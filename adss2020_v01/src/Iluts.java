@@ -18,6 +18,7 @@ public class Iluts {
         //if its null we need to add a new one
         if (curr==null){
             curr=new ArrayList<>();
+            curr.add(new CantWork(s,e));
             cantWork.put(day,curr);
         }
         // if not null we add a value to what we already have

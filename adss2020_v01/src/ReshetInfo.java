@@ -402,7 +402,7 @@ public class ReshetInfo {
                         // check if the iluts number is valid
                         double iluts_num_start=Double.parseDouble(input_iluts);
                         double iluts_num_end=Double.parseDouble(input_iluts_2);
-                        if (iluts_num_start <0 || iluts_num_start>iluts_num_end || iluts_num_end>24){
+                        if (!CheckTimeValidate(iluts_num_start,iluts_num_end)){
                             System.out.println("not valid, please try again");
                             day_choice =-1;
                             break;
@@ -459,7 +459,7 @@ public class ReshetInfo {
                         // check if the iluts number is valid
                         double iluts_num_start=Double.parseDouble(input_iluts);
                         double iluts_num_end=Double.parseDouble(input_iluts_2);
-                        if (iluts_num_start <0 || iluts_num_start>iluts_num_end || iluts_num_end>24){
+                        if (!CheckTimeValidate(iluts_num_start,iluts_num_end)){
                             System.out.println("not valid, please try again");
                             day_choice =-1;
                             break;
@@ -862,4 +862,13 @@ public class ReshetInfo {
         Workers.get(ID).setContract(input_Contract);
     }
 
+
+    public boolean CheckTimeValidate(double start, double end){
+        double start_dec = start - Math.floor(start);
+        double end_dec = end - Math.floor(end);
+        if (start <0 || start>end || end>24 || start_dec >=0.60 || end_dec >= 0.60){
+            return false;
+        }
+        return true;
+    }
 }

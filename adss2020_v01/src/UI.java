@@ -439,18 +439,8 @@ public class UI {
                                         double iluts_num_morning_end = Double.parseDouble(input_iluts_2);
                                         double iluts_num_evening_start = Double.parseDouble(input_iluts_3);
                                         double iluts_num_evening_end = Double.parseDouble(input_iluts_4);
-                                        if (iluts_num_morning_start < 1 ||
-                                                iluts_num_morning_end > iluts_num_evening_start ||
-                                                iluts_num_evening_start > iluts_num_evening_end ||
-                                                iluts_num_evening_end > 24.59) {
-                                            System.out.println("not valid, number needs to be btween 10.00 and 24.59 please try again");
-                                        }
-                                        //check the decimal part of the number, the value need to be good for hours
-                                        else if(iluts_num_morning_start-(int)iluts_num_morning_start>=0.60 ||
-                                                iluts_num_morning_end-(int)iluts_num_morning_end>=0.60||
-                                                iluts_num_evening_start-(int)iluts_num_evening_start>=0.60||
-                                                iluts_num_evening_end-(int)iluts_num_evening_end>=0.60){
-                                            System.out.println("not valid,decimal part needs to be between 0 and 59 please try again");
+                                        if(!info.CheckTimeValidate(iluts_num_morning_start,iluts_num_morning_end) || !info.CheckTimeValidate(iluts_num_evening_start,iluts_num_evening_end)){
+                                            System.out.println("invalid time input - hours should be between 10.00-24.59 (note that seconds is .0-.59!");
                                         }
                                         else {
                                             // if the times are valid ill send them to the super for update
