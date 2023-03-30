@@ -137,8 +137,6 @@ public class UI {
             }
         }
 
-
-
     }
 
     public static void WorkerLogIN(){
@@ -452,7 +450,7 @@ public class UI {
                                                 iluts_num_morning_end-(int)iluts_num_morning_end>=0.60||
                                                 iluts_num_evening_start-(int)iluts_num_evening_start>=0.60||
                                                 iluts_num_evening_end-(int)iluts_num_evening_end>=0.60){
-                                            System.out.println("not valid,decimal part need to be between 0 and 59 please try again");
+                                            System.out.println("not valid,decimal part needs to be between 0 and 59 please try again");
                                         }
                                         else {
                                             // if the times are valid ill send them to the super for update
