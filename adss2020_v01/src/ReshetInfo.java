@@ -342,12 +342,12 @@ public class ReshetInfo {
     double end=0;
     //like that i get the correct hours
     if (time==CanWork.Morning){
-        start=Superim.get(SuperName).getStart_morning();
-        end=Superim.get(SuperName).getEnd_morning();
+        start=Superim.get(SuperName).getStart_morning(day);
+        end=Superim.get(SuperName).getEnd_morning(day);
     }
     else{
-        start=Superim.get(SuperName).getStart_evening();
-        end=Superim.get(SuperName).getEnd_evening();
+        start=Superim.get(SuperName).getStart_evening(day);
+        end=Superim.get(SuperName).getEnd_evening(day);
     }
     //checking each employrr
         for(String id:WorkersID){
@@ -567,8 +567,12 @@ public class ReshetInfo {
 
     }
 
-    public void UpdateSuperTimes(String Name, double m_s,double m_e, double e_s, double e_e){
-
+    public void UpdateSuperTimes(String Name,Days day, double m_s,double m_e, double e_s, double e_e){
+        Super curr=Superim.get(Name);
+        curr.setStart_morning(day,m_s);
+        curr.setEnd_morning(day,m_e);
+        curr.setStart_evening(day,m_s);
+        curr.setEnd_evening(day,m_s);
     }
 
     //cash cancallations

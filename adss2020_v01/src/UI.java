@@ -397,22 +397,44 @@ public class UI {
                                 }
                                 break;
                             case 7:
+                                int day_choice1=0;
                                 int choice1 = -1;
                                 while (choice1 != 8) {
+                                    boolean day_flag=true;
+                                    //loop to get the day to change
+                                    while(day_flag){
+                                        System.out.println("please enter the number of the day which you want to change working hoursd in \n\" +\n" +
+                                                "                    \"Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n");
+                                        Scanner day_input = new Scanner(System.in); // Create a Scanner object
+                                        String input_day = day_input.nextLine();  // Read user input
+                                        try{
+                                            day_choice1=Integer.parseInt(input_day);
+                                            if (day_choice1<1 || day_choice1>7){
+                                                System.out.println("not valid, please try again");
+                                            }
+                                            else {
+                                                day_flag=false;
+                                            }
+                                        }
+                                        //if he entered something not suitable we will repeat
+                                        catch (Exception e){
+                                            System.out.println("not valid, please try again");
+                                        }
+                                    }
                                     //change shift hours
                                     //he will change both morning and evening so they wont overlap
                                     System.out.println("please enter the start of the morning shift (it needs to look like: 10.00 for 10am): ");
-                                    Scanner myIluts = new Scanner(System.in);  // Create a Scanner object
-                                    String input_iluts = myIluts.nextLine();  // Read user input
+                                    Scanner time_input = new Scanner(System.in);  // Create a Scanner object
+                                    String input_iluts = time_input.nextLine();  // Read user input
                                     System.out.println("please enter the end of the morning shift (it needs to look like: 22.00 for 22pm): ");
-                                    myIluts = new Scanner(System.in);  // Create a Scanner object
-                                    String input_iluts_2 = myIluts.nextLine();  // Read user input
+                                    time_input = new Scanner(System.in);  // Create a Scanner object
+                                    String input_iluts_2 = time_input.nextLine();  // Read user input
                                     System.out.println("please enter the start of the evening shift (it needs to look like: 22.00 for 22pm): ");
-                                    myIluts = new Scanner(System.in);  // Create a Scanner object
-                                    String input_iluts_3 = myIluts.nextLine();  // Read user input
+                                    time_input = new Scanner(System.in);  // Create a Scanner object
+                                    String input_iluts_3 = time_input.nextLine();  // Read user input
                                     System.out.println("please enter the end of the evening shift (it needs to look like: 22.00 for 22pm): ");
-                                    myIluts = new Scanner(System.in);  // Create a Scanner object
-                                    String input_iluts_4 = myIluts.nextLine();  // Read user input
+                                    time_input = new Scanner(System.in);  // Create a Scanner object
+                                    String input_iluts_4 = time_input.nextLine();  // Read user input
                                     try {
                                         // check if the iluts number is valid
                                         double iluts_num_morning_start = Double.parseDouble(input_iluts);
@@ -421,11 +443,16 @@ public class UI {
                                         double iluts_num_evening_end = Double.parseDouble(input_iluts_4);
                                         if (iluts_num_morning_start < 0 || iluts_num_morning_end > iluts_num_evening_start || iluts_num_evening_start > iluts_num_evening_end || iluts_num_evening_end > 24) {
                                             System.out.println("not valid, please try again");
-                                            break;
                                         }
-                                        // if the times are valid ill send them to the super for update
-                                        info.UpdateSuperTimes(Name, iluts_num_morning_start, iluts_num_morning_end, iluts_num_evening_start, iluts_num_evening_end);
-                                        choice1 = -1;
+                                        else if(){
+                                            System.out.println("not valid, please try again");
+                                        }
+                                        else {
+                                            // if the times are valid ill send them to the super for update
+                                            info.UpdateSuperTimes(Name, Days.values()[day_choice1 - 1], iluts_num_morning_start, iluts_num_morning_end, iluts_num_evening_start, iluts_num_evening_end);
+                                            //we can stop the loop
+                                            choice1 = 8;
+                                        }
                                         break;
                                     }
                                     //if he entered something not suitable we will repeat

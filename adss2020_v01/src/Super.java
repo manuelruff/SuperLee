@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +15,11 @@ public class Super {
     //times of the shifts, ill put default values that the manager can change later
     //need to change them to map <days,double>
     //private Map<Days,Double> start_morning;
-    private double start_morning;
-    private double end_morning;
-    private double start_evening;
-    private double end_evening;
+    private Map<Days,Double> start_morning;
+    private Map<Days,Double> end_morning;
+    private Map<Days,Double> start_evening;
+    private Map<Days,Double> end_evening;
+
 
 
     //builder for super
@@ -27,11 +29,21 @@ public class Super {
         WeeklyHist=new ArrayList<>();
         cash_register=new CashRegister();
 
-        start_morning=7;
-        end_morning=14;
-        start_evening=14;
-        end_evening=23;
+        start_morning=new HashMap<>();
+        end_morning=new HashMap<>();
+        start_evening=new HashMap<>();
+        end_evening=new HashMap<>();
 
+        //sets the basic hourse of each day to work from 7 to 14 and then from 14 to 23
+        this.setHours();
+    }
+    public void setHours(){
+        for (Days day:Days.values()){
+            start_morning.put(day,7.00);
+            end_morning.put(day,14.00);
+            start_evening.put(day,14.00);
+            end_evening.put(day,23.00);
+        }
     }
     //a function that adds a worker to the workers list
     public void AddWorker(String WorkerID){
@@ -63,34 +75,47 @@ public class Super {
         this.WeekShifts=null;
     }
 
-    public void setEnd_evening(double end_evening) {
-        this.end_evening = end_evening;
-    }
-    public double getEnd_evening() {
-        return end_evening;
+    public double getEnd_evening(Days day) {
+        return end_evening.get(day);
     }
 
-    public void setEnd_morning(double end_morning) {
-        this.end_morning = end_morning;
-    }
-    public double getEnd_morning() {
-        return end_morning;
+    public double getEnd_morning(Days day) {return end_morning.get(day);}
+
+    public double getStart_evening(Days day) {
+        return start_evening.get(day);
     }
 
-    public void setStart_evening(double start_evening) {
-        this.start_evening = start_evening;
-    }
-    public double getStart_evening() {
-        return start_evening;
+    public double getStart_morning(Days day) {
+        return start_morning.get(day);
     }
 
-    public void setStart_morning(double start_morning) {
-        this.start_morning = start_morning;
-    }
-    public double getStart_morning() {
-        return start_morning;
+    public void setStart_morning(Days day,Double t) {
+        //remove if already has something
+        this.start_morning.remove(day);
+        //add new one
+        this.start_morning.put(day,t);
     }
 
+    public void setEnd_morning(Days day,Double t) {
+        //remove if already has something
+        this.end_morning.remove(day);
+        //add new one
+        this.end_morning.put(day,t);
+    }
+
+    public void setStart_evening(Days day,Double t) {
+        //remove if already has something
+        this.start_evening.remove(day);
+        //add new one
+        this.start_evening.put(day,t);
+    }
+
+    public void setEnd_evening(Days day,Double t) {
+        //remove if already has something
+        this.end_evening.remove(day);
+        //add new one
+        this.end_evening.put(day,t);
+    }
 
     public CashRegister get_cash_register(){
         return this.cash_register;
