@@ -398,13 +398,13 @@ public class UI {
                                 break;
                             case 7:
                                 int day_choice1=0;
-                                int choice1 = -1;
-                                while (choice1 != 8) {
+                                int choice4 = -1;
+                                while (choice4 != 8) {
                                     boolean day_flag=true;
                                     //loop to get the day to change
                                     while(day_flag){
-                                        System.out.println("please enter the number of the day which you want to change working hoursd in \n\" +\n" +
-                                                "                    \"Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n");
+                                        System.out.println("please enter the number of the day which you want to change working hoursd in \n" +
+                                                "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 ");
                                         Scanner day_input = new Scanner(System.in); // Create a Scanner object
                                         String input_day = day_input.nextLine();  // Read user input
                                         try{
@@ -423,16 +423,16 @@ public class UI {
                                     }
                                     //change shift hours
                                     //he will change both morning and evening so they wont overlap
-                                    System.out.println("please enter the start of the morning shift (it needs to look like: 10.00 for 10am): ");
+                                    System.out.println("please enter time to start morning shift (it needs to look like: 10.00 for 10am): ");
                                     Scanner time_input = new Scanner(System.in);  // Create a Scanner object
                                     String input_iluts = time_input.nextLine();  // Read user input
-                                    System.out.println("please enter the end of the morning shift (it needs to look like: 22.00 for 22pm): ");
+                                    System.out.println("please enter time to end morning shift (it needs to look like: 22.00 for 22pm): ");
                                     time_input = new Scanner(System.in);  // Create a Scanner object
                                     String input_iluts_2 = time_input.nextLine();  // Read user input
-                                    System.out.println("please enter the start of the evening shift (it needs to look like: 22.00 for 22pm): ");
+                                    System.out.println("please enter time to start evening shift (it needs to look like: 22.00 for 22pm): ");
                                     time_input = new Scanner(System.in);  // Create a Scanner object
                                     String input_iluts_3 = time_input.nextLine();  // Read user input
-                                    System.out.println("please enter the end of the evening shift (it needs to look like: 22.00 for 22pm): ");
+                                    System.out.println("please enter time to end evening shift (it needs to look like: 22.00 for 22pm): ");
                                     time_input = new Scanner(System.in);  // Create a Scanner object
                                     String input_iluts_4 = time_input.nextLine();  // Read user input
                                     try {
@@ -441,26 +441,33 @@ public class UI {
                                         double iluts_num_morning_end = Double.parseDouble(input_iluts_2);
                                         double iluts_num_evening_start = Double.parseDouble(input_iluts_3);
                                         double iluts_num_evening_end = Double.parseDouble(input_iluts_4);
-                                        if (iluts_num_morning_start < 0 || iluts_num_morning_end > iluts_num_evening_start || iluts_num_evening_start > iluts_num_evening_end || iluts_num_evening_end > 24) {
-                                            System.out.println("not valid, please try again");
+                                        if (iluts_num_morning_start < 1 ||
+                                                iluts_num_morning_end > iluts_num_evening_start ||
+                                                iluts_num_evening_start > iluts_num_evening_end ||
+                                                iluts_num_evening_end > 24.59) {
+                                            System.out.println("not valid, number needs to be btween 10.00 and 24.59 please try again");
                                         }
-                                        else if(){
-                                            System.out.println("not valid, please try again");
+                                        //check the decimal part of the number, the value need to be good for hours
+                                        else if(iluts_num_morning_start-(int)iluts_num_morning_start>=0.60 ||
+                                                iluts_num_morning_end-(int)iluts_num_morning_end>=0.60||
+                                                iluts_num_evening_start-(int)iluts_num_evening_start>=0.60||
+                                                iluts_num_evening_end-(int)iluts_num_evening_end>=0.60){
+                                            System.out.println("not valid,decimal part need to be between 0 and 59 please try again");
                                         }
                                         else {
                                             // if the times are valid ill send them to the super for update
                                             info.UpdateSuperTimes(Name, Days.values()[day_choice1 - 1], iluts_num_morning_start, iluts_num_morning_end, iluts_num_evening_start, iluts_num_evening_end);
                                             //we can stop the loop
-                                            choice1 = 8;
+                                            choice4 = 8;
+                                            break;
                                         }
-                                        break;
                                     }
                                     //if he entered something not suitable we will repeat
                                     catch (Exception e) {
                                         System.out.println("invalid input, please try again");
                                     }
-                                    break;
                                 }
+                                break;
                             case 8:
                                 choice2=3;
                                 break;
