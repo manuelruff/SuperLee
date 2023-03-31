@@ -118,16 +118,13 @@ public class ReshetInfo {
         Superim.put("yakarmeod",Super2);
     }
 
-    public void CreateWeekly(String name){
-
-    }
     //function that checks if the name of a super exists
     public boolean CheckSuperName(String Name){
         return Superim.get(Name) != null;
     }
 
     //function that creates weeklysheet for a super
-    public void CreatWeekly(String Name){
+    public void CreateWeekly(String Name){
         //we get the object of the super we wanna add a weekly to
         Super curr=Superim.get(Name);
         List<String> CanWorkList;
@@ -266,7 +263,7 @@ public class ReshetInfo {
     }
 
     public void RemoveFromDay(String Name,int day){
-        //well get the ID oof the one he wants to delete
+        //well get the ID of the one he wants to delete
         System.out.println("please write the ID of the employee you want to remove: ");
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         int loop=-1;
@@ -274,7 +271,7 @@ public class ReshetInfo {
         while (loop==-1){
             input_ID = myObj.nextLine();  // Read user input
             if(!Superim.get(Name).GetWeekShifts().GetShift(day).IsWorkerAtShift(input_ID)){
-                System.out.println("please enter a valid number ");
+                System.out.println("this worker doesnt work at this shift - please try again");
             }
             else{
                 loop=0;
@@ -295,6 +292,7 @@ public class ReshetInfo {
         String input_ID="";
         while (loop==-1){
             input_ID = myObj.nextLine();  // Read user input
+            // do not forget to change this!!!
             if(false){
                 System.out.println("please enter a valid number ");
             }
@@ -402,7 +400,7 @@ public class ReshetInfo {
                         // check if the iluts number is valid
                         double iluts_num_start=Double.parseDouble(input_iluts);
                         double iluts_num_end=Double.parseDouble(input_iluts_2);
-                        if (!CheckTimeValidate(iluts_num_start,iluts_num_end)){
+                        if (CheckTimeValidate(iluts_num_start, iluts_num_end)){
                             System.out.println("not valid, please try again");
                             day_choice =-1;
                             break;
@@ -459,7 +457,7 @@ public class ReshetInfo {
                         // check if the iluts number is valid
                         double iluts_num_start=Double.parseDouble(input_iluts);
                         double iluts_num_end=Double.parseDouble(input_iluts_2);
-                        if (!CheckTimeValidate(iluts_num_start,iluts_num_end)){
+                        if (CheckTimeValidate(iluts_num_start, iluts_num_end)){
                             System.out.println("not valid, please try again");
                             day_choice =-1;
                             break;
@@ -629,9 +627,6 @@ public class ReshetInfo {
     public void PrintCancellation(String Name,int year,int month,int day){
         Superim.get(Name).get_cash_register().PrintCancellation( year, month, day);
     }
-
-
-    // omri's new code - 29.3
 
     // the function add a new worker
     public void AddNewWorker(){
@@ -866,9 +861,6 @@ public class ReshetInfo {
     public boolean CheckTimeValidate(double start, double end){
         double start_dec = start - Math.floor(start);
         double end_dec = end - Math.floor(end);
-        if (start <0 || start>end || end>24 || start_dec >=0.60 || end_dec >= 0.60){
-            return false;
-        }
-        return true;
+        return start < 0 || start > end || end > 24 || start_dec >= 0.60 || end_dec >= 0.60;
     }
 }

@@ -113,4 +113,6 @@ public class Worker {
 
     public void setContract(String contract){this.Contract = contract;}
 
+    // function to set the number of shifts worker works
+
 }

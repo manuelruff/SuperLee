@@ -1,4 +1,3 @@
-import javax.lang.model.element.Name;
 import java.util.Scanner;
 
 public class UI {
@@ -293,7 +292,7 @@ public class UI {
                         switch (choice2) {
                             case 1:
                                 //create the weekly plan
-                                info.CreatWeekly(Name);
+                                info.CreateWeekly(Name);
                                 break;
                             case 2:
                                 //get the day he wants to edit
@@ -439,7 +438,7 @@ public class UI {
                                         double iluts_num_morning_end = Double.parseDouble(input_iluts_2);
                                         double iluts_num_evening_start = Double.parseDouble(input_iluts_3);
                                         double iluts_num_evening_end = Double.parseDouble(input_iluts_4);
-                                        if(!info.CheckTimeValidate(iluts_num_morning_start,iluts_num_morning_end) || !info.CheckTimeValidate(iluts_num_evening_start,iluts_num_evening_end)){
+                                        if(info.CheckTimeValidate(iluts_num_morning_start, iluts_num_morning_end) || info.CheckTimeValidate(iluts_num_evening_start, iluts_num_evening_end)){
                                             System.out.println("invalid time input - hours should be between 10.00-24.59 (note that seconds is .0-.59!");
                                         }
                                         else {
