@@ -279,22 +279,19 @@ public class ReshetInfo {
         }
         //whem were here we have a good number for employee so we remove him
         Superim.get(Name).GetWeekShifts().GetShift(day).RemoveWorker(input_ID);
+        Workers.get(input_ID).RemoveShift(Days.values()[day-1]);
     }
     public void AddToDay(String Name,int day){
-        //we will get the available workers for this day
-        //we need to know what worker he wants
-
-
         //well get the ID oof the one he wants to delete
-        System.out.println("please write the ID of the employee you want to remove: ");
+        System.out.println("please write the ID of the employee you want to add: ");
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         int loop=-1;
         String input_ID="";
         while (loop==-1){
             input_ID = myObj.nextLine();  // Read user input
             // do not forget to change this!!!
-            if(false){
-                System.out.println("please enter a valid number ");
+            if(Superim.get(Name).GetWeekShifts().GetShift(day).IsWorkerAtShift(input_ID)){
+                System.out.println("this worker is already wotks at this shift");
             }
             else{
                 loop=0;
@@ -302,6 +299,8 @@ public class ReshetInfo {
         }
         //whem were here we have a good number for employee so we add him
         Superim.get(Name).GetWeekShifts().GetShift(day).AddWorker(input_ID,Workers.get(input_ID).GetName());
+        // add the shift to the workers shifts - added 31.3
+        Workers.get(input_ID).AddShift(Days.values()[day-1]);
     }
 
     //function that prints current weekly shifts
@@ -857,10 +856,36 @@ public class ReshetInfo {
         Workers.get(ID).setContract(input_Contract);
     }
 
-
     public boolean CheckTimeValidate(double start, double end){
         double start_dec = start - Math.floor(start);
         double end_dec = end - Math.floor(end);
         return start < 0 || start > end || end > 24 || start_dec >= 0.60 || end_dec >= 0.60;
+    }
+
+    // calculate salary for worker without a bonus
+    public double CalculateMonthlySalary(String ID){
+        if (!isExistWorker(ID)) {
+            System.out.println("this worker is not working at our markets");
+            return -1;
+        }
+        double salary = Workers.get(ID).getShiftWorked()*Workers.get(ID).getWage();
+        return salary;
+    }
+
+    // with bonus
+    public double CalculateMonthlySalary(String ID,double bonus){
+        if (!isExistWorker(ID)) {
+            System.out.println("this worker is not working at our markets");
+            return -1;
+        }
+        double salary = Workers.get(ID).getShiftWorked()*Workers.get(ID).getWage() + bonus;
+        return salary;
+    }
+
+    // reset the number of shifts to all workers
+    public void ResetWorkDaysWorkers (){
+        for(String ID : Workers.keySet() ){
+            Workers.get(ID).ReSetShiftsAmount();
+        }
     }
 }

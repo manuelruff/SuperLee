@@ -54,6 +54,11 @@ public class Worker {
         this.WeeklyWorkingDays.clear();
     }
 
+    // reset the number of shifts the worker works in a month
+    public void ReSetShiftsAmount(){
+        this.ShiftWorked = 0;
+    }
+
     //called when we create a new iluts
     public void AddCantWork(Days day,double s,double e){
         ShiftsCanWork.AddCantWork(day,s,e);
@@ -95,6 +100,12 @@ public class Worker {
         this.WeeklyWorkingDays.add(day);
     }
 
+    //update a worker that he removes a shift - added 31.3
+    public void RemoveShift(Days day){
+        this.ShiftWorked--;
+        this.WeeklyWorkingDays.remove(day);
+    }
+
     // used to change worker name
     public void SetName(String newName){
         this.Name=newName;
@@ -114,5 +125,10 @@ public class Worker {
     public void setContract(String contract){this.Contract = contract;}
 
     // function to set the number of shifts worker works
+    public int getShiftWorked(){
+        return this.ShiftWorked;
+    }
+
+    public int getWage(){return this.Wage;}
 
 }
