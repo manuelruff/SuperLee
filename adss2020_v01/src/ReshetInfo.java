@@ -16,7 +16,6 @@ public class ReshetInfo {
         StartData();
     }
     public void StartData(){
-
         //creating shift managers:
         Worker ShiftManager1 = new Worker("manu" , " 1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Worker ShiftManager2 = new Worker("david" , " 2", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
