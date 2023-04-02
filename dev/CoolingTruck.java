@@ -10,4 +10,5 @@ public class CoolingTruck extends Truck{
     public void addItem(Item item) {
 
     }
+
 }
