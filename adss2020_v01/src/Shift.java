@@ -7,24 +7,23 @@ public class Shift {
     //tells if the shift is evening or morning, we will use only 1 \ 2 from the enum
     private CanWork ShiftTime;
     //all the workers in the shift
-    private Map<String,String> WorkerList;
-    //manager of the shift
-    private String manager;
-    private String managerName;
+    private Map<Jobs,List<Worker>> WorkerList;
 
-    public Shift(LocalDate date,CanWork ShiftTime,String manager,String managerName){
+    public Shift(LocalDate date,CanWork ShiftTime){
         this.date=date;
         this.ShiftTime=ShiftTime;
-        this.manager=manager;
-        this.managerName=managerName;
         WorkerList=new HashMap<>();
     }
-    public void AddWorker(String ID, String Name){
-        this.WorkerList.put(ID,Name);
+    public void AddWorker(Jobs job, Worker worker){
+        List<Worker> curr=this.WorkerList.get(job);
+        if (curr==null){
+            this.WorkerList.put(job,new ArrayList<>());
+        }
+        curr.add(worker);
     }
 
     public void RemoveWorker(String ID){
-        this.WorkerList.remove(ID);
+        //we nned to implement it in the new way -- map something
     }
 
     public boolean IsWorkerAtShift(String ID){
@@ -38,18 +37,25 @@ public class Shift {
         return this.ShiftTime;
     }
     public List<String> GetWorkers(){
+
         List<String> ret=new ArrayList<>();
+        /*
         for (String ID:this.WorkerList.values()){
             ret.add(ID);
         }
+
+         */
         return ret;
     }
 
     public void PrintMe(){
+        /*
         System.out.println(this.date + " " + this.ShiftTime);
-        System.out.println("the manager is "+this.managerName +" with ID: "+this.manager);
+        System.out.println("the manager is "+this.managerName +" with ID: "+this.managerID);
         for (String ID:this.WorkerList.keySet()){
             System.out.println(ID + " - "+ this.WorkerList.get(ID) );
         }
+
+         */
     }
 }

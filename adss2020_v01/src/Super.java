@@ -20,8 +20,6 @@ public class Super {
     private Map<Days,Double> start_evening;
     private Map<Days,Double> end_evening;
 
-
-
     //builder for super
     public Super(String Name){
         this.Name=Name;

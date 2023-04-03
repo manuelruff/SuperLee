@@ -126,6 +126,7 @@ public class ReshetInfo {
     }
 
     //function that creates weeklysheet for a super
+    /*
     public void CreateWeekly(String Name){
         //we get the object of the super we wanna add a weekly to
         Super curr=Superim.get(Name);
@@ -254,6 +255,8 @@ public class ReshetInfo {
         curr.AddWeekly(week);
         }
 
+
+     */
     public void SetWeeklyPlan(String Name,List<WantShift> ls){
         want_shifts.remove(Name);
         want_shifts.put(Name,ls);
@@ -292,7 +295,7 @@ public class ReshetInfo {
         Superim.get(Name).GetWeekShifts().GetShift(day).RemoveWorker(input_ID);
         Workers.get(input_ID).RemoveShift(Days.values()[day-1]);
     }
-    public void AddToDay(String Name,int day){
+    public void AddToDay(String Name,int day,Jobs job){
         //well get the ID oof the one he wants to delete
         System.out.println("please write the ID of the employee you want to add: ");
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
@@ -309,7 +312,7 @@ public class ReshetInfo {
             }
         }
         //whem were here we have a good number for employee so we add him
-        Superim.get(Name).GetWeekShifts().GetShift(day).AddWorker(input_ID,Workers.get(input_ID).GetName());
+        Superim.get(Name).GetWeekShifts().GetShift(day).AddWorker(job,Workers.get(input_ID));
         // add the shift to the workers shifts - added 31.3
         Workers.get(input_ID).AddShift(Days.values()[day-1]);
     }
@@ -343,8 +346,8 @@ public class ReshetInfo {
     }
 
     //function that get day job and a list of workers and checks if the worker can do the work in these conditions
-    public List<String> GetAvailableEmployee(Days day, Jobs job,CanWork time, List<String> WorkersID,String SuperName){
-    List<String> ret=new ArrayList<>();
+    public Map<String,String> GetAvailableEmployee( Days day, Jobs job,CanWork time, List<String> WorkersID,String SuperName){
+    Map<String,String> ret=new HashMap<>();
     //we will save the start and end of the shift
     double start=0;
     double end=0;
@@ -364,7 +367,7 @@ public class ReshetInfo {
             if(curr.CanDoJob(job)){
                 //check if he is free by his iluts
                 if (curr.IsFree(day,start,end)) {
-                    ret.add(id);
+                    ret.put(id,Workers.get(id).GetName());
                 }
             }
         }

@@ -33,4 +33,8 @@ public class WantShift {
     public CanWork getMorning_evening() {
         return morning_evening;
     }
+
+    public List<String> getW_wants() {
+        return w_wants;
+    }
 }

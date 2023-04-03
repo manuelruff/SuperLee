@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 
 public class UI {
     // all the info will come form there
@@ -301,7 +300,10 @@ public class UI {
                                         //create a list of jobs so we can present it to the manager
                                         List<Jobs> job_list = new ArrayList<>();
                                         for (Jobs job : Jobs.values()) {
-                                            job_list.add(job);
+                                            //there will be only one shift manager so we wont save it
+                                            if (job!=Jobs.ShiftManager) {
+                                                job_list.add(job);
+                                            }
                                         }
                                         int job_chose = -1;
                                         while (job_chose == -1) {
@@ -344,13 +346,21 @@ public class UI {
                                 Weekly week=new Weekly();
                                 //get the options for the shift
                                 List<WantShift> ls2=info.getWant_shifts_byName(Name);
+                                //we will save here a list of workers that can work by certain parametesrs
+                                Map<String,String>free_workers;
                                 //go threw all of them and create real shifts
                                 for (WantShift want: ls2) {
+                                    //create the current shift
+                                    Shift curr=new Shift(LocalDate.now().plusDays(want.getDay().ordinal()),want.getMorning_evening());
+                                    //start choosing workers
+                                    System.out.println("first you need to chose the manager for the shift: ");
+                                    //update the list of available managers for this shift
+                                    free_workers=info.GetAvailableEmployee(want.getDay(),Jobs.ShiftManager,want.getMorning_evening(),want.getW_wants(),Name);
                                     
                                 }
 
                                 //create the weekly shifts
-                                info.CreateWeekly(Name);
+                                //info.CreateWeekly(Name);
                                 break;
                             case 3:
                                 //get the day he wants to edit
@@ -409,7 +419,9 @@ public class UI {
                                         info.RemoveFromDay(Name,day_choice);
                                         break;
                                     case 2:
-                                        info.AddToDay(Name,day_choice);
+                                        //now i need to have a job tytpe so i can add someone so i need to think how i do it
+                                        //or just ask for it
+                                        //info.AddToDay(Name,day_choice);
                                         break;
                                 }
 
@@ -682,7 +694,6 @@ public class UI {
         }
     }
 
-// added 29.3
     public static String AskForWorkerID(){
         System.out.println("please enter the worker's ID: ");
         // get the new id from the manager
