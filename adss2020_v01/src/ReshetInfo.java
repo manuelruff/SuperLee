@@ -495,9 +495,16 @@ public class ReshetInfo {
     }
 
     public void ShowWantsShift(String ID) {
-        if ()
+        //Map<String,List<WantShift>> want_shifts
+        List all_relevent_supers
+        list all_want_shifts = want_shifts.get(Workers.get(ID))
+        for()
     }
     public Worker GetWorkerByID(String ID){
         return Workers.get(ID);
+    }
+
+    public boolean IsWorksInSuper(String ID, String SuperName){
+        
     }
 }

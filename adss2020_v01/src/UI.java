@@ -190,6 +190,7 @@ public class UI {
                     break;
                 case 2:
                     System.out.println("please choose the shift you want to join: ");
+                    info.ShowWantsShift();
 
                     //after we did what we want we stop
                     break;
