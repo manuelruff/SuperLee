@@ -346,6 +346,7 @@ public class UI {
                                 Weekly week=new Weekly();
                                 //get the options for the shift
                                 List<WantShift> ls2=info.getWant_shifts_byName(Name);
+
                                 //we will save here a list of workers that can work by certain parametesrs
                                 Map<String,String>free_workers;
                                 //go threw all of them and create real shifts
@@ -356,7 +357,13 @@ public class UI {
                                     System.out.println("first you need to chose the manager for the shift: ");
                                     //update the list of available managers for this shift
                                     free_workers=info.GetAvailableEmployee(want.getDay(),Jobs.ShiftManager,want.getMorning_evening(),want.getW_wants(),Name);
-                                    
+
+
+
+
+
+                                    //add the shift we created to the weekly
+                                    week.AddShift(curr);
                                 }
 
                                 //create the weekly shifts

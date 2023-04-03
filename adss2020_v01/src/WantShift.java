@@ -15,7 +15,6 @@ public class WantShift {
         this.day=day;
         this.morning_evening=m_e;
     }
-
     public void add_m_wants(Jobs job, Integer num){
         this.m_wants.put(job,num);
     }
@@ -25,6 +24,8 @@ public class WantShift {
     public void remove_w_wants(String ID){
         this.w_wants.remove(ID);
     }
+
+
 
     public Days getDay() {
         return day;

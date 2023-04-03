@@ -8,6 +8,11 @@ public class ReshetInfo {
     private static Map<String ,Worker> Workers;
     //every week the managers will fill their desires for workers and it will be saved here
     private static Map<String,List<WantShift>> want_shifts;
+    //if shift wasnt planned the workers cant put themselves
+    private static Map<String,Boolean> is_shift_planed;
+    //if the shift was created the workers cant make changes
+    private static Map<String,Boolean> is_shift_created;
+
     //builder for reshetinfo
     public ReshetInfo(){
 
@@ -120,143 +125,30 @@ public class ReshetInfo {
         Superim.put("yakarmeod",Super2);
     }
 
+
+    public static void setIs_shift_planed_byName(String Name,Boolean is_shift_planed) {
+        ReshetInfo.is_shift_planed.remove(Name);
+        ReshetInfo.is_shift_planed.put(Name,is_shift_planed);
+    }
+
+    public static void setIs_shift_created_byName(String Name,Boolean is_shift_created) {
+        ReshetInfo.is_shift_created.remove(Name);
+        ReshetInfo.is_shift_created.put(Name,is_shift_created);
+    }
+
+    public static Boolean getIs_shift_planed_byName(String Name) {
+        return is_shift_planed.get(Name);
+    }
+
+    public static Boolean getIs_shift_created_byName(String Name) {
+        return is_shift_created.get(Name);
+    }
+
     //function that checks if the name of a super exists
     public boolean CheckSuperName(String Name){
         return Superim.get(Name) != null;
     }
 
-    //function that creates weeklysheet for a super
-    /*
-    public void CreateWeekly(String Name){
-        //we get the object of the super we wanna add a weekly to
-        Super curr=Superim.get(Name);
-        List<String> CanWorkList;
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        //create the weekly
-        Weekly week=new Weekly();
-        for (Days day:Days.values()){
-            CanWork time=CanWork.Morning;
-            for(int i=0;i<2;i++) {
-                System.out.println("we are working on: " + day + " at the "+time+ " shift");
-                //first we need to choose the manager to start the shift
-                System.out.println("first choose the shift manager: ");
-                //ill get the list of available managers
-                CanWorkList=GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkers(),curr.GetName());
-                //prints the list of workers available - name and id
-                for(int j=0;j<CanWorkList.size();j++){
-                    System.out.println(j+1 +". "+ Workers.get(CanWorkList.get(j)).GetName() + " with ID: "+ CanWorkList.get(j));
-                }
-                int num = -1;
-                while (num == -1) {
-                    String number = myObj.nextLine();  // Read user input
-                    //try to change the input to a string
-                    try {
-                        num = Integer.parseInt(number);
-                        //if he puts negative value its not good
-                        if (num < 1 || num > CanWorkList.size()) {
-                            System.out.println("please choose a valid option");
-                            num = -1;
-                        }
-                    }
-                    //if he entered someting not suitable we will repeate
-                    catch (Exception e) {
-                        System.out.println("please choose a valid option");
-                        num = -1;
-                    }
-                }
-                //when we get here we have a good choice for the shift manager
-                // ineed to figure our how to work with date later on..
-                //crete the shift and now we need to add to it
-                Shift CurrShift=new Shift(LocalDate.now().plusDays(day.ordinal()),time,CanWorkList.get(num-1),Workers.get(CanWorkList.get(num-1)).GetName());
-                //update the menager shift
-                Workers.get(CanWorkList.get(num-1)).AddShift(day);
-                //then we need to let him see the rest without shift manager
-                //then we send it to the curr shift
-
-                //start the list from the beginnning we dont need the menager list
-                CanWorkList.clear();
-
-                for (Jobs job : Jobs.values()) {
-                    //we dont need to choose shift manager again or more then one
-                    if (job==Jobs.ShiftManager){
-                        continue;
-                    }
-                    num = -1;
-                    while (num == -1) {
-                        System.out.print(" how many workers as " + job + " you want? ");
-                        String number = myObj.nextLine();  // Read user input
-                        //try to change the input to int
-                        try {
-                            num = Integer.parseInt(number);
-                            //if he puts negative value its not good
-                            if (num < 0) {
-                                num = -1;
-                                continue;
-                            }
-                            //we will get the available workers
-                            CanWorkList = GetAvailableEmployee(day, job, time, curr.GetWorkers(),curr.GetName());
-                            //if he wants too many its also not good
-                            if (CanWorkList.size() < num) {
-                                System.out.println("you dont have enough workers, the maximum is: " + CanWorkList.size() + " please choose again");
-                                num = -1;
-                            }
-                        }
-                        //if he entered someting not suitable we will repeate
-                        catch (Exception e) {
-                            System.out.println("please choose a valid number");
-                            num = -1;
-                        }
-                    }
-                    //if i got here i have a good number
-                    int k = 0;
-                    while (k < num) {
-                        System.out.println("the workers that can be in this shift are: ");
-                        for (int j = 0; j < CanWorkList.size(); j++) {
-                            System.out.println((j+1) +". " +Workers.get(CanWorkList.get(j)).GetName() + " with ID: "+ CanWorkList.get(j));
-                        }
-                        int choice=-1;
-                        while (choice==-1){
-                            System.out.println("choose the one you want");
-                            String input = myObj.nextLine();  // Read user input
-                            //try to change the input to a string
-                            try{
-                                choice=Integer.parseInt(input);
-                                if (choice<1 || choice>CanWorkList.size()){
-                                    System.out.println("please choose a valid number.");
-                                    choice =-1;
-                                }
-                            }
-                            //if he entered something not suitable we will repeate
-                            catch (Exception e){
-                                System.out.println("please choose a valid number.");
-                                choice =-1;
-                            }
-                        }
-                        //if i got here i have a good index for a worker
-                        // we will decrese one so it will be the index from the list
-                        choice=choice-1;
-                        //add to the shift
-                        CurrShift.AddWorker(CanWorkList.get(choice),Workers.get(CanWorkList.get(choice)).GetName());
-                        //now i need to update the worker propertyly
-                        Workers.get(CanWorkList.get(choice)).AddShift(day);
-                        //remove from the available workers
-                        CanWorkList.remove(choice);
-                        k++;
-                    }
-
-                }
-                    //send the shift i created to the weekly
-                    week.AddShift(CurrShift);
-                    //we go to evening shift
-                    time=CanWork.Evening;
-                }
-            }
-        //add the weekly to the super
-        curr.AddWeekly(week);
-        }
-
-
-     */
     public void SetWeeklyPlan(String Name,List<WantShift> ls){
         want_shifts.remove(Name);
         want_shifts.put(Name,ls);
