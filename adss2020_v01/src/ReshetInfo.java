@@ -15,7 +15,6 @@ public class ReshetInfo {
     //if the woirkers didnt add themeselves to the shifts the shift cant be created
     private static Map<String,Boolean> is_workers_in_shift;
 
-
     //builder for reshetinfo
     public ReshetInfo(){
 
@@ -495,7 +494,10 @@ public class ReshetInfo {
         }
     }
 
-    public void ShowWantsShift(String ID){
-        if()
+    public void ShowWantsShift(String ID) {
+        if ()
+    }
+    public Worker GetWorkerByID(String ID){
+        return Workers.get(ID);
     }
 }

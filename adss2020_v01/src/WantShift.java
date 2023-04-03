@@ -25,7 +25,9 @@ public class WantShift {
         this.w_wants.remove(ID);
     }
 
-
+    public Map<Jobs, Integer> getM_wants() {
+        return m_wants;
+    }
 
     public Days getDay() {
         return day;

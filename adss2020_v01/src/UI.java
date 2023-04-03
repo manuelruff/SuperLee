@@ -356,12 +356,18 @@ public class UI {
                                     System.out.println("you cant create a shift without planning it first");
                                     break;
                                 }
+                                //if workers didnt put themselves in the shifts he cant create a shift
+                                if(ReshetInfo.getIs_workers_in_shiftbyName(Name)){
+                                    System.out.println("you cant create a shift without the workers singning in first, go talk with them");
+                                    break;
+                                }
                                 //create the weekly plan
                                 Weekly week=new Weekly();
                                 //get the options for the shift
                                 List<WantShift> ls2=info.getWant_shifts_byName(Name);
 
                                 //we will save here a list of workers that can work by certain parametesrs
+                                //<ID,Name>
                                 Map<String,String>free_workers;
                                 //go threw all of them and create real shifts
                                 for (WantShift want: ls2) {
@@ -371,7 +377,32 @@ public class UI {
                                     System.out.println("first you need to chose the manager for the shift: ");
                                     //update the list of available managers for this shift
                                     free_workers=info.GetAvailableEmployee(want.getDay(),Jobs.ShiftManager,want.getMorning_evening(),want.getW_wants(),Name);
+                                    int i=1;
+                                    //shows all available managers
+                                    for (String ID:free_workers.keySet()){
+                                        System.out.println(i+". " +free_workers.get(ID) +" with ID: "+ID );
+                                        i++;
+                                    }
+                                    //when im back from here ill have a good choice
+                                    int num=AskForNumber(1, free_workers.size());
+                                    //add the manager to the shift
+                                    curr.AddWorker(Jobs.ShiftManager,info.GetWorkerByID(free_workers.get(num-1)));
+                                    //remove the worker from the option
+                                    want.remove_w_wants(free_workers.get(num-1));
 
+                                    //we have here all the workers he wants so we know how much to loop on each job type
+                                    Map<Jobs, Integer> job_nums=want.getM_wants();
+                                    for(Jobs job:job_nums.keySet()){
+                                        //get list of free workers by job
+                                        free_workers=info.GetAvailableEmployee(want.getDay(),job,want.getMorning_evening(),want.getW_wants(),Name);
+                                        //print the workers available until he chooses enough
+                                        for(int j=0;j<job_nums.get(job);j++){
+                                            System.out.println("for the job of: "+job.name()+" the workers are: ");
+
+                                            System.out.println("please choose one");
+                                        }
+
+                                    }
 
 
 
@@ -778,5 +809,25 @@ public class UI {
             BranchCheck = true;
         }
         return BranchName;
+    }
+    public static int AskForNumber(int s,int e){
+        int num=0;
+        while(true){
+            Scanner myObj_input = new Scanner(System.in);  // Create a Scanner object
+            String input= myObj_input.nextLine();
+            try {
+                num = Integer.parseInt(input);
+                if (num<=e && num>=s){
+                    return num;
+                }
+                else{
+                    System.out.println("invalid inoput, please try again");
+                }
+            }
+            //if he entered something not suitable we will repeat
+            catch (Exception e1) {
+                System.out.println("invalid inoput, please try again");
+            }
+        }
     }
 }
