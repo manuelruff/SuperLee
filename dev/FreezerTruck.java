@@ -6,8 +6,4 @@ public class FreezerTruck extends Truck{
         super(truck_Number, totalWeight, truckWeight, model);
     }
 
-    @Override
-    public void addItem(Item item) {
-
-    }
 }
