@@ -12,8 +12,7 @@ public class Worker {
     //so we know how much to pay him
     private int Wage;
     private String Password;
-    //the shifts he can work at
-    private Iluts ShiftsCanWork;
+
     //a list of jobes he can do
     private List<Jobs> Roles;//need to be size 7 for all the roles in the end
 
@@ -34,12 +33,7 @@ public class Worker {
         this.Password=Password;
         //puts the date if starting the job
         this.StartDate=LocalDate.now();
-
         this.ShiftWorked=0;
-
-        //sets the iluts to everyday until he updates it
-        this.ShiftsCanWork= new Iluts();
-
         this.WeeklyWorkingDays=new ArrayList<>();
     }
 
@@ -59,14 +53,8 @@ public class Worker {
         this.ShiftWorked = 0;
     }
 
-    //called when we create a new iluts
-    public void AddCantWork(Days day,double s,double e){
-        ShiftsCanWork.AddCantWork(day,s,e);
-    }
-    //called when we delete an iluts
-    public void RemoveCantWork(Days day,double s,double e){
-        ShiftsCanWork.RemoveCantWork(day,s,e);
-    }
+    public boolean IsFree(Days day, double s,double e0){return true;}
+
 
     //check if entered right password
     public boolean CheckPassword(String Password){
@@ -82,13 +70,6 @@ public class Worker {
         return this.Roles.contains(job);
     }
 
-    public boolean IsFree(Days day,double s,double e){
-        if(this.WeeklyWorkingDays.size()==6 || this.WeeklyWorkingDays.contains(day)){
-            return false;
-        }
-        //return if he can work there or not
-        return ShiftsCanWork.CanWork(day, s, e);
-    }
 
     public String GetName(){
         return this.Name;
@@ -115,10 +96,6 @@ public class Worker {
         this.Bank=newBank;
     }
     // used to add new Iluts
-
-    public void ShowIluts(){
-        this.ShiftsCanWork.PrintMe();
-    }
 
     public void setWage(int wage){this.Wage = wage;}
 

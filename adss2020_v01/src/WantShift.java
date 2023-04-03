@@ -1,0 +1,36 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class WantShift {
+    private Days day;
+    private CanWork morning_evening;
+    private Map<Jobs,Integer> m_wants;
+    private List<String>w_wants;
+
+    public WantShift(Days day,CanWork m_e){
+        m_wants=new HashMap<>();
+        w_wants=new ArrayList<>();
+        this.day=day;
+        this.morning_evening=m_e;
+    }
+
+    public void add_m_wants(Jobs job, Integer num){
+        this.m_wants.put(job,num);
+    }
+    public void add_w_wants(String ID){
+        this.w_wants.add(ID);
+    }
+    public void remove_w_wants(String ID){
+        this.w_wants.remove(ID);
+    }
+
+    public Days getDay() {
+        return day;
+    }
+
+    public CanWork getMorning_evening() {
+        return morning_evening;
+    }
+}

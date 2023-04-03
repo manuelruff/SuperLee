@@ -167,7 +167,7 @@ public class UI {
         while (choice!=4){
             System.out.println("hello please choose your option: ");
             System.out.println("1. update personal details ");
-            System.out.println("2. add new Iluts ");
+            System.out.println("2. create Iluts ");
             System.out.println("3. remove Iluts ");
             System.out.println("4. show Iluts ");
             System.out.println("5. Exit");
@@ -188,15 +188,12 @@ public class UI {
                     //after we did what we want we stop
                     break;
                 case 2:
-                    info.AddIluts(ID);
                     //after we did what we want we stop
                     break;
                 case 3:
-                    info.RemoveIluts(ID);
                     //do remove ilutz here
                     break;
                 case 4:
-                    info.ShowIluts(ID);
                     //after we did what we want we stop
                     break;
                 case 5:
@@ -348,7 +345,6 @@ public class UI {
                                 //if i got here i have a good option
                                 switch (ActionChoice){
                                     case 1:
-
                                         info.RemoveFromDay(Name,day_choice);
                                         break;
                                     case 2:
