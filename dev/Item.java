@@ -1,9 +1,9 @@
 public class Item {
     private String name;
     private int quantity;
-    private String storageCondition;
+    private Training storageCondition;
 
-    public Item(String name, int quantity, String storageCondition) {
+    public Item(String name, int quantity, Training storageCondition) {
         this.name = name;
         this.quantity = quantity;
         this.storageCondition = storageCondition;
@@ -17,7 +17,7 @@ public class Item {
         return quantity;
     }
 
-    public String getStorageCondition() {
+    public Training getStorageCondition() {
         return storageCondition;
     }
 
