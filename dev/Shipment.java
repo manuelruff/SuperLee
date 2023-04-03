@@ -20,7 +20,33 @@ public class Shipment {
         this.shipmentStatus = null;
     }
 
+
+
     public String getID() {
         return ID;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Site getSource() {
+        return source;
+    }
+
+    public Status getShipmentStatus() {
+        return shipmentStatus;
+    }
+
+    public void setDepartureTime(Date departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public void setShipmentStatus(Status shipmentStatus) {
+        this.shipmentStatus = shipmentStatus;
     }
 }
