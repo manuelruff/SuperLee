@@ -626,26 +626,14 @@ public class UI {
                                 }
                                 // create a generic password for the new worker
                                 String generic_Password = "1111";
-                                boolean BranchCheck=false;
-                                String BranchName="";
-                                while (!BranchCheck){
-                                    System.out.println("please enter the branch you want to add the new worker: ");
-                                    //in the beginning there will be a few options, he is supposed to know them
-                                    BranchName = myObj.nextLine();  // Read user input
-                                    BranchCheck=info.CheckSuperName(BranchName);
-                                    if (!BranchCheck){
-                                        System.out.println("this branch doesn't exists, try again ");
-                                    }
-                                    else {
-                                        break;
-                                    }
-                                }
+                                String BranchName= AskForBranch();
                                 // create a new worker and add him to the asked branch
                                 info.AddNewWorker(input_newID,input_newName,bankNum,input_newContract,wage,Jobs.values()[role_choice-1],generic_Password,BranchName);
                                 break;
                             case 2:
                                 ID = AskForWorkerID();
-                                info.AddWorkerToBranch(ID);
+                                String branch_name = AskForBranch();
+                                info.AddWorkerToBranch(ID,branch_name);
                                 break;
                             case 3:
                                 ID = AskForWorkerID();
@@ -653,15 +641,57 @@ public class UI {
                                 break;
                             case 4:
                                 ID = AskForWorkerID();
-                                info.AddJobToWorker(ID);
+                                boolean validInput = false;
+                                int job_num = -1;
+                                while(!validInput) {
+                                    System.out.println("please enter the new worker's first role: \n" +
+                                            "ShiftManager-1 , Cashier-2, StoreKeeper-3, GeneralEmp-4, Guard-5, Cleaner-6, Usher-7");
+                                    Scanner myObj_Role = new Scanner(System.in);  // Create a Scanner object
+                                    String input_role = myObj_Role.nextLine();  // Read user input
+                                    try {
+                                        // check the valdity of the role input
+                                        job_num = Integer.parseInt(input_role);
+                                        if (job_num < 0 || job_num > 8) {
+                                            System.out.println("not valid, please try again");
+                                            continue;
+                                        }
+                                        validInput = true;
+                                    }
+                                    //if he entered something not suitable we will repeat
+                                    catch (Exception e) {
+                                        System.out.println("you entered wrong role option - please try again!");
+                                        continue;
+                                    }
+                                }
+                                info.AddJobToWorker(ID,job_num);
                                 break;
                             case 5:
                                 ID = AskForWorkerID();
-                                info.ChangeWage(ID);
+                                int wage_choice = 0;
+                                validInput = false;
+                                while(!validInput){
+                                    System.out.println("please enter the wage: ");
+                                    Scanner myObj_Wage = new Scanner(System.in);  // Create a Scanner object
+                                    String input_Wage = myObj_Wage.nextLine();  // Read user input
+                                    // check if the wage is number
+                                    try {
+                                        wage_choice = Integer.parseInt(input_Wage);
+                                        validInput = true;
+                                    }
+                                    //if he entered something not suitable we will repeat
+                                    catch (Exception e) {
+                                        System.out.println("you entered wrong wage - please try again!");
+                                        continue;
+                                    }
+                                }
+                                info.ChangeWage(ID,wage_choice);
                                 break;
                             case 6:
                                 ID = AskForWorkerID();
-                                info.ChangeContract(ID);
+                                System.out.println("please enter the contract: ");
+                                Scanner myObj_Contract = new Scanner(System.in);  // Create a Scanner object
+                                String input_Contract = myObj_Contract.nextLine();  // Read user input
+                                info.ChangeContract(ID,input_Contract);
                                 break;
                             case 7:
                                 choice = 3;
@@ -695,9 +725,37 @@ public class UI {
     }
 
     public static String AskForWorkerID(){
-        System.out.println("please enter the worker's ID: ");
-        // get the new id from the manager
-        Scanner myObj_newID = new Scanner(System.in);  // Create a Scanner object
-        return myObj_newID.nextLine();
+        boolean IdCheck = false;
+        String ID="";
+        while(!IdCheck){
+            System.out.println("please enter the worker's ID: ");
+            // get the new id from the manager
+            Scanner myObj_newID = new Scanner(System.in);  // Create a Scanner object
+            ID = myObj_newID.nextLine();
+            if(!info.isExistWorker(ID)){
+                System.out.println("this worker is not working at our markets! try again");
+                continue;
+            }
+            IdCheck = true;
         }
+        return ID;
+    }
+
+    public static String AskForBranch(){
+        boolean BranchCheck=false;
+        String BranchName="";
+        while (!BranchCheck){
+            System.out.println("please enter the branch you want to add the new worker: ");
+            //in the beginning there will be a few options, he is supposed to know them
+            Scanner myObj_BranchName = new Scanner(System.in);  // Create a Scanner object
+            BranchName = myObj_BranchName.nextLine();
+            BranchCheck=info.CheckSuperName(BranchName);
+            if (!BranchCheck){
+                System.out.println("this branch doesn't exists, try again ");
+                continue;
+            }
+            BranchCheck = true;
+        }
+        return BranchName;
+    }
 }
