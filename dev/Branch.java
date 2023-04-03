@@ -7,4 +7,8 @@ public class Branch extends Site{
         super(name, address, phoneNumber, contactName);
         this.zone = zone;
     }
+
+    public Zone getZone() {
+        return zone;
+    }
 }

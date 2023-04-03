@@ -3,10 +3,10 @@ import java.util.List;
 
 public class Order {
     private String destination;
-    private String zone;
+    private Zone zone;
     private List<Item> itemList;
 
-    public Order(String destination, String zone) {
+    public Order(String destination, Zone zone) {
         this.destination = destination;
         this.zone = zone;
         itemList = new ArrayList<>();
@@ -16,7 +16,7 @@ public class Order {
         return destination;
     }
 
-    public String getZone() {
+    public Zone getZone() {
         return zone;
     }
     public void addItemToOrder(Item item)
