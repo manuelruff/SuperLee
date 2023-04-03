@@ -7,13 +7,13 @@ public class ReshetInfo {
     //all the workers in the company
     private static Map<String ,Worker> Workers;
     //every week the managers will fill their desires for workers and it will be saved here
-    private static Map<String,List<WantShift>> wnt_shifts;
+    private static Map<String,List<WantShift>> want_shifts;
     //builder for reshetinfo
     public ReshetInfo(){
 
         Superim=new HashMap<>();
         Workers=new HashMap<>();
-        wnt_shifts=new HashMap<>();
+        want_shifts=new HashMap<>();
         //create supers and workers and insert them to where i need
         StartData();
     }
@@ -254,7 +254,16 @@ public class ReshetInfo {
         curr.AddWeekly(week);
         }
 
-    public void PrintDay(String Name,int day){
+    public void SetWeeklyPlan(String Name,List<WantShift> ls){
+        want_shifts.remove(Name);
+        want_shifts.put(Name,ls);
+    }
+
+    public static List<WantShift> getWant_shifts_byName(String Name) {
+        return want_shifts.get(Name);
+    }
+
+    public void PrintDay(String Name, int day){
         //we get the object of the super
         Super curr=Superim.get(Name);
         Weekly week=curr.GetWeekShifts();

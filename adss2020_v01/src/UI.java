@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UI {
@@ -266,16 +268,17 @@ public class UI {
                     }
                     // once we now the name of the branch we need to ask what he wanna do with it
                     int choice2=-1;
-                    while (choice2!=3) {
+                    while (choice2!=3) {//there probably is a problem here with the loop check that later
                         System.out.println("please choose your action at the branch: ");
-                        System.out.println("1. create weekly shift");
-                        System.out.println("2. update day in weekly shift");
-                        System.out.println("3. show current shift");
-                        System.out.println("4. send shift to history");
-                        System.out.println("5. watch history");
-                        System.out.println("6. remove worker from this super");
-                        System.out.println("7. update super shift times");
-                        System.out.println("8. Exit ");
+                        System.out.println("1. plan weekly shift");
+                        System.out.println("2. create weekly shift");
+                        System.out.println("3. update day in weekly shift");
+                        System.out.println("4. show current shift");
+                        System.out.println("5. send shift to history");
+                        System.out.println("6. watch history");
+                        System.out.println("7. remove worker from this super");
+                        System.out.println("8. update super shift times");
+                        System.out.println("9. Exit ");
                         myObj = new Scanner(System.in);  // Create a Scanner object
                         input = myObj.nextLine();  // Read user input
                         //try to change the input to a string
@@ -288,10 +291,68 @@ public class UI {
                         }
                         switch (choice2) {
                             case 1:
+                                //create list of the what he wants
+                                List<WantShift> ls=new ArrayList<>();
                                 //create the weekly plan
-                                info.CreateWeekly(Name);
+                                for (Days day:Days.values()) {
+                                    CanWork time = CanWork.Morning;
+                                    for (int j=0;j<2;j++) {
+                                        WantShift curr = new WantShift(day, time);
+                                        //create a list of jobs so we can present it to the manager
+                                        List<Jobs> job_list = new ArrayList<>();
+                                        for (Jobs job : Jobs.values()) {
+                                            job_list.add(job);
+                                        }
+                                        int job_chose = -1;
+                                        while (job_chose == -1) {
+                                            System.out.println("please choose your the job you want to add to the shift: ");
+                                            //prints options
+                                            for (int i = 0; i < job_list.size(); i++) {
+                                                System.out.println(i + "." + job_list.get(i));
+                                            }
+                                            String job_s = myObj.nextLine();  // Read user input
+                                            System.out.println("please enter the amount you want from that job: ");
+                                            String num_s = myObj.nextLine();  // Read user input
+                                            //try to change the input to a string
+                                            try {
+                                                job_chose = Integer.parseInt(job_s);
+                                                int num_choose = Integer.parseInt(num_s);
+                                                if (job_chose > job_list.size()) {
+                                                    job_chose = -1;
+                                                    System.out.println("not valid input, please try again");
+                                                } else {
+                                                    curr.add_m_wants(job_list.get(job_chose), num_choose);
+                                                }
+                                            }
+                                            //if he entered someting not suitable we will repeate
+                                            catch (Exception e) {
+                                                job_chose = -1;
+                                                System.out.println("not valid input, please try again");
+                                            }
+                                        }
+                                        //add the WantShift to the list of shifts
+                                        ls.add(curr);
+                                        //switch between morning and evening
+                                        time = CanWork.Evening;
+                                    }
+                                }
+                                //sends the info to reshet info
+                                info.SetWeeklyPlan(Name,ls);
                                 break;
                             case 2:
+                                //create the weekly plan
+                                Weekly week=new Weekly();
+                                //get the options for the shift
+                                List<WantShift> ls2=info.getWant_shifts_byName(Name);
+                                //go threw all of them and create real shifts
+                                for (WantShift want: ls2) {
+                                    
+                                }
+
+                                //create the weekly shifts
+                                info.CreateWeekly(Name);
+                                break;
+                            case 3:
                                 //get the day he wants to edit
                                 int day_choice = -1;
                                 while (day_choice != 8) {
@@ -353,18 +414,18 @@ public class UI {
                                 }
 
                                 break;
-                            case 3:
+                            case 4:
                                 //print the current weekly plan
                                 info.PrintWeekly(Name);
                                 break;
-                            case 4:
+                            case 5:
                                 //send the current iluts to history and then you have to create new one
                                 info.SendIlutsToHistory(Name);
                                 break;
-                            case 5:
+                            case 6:
 
                                 break;
-                            case 6:
+                            case 7:
                                 //we need to ask for the ID of the employee he wants to remove from the branch
                                 CheckName=false;
                                 String ID="";
@@ -382,7 +443,7 @@ public class UI {
                                     }
                                 }
                                 break;
-                            case 7:
+                            case 8:
                                 int day_choice1=0;
                                 int choice4 = -1;
                                 while (choice4 != 8) {
@@ -444,7 +505,7 @@ public class UI {
                                     }
                                 }
                                 break;
-                            case 8:
+                            case 9:
                                 choice2=3;
                                 break;
                             default:
