@@ -358,10 +358,14 @@ public class UI {
                                     break;
                                 }
                                 //if workers didnt put themselves in the shifts he cant create a shift
+                                //might be redundant because it will be true when only one worker has signd
+                                /*
                                 if(ReshetInfo.getIs_workers_in_shiftbyName(Name)){
                                     System.out.println("you cant create a shift without the workers singning in first, go talk with them");
                                     break;
                                 }
+                                 */
+
                                 //create the weekly plan
                                 Weekly week=new Weekly();
                                 //get the options for the shift
@@ -378,6 +382,8 @@ public class UI {
                                     System.out.println("first you need to chose the manager for the shift: ");
                                     //update the list of available managers for this shift
                                     free_workers=info.GetAvailableEmployee(want.getDay(),Jobs.ShiftManager,want.getMorning_evening(),want.getW_wants(),Name);
+                                    //a function that checks that there is enough managers for all the days
+                                    //maybe we will assing a manager to each day first and then the rest
                                     int i=1;
                                     //shows all available managers
                                     for (String ID:free_workers.keySet()){
@@ -399,18 +405,27 @@ public class UI {
                                         //print the workers available until he chooses enough
                                         for(int j=0;j<job_nums.get(job);j++){
                                             System.out.println("for the job of: "+job.name()+" the workers are: ");
-
+                                            int k=1;
+                                            //shows all available managers
+                                            for (String ID:free_workers.keySet()){
+                                                System.out.println(k+". " +free_workers.get(ID) +" with ID: "+ID );
+                                                k++;
+                                            }
                                             System.out.println("please choose one");
+                                            //when im back from here ill have a good choice
+                                            num=AskForNumber(1, free_workers.size());
+                                            //add the manager to the shift
+                                            curr.AddWorker(Jobs.ShiftManager,info.GetWorkerByID(free_workers.get(num-1)));
+                                            //remove the worker from the option
+                                            want.remove_w_wants(free_workers.get(num-1));
+                                            //delete from the free workers
+                                            free_workers.remove(free_workers.get(num-1));
                                         }
-
                                     }
-
-
-
-
                                     //add the shift we created to the weekly
                                     week.AddShift(curr);
                                 }
+                                info.AddWeeklyToSuper(Name,week);
                                 //we save that the status of the creation - that it was created
                                 ReshetInfo.setIs_shift_created_byName(Name,true);
                                 //create the weekly shifts
