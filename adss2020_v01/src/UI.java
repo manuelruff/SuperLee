@@ -340,6 +340,8 @@ public class UI {
                                 }
                                 //sends the info to reshet info
                                 info.SetWeeklyPlan(Name,ls);
+                                //we save that the status of the planning - that it was created
+                                ReshetInfo.setIs_shift_planed_byName(Name,true);
                                 break;
                             case 2:
                                 //create the weekly plan
@@ -365,9 +367,9 @@ public class UI {
                                     //add the shift we created to the weekly
                                     week.AddShift(curr);
                                 }
-
+                                //we save that the status of the creation - that it was created
+                                ReshetInfo.setIs_shift_created_byName(Name,true);
                                 //create the weekly shifts
-                                //info.CreateWeekly(Name);
                                 break;
                             case 3:
                                 //get the day he wants to edit
