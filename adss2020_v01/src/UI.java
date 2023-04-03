@@ -189,8 +189,12 @@ public class UI {
                     //after we did what we want we stop
                     break;
                 case 2:
+                    System.out.println("this are the shifts you can join to: ");
+                    info.ShowWantsShift(ID);
                     System.out.println("please choose the shift you want to join: ");
-                    info.ShowWantsShift();
+
+
+
 
                     //after we did what we want we stop
                     break;

@@ -1,4 +1,3 @@
-import java.time.LocalDate;
 import java.util.*;
 
 public class ReshetInfo {
@@ -500,16 +499,33 @@ public class ReshetInfo {
 
 
     public void ShowWantsShift(String ID) {
-        //Map<String,List<WantShift>> want_shifts
-        List all_relevent_supers
-        list all_want_shifts = want_shifts.get(Workers.get(ID))
-        for()
+        List<WantShift> relevant_shifts_by_branch = new ArrayList<>();
+        // save all the jobs that worker can do
+        List<Jobs> worker_jobs = new ArrayList<>();
+        worker_jobs = Workers.get(ID).getRoles();
+        // iterate over all the supers to show only the one the worker works in
+        for(String superName : Superim.keySet() ){
+            if(IsWorksInSuper(ID,superName)){
+                relevant_shifts_by_branch = want_shifts.get(superName);
+                // show only the shifts in the relevant branch
+                for(WantShift ws : relevant_shifts_by_branch){
+                    for(Jobs job : worker_jobs){
+                        // check if the job is in the jobs that the manager needs
+                        if(ws.JobInShift(job)){
+                            ws.ShowShift();
+                        }
+                    }
+                }
+            }
+        }
     }
     public Worker GetWorkerByID(String ID){
         return Workers.get(ID);
     }
 
+    // check by id if worker works in specific super
     public boolean IsWorksInSuper(String ID, String SuperName){
-        
+        return Superim.get(SuperName).GetWorkers().contains(ID);
+
     }
 }
