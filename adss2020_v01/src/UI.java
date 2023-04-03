@@ -290,6 +290,11 @@ public class UI {
                         }
                         switch (choice2) {
                             case 1:
+                                //if there is a shift already created we want him to sent it to the history and then plan a new one
+                                if(ReshetInfo.getIs_shift_created_byName(Name)){
+                                    System.out.println("you cant plan new weekly shift without sendint the last one you created to the history.");
+                                    break;
+                                }
                                 //create list of the what he wants
                                 List<WantShift> ls=new ArrayList<>();
                                 //create the weekly plan
@@ -344,6 +349,11 @@ public class UI {
                                 ReshetInfo.setIs_shift_planed_byName(Name,true);
                                 break;
                             case 2:
+                                //if he didnt plan the shift he cant creat it yet
+                                if(ReshetInfo.getIs_shift_planed_byName(Name)){
+                                    System.out.println("you cant create a shift without planning it first");
+                                    break;
+                                }
                                 //create the weekly plan
                                 Weekly week=new Weekly();
                                 //get the options for the shift

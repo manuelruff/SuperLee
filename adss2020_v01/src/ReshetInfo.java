@@ -12,6 +12,9 @@ public class ReshetInfo {
     private static Map<String,Boolean> is_shift_planed;
     //if the shift was created the workers cant make changes
     private static Map<String,Boolean> is_shift_created;
+    //if the woirkers didnt add themeselves to the shifts the shift cant be created
+    private static Map<String,Boolean> is_workers_in_shift;
+
 
     //builder for reshetinfo
     public ReshetInfo(){
@@ -142,6 +145,15 @@ public class ReshetInfo {
 
     public static Boolean getIs_shift_created_byName(String Name) {
         return is_shift_created.get(Name);
+    }
+
+    public static Boolean getIs_workers_in_shiftbyName(String Name) {
+        return is_workers_in_shift.get(Name);
+    }
+
+    public static void setIs_workers_in_shiftbyName(String Name,Boolean is_workers_in_shift) {
+        ReshetInfo.is_workers_in_shift.remove(Name);
+        ReshetInfo.is_workers_in_shift.put(Name,is_workers_in_shift);
     }
 
     //function that checks if the name of a super exists
