@@ -6,7 +6,6 @@ import java.util.Map;
 public class Iluts {
 
     //a dictionary of a day and the info of the shift he can work there
-
     private Map<Days, List<CantWork>> cantWork;
 
     public Iluts(){

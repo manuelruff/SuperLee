@@ -327,8 +327,7 @@ public class UI {
                                 while (ActionChoice != 8) {
                                     System.out.println("please choose the action you want to do: \n" +
                                             "1. remove an employee  \n"+
-                                            "2. add an employee \n"+
-                                            "3. switch employees");
+                                            "2. add an employee");
                                     myObj = new Scanner(System.in);  // Create a Scanner object
                                     String input_action = myObj.nextLine();  // Read user input
                                     try{
@@ -353,12 +352,6 @@ public class UI {
                                         info.RemoveFromDay(Name,day_choice);
                                         break;
                                     case 2:
-                                        info.AddToDay(Name,day_choice);
-                                        break;
-                                    case 3:
-                                        //first removes someone
-                                        info.RemoveFromDay(Name,day_choice);
-                                        //and then add somone else
                                         info.AddToDay(Name,day_choice);
                                         break;
                                 }
