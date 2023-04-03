@@ -8,8 +8,7 @@ public class Branch extends Site{
         this.zone = zone;
     }
 
-    public void printSite()
-    {
-
+    public Zone getZone() {
+        return zone;
     }
 }
