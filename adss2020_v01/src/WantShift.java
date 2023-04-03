@@ -38,4 +38,24 @@ public class WantShift {
     public List<String> getW_wants() {
         return w_wants;
     }
+
+    public void ShowShift() {
+        System.out.println("shift details: ");
+        System.out.println(this.day + " " + this.morning_evening);
+        for (Map.Entry<Jobs, Integer> entry : m_wants.entrySet()) {
+            Jobs job = entry.getKey();
+            Integer num_of_workers = entry.getValue();
+            System.out.println(job + ": " + num_of_workers);
+        }
+    }
+
+    public boolean JobInShift(Jobs j){
+        for(Map.Entry<Jobs, Integer> job : m_wants.entrySet()){
+            // im not sure if the tostring will work - check!!!!
+            if(j.toString().equals(job.toString())){
+                return true;
+            }
+        }
+    return false;
+    }
 }

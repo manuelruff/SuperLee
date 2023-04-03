@@ -494,4 +494,8 @@ public class ReshetInfo {
             Workers.get(ID).ReSetShiftsAmount();
         }
     }
+
+    public void ShowWantsShift(String ID){
+        if()
+    }
 }

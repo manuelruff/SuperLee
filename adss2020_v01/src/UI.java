@@ -189,6 +189,8 @@ public class UI {
                     //after we did what we want we stop
                     break;
                 case 2:
+                    System.out.println("please choose the shift you want to join: ");
+
                     //after we did what we want we stop
                     break;
                 case 3:
