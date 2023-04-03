@@ -423,6 +423,10 @@ public class ReshetInfo {
         Superim.get(Name).get_cash_register().AddCancalation(cancel);
     }
 
+    public void AddWeeklyToSuper(String Name,Weekly week){
+        Superim.get(Name).AddWeekly(week);
+    }
+
     //print Cancellations of a specific date
     public void PrintCancellation(String Name,int year,int month,int day){
         Superim.get(Name).get_cash_register().PrintCancellation( year, month, day);
@@ -494,9 +498,6 @@ public class ReshetInfo {
         }
     }
 
-    public void ShowWantsShift(String ID) {
-        if ()
-    }
     public Worker GetWorkerByID(String ID){
         return Workers.get(ID);
     }
