@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Driver {
 
@@ -8,13 +10,14 @@ public class Driver {
     private Training ability;
 
 
-    private Days[] availability;
+    private List<Days> workingDays;
 
     public Driver(String name, String ID, char license, Training ability) {
         this.name = name;
         this.ID = ID;
         this.license = license;
         this.ability = ability;
+        workingDays = new ArrayList<>();
     }
 
 
