@@ -496,8 +496,6 @@ public class ReshetInfo {
             Workers.get(ID).ReSetShiftsAmount();
         }
     }
-
-
     public void ShowWantsShift(String ID) {
         List<WantShift> relevant_shifts_by_branch = new ArrayList<>();
         // save all the jobs that worker can do
