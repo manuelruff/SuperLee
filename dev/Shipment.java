@@ -49,4 +49,6 @@ public class Shipment {
     public void setShipmentStatus(Status shipmentStatus) {
         this.shipmentStatus = shipmentStatus;
     }
+
+
 }

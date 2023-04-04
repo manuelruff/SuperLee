@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Order {
     private String destination;
@@ -19,18 +20,25 @@ public class Order {
     public Zone getZone() {
         return zone;
     }
+    /*
+    this function adds an item to the order
+     */
     public void addItemToOrder(Item item)
     {
         for(int i=0;i< itemList.size();i++)
         {
-            if(item.getName() == itemList.get(i).getName())
+            if(Objects.equals(item.getName(), itemList.get(i).getName()))
             {
              itemList.get(i).setQuantity(item.getQuantity() + itemList.get(i).getQuantity());
             }
             itemList.add(item);
         }
     }
-    public List<Item> getItemsForShipping()
+    /*
+    this function gets a storage condition as a parameter and returns a list of items
+    from the order with the same storage condition and removes those items from the order
+     */
+    public List<Item> getItemsForShipping(Training ability)
     {
         List<Item> deliveryList = new ArrayList<>();
         if(itemList.isEmpty())
@@ -38,20 +46,21 @@ public class Order {
             System.out.println("Item list is empty");
         }
         else {
-
-            String storingCondition = itemList.get(0).getStorageCondition().name();
-            deliveryList.add(itemList.get(0));
-            itemList.remove(0);
             for(int i=0; i< itemList.size(); i++)
             {
-                if(itemList.get(i).getStorageCondition().name() == storingCondition)
-                {
-                    deliveryList.add(itemList.get(i));
-                    itemList.remove(i);
-                }
+                if(itemList.get(i).getStorageCondition() == ability)
+                    deliveryList.add(itemList.remove(i));
             }
         }
         return deliveryList;
     }
+    /*
+        This function returns the first item storage condition
+     */
+    public Training firstItemType()
+    {
+        return itemList.get(0).getStorageCondition();
+    }
 
 }
+
