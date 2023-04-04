@@ -189,7 +189,9 @@ public class UI {
                     //after we did what we want we stop
                     break;
                 case 2:
-                    System.out.println("this are the shifts you can join to: ");
+                    System.out.println("these are the shifts you can join to: ");
+                    
+
                     info.ShowWantsShift(ID);
                     System.out.println("please choose the shift you want to join: ");
 
@@ -373,8 +375,7 @@ public class UI {
                                 //create the weekly plan
                                 Weekly week=new Weekly();
                                 //get the options for the shift
-                                List<WantShift> ls2=info.getWant_shifts_byName(Name);
-
+                                List<WantShift> ls2=ReshetInfo.getWant_shifts_byName(Name);
                                 //we will save here a list of workers that can work by certain parametesrs
                                 //<ID,Name>
                                 Map<String,String>free_workers;
@@ -812,7 +813,6 @@ public class UI {
         }
         return ID;
     }
-
     public static String AskForBranch(){
         boolean BranchCheck=false;
         String BranchName="";
