@@ -568,51 +568,9 @@ public class ReshetInfo {
     }
 
     //cash cancellations
-    public void AddCancellations(String Name){
-        //we need to verify that the shift manager is the one who is trying to cancel
-        boolean flag = true;
-        System.out.println("please log in to make sure you are the manager: ");
-        String ID="";
-        while (flag){
-            // got from the use the ID and the password
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-            System.out.println("ID: ");
-            ID = myObj.nextLine();  // Read user input
-            System.out.println("Password: ");
-            String passwordInput = myObj.nextLine();  // Read user input
-            // check if the worker enter valid inputs
-            if(Workers.get(ID)==null || !Workers.get(ID).CanDoJob(Jobs.ShiftManager)){
-                System.out.println("invalid input - try again!");
-            }
-            // if the inputs were valid - call to WorkerOption menu
-            else {
-                System.out.println("ok fill in the next information please:");
-                break;
-            }
-        }
-        flag = true;
-        int amount=0;
-        System.out.println("what is the amount of the item you want to cancel?");
-        while (flag){
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-            String input = myObj.nextLine();  // Read user input
-            //try to change the input to a string
-            try{
-                amount=Integer.parseInt(input);
-                flag=false;
-            }
-            //if he entered someting not suitable we will repeate
-            catch (Exception e){
-                System.out.println("invalid input - try again!");
-                amount =0;
-            }
-        }
-        //we got a good amount
-        System.out.println("what is the name of the item you want to cancel?");
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        String input = myObj.nextLine();  // Read user input
+    public void AddCancellations(String Name,String item,int amount,String ID){
         //create the cancallation
-        Cancellations cancel=new Cancellations(amount,input,ID,Workers.get(ID).GetName());
+        Cancellations cancel=new Cancellations(amount,item,ID,Workers.get(ID).GetName());
         //add the cancellation to the super
         Superim.get(Name).get_cash_register().AddCancalation(cancel);
     }
@@ -712,5 +670,9 @@ public class ReshetInfo {
     public boolean IsWorksInSuper(String ID, String SuperName){
         return Superim.get(SuperName).GetWorkers().contains(ID);
 
+    }
+
+    public boolean CanDoJob(String ID, Jobs job){
+        return Workers.get(ID).CanDoJob(job);
     }
 }

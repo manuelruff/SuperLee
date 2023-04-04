@@ -108,8 +108,22 @@ public class UI {
                     choice=4;
                     break;
                 case 2:
-                    // once we now the name of the branch we need to ask what he wants to do with it
-                    info.AddCancellations(Name);
+                    String ID = AskForWorkerID();
+                    boolean isShiftManager = false;
+                    while(!isShiftManager){
+                        if(!info.CanDoJob(ID,Jobs.ShiftManager)){
+                            System.out.println("access denied - this action is for Shift Manager only!");
+                            continue;
+                        }
+                        isShiftManager = true;
+                    }
+                    // if he's a shift manager
+                    System.out.println("please enter the name of the item which you want to cancel: ");
+                    myObj = new Scanner(System.in);  // Create a Scanner object
+                    String item = myObj.nextLine();  // Read user input
+                    System.out.println("please enter the amount of the item which you want to cancel: ");
+                    int amount = AskForIntNumber();
+                    info.AddCancellations(Name,item,amount,ID);
                     //after we did what we want we stop
                     choice=4;
                     break;
@@ -622,4 +636,25 @@ public class UI {
         return new Worker(input_newName,input_newID,bankNum,input_newContract,wage,Jobs.values()[role_choice-1],generic_Password);
     }
 
+    // the function ask the user for a number
+    public static int AskForIntNumber(){
+        boolean flag = true;
+        int num=-999;
+        while (flag){
+            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+            String input = myObj.nextLine();  // Read user input
+            //try to change the input to a string
+            try{
+                num=Integer.parseInt(input);
+                flag=false;
+                return num;
+            }
+            //if he entered something not suitable we will repeat
+            catch (Exception e){
+                System.out.println("invalid input - try again!");
+                continue;
+            }
+        }
+        return num;
+    }
 }
