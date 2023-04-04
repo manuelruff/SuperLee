@@ -55,6 +55,7 @@ public class Worker {
 
     public boolean IsFree(Days day, double s,double e0){return true;}
 
+    public List<Jobs> getRoles(){return this.Roles;}
 
     //check if entered right password
     public boolean CheckPassword(String Password){
