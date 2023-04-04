@@ -6,13 +6,16 @@ public class shipmentManagement {
     private final List<Truck> trucks;
     private final List<Site> sites;
 
-    private List<Shipment> shipments;
+    private final List<Shipment> shipments;
 
+    private List<Shipment> availableShipments;
     public shipmentManagement() {
         vendorMap = new HashMap<>();
         drivers = new ArrayList<>();
         trucks = new ArrayList<>();
         sites = new ArrayList<>();
+        shipments = new ArrayList<>();
+        availableShipments = new ArrayList<>();
     }
 
     /****************************** Drivers related Methods ******************************/
@@ -58,6 +61,33 @@ public class shipmentManagement {
             }
         }
     }
+
+    /**
+     * This function search for a driver that can do a shipment.
+     * @param train enum, his ability to driver truck.
+     * @param day int represent the day of the week.
+     * @return the available driver.
+     */
+    public Driver searchForDriver(Training train, int day){
+        for (Driver driver : drivers){
+            if (driver.getAbility().ordinal() <= train.ordinal())
+                if (driver.addNewDay(Days.values()[day])){
+                    return driver;
+                }
+        }
+        return null;
+    }
+
+    /**
+     * This Function prints every driver in the system.
+     */
+    public void printDrivers(){
+        for (Driver driver : drivers){
+            driver.printDriver();
+            System.out.println(" ");
+        }
+    }
+
 
     /****************************** Truck related Methods ******************************/
 
@@ -115,7 +145,33 @@ public class shipmentManagement {
                 trucks.remove(truck);
             }
         }
+    }
 
+    /**
+     * This function search for a suitable truck and returns its truck number.
+     * @param train Enum, they type of the truck.
+     * @param day   int, represent the day of the week.
+     * @return string, the truck Number.
+     */
+    public String searchForTruck(Training train, int day){
+        for (Truck truck : trucks){
+            if (truck.addNewDay(Days.values()[day])){
+                if (((truck instanceof FreezerTruck) && (train == Training.Freezer))
+                        || ((truck instanceof CoolingTruck) && (train == Training.Cooling))
+                            || ((truck instanceof RegularTruck) && (train == Training.Regular)))
+                    return truck.getTruckNumber();
+            }
+        }
+        return "";
+    }
+
+    /**
+     * This function prints every truck in the system.
+     */
+    public void printTrucks(){
+        for (Truck truck : trucks){
+            truck.printTruck();
+        }
     }
 
 
@@ -172,7 +228,6 @@ public class shipmentManagement {
 
     /**
      * This function removes a site from the system
-     *
      * @param name string, name of the site.
      */
     public void deleteSite(String name) {
@@ -184,16 +239,21 @@ public class shipmentManagement {
         }
     }
 
+    /**
+     * This function checks if a vendor is already exist in the system.
+     * @param name String, name of the vendor.
+     * @return true if found. false otherwise.
+     */
+
     public boolean checkVendor(String name) {
-        for (Site site : sites) {
-            if (Objects.equals(site.getName(), name)) {
-                if (site instanceof Vendor)
-                    return true;
-                break;
-            }
-        }
-        return false;
+        return vendorMap.containsKey(name);
     }
+
+    /**
+     * This function checks if a branch is already exist in the system.
+     * @param name String, name of the branch.
+     * @return true if found. false otherwise.
+     */
 
     public boolean checkBranch(String name) {
         for (Site site : sites) {
@@ -206,7 +266,16 @@ public class shipmentManagement {
         return false;
     }
 
-    public void addOrder(String source, String destination) {
+
+
+    /************************************* Order Related Methods *************************************/
+
+    /**
+     * Creates a new order and adding it to the system.
+     * @param source string, name of the supplier.
+     * @param destination string, name of the branch to deliver.
+     */
+    public void createOrder(String source, String destination) {
         Zone zone = null;
         for (Site site : sites) {
             if (Objects.equals(destination, site.getName())) {
@@ -215,5 +284,48 @@ public class shipmentManagement {
         }
         Order order = new Order(destination, zone);
         vendorMap.get(source).add(order);
+    }
+
+
+    /**
+     * Creates a new item and adding it to the last order that was created of a specific vendor
+     * @param source string, vendors name.
+     * @param itemName string, the name of the item.
+     * @param amount int, the amount of this item.
+     * @param storageCondition int, which will be represented as enum: regular/cooling/freezer
+     */
+    public void addItemToOrder(String source, String itemName, int amount, int storageCondition){
+        Item item = new Item(itemName,amount,Training.values()[storageCondition]);
+        vendorMap.get(source).get(vendorMap.get(source).size() - 1).addItemToOrder(item);
+    }
+
+
+    /**
+     * This function checks if a shipment is already exist in the system.
+     * @param ID string, ID of the shipment.
+     * @return true if found. false otherwise
+     */
+    public boolean checkShipmentID(String ID){
+        for (Shipment ship : shipments){
+            if (Objects.equals(ship.getID(), ID)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public boolean createShipment(int dayOfWeek, String ID, String source){
+        List<String> branchList = new ArrayList<>();
+        if (vendorMap.get(source).isEmpty()){
+            System.out.println("This vendor: " + source + " does not have any orders");
+            return false;
+        }
+        // saving the values of the first order.
+        Order firstOrder = vendorMap.get(source).get(0);
+        Zone firstZone = firstOrder.getZone();
+        branchList.add(firstOrder.getDestination());
+        return true;
     }
 }

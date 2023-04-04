@@ -17,7 +17,7 @@ public class Driver {
         this.ID = ID;
         this.license = license;
         this.ability = ability;
-        workingDays = new ArrayList<>();
+        this.workingDays = new ArrayList<>();
     }
 
 
@@ -35,6 +35,34 @@ public class Driver {
 
     public Training getAbility() {
         return ability;
+    }
+
+    public boolean addNewDay(Days newDay){
+        for (Days day : workingDays){
+            if(day == newDay)
+                return false;
+        }
+        workingDays.add(newDay);
+        return true;
+    }
+
+    public void printDriver() {
+        System.out.println("Name: " + name);
+        System.out.println("ID: " + ID);
+        System.out.println("License type: " + license);
+        System.out.println("Trainings: " + ability.toString());
+        if (workingDays.isEmpty())
+            System.out.println(name + " doesn't work this week");
+        else{
+            int i;
+            StringBuilder print = new StringBuilder();
+            for (i=0; i < workingDays.size() - 1; i++){
+                print.append(workingDays.get(i).toString()).append(" , ");
+            }
+            print.append(workingDays.get(i).toString());
+            System.out.println(name + " days of work are:");
+            System.out.println(print);
+        }
     }
 }
 
