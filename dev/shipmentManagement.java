@@ -84,6 +84,7 @@ public class shipmentManagement {
     public void printDrivers(){
         for (Driver driver : drivers){
             driver.printDriver();
+            System.out.println(" ");
         }
     }
 
