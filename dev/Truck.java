@@ -44,6 +44,6 @@ public abstract class Truck {
     }
 
 
-
-
+    public void printTruck() {
+    }
 }

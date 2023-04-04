@@ -8,12 +8,14 @@ public class shipmentManagement {
 
     private final List<Shipment> shipments;
 
+    private List<Shipment> availableShipments;
     public shipmentManagement() {
         vendorMap = new HashMap<>();
         drivers = new ArrayList<>();
         trucks = new ArrayList<>();
         sites = new ArrayList<>();
         shipments = new ArrayList<>();
+        availableShipments = new ArrayList<>();
     }
 
     /****************************** Drivers related Methods ******************************/
@@ -74,6 +76,15 @@ public class shipmentManagement {
                 }
         }
         return null;
+    }
+
+    /**
+     * This Function prints every driver in the system.
+     */
+    public void printDrivers(){
+        for (Driver driver : drivers){
+            driver.printDriver();
+        }
     }
 
 
@@ -151,6 +162,15 @@ public class shipmentManagement {
             }
         }
         return "";
+    }
+
+    /**
+     * This function prints every truck in the system.
+     */
+    public void printTrucks(){
+        for (Truck truck : trucks){
+            truck.printTruck();
+        }
     }
 
 
