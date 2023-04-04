@@ -94,6 +94,10 @@ public class Worker {
         return this.Name;
     }
 
+    public String GetID(){
+        return this.ID;
+    }
+
     //update a worker that he got a shift
     public void AddShift(Days day){
         this.ShiftWorked++;

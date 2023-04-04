@@ -318,11 +318,6 @@ public class ReshetInfo {
     public boolean isExistWorker(String ID){
         return Workers.get(ID) != null;
     }
-    public boolean isExistWorkerInSuper(String ID,String Name){
-        //we get the object of the super we wanna add a weekly to
-        Super curr=Superim.get(Name);
-        return curr.GetWorkers().contains(ID);
-    }
 
     //remove a worker from a branch by id
     public void RemoveWorker(String ID,String Name){
@@ -346,7 +341,7 @@ public class ReshetInfo {
         start=Superim.get(SuperName).getStart_evening(day);
         end=Superim.get(SuperName).getEnd_evening(day);
     }
-    //checking each employrr
+    //checking each employee
         for(String id:WorkersID){
             Worker curr=Workers.get(id);
             //check if he is qualified for the job
@@ -572,7 +567,7 @@ public class ReshetInfo {
         curr.setEnd_evening(day,m_s);
     }
 
-    //cash cancallations
+    //cash cancellations
     public void AddCancellations(String Name){
         //we need to verify that the shift manager is the one who is trying to cancel
         boolean flag = true;
@@ -628,158 +623,31 @@ public class ReshetInfo {
     }
 
     // the function add a new worker
-    public void AddNewWorker(){
-        boolean is_exist_branch = false;
-        System.out.println("please enter the new worker's ID");
-        // get the new id from the manager
-        Scanner myObj_newID = new Scanner(System.in);  // Create a Scanner object
-        String input_newID = myObj_newID.nextLine();  // Read user input
-        if (isExistWorker(input_newID)) {
-            System.out.println("this worker is already working at our markets");
-            return;
-        }
-        // if the worker doesn't exist - get the other info from the manager
-        System.out.println("please enter the new worker's name");
-        Scanner myObj_newName = new Scanner(System.in);  // Create a Scanner object
-        String input_newName = myObj_newName.nextLine();  // Read user input
-        boolean bank_flag = false;
-        int bankNum = 0;
-        while (!bank_flag) {
-            System.out.println("please enter the new worker's bank number");
-            Scanner myObj_newBank = new Scanner(System.in);  // Create a Scanner object
-            String input_newBank = myObj_newBank.nextLine();  // Read user input
-            try {
-                bankNum = Integer.parseInt(input_newBank);
-                bank_flag = true;
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e) {
-                System.out.println("you entered wrong bank number (should be only numbers) - please try again!");
-            }
-        }
-        System.out.println("please enter the new worker's contract");
-        Scanner myObj_newContract = new Scanner(System.in);  // Create a Scanner object
-        String input_newContract = myObj_newContract.nextLine();  // Read user input
-        boolean wage_flag = false;
-        int wage = 0;
-        while (!wage_flag) {
-            System.out.println("please enter the new worker's wage");
-            Scanner myObj_newWage = new Scanner(System.in);  // Create a Scanner object
-            String input_newWage = myObj_newWage.nextLine();  // Read user input
-            try {
-                wage = Integer.parseInt(input_newWage);
-                wage_flag = true;
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e) {
-                System.out.println("you entered wrong wage - please try again!");
-            }
-        }
-        boolean role_flag = false;
-        int role_choice = 0;
-        while (!role_flag) {
-            System.out.println("please enter the new worker's first role: \n" +
-                    "ShiftManager-1 , Cashier-2, StoreKeeper-3, GeneralEmp-4, Guard-5, Cleaner-6, Usher-7");
-            Scanner myObj_Role = new Scanner(System.in);  // Create a Scanner object
-            String input_role = myObj_Role.nextLine();  // Read user input
-            try {
-                role_choice = Integer.parseInt(input_role);
-                if (role_choice < 0 || role_choice > 8) {
-                    System.out.println("not valid, please try again");
-                    continue;
-                }
-                role_flag = true;
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e) {
-                System.out.println("you entered wrong role option - please try again!");
-            }
-        }
-        String generic_Password = "1111";
+    public void AddNewWorker(Worker newEmployee,String branchName){
         // create the worker using all the data the manger entered
-        Worker new_worker = new Worker(input_newName, input_newID, bankNum, input_newContract, wage, Jobs.values()[role_choice - 1], generic_Password);
-        // add the new worker to the needed branches
-        System.out.println("please enter the branch you want to add the new worker: \n" +
-                "this are our branches - please enter the branch name exactly as written");
-        int j = 0;
+        //Worker new_worker = new Worker(ID, name, bank, contract, wage, job, password);
         for (Map.Entry<String, Super> entry : Superim.entrySet()) {
-            System.out.println((j + 1) + ". " + entry.getKey());
-            j++;
-        }
-        int branch_choice = -1;
-        // the flag checks if the input of the manager is valid branch name
-        // the flag checks if the worker is already working in the given branch
-        boolean worker_in_branch = false;
-        while (branch_choice == -1) {
-            Scanner myObj_Branch = new Scanner(System.in);  // Create a Scanner object
-            String inputBranchName = myObj_Branch.nextLine();  // Read user input
-            // check if the branch name is existed in the superim list
-            for (Map.Entry<String, Super> entry : Superim.entrySet()) {
-                if (entry.getKey().equals(inputBranchName)) {
-                    is_exist_branch = true;
-                    branch_choice = 999;
-                    // add the new worker to the selected branch
-                    Superim.get(entry.getKey()).AddWorker(input_newID);
-                    Workers.put(input_newID,new_worker);
-                    break;
-                }
-            }
-            if(!is_exist_branch){
-                System.out.println("please enter valid super name");
+            if (entry.getKey().equals(branchName)) {
+                Superim.get(entry.getKey()).AddWorker(newEmployee.GetID());
+                Workers.put(newEmployee.GetID(),newEmployee);
+                System.out.println(newEmployee.GetID() + " added successfully to: " + branchName);
             }
         }
-        if(is_exist_branch){
-            System.out.println(input_newID + " added successfully to the superim");
-        }
-
     }
 
     // the function add worker by id to branch
-    public void AddWorkerToBranch(String ID){
-        // flag to check if the branch is existed
-        boolean is_exist_branch = false;
-        if (!isExistWorker(ID)) {
-            System.out.println("this id is not working at our markets");
+    public void AddWorkerToBranch(String ID, String branchName){
+        if (Superim.get(branchName).GetWorkers().contains(ID)){
+            System.out.println("the worker is already in this branch");
             return;
         }
-        System.out.println("please enter the branch you want to add the worker: \n" +
-                "this are our branches - please enter the branch name exactly as written");
-        int j = 0;
-        for (Map.Entry<String, Super> entry : Superim.entrySet()) {
-            System.out.println((j + 1) + ". " + entry.getKey());
-            j++;
-        }
-        Scanner myObj_Branch = new Scanner(System.in);  // Create a Scanner object
-        String inputBranchName = myObj_Branch.nextLine();  // Read user input
-        // check if the branch name is existed in the superim list
-        for (Map.Entry<String, Super> entry : Superim.entrySet()) {
-            if (entry.getKey().equals(inputBranchName)) {
-                is_exist_branch = true;
-                // check if the worker is already working in the branch
-                for (int i = 0; i < Superim.get(entry.getKey()).GetWorkers().size(); i++) {
-                    if (ID.equals(Superim.get(entry.getKey()).GetWorkers().get(i))) {
-                        System.out.println("the worker is already in this branch");
-                        return;
-                    }
-                    // add the worker to the workers map
-                    Superim.get(entry.getKey()).AddWorker(ID);
-                    System.out.println("worker added successfully");
-                }
-            }
-        }
-        // if the branch doesn't exist
-        if (!is_exist_branch) {
-            System.out.println("this branch doesn't exist - please enter the accurate name!");
-        }
+        // add the worker to the workers map
+        Superim.get(branchName).AddWorker(ID);
+        System.out.println( ID + " added successfully to: " + branchName);
     }
 
     // the function removes a worker from all
     public void RemoveWorkerAllBranches(String ID){
-        // first check if the worker is existed
-        if (!isExistWorker(ID)) {
-            System.out.println("this worker is not working at our markets");
-            return;
-        }
         // check if the branch name is existed in the superim list
         for (Map.Entry<String, Super> entry : Superim.entrySet()) {
             // remove if from every branch he works at
@@ -791,68 +659,15 @@ public class ReshetInfo {
         Workers.remove(ID);
     }
 
-    public void AddJobToWorker(String ID){
-        int role_choice;
-        // do the loop as long as the flag is false - it means the input was invalid
-        boolean validInput = false;
-        if (!isExistWorker(ID)) {
-            System.out.println("this worker is not working at our markets");
-            return;
-        }
-        while(!validInput){
-            System.out.println("please enter the new worker's first role: \n" +
-                    "ShiftManager-1 , Cashier-2, StoreKeeper-3, GeneralEmp-4, Guard-5, Cleaner-6, Usher-7");
-            Scanner myObj_Role = new Scanner(System.in);  // Create a Scanner object
-            String input_role = myObj_Role.nextLine();  // Read user input
-            try {
-                // check the valdity of the role input
-                role_choice = Integer.parseInt(input_role);
-                if (role_choice < 0 || role_choice > 8) {
-                    System.out.println("not valid, please try again");
-                    continue;
-                }
-                // if the input is valid - add the job to all of his optional jobs
-                Workers.get(ID).AddJob(Jobs.values()[role_choice - 1]);
-                validInput = true;
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e) {
-                System.out.println("you entered wrong role option - please try again!");
-            }
-        }
+    public void AddJobToWorker(String ID,int job_index){
+        Workers.get(ID).AddJob(Jobs.values()[job_index - 1]);
     }
 
-    public void ChangeWage(String ID){
-        if (!isExistWorker(ID)) {
-            System.out.println("this worker is not working at our markets");
-            return;
-        }
-        boolean validInput = false;
-        while(!validInput){
-            System.out.println("please enter the wage: ");
-            Scanner myObj_Wage = new Scanner(System.in);  // Create a Scanner object
-            String input_Wage = myObj_Wage.nextLine();  // Read user input
-            // check if the wage is number
-            try {
-                int wage_choice = Integer.parseInt(input_Wage);
-                Workers.get(ID).setWage(wage_choice);
-                validInput = true;
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e) {
-                System.out.println("you entered wrong wage - please try again!");
-            }
-        }
+    public void ChangeWage(String ID,int wage){
+        Workers.get(ID).setWage(wage);
     }
 
-    public void ChangeContract(String ID){
-        if (!isExistWorker(ID)) {
-            System.out.println("this worker is not working at our markets");
-            return;
-        }
-        System.out.println("please enter the contract: ");
-        Scanner myObj_Contract = new Scanner(System.in);  // Create a Scanner object
-        String input_Contract = myObj_Contract.nextLine();  // Read user input
+    public void ChangeContract(String ID, String input_Contract){
         Workers.get(ID).setContract(input_Contract);
     }
 
@@ -887,5 +702,15 @@ public class ReshetInfo {
         for(String ID : Workers.keySet() ){
             Workers.get(ID).ReSetShiftsAmount();
         }
+    }
+
+    public Worker GetWorkerByID(String ID){
+        return Workers.get(ID);
+    }
+
+    // check by id if worker works in specific super
+    public boolean IsWorksInSuper(String ID, String SuperName){
+        return Superim.get(SuperName).GetWorkers().contains(ID);
+
     }
 }
