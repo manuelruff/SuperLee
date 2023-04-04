@@ -252,7 +252,7 @@ public class UI {
             try{
                 choice=Integer.parseInt(input);
             }
-            //if he entered someting not suitable we will repeate
+            //if he entered something not suitable we will repeat
             catch (Exception e){
                 choice =-1;
             }
@@ -299,7 +299,7 @@ public class UI {
                             case 1:
                                 //if there is a shift already created we want him to sent it to the history and then plan a new one
                                 if(ReshetInfo.getIs_shift_created_byName(Name)){
-                                    System.out.println("you cant plan new weekly shift without sendint the last one you created to the history.");
+                                    System.out.println("you can't plan new weekly shift without send it the last one you created to the history.");
                                     break;
                                 }
                                 //create list of the what he wants
@@ -841,12 +841,12 @@ public class UI {
                     return num;
                 }
                 else{
-                    System.out.println("invalid inoput, please try again");
+                    System.out.println("invalid input, please try again");
                 }
             }
             //if he entered something not suitable we will repeat
             catch (Exception e1) {
-                System.out.println("invalid inoput, please try again");
+                System.out.println("invalid input, please try again");
             }
         }
     }
