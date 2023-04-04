@@ -17,7 +17,7 @@ public class Driver {
         this.ID = ID;
         this.license = license;
         this.ability = ability;
-        workingDays = new ArrayList<>();
+        this.workingDays = new ArrayList<>();
     }
 
 
@@ -35,6 +35,15 @@ public class Driver {
 
     public Training getAbility() {
         return ability;
+    }
+
+    public boolean addNewDay(Days newDay){
+        for (Days day : workingDays){
+            if(day == newDay)
+                return false;
+        }
+        workingDays.add(newDay);
+        return true;
     }
 }
 

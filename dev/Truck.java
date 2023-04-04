@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 public abstract class Truck {
 
@@ -6,7 +7,7 @@ public abstract class Truck {
     private int truckWeight;
     private String model;
 
-    private Days inUse;
+    private List<Days> inUse;
 
 
 
@@ -15,6 +16,7 @@ public abstract class Truck {
         this.totalWeight = totalWeight;
         this.truckWeight = truckWeight;
         this.model = model;
+        this.inUse = new ArrayList<>();
     }
     public String getTruckNumber() {
         return truckNumber;
@@ -30,6 +32,15 @@ public abstract class Truck {
 
     public String getModel() {
         return model;
+    }
+
+    public boolean addNewDay(Days newDay){
+        for (Days day : inUse){
+            if (day == newDay)
+                return false;
+        }
+        inUse.add(newDay);
+        return true;
     }
 
 

@@ -1,4 +1,3 @@
-import javax.xml.transform.Source;
 import java.util.*;
 
 public class shipmentManagement {
@@ -7,7 +6,7 @@ public class shipmentManagement {
     private final List<Truck> trucks;
     private final List<Site> sites;
 
-    private List<Shipment> shipments;
+    private final List<Shipment> shipments;
 
     public shipmentManagement() {
         vendorMap = new HashMap<>();
@@ -60,6 +59,23 @@ public class shipmentManagement {
             }
         }
     }
+
+    /**
+     * This function search for a driver that can do a shipment.
+     * @param train enum, his ability to driver truck.
+     * @param day int represent the day of the week.
+     * @return the available driver.
+     */
+    public Driver searchForDriver(Training train, int day){
+        for (Driver driver : drivers){
+            if (driver.getAbility().ordinal() <= train.ordinal())
+                if (driver.addNewDay(Days.values()[day])){
+                    return driver;
+                }
+        }
+        return null;
+    }
+
 
     /****************************** Truck related Methods ******************************/
 
@@ -117,7 +133,24 @@ public class shipmentManagement {
                 trucks.remove(truck);
             }
         }
+    }
 
+    /**
+     * This function search for a suitable truck and returns its truck number.
+     * @param train Enum, they type of the truck.
+     * @param day   int, represent the day of the week.
+     * @return string, the truck Number.
+     */
+    public String searchForTruck(Training train, int day){
+        for (Truck truck : trucks){
+            if (truck.addNewDay(Days.values()[day])){
+                if (((truck instanceof FreezerTruck) && (train == Training.Freezer))
+                        || ((truck instanceof CoolingTruck) && (train == Training.Cooling))
+                            || ((truck instanceof RegularTruck) && (train == Training.Regular)))
+                    return truck.getTruckNumber();
+            }
+        }
+        return "";
     }
 
 
@@ -265,7 +298,7 @@ public class shipmentManagement {
     public boolean createShipment(int dayOfWeek, String ID, String source){
         List<String> branchList = new ArrayList<>();
         if (vendorMap.get(source).isEmpty()){
-            System.out.println("This vendor does not have any orders");
+            System.out.println("This vendor: " + source + " does not have any orders");
             return false;
         }
         // saving the values of the first order.
@@ -273,6 +306,5 @@ public class shipmentManagement {
         Zone firstZone = firstOrder.getZone();
         branchList.add(firstOrder.getDestination());
         return true;
-
     }
 }
