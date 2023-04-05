@@ -397,7 +397,7 @@ public class ReshetInfo {
     }
 
     // change the worker password
-    public void ChangeWorkerPassword(String ID, String newPassword){Workers.get(ID).CheckPassword(newPassword);}
+    public void ChangeWorkerPassword(String ID, String newPassword){Workers.get(ID).SetPassword(newPassword);}
 
     public void ChangeWorkerName(String ID, String newName){Workers.get(ID).SetName(newName);}
 
