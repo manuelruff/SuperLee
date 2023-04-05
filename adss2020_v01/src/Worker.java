@@ -2,6 +2,7 @@ import java.lang.management.LockInfo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Worker {
     private String Name;
@@ -12,6 +13,8 @@ public class Worker {
     private LocalDate StartDate;
     //so we know how much to pay him
     private double Wage;
+    private double Bonus;
+    private Map<String ,String >info;
     private String Password;
     //the shifts he can work at
     private Iluts ShiftsCanWork;
