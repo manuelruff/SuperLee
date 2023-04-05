@@ -43,7 +43,7 @@ public class Order {
         List<Item> deliveryList = new ArrayList<>();
         if(itemList.isEmpty())
         {
-            System.out.println("Item list is empty");
+            return null;
         }
         else {
             for(int i=0; i< itemList.size(); i++)
