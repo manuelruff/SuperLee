@@ -24,5 +24,13 @@ public class ItemsDoc {
         itemList.add(item);
     }
 
+    public void addListOfItems(List<Item> items){
+        if (items.isEmpty())
+            return;
+        for (Item item : items){
+            this.addItemToDoc(item);
+        }
+    }
+
 
 }

@@ -1,15 +1,16 @@
 import java.util.Date;
+import java.util.List;
 
 public class Shipment {
 
     private String ID, truckNumber, driverName;
     private Date date, departureTime;
     private Site source;
-    private Site[] destinations;
-    private ItemsDoc[] docs;
+    private List<Site> destinations;
+    private List<ItemsDoc> docs;
     private Status shipmentStatus;
 
-    public Shipment(String ID, String truckNumber, String driverName, Date date, Site source, Site[] destinations, ItemsDoc[] docs) {
+    public Shipment(String ID, String truckNumber, String driverName, Date date, Site source, List<Site> destinations, List<ItemsDoc> docs) {
         this.ID = ID;
         this.truckNumber = truckNumber;
         this.driverName = driverName;

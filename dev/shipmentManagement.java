@@ -9,6 +9,7 @@ public class shipmentManagement {
     private final List<Shipment> shipments;
 
     private List<Shipment> availableShipments;
+
     public shipmentManagement() {
         vendorMap = new HashMap<>();
         drivers = new ArrayList<>();
@@ -64,14 +65,15 @@ public class shipmentManagement {
 
     /**
      * This function search for a driver that can do a shipment.
+     *
      * @param train enum, his ability to driver truck.
-     * @param day int represent the day of the week.
+     * @param day   int represent the day of the week.
      * @return the available driver.
      */
-    public Driver searchForDriver(Training train, int day){
-        for (Driver driver : drivers){
+    public Driver searchForDriver(Training train, int day) {
+        for (Driver driver : drivers) {
             if (driver.getAbility().ordinal() <= train.ordinal())
-                if (driver.addNewDay(Days.values()[day])){
+                if (driver.addNewDay(Days.values()[day])) {
                     return driver;
                 }
         }
@@ -81,8 +83,8 @@ public class shipmentManagement {
     /**
      * This Function prints every driver in the system.
      */
-    public void printDrivers(){
-        for (Driver driver : drivers){
+    public void printDrivers() {
+        for (Driver driver : drivers) {
             driver.printDriver();
             System.out.println(" ");
         }
@@ -149,16 +151,17 @@ public class shipmentManagement {
 
     /**
      * This function search for a suitable truck and returns its truck number.
+     *
      * @param train Enum, they type of the truck.
      * @param day   int, represent the day of the week.
      * @return string, the truck Number.
      */
-    public String searchForTruck(Training train, int day){
-        for (Truck truck : trucks){
-            if (truck.addNewDay(Days.values()[day])){
+    public String searchForTruck(Training train, int day) {
+        for (Truck truck : trucks) {
+            if (truck.addNewDay(Days.values()[day])) {
                 if (((truck instanceof FreezerTruck) && (train == Training.Freezer))
                         || ((truck instanceof CoolingTruck) && (train == Training.Cooling))
-                            || ((truck instanceof RegularTruck) && (train == Training.Regular)))
+                        || ((truck instanceof RegularTruck) && (train == Training.Regular)))
                     return truck.getTruckNumber();
             }
         }
@@ -168,8 +171,8 @@ public class shipmentManagement {
     /**
      * This function prints every truck in the system.
      */
-    public void printTrucks(){
-        for (Truck truck : trucks){
+    public void printTrucks() {
+        for (Truck truck : trucks) {
             truck.printTruck();
         }
     }
@@ -228,6 +231,7 @@ public class shipmentManagement {
 
     /**
      * This function removes a site from the system
+     *
      * @param name string, name of the site.
      */
     public void deleteSite(String name) {
@@ -241,6 +245,7 @@ public class shipmentManagement {
 
     /**
      * This function checks if a vendor is already exist in the system.
+     *
      * @param name String, name of the vendor.
      * @return true if found. false otherwise.
      */
@@ -251,6 +256,7 @@ public class shipmentManagement {
 
     /**
      * This function checks if a branch is already exist in the system.
+     *
      * @param name String, name of the branch.
      * @return true if found. false otherwise.
      */
@@ -266,13 +272,21 @@ public class shipmentManagement {
         return false;
     }
 
+    public Site getSite(String name) {
+        for (Site site : sites) {
+            if (Objects.equals(site.getName(), name))
+                return site;
+        }
+        return null;
+    }
 
 
     /************************************* Order Related Methods *************************************/
 
     /**
      * Creates a new order and adding it to the system.
-     * @param source string, name of the supplier.
+     *
+     * @param source      string, name of the supplier.
      * @param destination string, name of the branch to deliver.
      */
     public void createOrder(String source, String destination) {
@@ -289,25 +303,27 @@ public class shipmentManagement {
 
     /**
      * Creates a new item and adding it to the last order that was created of a specific vendor
-     * @param source string, vendors name.
-     * @param itemName string, the name of the item.
-     * @param amount int, the amount of this item.
+     *
+     * @param source           string, vendors name.
+     * @param itemName         string, the name of the item.
+     * @param amount           int, the amount of this item.
      * @param storageCondition int, which will be represented as enum: regular/cooling/freezer
      */
-    public void addItemToOrder(String source, String itemName, int amount, int storageCondition){
-        Item item = new Item(itemName,amount,Training.values()[storageCondition]);
+    public void addItemToOrder(String source, String itemName, int amount, int storageCondition) {
+        Item item = new Item(itemName, amount, Training.values()[storageCondition]);
         vendorMap.get(source).get(vendorMap.get(source).size() - 1).addItemToOrder(item);
     }
 
 
     /**
      * This function checks if a shipment is already exist in the system.
+     *
      * @param ID string, ID of the shipment.
      * @return true if found. false otherwise
      */
-    public boolean checkShipmentID(String ID){
-        for (Shipment ship : shipments){
-            if (Objects.equals(ship.getID(), ID)){
+    public boolean checkShipmentID(String ID) {
+        for (Shipment ship : shipments) {
+            if (Objects.equals(ship.getID(), ID)) {
                 return true;
             }
         }
@@ -315,17 +331,90 @@ public class shipmentManagement {
     }
 
 
-
-    public boolean createShipment(int dayOfWeek, String ID, String source){
-        List<String> branchList = new ArrayList<>();
-        if (vendorMap.get(source).isEmpty()){
+    /**
+     * This function creates a new shipment, first the function checks if the vendor has orders, if an order was found,
+     * the function will go over the orders and combine those with same delivery zones and creating a new shipments.
+     * the function finds a matching driver truck pair, the type of the truck is decided by the type of the first
+     * item that was checked.
+     * @param dayOfWeek int representing the date. //todo maybe change later ****important****
+     * @param ID string, the ID of the shipment.
+     * @param source string, Vendor.
+     * @return True/false if the shipment was created.
+     */
+    public boolean createShipment(int dayOfWeek, String ID, String source) {
+        Date date = new Date();
+        ItemsDoc itemsDoc;
+        Shipment shipment;
+        if (vendorMap.get(source).isEmpty()) {
             System.out.println("This vendor: " + source + " does not have any orders");
             return false;
         }
+        // initialize the lists
+        List<Site> branchList = new ArrayList<>();
+        List<ItemsDoc> itemsDocList = new ArrayList<>();
+
         // saving the values of the first order.
         Order firstOrder = vendorMap.get(source).get(0);
         Zone firstZone = firstOrder.getZone();
-        branchList.add(firstOrder.getDestination());
-        return true;
+        branchList.add(getSite(firstOrder.getDestination()));
+        Training trainToSearchBy = firstOrder.firstItemType();
+        Site vendor = getSite(source);
+
+        // finding driver and truck
+        Driver driverForShipment = searchForDriver(trainToSearchBy, dayOfWeek);
+        String truckNumberForShipment = searchForTruck(trainToSearchBy, dayOfWeek);
+
+        // creating the first item doc and adding it to the list of items.
+        itemsDoc = new ItemsDoc(ID, firstOrder.getDestination());
+        itemsDoc.addListOfItems(firstOrder.getItemsForShipping(trainToSearchBy));
+        itemsDocList.add(itemsDoc);
+
+        // in case there is only one order from the specific vendor
+        if (vendorMap.get(source).size() == 1) {
+            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment.getName(), date, vendor, branchList, itemsDocList);
+            availableShipments.add(shipment);
+            if (firstOrder.checkIfEmpty())
+                vendorMap.get(source).remove(firstOrder);
+            return true;
+        } else {
+            boolean skip = true;
+            boolean found;
+            // in case there is more than 1 order.
+            for (Order order : vendorMap.get(source)) {
+                if (skip) {   // skipping the first site
+                    skip = false;
+                    continue;
+                }
+                found = false;
+                // if there is another site with same zone.
+                if (order.getZone() == firstZone) {
+                    // checking if an item doc was already created for that site.
+                    for (ItemsDoc itemD : itemsDocList) {
+                        if (Objects.equals(order.getDestination(), itemD.getSiteName())) {
+                            itemD.addListOfItems(order.getItemsForShipping(trainToSearchBy));
+                            // checking if the order is empty, to delete.
+                            if (firstOrder.checkIfEmpty())
+                                vendorMap.get(source).remove(firstOrder);
+                            found = true;
+                            break;
+                        }
+                    }
+                    // checking if the for above was executed to the fullest.
+                    if (found)
+                        continue;
+                    // in case of a new site.
+                    branchList.add(getSite(order.getDestination()));
+                    itemsDoc = new ItemsDoc(ID, order.getDestination());
+                    itemsDoc.addListOfItems(order.getItemsForShipping(trainToSearchBy));
+                    itemsDocList.add(itemsDoc);
+                    if (firstOrder.checkIfEmpty())
+                        vendorMap.get(source).remove(firstOrder);
+                }
+            }
+            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment.getName(), date, vendor, branchList, itemsDocList);
+            availableShipments.add(shipment);
+            return true;
+        }
     }
 }
+

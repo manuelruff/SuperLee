@@ -62,5 +62,10 @@ public class Order {
         return itemList.get(0).getStorageCondition();
     }
 
+
+    public boolean checkIfEmpty(){
+        return itemList.isEmpty();
+    }
+
 }
 
