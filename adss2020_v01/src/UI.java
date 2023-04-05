@@ -169,9 +169,9 @@ public class UI {
         while (choice!=4){
             System.out.println("hello please choose your option: ");
             System.out.println("1. update personal details ");
-            System.out.println("2. add new Iluts ");
-            System.out.println("3. remove Iluts ");
-            System.out.println("4. show Iluts ");
+            System.out.println("2. add new constraint ");
+            System.out.println("3. remove constraint ");
+            System.out.println("4. show constraints ");
             System.out.println("5. Exit");
             //ask for input
             choice=AskForNumber(1,5);
@@ -227,39 +227,31 @@ public class UI {
                 case 2:
                     int day_choice = -1;
                     while (day_choice != 8) {
-                        System.out.println("please enter the number of the day which you want to add iluts in \n" +
+                        System.out.println("please enter the number of the day which you want to add constraint in \n" +
                                 "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
                                 "if you want to exit - press 8 ");
                         day_choice = AskForNumber(1,8);
                         switch (day_choice){
                             case 1: case 2: case 3: case 4: case 5: case 6: case 7:
                                 System.out.println("please enter the start of the time that you cant work at (it needs to look like: 10.00 for 10): ");
-                                Scanner myIluts = new Scanner(System.in);  // Create a Scanner object
-                                String input_iluts = myIluts.nextLine();  // Read user input
+                                double iluts_num_start=AskForDoubleNumber();
                                 System.out.println("please enter the end of the time that you cant work at (it needs to look like: 10.00 for 10): ");
-                                myIluts = new Scanner(System.in);  // Create a Scanner object
-                                String input_iluts_2 = myIluts.nextLine();  // Read user input
-                                try{
-                                    // check if the iluts number is valid
-                                    double iluts_num_start=Double.parseDouble(input_iluts);
-                                    double iluts_num_end=Double.parseDouble(input_iluts_2);
-                                    if (info.CheckTimeValidate(iluts_num_start, iluts_num_end)){
-                                        System.out.println("not valid, please try again");
-                                        day_choice =-1;
-                                        break;
-                                    }
-                                    // if the iluts is valid - add the iluts at the day the user gave
-                                    info.AddIluts(ID,day_choice,iluts_num_start,iluts_num_end);
-                                    day_choice =-1;
+                                double iluts_num_end=AskForDoubleNumber();
+                                if (info.CheckTimeValidate(iluts_num_start, iluts_num_end)){
+                                    System.out.println("not valid, please try again");
                                     break;
                                 }
-                                //if he entered something not suitable we will repeat
-                                catch (Exception e){
-                                    day_choice =-1;
-                                }
+                                Scanner myIluts=new Scanner(System.in);// create scanner
+                                System.out.println("please enter reason:");
+                                String reason=myIluts.nextLine();  // Read user input
+                                // if the iluts is valid - add the iluts at the day the user gave
+                                info.AddIluts(ID,day_choice,iluts_num_start,iluts_num_end,reason);
+                                //stop the loop
+                                day_choice =8;
+                                break;
                                 // exit option
                             case 8:
-                                System.out.println("thank you for updating your iluts");
+                                System.out.println("thank you for updating your constraints");
                                 return;
                             // chosen wrong number of day
                             default:
@@ -272,40 +264,28 @@ public class UI {
                 case 3:
                     day_choice = -1;
                     while (day_choice != 8) {
-                        System.out.println("please enter the number of the day which you want to add iluts in \n" +
+                        System.out.println("please enter the number of the day which you want to add constraint in \n" +
                                 "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
                                 "if you want to exit - press 8 ");
                         day_choice = AskForNumber(1,8);
                         switch (day_choice){
                             case 1: case 2: case 3: case 4: case 5: case 6: case 7:
                                 System.out.println("please enter the start of the time that you cant work at (it needs to look like: 10.00 for 10am): ");
-                                Scanner myIluts = new Scanner(System.in);  // Create a Scanner object
-                                String input_iluts = myIluts.nextLine();  // Read user input
+                                double iluts_num_start=AskForDoubleNumber();
                                 System.out.println("please enter the end of the time that you cant work at (it needs to look like: 22.00 for 22pm): ");
-                                myIluts = new Scanner(System.in);  // Create a Scanner object
-                                String input_iluts_2 = myIluts.nextLine();  // Read user input
-                                try{
-                                    // check if the iluts number is valid
-                                    double iluts_num_start=Double.parseDouble(input_iluts);
-                                    double iluts_num_end=Double.parseDouble(input_iluts_2);
-                                    if (info.CheckTimeValidate(iluts_num_start, iluts_num_end)){
-                                        System.out.println("not valid, please try again");
-                                        day_choice =-1;
-                                        break;
-                                    }
-
-                                    // if the iluts is valid - remove the iluts at the day the user gave if exists
-                                    info.RemoveIluts(ID,day_choice,iluts_num_start,iluts_num_end);
-                                    day_choice =-1;
+                                double iluts_num_end=AskForDoubleNumber();
+                                // check if the iluts number is valid
+                                if (info.CheckTimeValidate(iluts_num_start, iluts_num_end)){
+                                    System.out.println("not valid, please try again");
                                     break;
                                 }
-                                //if he entered something not suitable we will repeat
-                                catch (Exception e){
-                                    day_choice =-1;
-                                }
+                                // if the iluts is valid - remove the iluts at the day the user gave if exists
+                                info.RemoveIluts(ID,day_choice,iluts_num_start,iluts_num_end);
+                                day_choice =8;
+                                break;
                                 // exit option
                             case 8:
-                                System.out.println("thank you for updating your iluts");
+                                System.out.println("thank you for updating your constraints");
                                 return;
                             // chosen wrong number of day
                             default:

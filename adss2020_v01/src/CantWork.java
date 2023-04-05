@@ -1,10 +1,16 @@
 public class CantWork {
+    private String reason;
     private double start;
     private double end;
 
-    public CantWork(double s,double e){
+    public CantWork(double s,double e,String r){
+        reason=r;
         this.start=s;
         this.end=e;
+    }
+
+    public String getReason() {
+        return reason;
     }
 
     public double getStart(){
@@ -14,6 +20,10 @@ public class CantWork {
         return end;
     }
     public void printMe(){
-        System.out.println("start: "+start+ " end: "+end);
+        String print="start: "+start+ " end: "+end;
+        if(reason!=""){
+            print+=" reason: "+reason;
+        }
+        System.out.println(print);
     }
 }

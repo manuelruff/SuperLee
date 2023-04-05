@@ -13,17 +13,17 @@ public class Iluts {
         cantWork=new HashMap<>();
     }
 
-    public void AddCantWork(Days day,double s,double e){
+    public void AddCantWork(Days day,double s,double e,String r ){
         List<CantWork> curr=cantWork.get(day);
         //if its null we need to add a new one
         if (curr==null){
             curr=new ArrayList<>();
-            curr.add(new CantWork(s,e));
+            curr.add(new CantWork(s,e,r));
             cantWork.put(day,curr);
         }
         // if not null we add a value to what we already have
         else{
-            curr.add(new CantWork(s,e));
+            curr.add(new CantWork(s,e,r));
         }
     }
 
@@ -77,7 +77,7 @@ public class Iluts {
         for (Days day:Days.values()){
             System.out.println(day.toString() +":");
             if(cantWork.get(day) == null){
-                System.out.println("there are no Ilitutsim in this day");
+                System.out.println("there are no constraints in this day");
                 continue;
             }
             for (int i=0;i<cantWork.get(day).size();i++){

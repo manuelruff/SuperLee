@@ -63,8 +63,8 @@ public class Worker {
     }
 
     //called when we create a new iluts
-    public void AddCantWork(Days day,double s,double e){
-        ShiftsCanWork.AddCantWork(day,s,e);
+    public void AddCantWork(Days day,double s,double e,String r){
+        ShiftsCanWork.AddCantWork(day,s,e,r);
     }
     //called when we delete an iluts
     public void RemoveCantWork(Days day,double s,double e){

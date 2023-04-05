@@ -140,7 +140,7 @@ public class ReshetInfo {
                 //ill get the list of available managers
                 CanWorkList=GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkers(),curr.GetName());
                 if(CanWorkList.size()==0){
-                    System.out.println("there are not enough managers, go assing some new ones so you can make the shifts.");
+                    System.out.println("it looks like you are out of managers or you dont have enough, go assing some new ones so you can make the shifts.");
                     return;
                 }
                 //prints the list of workers available - name and id
@@ -387,11 +387,11 @@ public class ReshetInfo {
     }
 
     // add Iluts to worker by given Id
-    public void AddIluts(String ID,int day,double s_hour,double e_hour){
-        Workers.get(ID).AddCantWork(Days.values()[day-1],s_hour,e_hour);
+    public void AddIluts(String ID,int day,double s_hour,double e_hour,String r){
+        Workers.get(ID).AddCantWork(Days.values()[day-1],s_hour,e_hour,r);
     }
 
-    // remove iluts for worker
+    // remove constraints for worker
     public void RemoveIluts(String ID,int day,double s_hour,double e_hour){
         Workers.get(ID).RemoveCantWork(Days.values()[day-1],s_hour,e_hour);
     }
