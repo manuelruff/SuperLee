@@ -1,3 +1,4 @@
+import javax.security.auth.Subject;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -6,6 +7,8 @@ public class ReshetInfo {
     private static Map<String ,Super> Superim;
     //all the workers in the company
     private static Map<String ,Worker> Workers;
+
+
 
     //builder for reshetinfo
     public ReshetInfo(){
@@ -166,9 +169,19 @@ public class ReshetInfo {
                     }
                 }
                 //when we get here we have a good choice for the shift manager
-                // ineed to figure our how to work with date later on..
+                //get the time of the shift
+                double start;
+                double end;
+                if(time ==ShiftTime.Morning){
+                    start= Superim.get(Name).getStart_morning(day);
+                    end=Superim.get(Name).getEnd_morning(day);
+                }
+                else{
+                    start= Superim.get(Name).getStart_evening(day);
+                    end=Superim.get(Name).getEnd_evening(day);
+                }
                 //crete the shift and now we need to add to it
-                Shift CurrShift=new Shift(week.getStartDate().plusDays(day.ordinal()),time,CanWorkList.get(num-1),Workers.get(CanWorkList.get(num-1)).GetName());
+                Shift CurrShift=new Shift(week.getStartDate().plusDays(day.ordinal()),time,start,end,CanWorkList.get(num-1),Workers.get(CanWorkList.get(num-1)).GetName());
                 //update the menager shift
                 Workers.get(CanWorkList.get(num-1)).AddShift(day);
                 //then we need to let him see the rest without shift manager
