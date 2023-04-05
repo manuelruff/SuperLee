@@ -436,7 +436,7 @@ public class ReshetInfo {
     }
 
     //cash cancellations
-    public void AddCancellations(String Name,String item,int amount,String ID){
+    public void AddCancellations(String Name,String item,double amount,String ID){
         //create the cancallation
         Cancellations cancel=new Cancellations(amount,item,ID,Workers.get(ID).GetName());
         //add the cancellation to the super

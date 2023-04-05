@@ -1,23 +1,24 @@
 import java.time.LocalDateTime;
 public class Cancellations {
-    private int Amount;
+    private double Amount;
     private String NameOfProduct;
-    private String IDOfCancler;
-    private String NameOfCancler;
+    private String IDOfCanceller;
+    private String NameOfCanceller;
     private LocalDateTime Time;
 
-    public Cancellations(int Amount, String NameOfProduct,String IDOfCancler, String NameOfCancler){
+    public Cancellations(double Amount, String NameOfProduct,String IDOfCanceller, String NameOfCanceller){
         this.Amount=Amount;
         this.NameOfProduct=NameOfProduct;
-        this.IDOfCancler=IDOfCancler;
-        this.NameOfCancler=NameOfCancler;
+        this.IDOfCanceller=IDOfCanceller;
+        this.NameOfCanceller=NameOfCanceller;
         this.Time=LocalDateTime.now();
     }
 
+    // the function prints the information about the cancel
     public void printMe(){
         System.out.println("time: "+ this.Time +
                 "\n name of product: "+this.NameOfProduct +" amount: "+this.Amount +
-                "\n cancelled by: "+this.NameOfCancler +" with ID: "+this.IDOfCancler  );
+                "\n cancelled by: "+this.NameOfCanceller +" with ID: "+this.IDOfCanceller  );
     }
 
     public int getYear(){

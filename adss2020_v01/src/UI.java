@@ -124,7 +124,7 @@ public class UI {
                     myObj = new Scanner(System.in);  // Create a Scanner object
                     String item = myObj.nextLine();  // Read user input
                     System.out.println("please enter the amount of the item which you want to cancel: ");
-                    int amount = AskForIntNumber();
+                    double amount = AskForDoubleNumber();
                     info.AddCancellations(Name,item,amount,ID);
                     //after we did what we want we stop
                     choice=4;
@@ -749,6 +749,28 @@ public class UI {
             //try to change the input to a string
             try{
                 num=Integer.parseInt(input);
+                flag=false;
+                return num;
+            }
+            //if he entered something not suitable we will repeat
+            catch (Exception e){
+                System.out.println("invalid input - try again!");
+                continue;
+            }
+        }
+        return num;
+    }
+
+    // the function ask the user for a number
+    public static double AskForDoubleNumber(){
+        boolean flag = true;
+        double num=-999;
+        while (flag){
+            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+            String input = myObj.nextLine();  // Read user input
+            //try to change the input to a string
+            try{
+                num=Double.parseDouble(input);
                 flag=false;
                 return num;
             }

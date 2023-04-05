@@ -4,17 +4,17 @@ import java.util.*;
 public class Shift {
     private LocalDate date;
     //tells if the shift is evening or morning, we will use only 1 \ 2 from the enum
-    private ShiftTime ShiftTime;
+    private ShiftTime shift_time;
     //all the workers in the shift
     private Map<String,String> WorkerList;
     //manager of the shift
-    private String manager;
+    private String managerID;
     private String managerName;
 
-    public Shift(LocalDate date,ShiftTime ShiftTime,String manager,String managerName){
+    public Shift(LocalDate date,ShiftTime ShiftTime,String managerID,String managerName){
         this.date=date;
-        this.ShiftTime=ShiftTime;
-        this.manager=manager;
+        this.shift_time=ShiftTime;
+        this.managerID=managerID;
         this.managerName=managerName;
         WorkerList=new HashMap<>();
     }
@@ -34,7 +34,7 @@ public class Shift {
         return this.date;
     }
     public ShiftTime GetShiftTime(){
-        return this.ShiftTime;
+        return this.shift_time;
     }
     public List<String> GetWorkers(){
         List<String> ret=new ArrayList<>();
@@ -45,8 +45,8 @@ public class Shift {
     }
 
     public void PrintMe(){
-        System.out.println(this.date + " " + this.ShiftTime);
-        System.out.println("the manager is "+this.managerName +" with ID: "+this.manager);
+        System.out.println(this.date + " " + this.shift_time);
+        System.out.println("the manager is "+this.managerName +" with ID: "+this.managerID);
         for (String ID:this.WorkerList.keySet()){
             System.out.println(ID + " - "+ this.WorkerList.get(ID) );
         }
