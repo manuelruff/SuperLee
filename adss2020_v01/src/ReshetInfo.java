@@ -417,8 +417,8 @@ public class ReshetInfo {
         Super curr=Superim.get(Name);
         curr.setStart_morning(day,m_s);
         curr.setEnd_morning(day,m_e);
-        curr.setStart_evening(day,m_s);
-        curr.setEnd_evening(day,m_s);
+        curr.setStart_evening(day,e_s);
+        curr.setEnd_evening(day,e_e);
     }
 
     //cash cancellations
