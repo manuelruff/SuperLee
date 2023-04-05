@@ -409,7 +409,11 @@ public class ReshetInfo {
     public void SendIlutsToHistory(String Name){
         //we get the object of the super we wanna add a weekly to
         Super curr=Superim.get(Name);
+        /// go on each worker and delete the shift and info from him so he weill be free
+
+        //sent it to history
         curr.SendIlutsToHistory();
+
 
     }
 
