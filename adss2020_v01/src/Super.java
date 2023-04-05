@@ -89,7 +89,7 @@ public class Super {
         }
     }
 
-    public void SendIlutsToHistory(){
+    public void SendConstraintsToHistory(){
         //add the current one to history
         this.WeeklyHist.add(this.WeekShifts);
         //sets the weekly shift to null so he will need to create new one

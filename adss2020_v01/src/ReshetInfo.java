@@ -369,7 +369,7 @@ public class ReshetInfo {
             Worker curr=Workers.get(id);
             //check if he is qualified for the job
             if(curr.CanDoJob(job)){
-                //check if he is free by his iluts
+                //check if he is free by his Constraints
                 if (curr.IsFree(day,start,end)) {
                     ret.add(id);
                 }
@@ -386,13 +386,13 @@ public class ReshetInfo {
         return Workers.get(ID).CheckPassword(password);
     }
 
-    // add Iluts to worker by given Id
-    public void AddIluts(String ID,int day,double s_hour,double e_hour,String r){
+    // add Constraints to worker by given Id
+    public void AddConstraints(String ID,int day,double s_hour,double e_hour,String r){
         Workers.get(ID).AddCantWork(Days.values()[day-1],s_hour,e_hour,r);
     }
 
-    // remove constraints for worker
-    public void RemoveIluts(String ID,int day,double s_hour,double e_hour){
+    // remove Constraintss for worker
+    public void RemoveConstraints(String ID,int day,double s_hour,double e_hour){
         Workers.get(ID).RemoveCantWork(Days.values()[day-1],s_hour,e_hour);
     }
 
@@ -404,13 +404,13 @@ public class ReshetInfo {
     public void ChangeWorkerBank(String ID, int newBank){Workers.get(ID).SetBank(newBank);}
 
 
-    public void ShowIluts(String ID){Workers.get(ID).ShowIluts();}
+    public void ShowConstraints(String ID){Workers.get(ID).ShowConstraints();}
 
     //sends weekly of all branches to their history
-    public void SendIlutsToHistory(){
+    public void SendConstraintsToHistory(){
         //send all the weekly to history
         for(Super sup:Superim.values()){
-            sup.SendIlutsToHistory();
+            sup.SendConstraintsToHistory();
         }
         //prepare the workers state for next weekly
         for(Worker worker : Workers.values()){

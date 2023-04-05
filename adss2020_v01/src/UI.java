@@ -169,9 +169,9 @@ public class UI {
         while (choice!=4){
             System.out.println("hello please choose your option: ");
             System.out.println("1. update personal details ");
-            System.out.println("2. add new constraint ");
-            System.out.println("3. remove constraint ");
-            System.out.println("4. show constraints ");
+            System.out.println("2. add new Constraints ");
+            System.out.println("3. remove Constraints ");
+            System.out.println("4. show Constraintss ");
             System.out.println("5. Exit");
             //ask for input
             choice=AskForNumber(1,5);
@@ -227,31 +227,31 @@ public class UI {
                 case 2:
                     int day_choice = -1;
                     while (day_choice != 8) {
-                        System.out.println("please enter the number of the day which you want to add constraint in \n" +
+                        System.out.println("please enter the number of the day which you want to add Constraints in \n" +
                                 "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
                                 "if you want to exit - press 8 ");
                         day_choice = AskForNumber(1,8);
                         switch (day_choice){
                             case 1: case 2: case 3: case 4: case 5: case 6: case 7:
                                 System.out.println("please enter the start of the time that you cant work at (it needs to look like: 10.00 for 10): ");
-                                double iluts_num_start=AskForDoubleNumber();
+                                double Constraints_num_start=AskForDoubleNumber();
                                 System.out.println("please enter the end of the time that you cant work at (it needs to look like: 10.00 for 10): ");
-                                double iluts_num_end=AskForDoubleNumber();
-                                if (info.CheckTimeValidate(iluts_num_start, iluts_num_end)){
+                                double Constraints_num_end=AskForDoubleNumber();
+                                if (info.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
                                     System.out.println("not valid, please try again");
                                     break;
                                 }
-                                Scanner myIluts=new Scanner(System.in);// create scanner
+                                Scanner myConstraints=new Scanner(System.in);// create scanner
                                 System.out.println("please enter reason:");
-                                String reason=myIluts.nextLine();  // Read user input
-                                // if the iluts is valid - add the iluts at the day the user gave
-                                info.AddIluts(ID,day_choice,iluts_num_start,iluts_num_end,reason);
+                                String reason=myConstraints.nextLine();  // Read user input
+                                // if the Constraints is valid - add the Constraints at the day the user gave
+                                info.AddConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end,reason);
                                 //stop the loop
                                 day_choice =8;
                                 break;
                                 // exit option
                             case 8:
-                                System.out.println("thank you for updating your constraints");
+                                System.out.println("thank you for updating your Constraintss");
                                 return;
                             // chosen wrong number of day
                             default:
@@ -264,28 +264,28 @@ public class UI {
                 case 3:
                     day_choice = -1;
                     while (day_choice != 8) {
-                        System.out.println("please enter the number of the day which you want to add constraint in \n" +
+                        System.out.println("please enter the number of the day which you want to add Constraints in \n" +
                                 "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
                                 "if you want to exit - press 8 ");
                         day_choice = AskForNumber(1,8);
                         switch (day_choice){
                             case 1: case 2: case 3: case 4: case 5: case 6: case 7:
                                 System.out.println("please enter the start of the time that you cant work at (it needs to look like: 10.00 for 10am): ");
-                                double iluts_num_start=AskForDoubleNumber();
+                                double Constraints_num_start=AskForDoubleNumber();
                                 System.out.println("please enter the end of the time that you cant work at (it needs to look like: 22.00 for 22pm): ");
-                                double iluts_num_end=AskForDoubleNumber();
-                                // check if the iluts number is valid
-                                if (info.CheckTimeValidate(iluts_num_start, iluts_num_end)){
+                                double Constraints_num_end=AskForDoubleNumber();
+                                // check if the Constraints number is valid
+                                if (info.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
                                     System.out.println("not valid, please try again");
                                     break;
                                 }
-                                // if the iluts is valid - remove the iluts at the day the user gave if exists
-                                info.RemoveIluts(ID,day_choice,iluts_num_start,iluts_num_end);
+                                // if the Constraints is valid - remove the Constraints at the day the user gave if exists
+                                info.RemoveConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end);
                                 day_choice =8;
                                 break;
                                 // exit option
                             case 8:
-                                System.out.println("thank you for updating your constraints");
+                                System.out.println("thank you for updating your Constraintss");
                                 return;
                             // chosen wrong number of day
                             default:
@@ -295,7 +295,7 @@ public class UI {
                     }
                     break;
                 case 4:
-                    info.ShowIluts(ID);
+                    info.ShowConstraints(ID);
                     //after we did what we want we stop
                     break;
                 case 5:
@@ -469,28 +469,28 @@ public class UI {
                                     //he will change both morning and evening so they wont overlap
                                     System.out.println("please enter time to start morning shift (it needs to look like: 10.00 for 10am): ");
                                     Scanner time_input = new Scanner(System.in);  // Create a Scanner object
-                                    String input_iluts = time_input.nextLine();  // Read user input
+                                    String input_Constraints = time_input.nextLine();  // Read user input
                                     System.out.println("please enter time to end morning shift (it needs to look like: 22.00 for 22pm): ");
                                     time_input = new Scanner(System.in);  // Create a Scanner object
-                                    String input_iluts_2 = time_input.nextLine();  // Read user input
+                                    String input_Constraints_2 = time_input.nextLine();  // Read user input
                                     System.out.println("please enter time to start evening shift (it needs to look like: 22.00 for 22pm): ");
                                     time_input = new Scanner(System.in);  // Create a Scanner object
-                                    String input_iluts_3 = time_input.nextLine();  // Read user input
+                                    String input_Constraints_3 = time_input.nextLine();  // Read user input
                                     System.out.println("please enter time to end evening shift (it needs to look like: 22.00 for 22pm): ");
                                     time_input = new Scanner(System.in);  // Create a Scanner object
-                                    String input_iluts_4 = time_input.nextLine();  // Read user input
+                                    String input_Constraints_4 = time_input.nextLine();  // Read user input
                                     try {
-                                        // check if the iluts number is valid
-                                        double iluts_num_morning_start = Double.parseDouble(input_iluts);
-                                        double iluts_num_morning_end = Double.parseDouble(input_iluts_2);
-                                        double iluts_num_evening_start = Double.parseDouble(input_iluts_3);
-                                        double iluts_num_evening_end = Double.parseDouble(input_iluts_4);
-                                        if(info.CheckTimeValidate(iluts_num_morning_start, iluts_num_morning_end) || info.CheckTimeValidate(iluts_num_evening_start, iluts_num_evening_end)){
+                                        // check if the Constraints number is valid
+                                        double Constraints_num_morning_start = Double.parseDouble(input_Constraints);
+                                        double Constraints_num_morning_end = Double.parseDouble(input_Constraints_2);
+                                        double Constraints_num_evening_start = Double.parseDouble(input_Constraints_3);
+                                        double Constraints_num_evening_end = Double.parseDouble(input_Constraints_4);
+                                        if(info.CheckTimeValidate(Constraints_num_morning_start, Constraints_num_morning_end) || info.CheckTimeValidate(Constraints_num_evening_start, Constraints_num_evening_end)){
                                             System.out.println("invalid time input - hours should be between 10.00-24.59 (note that seconds is .0-.59!");
                                         }
                                         else {
                                             // if the times are valid ill send them to the super for update
-                                            info.UpdateSuperTimes(Name, Days.values()[day_choice1 - 1], iluts_num_morning_start, iluts_num_morning_end, iluts_num_evening_start, iluts_num_evening_end);
+                                            info.UpdateSuperTimes(Name, Days.values()[day_choice1 - 1], Constraints_num_morning_start, Constraints_num_morning_end, Constraints_num_evening_start, Constraints_num_evening_end);
                                             //we can stop the loop
                                             choice4 = 8;
                                             break;
@@ -518,7 +518,7 @@ public class UI {
                         break;
                     }
                     //send all to history
-                    info.SendIlutsToHistory();
+                    info.SendConstraintsToHistory();
                     break;
                 case 3:
                     int choice3 = -1;

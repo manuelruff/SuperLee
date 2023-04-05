@@ -17,7 +17,7 @@ public class Worker {
     private Map<String ,String >info;
     private String Password;
     //the shifts he can work at
-    private Iluts ShiftsCanWork;
+    private Constraints ShiftsCanWork;
     //a list of jobes he can do
     private List<Jobs> Roles;//need to be size 7 for all the roles in the end
 
@@ -41,8 +41,8 @@ public class Worker {
 
         this.ShiftWorked=0;
 
-        //sets the iluts to everyday until he updates it
-        this.ShiftsCanWork= new Iluts();
+        //sets the Constraints to everyday until he updates it
+        this.ShiftsCanWork= new Constraints();
 
         this.WeeklyWorkingDays=new ArrayList<>();
     }
@@ -62,11 +62,11 @@ public class Worker {
         this.ShiftWorked = 0;
     }
 
-    //called when we create a new iluts
+    //called when we create a new Constraints
     public void AddCantWork(Days day,double s,double e,String r){
         ShiftsCanWork.AddCantWork(day,s,e,r);
     }
-    //called when we delete an iluts
+    //called when we delete an Constraints
     public void RemoveCantWork(Days day,double s,double e){
         ShiftsCanWork.RemoveCantWork(day,s,e);
     }
@@ -120,9 +120,9 @@ public class Worker {
     public void SetBank(int newBank){
         this.Bank=newBank;
     }
-    // used to add new Iluts
+    // used to add new Constraints
 
-    public void ShowIluts(){
+    public void ShowConstraints(){
         this.ShiftsCanWork.PrintMe();
     }
 
