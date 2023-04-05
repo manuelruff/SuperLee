@@ -8,6 +8,10 @@ public class UI {
     private static ReshetInfo info=new ReshetInfo();
     //saves the Manager Password - started as 1234 and he can change it
     private static String ManagerPass="1234";
+
+    /**
+     * entering screen, the user will choose his role or if he want to add cancellation to cash
+     */
     //we will call this function from the main and all the user interface will be from here
     public static void StartMe(){
 
@@ -57,6 +61,9 @@ public class UI {
         }
     }
 
+    /**
+     * option for the cashregistry
+     */
     public static void CashWork(){
         String Name=AskForBranch();
         //maybe add an option to watch a specific days Cancellations
@@ -140,6 +147,9 @@ public class UI {
 
     }
 
+    /**
+     * worker needs to log in and it will be checked here
+     */
     public static void WorkerLogIN(){
         boolean flag = true;
         System.out.println("please log in: ");
@@ -163,6 +173,10 @@ public class UI {
         }
     }
 
+    /**
+     *  will open the options for workers
+     * @param ID make the changes on the worker with given id
+     */
     public static void WorkerOption(String ID){
         //start the worker options here - Omri's Code!
         int choice=-1;
@@ -311,6 +325,9 @@ public class UI {
 
     }
 
+    /**
+     * manager (HR manager) needs to log in and it will be checked here
+     */
     public static void ManagerLogIN(){
         int choice=-1;
         System.out.println("please log in: ");
@@ -331,6 +348,9 @@ public class UI {
         }
     }
 
+    /**
+     * will open the options for manager
+     */
     //window with everything the manager can do
     public static void ManagerOptions(){
         int choice=-1;
@@ -597,6 +617,10 @@ public class UI {
         }
     }
 
+    /**
+     * a function that asks for an id until its a valid one
+     * @return a valid ID of a worker
+     */
     // function to ask the user for an ID input
     public static String AskForWorkerID(){
         boolean IdCheck = false;
@@ -615,6 +639,10 @@ public class UI {
         return ID;
     }
 
+    /**
+     * a function that asks for a branch until its a valid one
+     * @return a valid name \ id of a branch
+     */
     // function to ask the user for a branch name input
     public static String AskForBranch(){
         boolean BranchCheck=false;
@@ -634,6 +662,12 @@ public class UI {
         return BranchName;
     }
 
+    /**
+     * a function that asks for a number until its int the given range
+     * @param s start of range
+     * @param e end of range
+     * @return a number in the range
+     */
     // function to ask the user for a number in given range input
     public static int AskForNumber(int s,int e){
         int num=0;
@@ -719,6 +753,10 @@ public class UI {
         return new Worker(input_newName,input_newID,bankNum,input_newContract,wage,Jobs.values()[role_choice-1],generic_Password);
     }
 
+    /**
+     *  a function that asks for a number (int) until we get one
+     * @return a number
+     */
     // the function ask the user for a number
     public static int AskForIntNumber(){
         boolean flag = true;
@@ -741,6 +779,10 @@ public class UI {
         return num;
     }
 
+    /**
+     * a function that asks for a number (double) until we get one
+     * @return a number
+     */
     // the function ask the user for a number
     public static double AskForDoubleNumber(){
         boolean flag = true;

@@ -18,6 +18,10 @@ public class ReshetInfo {
         //create supers and workers and insert them to where i need
         StartData();
     }
+
+    /**
+     * this function will create database for beginning
+     */
     public void StartData(){
 
         //creating shift managers:
@@ -121,12 +125,12 @@ public class ReshetInfo {
         Superim.put("yakarmeod",Super2);
     }
 
-    //function that checks if the name of a super exists
+    //checks if the name of a super exists
     public boolean CheckSuperName(String Name){
         return Superim.get(Name) != null;
     }
 
-    //function that creates weeklysheet for a super
+    //creates weeklysheeft for a branch
     public void CreateWeekly(String Name){
         //we get the object of the super we wanna add a weekly to
         Super curr=Superim.get(Name);
@@ -269,10 +273,12 @@ public class ReshetInfo {
         curr.AddWeekly(week);
         }
 
-    //a function that checks if there is a weekly right now
+    //checks if there is a weekly right now
     public boolean HasWeekly(String Name){
         return Superim.get(Name).HasWeekly();
     }
+
+    //prints the shifts of one day for a branch (morning and evening)
     public void PrintDay(String Name,int day){
         //we get the object of the super
         Super curr=Superim.get(Name);
@@ -288,9 +294,7 @@ public class ReshetInfo {
         }
     }
 
-
-
-    // remove worker to a shift
+    // remove worker from a shift of a branch
     public void RemoveFromDay(String ID,String branch,int day){
         if(!IsWorkAtDay(branch,ID,day)){
             System.out.println("this worker doesn't works at this shift");
@@ -303,12 +307,12 @@ public class ReshetInfo {
         Workers.get(ID).RemoveShift(Days.values()[day]);
     }
 
-    // function that checks if worker works in specific shift
+    //checks if worker works in specific shift in a branch
     public static boolean IsWorkAtDay(String branch,String ID,int day){
         day = day*2;
         return (Superim.get(branch).GetWeekShifts().GetShift(day).IsWorkerAtShift(ID) || Superim.get(branch).GetWeekShifts().GetShift(day+1).IsWorkerAtShift(ID));
     }
-    // add worker to a shift
+    // add worker to a shift int a branch
     public void AddToDay(String ID, String branch,int shift_op,int day){
         double s=0;
         double e=0;
@@ -335,8 +339,7 @@ public class ReshetInfo {
         }
 
     }
-
-    //function that prints current weekly shifts
+    //prints current weekly shifts of a branch
     public void PrintWeekly(String Name){
         //we get the object of the weekly
         Weekly week=Superim.get(Name).GetWeekShifts();
@@ -345,24 +348,21 @@ public class ReshetInfo {
         }
         else{week.PrintMe();}
     }
+    //print a shift from history of a branch by its date if exists
     public void PrintWeeklyFromHist(String Name,int year,int month,int day){
         Superim.get(Name).PrintWeekFromHistByDate(year,month,day);
     }
-
-
-    // check if worker is exist by id
+    // check if worker is exists by id
     public boolean isExistWorker(String ID){
         return Workers.get(ID) != null;
     }
-
     //remove a worker from a branch by id
     public void RemoveWorker(String ID,String Name){
         //we get the object of the super we wanna add a weekly to
         Super curr=Superim.get(Name);
         curr.RemoveWorker(ID);
     }
-
-    //function that get day job and a list of workers and checks if the worker can do the work in these conditions
+    //get day job and a list of workers and checks if the worker can do the work in the shift and these conditions
     public List<String> GetAvailableEmployee(Days day, Jobs job,ShiftTime time, List<String> WorkersID,String SuperName){
     List<String> ret=new ArrayList<>();
     //we will save the start and end of the shift
@@ -390,35 +390,29 @@ public class ReshetInfo {
         }
         return ret;
     }
-
-    // check if the password is correct by given ID
+    //check if the password is correct by given ID
     public boolean IsTruePassword(String ID,String password){
         if(!isExistWorker(ID)){
             return false;
         }
         return Workers.get(ID).CheckPassword(password);
     }
-
     // add Constraints to worker by given Id
     public void AddConstraints(String ID,int day,double s_hour,double e_hour,String r){
         Workers.get(ID).AddCantWork(Days.values()[day-1],s_hour,e_hour,r);
     }
-
-    // remove Constraintss for worker
+    // remove Constraintss for worker by id
     public void RemoveConstraints(String ID,int day,double s_hour,double e_hour){
         Workers.get(ID).RemoveCantWork(Days.values()[day-1],s_hour,e_hour);
     }
-
-    // change the worker password
+    //changes a worker password
     public void ChangeWorkerPassword(String ID, String newPassword){Workers.get(ID).SetPassword(newPassword);}
-
+    //changes a worker name
     public void ChangeWorkerName(String ID, String newName){Workers.get(ID).SetName(newName);}
-
+    //changes a worker bank info
     public void ChangeWorkerBank(String ID, int newBank){Workers.get(ID).SetBank(newBank);}
-
-
+    //prints constraints of worker
     public void ShowConstraints(String ID){Workers.get(ID).ShowConstraints();}
-
     //sends weekly of all branches to their history
     public void SendConstraintsToHistory(){
         //send all the weekly to history
@@ -430,6 +424,7 @@ public class ReshetInfo {
             worker.ResetDaysOfWork();
         }
     }
+    //check if all branches has the weekly
     public boolean CheckAllHaveWeekly(){
         for(Super sup:Superim.values()){
             if(!sup.HasWeekly()){
@@ -438,8 +433,7 @@ public class ReshetInfo {
         }
         return true;
     }
-
-
+    //update times of shift for one day in a branch
     public void UpdateSuperTimes(String Name,Days day, double m_s,double m_e, double e_s, double e_e){
         Super curr=Superim.get(Name);
         curr.setStart_morning(day,m_s);
@@ -447,21 +441,18 @@ public class ReshetInfo {
         curr.setStart_evening(day,e_s);
         curr.setEnd_evening(day,e_e);
     }
-
-    //cash cancellations
+    //add a cash cancellations
     public void AddCancellations(String Name,String item,double amount,String ID){
         //create the cancallation
         Cancellations cancel=new Cancellations(amount,item,ID,Workers.get(ID).GetName());
         //add the cancellation to the super
         Superim.get(Name).get_cash_register().AddCancalation(cancel);
     }
-
-    //print Cancellations of a specific date
+    //print Cancellations of a specific date in a branch
     public void PrintCancellation(String Name,int year,int month,int day){
         Superim.get(Name).get_cash_register().PrintCancellation( year, month, day);
     }
-
-    // the function add a new worker
+    //add a new worker to the company
     public void AddNewWorker(Worker newEmployee,String branchName){
         // create the worker using all the data the manger entered
         //Worker new_worker = new Worker(ID, name, bank, contract, wage, job, password);
@@ -473,8 +464,7 @@ public class ReshetInfo {
             }
         }
     }
-
-    // the function add worker by id to branch
+    //add worker by id to branch
     public void AddWorkerToBranch(String ID, String branchName){
         if (Superim.get(branchName).GetWorkers().contains(ID)){
             System.out.println("the worker is already in this branch");
@@ -485,7 +475,7 @@ public class ReshetInfo {
         System.out.println( ID + " added successfully to: " + branchName);
     }
 
-    // the function removes a worker from all
+    //removes a worker from the company
     public void RemoveWorkerAllBranches(String ID){
         // check if the branch name is existed in the superim list
         for (Map.Entry<String, Super> entry : Superim.entrySet()) {
@@ -497,25 +487,24 @@ public class ReshetInfo {
         // remove it from the map of all workers
         Workers.remove(ID);
     }
-
+    //add a job for a worker (role) by id
     public void AddJobToWorker(String ID,int job_index){
         Workers.get(ID).AddJob(Jobs.values()[job_index - 1]);
     }
-
+    //changes the wage of a worker by id
     public void ChangeWage(String ID,int wage){
         Workers.get(ID).setWage(wage);
     }
-
+    //changes the contract of a worker by id
     public void ChangeContract(String ID, String input_Contract){
         Workers.get(ID).setContract(input_Contract);
     }
-
+    //check that a given number is in a time structure (hours and minuts)
     public boolean CheckTimeValidate(double start, double end){
         double start_dec = start - Math.floor(start);
         double end_dec = end - Math.floor(end);
         return start < 0 || start > end || end > 24 || start_dec >= 0.60 || end_dec >= 0.60;
     }
-
     // calculate salary for worker without a bonus
     public double CalculateMonthlySalary(String ID){
         if (!isExistWorker(ID)) {
@@ -525,7 +514,6 @@ public class ReshetInfo {
         double salary = Workers.get(ID).getShiftWorked()*Workers.get(ID).getWage();
         return salary;
     }
-
     // with bonus
     public double CalculateMonthlySalary(String ID,double bonus){
         if (!isExistWorker(ID)) {
@@ -535,24 +523,22 @@ public class ReshetInfo {
         double salary = Workers.get(ID).getShiftWorked()*Workers.get(ID).getWage() + bonus;
         return salary;
     }
-
     // reset the number of shifts to all workers
     public void ResetWorkDaysWorkers (){
         for(String ID : Workers.keySet() ){
             Workers.get(ID).ResetShiftsAmount();
         }
     }
-
+    //returns worker by id
     public Worker GetWorkerByID(String ID){
         return Workers.get(ID);
     }
-
-    // check by id if worker works in specific super
+    //check by id if worker works in specific super
     public boolean IsWorksInSuper(String ID, String SuperName){
         return Superim.get(SuperName).GetWorkers().contains(ID);
 
     }
-
+    //check if a worker can to a job\role
     public boolean CanDoJob(String ID, Jobs job){
         return Workers.get(ID).CanDoJob(job);
     }
