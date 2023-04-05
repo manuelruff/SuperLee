@@ -139,6 +139,10 @@ public class ReshetInfo {
                 System.out.println("first choose the shift manager: ");
                 //ill get the list of available managers
                 CanWorkList=GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkers(),curr.GetName());
+                if(CanWorkList.size()==0){
+                    System.out.println("there are not enough managers, go assing some new ones so you can make the shifts.");
+                    return;
+                }
                 //prints the list of workers available - name and id
                 for(int j=0;j<CanWorkList.size();j++){
                     System.out.println(j+1 +". "+ Workers.get(CanWorkList.get(j)).GetName() + " with ID: "+ CanWorkList.get(j));

@@ -171,16 +171,8 @@ public class UI {
             System.out.println("3. remove Iluts ");
             System.out.println("4. show Iluts ");
             System.out.println("5. Exit");
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-            String input = myObj.nextLine();  // Read user input
-            //try to change the input to a string
-            try{
-                choice=Integer.parseInt(input);
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e){
-                choice =-1;
-            }
+            //ask for input
+            choice=AskForNumber(1,5);
             switch (choice){
                 case 1:
                     //if the worker want to change details
@@ -235,28 +227,20 @@ public class UI {
     //window with everything the manager can do
     public static void ManagerOptions(){
         int choice=-1;
-        while (choice!=3){
+        while (choice!=4){
             System.out.println("please choose your action: ");
             System.out.println("1. work on a branch (snif)");
             System.out.println("2. update employee ");
             System.out.println("3. change password ");
             System.out.println("4. Exit ");
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-            String input = myObj.nextLine();  // Read user input
-            //try to change the input to a string
-            try{
-                choice=Integer.parseInt(input);
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e){
-                choice =-1;
-            }
+            //ask for input num
+            choice=AskForNumber(1,4);
             switch (choice){
                 case 1:
                     String Name=AskForBranch();
                     // once we now the name of the branch we need to ask what he wanna do with it
                     int choice2=-1;
-                    while (choice2!=3) {
+                    while (choice2!=8) {
                         System.out.println("please choose your action at the branch: ");
                         System.out.println("1. create weekly shift");
                         System.out.println("2. update day in weekly shift");
@@ -266,60 +250,32 @@ public class UI {
                         System.out.println("6. remove worker from this super");
                         System.out.println("7. update super shift times");
                         System.out.println("8. Exit ");
-                        myObj = new Scanner(System.in);  // Create a Scanner object
-                        input = myObj.nextLine();  // Read user input
-                        //try to change the input to a string
-                        try {
-                            choice2 = Integer.parseInt(input);
-                        }
-                        //if he entered someting not suitable we will repeate
-                        catch (Exception e) {
-                            choice2 = -1;
-                        }
+                        choice2=AskForNumber(1,8);
                         switch (choice2) {
                             case 1:
                                 //create the weekly plan
                                 info.CreateWeekly(Name);
                                 break;
                             case 2:
-                                //get the day he wants to edit
-                                int day_choice = -1;
                                 System.out.println("please enter the number of the day which you want to change \n" +
                                         "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
                                         "if you want to exit - press 8 ");
-                                day_choice = AskForNumber(1,8);
+                                //get the day he wants to edit
+                                int day_choice = AskForNumber(1,8);
                                 //prints this day's info
                                 System.out.println("the shift in " + Days.values()[day_choice-1] + " is:" );
                                 //print the shift og the day he chose
                                 info.PrintDay(Name,day_choice);
                                 //ask if he wants to add someone, remove or replace
-                                int ActionChoice = -1;
-                                while (ActionChoice != 8) {
-                                    System.out.println("please choose the action you want to do: \n" +
-                                            "1. remove an employee  \n"+
-                                            "2. add an employee \n"+
-                                            "3. switch employees");
-                                    myObj = new Scanner(System.in);  // Create a Scanner object
-                                    String input_action = myObj.nextLine();  // Read user input
-                                    try{
-                                        ActionChoice=Integer.parseInt(input_action);
-                                        if(ActionChoice<0 || ActionChoice>3){
-                                            System.out.println("please enter a valid number ");
-                                        }
-                                        else{
-                                            ActionChoice=8;
-                                        }
-                                    }
-                                    //if he entered something not suitable we will repeat
-                                    catch (Exception e){
-                                        System.out.println("please enter a valid number ");
-                                        ActionChoice =-1;
-                                    }
-                                }
+                                System.out.println("please choose the action you want to do: \n" +
+                                        "1. remove an employee  \n"+
+                                        "2. add an employee \n"+
+                                        "3. switch employees");
+                                //get input
+                                int ActionChoice =AskForNumber(1,3);
                                 //if i got here i have a good option
                                 switch (ActionChoice){
                                     case 1:
-
                                         info.RemoveFromDay(Name,day_choice);
                                         break;
                                     case 2:
@@ -332,7 +288,6 @@ public class UI {
                                         info.AddToDay(Name,day_choice);
                                         break;
                                 }
-
                                 break;
                             case 3:
                                 //print the current weekly plan
@@ -346,7 +301,6 @@ public class UI {
 
                                 break;
                             case 6:
-
                                 //we need to ask for the ID of the employee he wants to remove from the branch
                                 boolean CheckName=false;
                                 while (!CheckName){
@@ -362,12 +316,11 @@ public class UI {
                                 }
                                 break;
                             case 7:
-                                int day_choice1=0;
                                 int choice4 = -1;
                                 while (choice4 != 8) {
                                     System.out.println("please enter the number of the day which you want to change working hoursd in \n" +
                                             "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 ");
-                                    day_choice1 = AskForNumber(1,8);
+                                    int day_choice1 = AskForNumber(1,8);
                                     //change shift hours
                                     //he will change both morning and evening so they wont overlap
                                     System.out.println("please enter time to start morning shift (it needs to look like: 10.00 for 10am): ");
@@ -406,19 +359,17 @@ public class UI {
                                 }
                                 break;
                             case 8:
-                                choice2=3;
+                                choice2=8;
                                 break;
                             default:
                                 System.out.println("please enter a valid option");
                                 break;
                             }
                         }
-                    //after we did what we want we stop
-                    choice=4;
                     break;
                 case 2:
-                    choice2 = -1;
-                    while (choice2 != 7) {
+                    int choice3 = -1;
+                    while (choice3 != 7) {
                         String ID;
                         System.out.println("hello manager, please choose what you want to do: ");
                         System.out.println("1. add new worker");
@@ -428,17 +379,9 @@ public class UI {
                         System.out.println("5. change worker wage");
                         System.out.println("6. change worker contract");
                         System.out.println("7. Back");
-                        Scanner myObj_worker1 = new Scanner(System.in);  // Create a Scanner object
-                        String input_worker1 = myObj_worker1.nextLine();  // Read user input
-                        //try to change the input to a string
-                        try {
-                            choice2 = Integer.parseInt(input_worker1);
-                        }
-                        //if he entered something not suitable we will repeat
-                        catch (Exception e) {
-                            choice = -1;
-                        }
-                        switch (choice2) {
+                        //ask for input
+                        choice3=AskForNumber(1,7);
+                        switch (choice3) {
                             case 1:
                                 String BranchName= AskForBranch();
                                 info.AddNewWorker(CreateNewWorker(),BranchName);
@@ -461,23 +404,8 @@ public class UI {
                                 break;
                             case 5:
                                 ID = AskForWorkerID();
-                                int wage_choice = 0;
-                                boolean validInput = false;
-                                while(!validInput){
-                                    System.out.println("please enter the wage: ");
-                                    Scanner myObj_Wage = new Scanner(System.in);  // Create a Scanner object
-                                    String input_Wage = myObj_Wage.nextLine();  // Read user input
-                                    // check if the wage is number
-                                    try {
-                                        wage_choice = Integer.parseInt(input_Wage);
-                                        validInput = true;
-                                    }
-                                    //if he entered something not suitable we will repeat
-                                    catch (Exception e) {
-                                        System.out.println("you entered wrong wage - please try again!");
-                                        continue;
-                                    }
-                                }
+                                System.out.println("please enter the wage: ");
+                                int wage_choice=AskForIntNumber();
                                 info.ChangeWage(ID,wage_choice);
                                 break;
                             case 6:
@@ -488,15 +416,13 @@ public class UI {
                                 info.ChangeContract(ID,input_Contract);
                                 break;
                             case 7:
-                                choice = 3;
+                                choice3 = 7;
                                 break;
                             default:
                                 System.out.println("please enter a valid option");
                                 break;
                         }
                     }
-                    //after we did what we want we stop
-                    choice=4;
                     break;
                 case 3:
                     System.out.println("enter new password: ");
