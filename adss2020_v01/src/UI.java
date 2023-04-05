@@ -169,9 +169,9 @@ public class UI {
         while (choice!=4){
             System.out.println("hello please choose your option: ");
             System.out.println("1. update personal details ");
-            System.out.println("2. add new Constraints ");
-            System.out.println("3. remove Constraints ");
-            System.out.println("4. show Constraintss ");
+            System.out.println("2. add new constraints ");
+            System.out.println("3. remove constraints ");
+            System.out.println("4. show constraints ");
             System.out.println("5. Exit");
             //ask for input
             choice=AskForNumber(1,5);
@@ -227,7 +227,7 @@ public class UI {
                 case 2:
                     int day_choice = -1;
                     while (day_choice != 8) {
-                        System.out.println("please enter the number of the day which you want to add Constraints in \n" +
+                        System.out.println("please enter the number of the day which you want to add constraints in \n" +
                                 "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
                                 "if you want to exit - press 8 ");
                         day_choice = AskForNumber(1,8);
@@ -264,7 +264,7 @@ public class UI {
                 case 3:
                     day_choice = -1;
                     while (day_choice != 8) {
-                        System.out.println("please enter the number of the day which you want to add Constraints in \n" +
+                        System.out.println("please enter the number of the day which you want to add constraints in \n" +
                                 "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
                                 "if you want to exit - press 8 ");
                         day_choice = AskForNumber(1,8);
@@ -285,7 +285,7 @@ public class UI {
                                 break;
                                 // exit option
                             case 8:
-                                System.out.println("thank you for updating your Constraintss");
+                                System.out.println("thank you for updating your constraints");
                                 return;
                             // chosen wrong number of day
                             default:
