@@ -266,6 +266,7 @@ public class ReshetInfo {
         else{week.GetShift(day).PrintMe();}
     }
 
+    // remove worker to a shift
     public void RemoveFromDay(String Name,int day){
         //well get the ID of the one he wants to delete
         System.out.println("please write the ID of the employee you want to remove: ");
@@ -285,6 +286,8 @@ public class ReshetInfo {
         Superim.get(Name).GetWeekShifts().GetShift(day).RemoveWorker(input_ID);
         Workers.get(input_ID).RemoveShift(Days.values()[day-1]);
     }
+
+    // add worker to a shift
     public void AddToDay(String Name,int day){
         //well get the ID oof the one he wants to delete
         System.out.println("please write the ID of the employee you want to add: ");
@@ -295,7 +298,7 @@ public class ReshetInfo {
             input_ID = myObj.nextLine();  // Read user input
             // do not forget to change this!!!
             if(Superim.get(Name).GetWeekShifts().GetShift(day).IsWorkerAtShift(input_ID)){
-                System.out.println("this worker is already wotks at this shift");
+                System.out.println("this worker is already works at this shift");
             }
             else{
                 loop=0;
@@ -368,193 +371,24 @@ public class ReshetInfo {
     }
 
     // add Iluts to worker by given Id
-    public void AddIluts(String ID){
-        if(!isExistWorker(ID)){
-            return;
-        }
-        int day_choice = -1;
-        while (day_choice != 8) {
-            System.out.println("please enter the number of the day which you want to add iluts in \n" +
-                    "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
-                    "if you want to exit - press 8 ");
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-            String input_day = myObj.nextLine();  // Read user input
-            try{
-                day_choice=Integer.parseInt(input_day);
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e){
-                day_choice =-1;
-            }
-            switch (day_choice){
-                case 1: case 2: case 3: case 4: case 5: case 6: case 7:
-                    System.out.println("please enter the start of the time that you cant work at (it needs to look like: 10.00 for 10): ");
-                    Scanner myIluts = new Scanner(System.in);  // Create a Scanner object
-                    String input_iluts = myIluts.nextLine();  // Read user input
-                    System.out.println("please enter the end of the time that you cant work at (it needs to look like: 10.00 for 10): ");
-                    myIluts = new Scanner(System.in);  // Create a Scanner object
-                    String input_iluts_2 = myIluts.nextLine();  // Read user input
-                    try{
-                        // check if the iluts number is valid
-                        double iluts_num_start=Double.parseDouble(input_iluts);
-                        double iluts_num_end=Double.parseDouble(input_iluts_2);
-                        if (CheckTimeValidate(iluts_num_start, iluts_num_end)){
-                            System.out.println("not valid, please try again");
-                            day_choice =-1;
-                            break;
-                        }
-
-                        // if the iluts is valid - add the iluts at the day the user gave
-                        Workers.get(ID).AddCantWork(Days.values()[day_choice-1],iluts_num_start,iluts_num_end);
-                        day_choice =-1;
-                        break;
-                    }
-                    //if he entered something not suitable we will repeat
-                    catch (Exception e){
-                        day_choice =-1;
-                    }
-                    // exit option
-                case 8:
-                    System.out.println("thank you for updating your iluts");
-                    return;
-                // chosen wrong number of day
-                default:
-                    System.out.println("invalid input, please try again");
-                    break;
-            }
-        }
+    public void AddIluts(String ID,int day,double s_hour,double e_hour){
+        Workers.get(ID).AddCantWork(Days.values()[day-1],s_hour,e_hour);
     }
 
-    public void RemoveIluts(String ID){
-        if(!isExistWorker(ID)){
-            return;
-        }
-        int day_choice = -1;
-        while (day_choice != 8) {
-            System.out.println("please enter the number of the day which you want to add iluts in \n" +
-                    "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
-                    "if you want to exit - press 8 ");
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-            String input_day = myObj.nextLine();  // Read user input
-            try{
-                day_choice=Integer.parseInt(input_day);
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e){
-                day_choice =-1;
-            }
-            switch (day_choice){
-                case 1: case 2: case 3: case 4: case 5: case 6: case 7:
-                    System.out.println("please enter the start of the time that you cant work at (it needs to look like: 10.00 for 10am): ");
-                    Scanner myIluts = new Scanner(System.in);  // Create a Scanner object
-                    String input_iluts = myIluts.nextLine();  // Read user input
-                    System.out.println("please enter the end of the time that you cant work at (it needs to look like: 22.00 for 22pm): ");
-                    myIluts = new Scanner(System.in);  // Create a Scanner object
-                    String input_iluts_2 = myIluts.nextLine();  // Read user input
-                    try{
-                        // check if the iluts number is valid
-                        double iluts_num_start=Double.parseDouble(input_iluts);
-                        double iluts_num_end=Double.parseDouble(input_iluts_2);
-                        if (CheckTimeValidate(iluts_num_start, iluts_num_end)){
-                            System.out.println("not valid, please try again");
-                            day_choice =-1;
-                            break;
-                        }
-
-                        // if the iluts is valid - remove the iluts at the day the user gave if exists
-                        Workers.get(ID).RemoveCantWork(Days.values()[day_choice-1],iluts_num_start,iluts_num_end);
-                        day_choice =-1;
-                        break;
-                    }
-                    //if he entered something not suitable we will repeat
-                    catch (Exception e){
-                        day_choice =-1;
-                    }
-                    // exit option
-                case 8:
-                    System.out.println("thank you for updating your iluts");
-                    return;
-                // chosen wrong number of day
-                default:
-                    System.out.println("invalid input, please try again");
-                    break;
-            }
-        }
-    }
-    public void updatePersonalInfo(String ID){
-        if(!isExistWorker(ID)){
-            return;
-        }
-        int op1_choice=-1;
-        while (op1_choice!=3){
-            System.out.println("hello " +Workers.get(ID).GetName()  + " please choose the detail you want to change");
-            System.out.println("1. change password ");
-            System.out.println("2. change name");
-            System.out.println("3. change bank account");
-            System.out.println("4. Back");
-            Scanner myObj_worker1 = new Scanner(System.in);  // Create a Scanner object
-            String input_worker1 = myObj_worker1.nextLine();  // Read user input
-            //try to change the input to a string
-            try{
-                op1_choice=Integer.parseInt(input_worker1);
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e){
-                op1_choice =-1;
-            }
-            switch (op1_choice){
-                case 1:
-                    System.out.println("please enter new password: ");
-                    // get the new password from the worker
-                    Scanner myObj_changepass = new Scanner(System.in);  // Create a Scanner object
-                    String input_changepass = myObj_changepass.nextLine();  // Read user input
-                    Workers.get(ID).SetPassword(input_changepass); // change the password
-//                    info.changePassword(ID,input_changepass); // no needed
-                    //after we did what we want we stop
-                    op1_choice=4;
-                    break;
-                case 2:
-                    System.out.println("please enter new name: ");
-                    // get the new password from the worker
-                    Scanner myObj_changename = new Scanner(System.in);  // Create a Scanner object
-                    String input_changename = myObj_changename.nextLine();  // Read user input
-                    Workers.get(ID).SetName(input_changename); // change name
-//                    info.changeName(ID,input_changename); // change the name
-                    //after we did what we want we stop
-                    op1_choice=4;
-                    break;
-                case 3:
-                    System.out.println("please enter new bank details: ");
-                    // get the new password from the worker
-                    Scanner myObj_changebank = new Scanner(System.in);  // Create a Scanner object
-                    String input_changebank = myObj_changebank.nextLine();
-                    try
-                    {
-                        int bankNum=Integer.parseInt(input_changebank);
-                        Workers.get(ID).SetBank(bankNum);
-//                        info.changeBank(ID,bankNum); // change the bank details
-                    }
-                    //if he entered something not suitable we will repeat
-                    catch (Exception e){
-                        op1_choice =-1;
-                    }// Read user input
-                    //after we did what we want we stop
-                    op1_choice=4;
-                    break;
-                case 4:
-                    //stop the loop and go back to previous window
-                    op1_choice=3;
-                    break;
-                default:
-                    System.out.println("please enter a valid option");
-                    break;
-            }
-        }
+    // remove iluts for worker
+    public void RemoveIluts(String ID,int day,double s_hour,double e_hour){
+        Workers.get(ID).RemoveCantWork(Days.values()[day-1],s_hour,e_hour);
     }
 
-    public void ShowIluts(String ID){
-        Workers.get(ID).ShowIluts();
-    }
+    // change the worker password
+    public void ChangeWorkerPassword(String ID, String newPassword){Workers.get(ID).CheckPassword(newPassword);}
+
+    public void ChangeWorkerName(String ID, String newName){Workers.get(ID).SetName(newName);}
+
+    public void ChangeWorkerBank(String ID, int newBank){Workers.get(ID).SetBank(newBank);}
+
+
+    public void ShowIluts(String ID){Workers.get(ID).ShowIluts();}
 
     public void SendIlutsToHistory(String Name){
         //we get the object of the super we wanna add a weekly to
