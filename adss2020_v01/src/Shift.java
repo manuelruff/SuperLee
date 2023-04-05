@@ -27,8 +27,7 @@ public class Shift {
     }
 
     public boolean IsWorkerAtShift(String ID){
-        //for now
-        return false;
+        return WorkerList.get(ID) != null ;
     }
 
     public LocalDate GetDate(){

@@ -371,7 +371,7 @@ public class UI {
                         System.out.println("please choose your action at the branch: ");
                         System.out.println("1. create weekly shift");
                         System.out.println("2. update day in weekly shift");
-                        System.out.println("3. show current shift");
+                        System.out.println("3. show current shifts");
                         System.out.println("4. send weekly shifts to history");
                         System.out.println("5. watch week from history");
                         System.out.println("6. remove worker from this super");
@@ -401,6 +401,10 @@ public class UI {
                                 info.CreateWeekly(Name);
                                 break;
                             case 2:
+                                if(!info.HasWeekly(Name)){
+                                    System.out.println("no weekly yet, go create one first");
+                                    break;
+                                }
                                 System.out.println("please enter the number of the day which you want to change \n" +
                                         "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
                                         "if you want to exit - press 8 ");
@@ -414,22 +418,25 @@ public class UI {
                                 System.out.println("please choose the action you want to do: \n" +
                                         "1. remove an employee  \n"+
                                         "2. add an employee \n"+
-                                        "3. switch employees");
+                                        "3. back");
                                 //get input
                                 int ActionChoice =AskForNumber(1,3);
                                 //if i got here i have a good option
                                 switch (ActionChoice){
                                     case 1:
-                                        info.RemoveFromDay(Name,day_choice-1);
+                                        String ID = AskForWorkerID();
+                                        info.RemoveFromDay(ID, Name,day_choice-1);
                                         break;
                                     case 2:
-                                        info.AddToDay(Name,day_choice-1);
+                                        ID = AskForWorkerID();
+                                        System.out.println("""
+                                                please enter the time of the shift which you want to add the worker:\s
+                                                1. morning\s
+                                                2. Evening""");
+                                        int shift_op = AskForNumber(1,2);
+                                        info.AddToDay(ID,Name,shift_op,day_choice-1);
                                         break;
                                     case 3:
-                                        //first removes someone
-                                        info.RemoveFromDay(Name,day_choice-1);
-                                        //and then add somone else
-                                        info.AddToDay(Name,day_choice-1);
                                         break;
                                 }
                                 break;
@@ -438,6 +445,10 @@ public class UI {
                                 info.PrintWeekly(Name);
                                 break;
                             case 4:
+                                if(!info.HasWeekly(Name)){
+                                    System.out.println("no weekly yet, go create one first");
+                                    break;
+                                }
                                 //send the current iluts to history and then you have to create new one
                                 info.SendIlutsToHistory(Name);
                                 break;

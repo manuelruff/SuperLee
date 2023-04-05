@@ -265,53 +265,62 @@ public class ReshetInfo {
         Super curr=Superim.get(Name);
         Weekly week=curr.GetWeekShifts();
         if(week==null){
-            System.out.println("nothing in this day yet shift yet");
+            System.out.println("nothing in this week yet");
         }
-        else{week.GetShift(day).PrintMe();}
+        else{
+            //each day has 2 shifts so we show him both of them
+            day=day*2;
+            week.GetShift(day).PrintMe();
+            week.GetShift(day+1).PrintMe();
+        }
     }
+
+
 
     // remove worker to a shift
-    public void RemoveFromDay(String Name,int day){
-        //well get the ID of the one he wants to delete
-        System.out.println("please write the ID of the employee you want to remove: ");
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        int loop=-1;
-        String input_ID="";
-        while (loop==-1){
-            input_ID = myObj.nextLine();  // Read user input
-            if(!Superim.get(Name).GetWeekShifts().GetShift(day).IsWorkerAtShift(input_ID)){
-                System.out.println("this worker doesnt work at this shift - please try again");
-            }
-            else{
-                loop=0;
-            }
+    public void RemoveFromDay(String ID,String branch,int day){
+        if(!IsWorkAtDay(branch,ID,day)){
+            System.out.println("this worker doesn't works at this shift");
+            return;
         }
+        int shiftnum = day*2;
         //whem were here we have a good number for employee so we remove him
-        Superim.get(Name).GetWeekShifts().GetShift(day).RemoveWorker(input_ID);
-        Workers.get(input_ID).RemoveShift(Days.values()[day-1]);
+        Superim.get(branch).GetWeekShifts().GetShift(shiftnum).RemoveWorker(ID);
+        Superim.get(branch).GetWeekShifts().GetShift(shiftnum+1).RemoveWorker(ID);
+        Workers.get(ID).RemoveShift(Days.values()[day]);
     }
 
+    // function that checks if worker works in specific shift
+    public static boolean IsWorkAtDay(String branch,String ID,int day){
+        day = day*2;
+        return (Superim.get(branch).GetWeekShifts().GetShift(day).IsWorkerAtShift(ID) || Superim.get(branch).GetWeekShifts().GetShift(day+1).IsWorkerAtShift(ID));
+    }
     // add worker to a shift
-    public void AddToDay(String Name,int day){
-        //well get the ID oof the one he wants to delete
-        System.out.println("please write the ID of the employee you want to add: ");
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        int loop=-1;
-        String input_ID="";
-        while (loop==-1){
-            input_ID = myObj.nextLine();  // Read user input
-            // do not forget to change this!!!
-            if(Superim.get(Name).GetWeekShifts().GetShift(day).IsWorkerAtShift(input_ID)){
-                System.out.println("this worker is already works at this shift");
-            }
-            else{
-                loop=0;
-            }
+    public void AddToDay(String ID, String branch,int shift_op,int day){
+        double s=0;
+        double e=0;
+        day=day*2;
+        if(shift_op == 1)
+        {
+            s=Superim.get(branch).getStart_morning(Days.values()[day]);
+            e=Superim.get(branch).getEnd_morning(Days.values()[day]);
         }
-        //whem were here we have a good number for employee so we add him
-        Superim.get(Name).GetWeekShifts().GetShift(day).AddWorker(input_ID,Workers.get(input_ID).GetName());
-        // add the shift to the workers shifts - added 31.3
-        Workers.get(input_ID).AddShift(Days.values()[day-1]);
+        else {
+            s=Superim.get(branch).getStart_evening(Days.values()[day]);
+            e=Superim.get(branch).getEnd_evening(Days.values()[day]);
+            day=day+1;
+        }
+        if(!Workers.get(ID).IsFree(Days.values()[day],s,e)){
+            System.out.println("this worker can't work at this shift");
+            return;
+        }
+        else{
+            //whem were here we have a good number for employee so we add him
+            Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID,Workers.get(ID).GetName());
+            // add the shift to the workers shifts
+            Workers.get(ID).AddShift(Days.values()[day]);
+        }
+
     }
 
     //function that prints current weekly shifts
