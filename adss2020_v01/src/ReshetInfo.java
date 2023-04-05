@@ -406,16 +406,26 @@ public class ReshetInfo {
 
     public void ShowIluts(String ID){Workers.get(ID).ShowIluts();}
 
-    public void SendIlutsToHistory(String Name){
-        //we get the object of the super we wanna add a weekly to
-        Super curr=Superim.get(Name);
-        /// go on each worker and delete the shift and info from him so he weill be free
-
-        //sent it to history
-        curr.SendIlutsToHistory();
-
-
+    //sends weekly of all branches to their history
+    public void SendIlutsToHistory(){
+        //send all the weekly to history
+        for(Super sup:Superim.values()){
+            sup.SendIlutsToHistory();
+        }
+        //prepare the workers state for next weekly
+        for(Worker worker : Workers.values()){
+            worker.ResetDaysOfWork();
+        }
     }
+    public boolean CheckAllHaveWeekly(){
+        for(Super sup:Superim.values()){
+            if(!sup.HasWeekly()){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public void UpdateSuperTimes(String Name,Days day, double m_s,double m_e, double e_s, double e_e){
         Super curr=Superim.get(Name);
@@ -516,7 +526,7 @@ public class ReshetInfo {
     // reset the number of shifts to all workers
     public void ResetWorkDaysWorkers (){
         for(String ID : Workers.keySet() ){
-            Workers.get(ID).ReSetShiftsAmount();
+            Workers.get(ID).ResetShiftsAmount();
         }
     }
 

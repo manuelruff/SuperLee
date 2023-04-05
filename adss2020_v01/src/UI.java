@@ -354,47 +354,35 @@ public class UI {
     //window with everything the manager can do
     public static void ManagerOptions(){
         int choice=-1;
-        while (choice!=4){
+        while (choice!=5){
             System.out.println("please choose your action: ");
             System.out.println("1. work on a branch (snif)");
-            System.out.println("2. update employee ");
-            System.out.println("3. change password ");
-            System.out.println("4. Exit ");
+            System.out.println("2. send weekly shifts to history for all branches");
+            System.out.println("3. update employee ");
+            System.out.println("4. change password ");
+            System.out.println("5. Exit ");
             //ask for input num
-            choice=AskForNumber(1,4);
+            choice=AskForNumber(1,5);
             switch (choice){
                 case 1:
                     String Name=AskForBranch();
                     // once we now the name of the branch we need to ask what he wanna do with it
                     int choice2=-1;
-                    while (choice2!=8) {
+                    while (choice2!=7) {
                         System.out.println("please choose your action at the branch: ");
                         System.out.println("1. create weekly shift");
                         System.out.println("2. update day in weekly shift");
                         System.out.println("3. show current shifts");
-                        System.out.println("4. send weekly shifts to history");
-                        System.out.println("5. watch week from history");
-                        System.out.println("6. remove worker from this super");
-                        System.out.println("7. update super shift times");
-                        System.out.println("8. Exit ");
-                        choice2=AskForNumber(1,8);
+                        System.out.println("4. watch week from history");
+                        System.out.println("5. remove worker from this super");
+                        System.out.println("6. update super shift times");
+                        System.out.println("7. Exit ");
+                        choice2=AskForNumber(1,7);
                         switch (choice2) {
                             case 1:
                                 //check if there is not a weekly created already
                                 if(info.HasWeekly(Name)){
-                                    System.out.println("you already created a weekly, how would you like to continue? \n" +
-                                            "1. leave and make changes by add / remove workers \n" +
-                                            "2. send it to history and create a new one ");
-                                    //take input
-                                    int over_int=AskForNumber(1,2);
-                                    //if he chose 2 we will activate choice2=4
-                                    if (over_int==2) {
-                                        choice2 = 4;
-                                    }
-                                    else{
-                                        choice2 = 2;
-                                    }
-                                    //we will break from creat weekly
+                                    System.out.println("you already created a weekly, now you can just edit it or send all the weekly to history to start again");
                                     break;
                                 }
                                 //create the weekly plan
@@ -445,14 +433,6 @@ public class UI {
                                 info.PrintWeekly(Name);
                                 break;
                             case 4:
-                                if(!info.HasWeekly(Name)){
-                                    System.out.println("no weekly yet, go create one first");
-                                    break;
-                                }
-                                //send the current iluts to history and then you have to create new one
-                                info.SendIlutsToHistory(Name);
-                                break;
-                            case 5:
                                 //we need to get the date of sunday of that week
                                 boolean check=true;
                                 int Year=0;
@@ -484,7 +464,7 @@ public class UI {
                                     break;
                                 }
                                 break;
-                            case 6:
+                            case 5:
                                 //we need to ask for the ID of the employee he wants to remove from the branch
                                 boolean CheckName=false;
                                 while (!CheckName){
@@ -499,7 +479,7 @@ public class UI {
                                     }
                                 }
                                 break;
-                            case 7:
+                            case 6:
                                 int choice4 = -1;
                                 while (choice4 != 8) {
                                     System.out.println("please enter the number of the day which you want to change working hoursd in \n" +
@@ -542,8 +522,8 @@ public class UI {
                                     }
                                 }
                                 break;
-                            case 8:
-                                choice2=8;
+                            case 7:
+                                choice2=7;
                                 break;
                             default:
                                 System.out.println("please enter a valid option");
@@ -552,6 +532,15 @@ public class UI {
                         }
                     break;
                 case 2:
+                    //check if he created the weekly for everyone
+                    if(!info.CheckAllHaveWeekly()){
+                        System.out.println("not all the branches has a weekly plan create them first and then you can send");
+                        break;
+                    }
+                    //send all to history
+                    info.SendIlutsToHistory();
+                    break;
+                case 3:
                     int choice3 = -1;
                     while (choice3 != 7) {
                         String ID;
@@ -608,15 +597,15 @@ public class UI {
                         }
                     }
                     break;
-                case 3:
+                case 4:
                     System.out.println("enter new password: ");
                     Scanner scanner1 = new Scanner(System.in);  // Create a Scanner object
                     String pass1 = scanner1.nextLine();  // Read user input
                     ManagerPass=pass1;
                     //after we did what we want we stop
-                    System.out.println("password have changed");
+                    System.out.println("password has changed");
                     break;
-                case 4:
+                case 5:
                     System.out.println("have a good day");
                     //stops the program
                     System.exit(0);
