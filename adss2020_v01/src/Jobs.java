@@ -1,2 +1,1 @@
-public enum Jobs {ShiftManager,Cashier,StoreKeeper,GeneralEmp,Guard,Cleaner,Usher
-}
+public enum Jobs {ShiftManager,Cashier,StoreKeeper,GeneralEmp,Guard,Cleaner,Usher}

@@ -132,7 +132,7 @@ public class ReshetInfo {
         //create the weekly
         Weekly week=new Weekly();
         for (Days day:Days.values()){
-            CanWork time=CanWork.Morning;
+            ShiftTime time=ShiftTime.Morning;
             for(int i=0;i<2;i++) {
                 System.out.println("we are working on: " + day + " at the "+time+ " shift");
                 //first we need to choose the manager to start the shift
@@ -249,7 +249,7 @@ public class ReshetInfo {
                     //send the shift i created to the weekly
                     week.AddShift(CurrShift);
                     //we go to evening shift
-                    time=CanWork.Evening;
+                    time=ShiftTime.Evening;
                 }
             }
         //add the weekly to the super
@@ -350,13 +350,13 @@ public class ReshetInfo {
     }
 
     //function that get day job and a list of workers and checks if the worker can do the work in these conditions
-    public List<String> GetAvailableEmployee(Days day, Jobs job,CanWork time, List<String> WorkersID,String SuperName){
+    public List<String> GetAvailableEmployee(Days day, Jobs job,ShiftTime time, List<String> WorkersID,String SuperName){
     List<String> ret=new ArrayList<>();
     //we will save the start and end of the shift
     double start=0;
     double end=0;
     //like that i get the correct hours
-    if (time==CanWork.Morning){
+    if (time==ShiftTime.Morning){
         start=Superim.get(SuperName).getStart_morning(day);
         end=Superim.get(SuperName).getEnd_morning(day);
     }

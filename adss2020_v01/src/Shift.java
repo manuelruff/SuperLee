@@ -4,14 +4,14 @@ import java.util.*;
 public class Shift {
     private LocalDate date;
     //tells if the shift is evening or morning, we will use only 1 \ 2 from the enum
-    private CanWork ShiftTime;
+    private ShiftTime ShiftTime;
     //all the workers in the shift
     private Map<String,String> WorkerList;
     //manager of the shift
     private String manager;
     private String managerName;
 
-    public Shift(LocalDate date,CanWork ShiftTime,String manager,String managerName){
+    public Shift(LocalDate date,ShiftTime ShiftTime,String manager,String managerName){
         this.date=date;
         this.ShiftTime=ShiftTime;
         this.manager=manager;
@@ -33,7 +33,7 @@ public class Shift {
     public LocalDate GetDate(){
         return this.date;
     }
-    public CanWork GetShiftTime(){
+    public ShiftTime GetShiftTime(){
         return this.ShiftTime;
     }
     public List<String> GetWorkers(){

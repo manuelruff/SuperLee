@@ -11,7 +11,7 @@ public class Worker {
     private String Contract;
     private LocalDate StartDate;
     //so we know how much to pay him
-    private int Wage;
+    private double Wage;
     private String Password;
     //the shifts he can work at
     private Iluts ShiftsCanWork;
@@ -123,7 +123,7 @@ public class Worker {
         this.ShiftsCanWork.PrintMe();
     }
 
-    public void setWage(int wage){this.Wage = wage;}
+    public void setWage(double wage){this.Wage = wage;}
 
     public void setContract(String contract){this.Contract = contract;}
 
@@ -132,6 +132,6 @@ public class Worker {
         return this.ShiftWorked;
     }
 
-    public int getWage(){return this.Wage;}
+    public double getWage(){return this.Wage;}
 
 }
