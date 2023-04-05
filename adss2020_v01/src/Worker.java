@@ -51,12 +51,11 @@ public class Worker {
 
     //at the end of the week we need to put 0 here
     //probably when we start a new scheduel
-    public void ReSetDaysOfWork(){
+    public void ResetDaysOfWork(){
         this.WeeklyWorkingDays.clear();
     }
-
     // reset the number of shifts the worker works in a month
-    public void ReSetShiftsAmount(){
+    public void ResetShiftsAmount(){
         this.ShiftWorked = 0;
     }
 
