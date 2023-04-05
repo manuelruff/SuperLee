@@ -168,7 +168,7 @@ public class ReshetInfo {
                 //when we get here we have a good choice for the shift manager
                 // ineed to figure our how to work with date later on..
                 //crete the shift and now we need to add to it
-                Shift CurrShift=new Shift(LocalDate.now().plusDays(day.ordinal()),time,CanWorkList.get(num-1),Workers.get(CanWorkList.get(num-1)).GetName());
+                Shift CurrShift=new Shift(week.getStartDate().plusDays(day.ordinal()),time,CanWorkList.get(num-1),Workers.get(CanWorkList.get(num-1)).GetName());
                 //update the menager shift
                 Workers.get(CanWorkList.get(num-1)).AddShift(day);
                 //then we need to let him see the rest without shift manager
@@ -324,7 +324,7 @@ public class ReshetInfo {
         else{week.PrintMe();}
     }
     public void PrintWeeklyFromHist(String Name,int year,int month,int day){
-        Superim.get(Name).PrintWeekShiftFromHistByDate(year,month,day);
+        Superim.get(Name).PrintWeekFromHistByDate(year,month,day);
     }
 
 

@@ -1,3 +1,4 @@
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,12 @@ public class Weekly {
     public Weekly(){
         ShiftList=new ArrayList<>();
         StartDate=LocalDate.now();
+        //we want to start at next sunday so we add one until we are there
+        DayOfWeek day=StartDate.getDayOfWeek();
+        while(day!=DayOfWeek.SUNDAY){
+            StartDate=StartDate.plusDays(1);
+            day=StartDate.getDayOfWeek();
+        }
     }
 
     //add a shift to the list
@@ -29,4 +36,7 @@ public class Weekly {
         return this.ShiftList.get(day);
     }
 
+    public LocalDate getStartDate() {
+        return StartDate;
     }
+}

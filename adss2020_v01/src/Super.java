@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,13 +75,17 @@ public class Super {
     }
     public Weekly GetWeekShifts(){return this.WeekShifts;}
 
-    public void PrintWeekShiftFromHistByDate(int year,int month,int day){
-
-    }
-    public void PrintWeekShiftFromHistByID(int ID){
-        for (Weekly week:this.WeeklyHist)
-        {
-
+    public void PrintWeekFromHistByDate(int year,int month,int day) {
+        boolean is_printed=false;
+        for (Weekly week : this.WeeklyHist) {
+            LocalDate date = week.getStartDate();
+            if (date.getYear() == year && date.getMonthValue()== month && date.getDayOfMonth()==day){
+                week.PrintMe();
+                is_printed=true;
+            }
+        }
+        if (!is_printed){
+            System.out.println("there is no weekly in that date");
         }
     }
 
