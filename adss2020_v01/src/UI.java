@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UI {
@@ -245,14 +247,31 @@ public class UI {
                         System.out.println("1. create weekly shift");
                         System.out.println("2. update day in weekly shift");
                         System.out.println("3. show current shift");
-                        System.out.println("4. send shift to history");
-                        System.out.println("5. watch history");
+                        System.out.println("4. send weekly shifts to history");
+                        System.out.println("5. watch week from history");
                         System.out.println("6. remove worker from this super");
                         System.out.println("7. update super shift times");
                         System.out.println("8. Exit ");
                         choice2=AskForNumber(1,8);
                         switch (choice2) {
                             case 1:
+                                //check if there is not a weekly created already
+                                if(info.HasWeekly(Name)){
+                                    System.out.println("you already created a weekly, how would you like to continue? \n" +
+                                            "1. leave and make changes by add / remove workers \n" +
+                                            "2. send it to history and create a new one ");
+                                    //take input
+                                    int over_int=AskForNumber(1,2);
+                                    //if he chose 2 we will activate choice2=4
+                                    if (over_int==2) {
+                                        choice2 = 4;
+                                    }
+                                    else{
+                                        choice2 = 2;
+                                    }
+                                    //we will break from creat weekly
+                                    break;
+                                }
                                 //create the weekly plan
                                 info.CreateWeekly(Name);
                                 break;
@@ -265,7 +284,7 @@ public class UI {
                                 //prints this day's info
                                 System.out.println("the shift in " + Days.values()[day_choice-1] + " is:" );
                                 //print the shift og the day he chose
-                                info.PrintDay(Name,day_choice);
+                                info.PrintDay(Name,day_choice-1);
                                 //ask if he wants to add someone, remove or replace
                                 System.out.println("please choose the action you want to do: \n" +
                                         "1. remove an employee  \n"+
@@ -276,16 +295,16 @@ public class UI {
                                 //if i got here i have a good option
                                 switch (ActionChoice){
                                     case 1:
-                                        info.RemoveFromDay(Name,day_choice);
+                                        info.RemoveFromDay(Name,day_choice-1);
                                         break;
                                     case 2:
-                                        info.AddToDay(Name,day_choice);
+                                        info.AddToDay(Name,day_choice-1);
                                         break;
                                     case 3:
                                         //first removes someone
-                                        info.RemoveFromDay(Name,day_choice);
+                                        info.RemoveFromDay(Name,day_choice-1);
                                         //and then add somone else
-                                        info.AddToDay(Name,day_choice);
+                                        info.AddToDay(Name,day_choice-1);
                                         break;
                                 }
                                 break;
@@ -298,7 +317,36 @@ public class UI {
                                 info.SendIlutsToHistory(Name);
                                 break;
                             case 5:
-
+                                //we need to get the date of sunday of that week
+                                boolean check=true;
+                                int Year=0;
+                                int Month=0;
+                                int Day=0;
+                                while(check){
+                                    //we need to get the date he want to watch
+                                    System.out.println("we need the date of the sunday of that week");
+                                    System.out.println("please enter year: ");
+                                    Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+                                    String year = myObj.nextLine();  // Read user input
+                                    System.out.println("please enter month: ");
+                                    String month = myObj.nextLine();  // Read user input
+                                    System.out.println("please enter day: ");
+                                    String day = myObj.nextLine();  // Read user input
+                                    //try to change the input to a string
+                                    try{
+                                        Year=Integer.parseInt(year);
+                                        Month=Integer.parseInt(month);
+                                        Day=Integer.parseInt(day);
+                                        //stop the loop
+                                        check=false;
+                                    }
+                                    //if he entered something not suitable we will repeat
+                                    catch (Exception e){
+                                        System.out.println("please enter a valid date ");
+                                    }
+                                    info.PrintWeeklyFromHist(Name,Year,Month,Day);
+                                    break;
+                                }
                                 break;
                             case 6:
                                 //we need to ask for the ID of the employee he wants to remove from the branch

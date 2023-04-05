@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ public class Super {
     //history of all the shifts
     private List<Weekly> WeeklyHist;
     private CashRegister cash_register;
+
 
     //times of the shifts, ill put default values that the manager can change later
     //need to change them to map <days,double>
@@ -67,49 +69,55 @@ public class Super {
         this.WeekShifts=week;
     }
 
+    public boolean HasWeekly(){
+        return this.WeekShifts!=null;
+    }
     public Weekly GetWeekShifts(){return this.WeekShifts;}
+
+    public void PrintWeekShiftFromHistByDate(int year,int month,int day){
+
+    }
+    public void PrintWeekShiftFromHistByID(int ID){
+        for (Weekly week:this.WeeklyHist)
+        {
+
+        }
+    }
+
     public void SendIlutsToHistory(){
         //add the current one to history
         this.WeeklyHist.add(this.WeekShifts);
         //sets the weekly shift to null so he will need to create new one
         this.WeekShifts=null;
     }
-
     public double getEnd_evening(Days day) {
         return end_evening.get(day);
     }
-
     public double getEnd_morning(Days day) {return end_morning.get(day);}
-
     public double getStart_evening(Days day) {
         return start_evening.get(day);
     }
-
     public double getStart_morning(Days day) {
         return start_morning.get(day);
     }
-
     public void setStart_morning(Days day,Double t) {
         //remove if already has something
         this.start_morning.remove(day);
         //add new one
         this.start_morning.put(day,t);
     }
-
     public void setEnd_morning(Days day,Double t) {
         //remove if already has something
         this.end_morning.remove(day);
         //add new one
         this.end_morning.put(day,t);
     }
-
     public void setStart_evening(Days day,Double t) {
         //remove if already has something
         this.start_evening.remove(day);
         //add new one
         this.start_evening.put(day,t);
     }
-
     public void setEnd_evening(Days day,Double t) {
         //remove if already has something
         this.end_evening.remove(day);

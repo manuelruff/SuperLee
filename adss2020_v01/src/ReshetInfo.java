@@ -256,6 +256,10 @@ public class ReshetInfo {
         curr.AddWeekly(week);
         }
 
+    //a function that checks if there is a weekly right now
+    public boolean HasWeekly(String Name){
+        return Superim.get(Name).HasWeekly();
+    }
     public void PrintDay(String Name,int day){
         //we get the object of the super
         Super curr=Superim.get(Name);
@@ -309,14 +313,17 @@ public class ReshetInfo {
 
     //function that prints current weekly shifts
     public void PrintWeekly(String Name){
-        //we get the object of the super
-        Super curr=Superim.get(Name);
-        Weekly week=curr.GetWeekShifts();
+        //we get the object of the weekly
+        Weekly week=Superim.get(Name).GetWeekShifts();
         if(week==null){
             System.out.println("no weekly shift yet");
         }
         else{week.PrintMe();}
     }
+    public void PrintWeeklyFromHist(String Name,int year,int month,int day){
+        Superim.get(Name).PrintWeekShiftFromHistByDate(year,month,day);
+    }
+
 
     // check if worker is exist by id
     public boolean isExistWorker(String ID){

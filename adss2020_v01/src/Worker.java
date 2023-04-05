@@ -1,3 +1,4 @@
+import java.lang.management.LockInfo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +104,6 @@ public class Worker {
         this.ShiftWorked++;
         this.WeeklyWorkingDays.add(day);
     }
-
     //update a worker that he removes a shift - added 31.3
     public void RemoveShift(Days day){
         this.ShiftWorked--;
