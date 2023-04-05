@@ -2,7 +2,6 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Shift {
-    //date of the shift
     private LocalDate date;
     //tells if the shift is evening or morning, we will use only 1 \ 2 from the enum
     private CanWork ShiftTime;
@@ -31,6 +30,7 @@ public class Shift {
         //for now
         return false;
     }
+
     public LocalDate GetDate(){
         return this.date;
     }
