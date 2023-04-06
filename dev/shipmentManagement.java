@@ -222,9 +222,9 @@ public class shipmentManagement {
      * @param contactName string, name of the contact person.
      * @param zone        enum Zone, zone area.
      */
-    public void addBranch(String name, String address, String phoneNumber, String contactName, Zone zone) {
+    public void addBranch(String name, String address, String phoneNumber, String contactName, int zone) {
         Branch branch;
-        branch = new Branch(name, address, phoneNumber, contactName, zone);
+        branch = new Branch(name, address, phoneNumber, contactName, Zone.values()[zone]);
         sites.add(branch);
     }
 
@@ -415,6 +415,25 @@ public class shipmentManagement {
             availableShipments.add(shipment);
             return true;
         }
+    }
+    public void executeShipment(){
+        if (availableShipments.isEmpty()) {
+            System.out.println("There is no available shipment!");
+            return;
+        }
+        Shipment shipment = availableShipments.get(0);
+        System.out.println("U have arrived to ur destination: ");
+        shipment.getSource().printSite();
+        Scanner scanner = new Scanner(System.in);
+        String input = "";
+        System.out.println("Please enter the weight of the truck with the items (in KG): ");
+        int weight;
+        weight = scanner.nextInt();
+        while(!scanner.hasNextInt()){
+            System.out.println("The input was incorrect, please enter only numbers");
+        }
+        if ()
+
     }
 }
 
