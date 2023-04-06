@@ -8,11 +8,6 @@ public class CantWork {
         this.start=s;
         this.end=e;
     }
-
-    public String getReason() {
-        return reason;
-    }
-
     public double getStart(){
         return start;
     }

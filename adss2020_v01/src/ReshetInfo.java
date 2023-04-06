@@ -25,8 +25,8 @@ public class ReshetInfo {
     public void StartData(){
 
         //creating shift managers:
-        Worker ShiftManager1 = new Worker("manu" , " 1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
-        Worker ShiftManager2 = new Worker("david" , " 2", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker ShiftManager1 = new Worker("manu" , "1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker ShiftManager2 = new Worker("david" , "2", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Worker ShiftManager3 = new Worker("muhamad" , "3", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Worker ShiftManager4 = new Worker("omri" , "4", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Worker ShiftManager5 = new Worker("oded" , "5", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
@@ -46,8 +46,8 @@ public class ReshetInfo {
         Workers.put("9",ShiftManager9);
 
         //create cashiers
-        Worker Cashier1 = new Worker("mikel" , " 10", 318 , "ata ahla gever",60, Jobs.Cashier ,"123" );
-        Worker Cashier2 = new Worker("migul" , " 11", 318 , "ata ahla gever",60, Jobs.Cashier ,"123" );
+        Worker Cashier1 = new Worker("mikel" , "10", 318 , "ata ahla gever",60, Jobs.Cashier ,"123" );
+        Worker Cashier2 = new Worker("migul" , "11", 318 , "ata ahla gever",60, Jobs.Cashier ,"123" );
         Worker Cashier3 = new Worker("huan" , "12", 318 , "ata ahla gever",60, Jobs.Cashier ,"123" );
         Worker Cashier4 = new Worker("omri-escopar" , "13", 318 , "ata ahla gever",60, Jobs.Cashier ,"123" );
         //puts them in the worker list
@@ -57,8 +57,8 @@ public class ReshetInfo {
         Workers.put("13",Cashier4);
 
         //create StoreKeeper
-        Worker StoreKeeper1 = new Worker("oded" , " 14", 318 , "ata ahla gever",60, Jobs.StoreKeeper ,"123" );
-        Worker StoreKeeper2 = new Worker("gal" , " 15", 318 , "ata ahla gever",60, Jobs.StoreKeeper ,"123" );
+        Worker StoreKeeper1 = new Worker("oded" , "14", 318 , "ata ahla gever",60, Jobs.StoreKeeper ,"123" );
+        Worker StoreKeeper2 = new Worker("gal" , "15", 318 , "ata ahla gever",60, Jobs.StoreKeeper ,"123" );
         Worker StoreKeeper3 = new Worker("papi" , "16", 318 , "ata ahla gever",60, Jobs.StoreKeeper ,"123" );
         Worker StoreKeeper4 = new Worker("hatul" , "17", 318 , "ata ahla gever",60, Jobs.StoreKeeper ,"123" );
         //puts them in the worker list
@@ -69,8 +69,8 @@ public class ReshetInfo {
 
 
         //create GeneralEmployee
-        Worker GeneralEmp1 = new Worker("odedi" , " 18", 318 , "ata ahla gever",30, Jobs.GeneralEmp ,"123" );
-        Worker GeneralEmp2 = new Worker("shimun" , " 19", 318 , "ata ahla gever",30, Jobs.GeneralEmp ,"123" );
+        Worker GeneralEmp1 = new Worker("odedi" , "18", 318 , "ata ahla gever",30, Jobs.GeneralEmp ,"123" );
+        Worker GeneralEmp2 = new Worker("shimun" , "19", 318 , "ata ahla gever",30, Jobs.GeneralEmp ,"123" );
         Worker GeneralEmp3 = new Worker("sara" , "20", 318 , "ata ahla gever",30, Jobs.GeneralEmp ,"123" );
         Worker GeneralEmp4 = new Worker("gebi" , "21", 318 , "ata ahla gever",30, Jobs.GeneralEmp ,"123" );
         //puts them in the worker list
@@ -80,8 +80,8 @@ public class ReshetInfo {
         Workers.put("21",GeneralEmp4);
 
         //create guards
-        Worker Guard1 = new Worker("yuri" , " 22", 318 , "ata ahla gever",50, Jobs.Guard ,"123" );
-        Worker Guard2 = new Worker("dor" , " 23", 318 , "ata ahla gever",50, Jobs.Guard ,"123" );
+        Worker Guard1 = new Worker("yuri" , "22", 318 , "ata ahla gever",50, Jobs.Guard ,"123" );
+        Worker Guard2 = new Worker("dor" , "23", 318 , "ata ahla gever",50, Jobs.Guard ,"123" );
         Worker Guard3 = new Worker("shalev" , "24", 318 , "ata ahla gever",50, Jobs.Guard ,"123" );
         Worker Guard4 = new Worker("harel" , "25", 318 , "ata ahla gever",50, Jobs.Guard ,"123" );
         //puts them in the worker list
@@ -91,8 +91,8 @@ public class ReshetInfo {
         Workers.put("25",Guard4);
 
         //create cleaner
-        Worker Cleaner1 = new Worker("rohama" , " 26", 318 , "ata ahla gever",10, Jobs.Cleaner ,"123" );
-        Worker Cleaner2 = new Worker("avraham" , " 27", 318 , "ata ahla gever",10, Jobs.Cleaner ,"123" );
+        Worker Cleaner1 = new Worker("rohama" , "26", 318 , "ata ahla gever",10, Jobs.Cleaner ,"123" );
+        Worker Cleaner2 = new Worker("avraham" , "27", 318 , "ata ahla gever",10, Jobs.Cleaner ,"123" );
         Worker Cleaner3 = new Worker("shoshana" , "28", 318 , "ata ahla gever",10, Jobs.Cleaner ,"123" );
         Worker Cleaner4 = new Worker("alo" , "29", 318 , "ata ahla gever",10, Jobs.Cleaner ,"123" );
         //puts them in the worker list
@@ -102,8 +102,8 @@ public class ReshetInfo {
         Workers.put("29",Cleaner4);
 
         //create usher
-        Worker Usher1 = new Worker("ahrak" , " 30", 318 , "ata ahla gever",15, Jobs.Usher ,"123" );
-        Worker Usher2 = new Worker("midbar" , " 31", 318 , "ata ahla gever",15, Jobs.Usher ,"123" );
+        Worker Usher1 = new Worker("ahrak" , "30", 318 , "ata ahla gever",15, Jobs.Usher ,"123" );
+        Worker Usher2 = new Worker("midbar" , "31", 318 , "ata ahla gever",15, Jobs.Usher ,"123" );
         Worker Usher3 = new Worker("sahara" , "32", 318 , "ata ahla gever",15, Jobs.Usher ,"123" );
         Worker Usher4 = new Worker("alosantos" , "33", 318 , "ata ahla gever",15, Jobs.Usher ,"123" );
         //puts them in the worker list
