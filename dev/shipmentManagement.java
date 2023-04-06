@@ -45,8 +45,8 @@ public class shipmentManagement {
      * @param license license type. (C/D)
      * @param train   training type. (regular/cooling/freezer)
      */
-    public void addDriver(String name, String ID, char license, Training train) {
-        Driver driver = new Driver(name, ID, license, train);
+    public void addDriver(String name, String ID, char license, int train) {
+        Driver driver = new Driver(name, ID, license, Training.values()[train]);
         drivers.add(driver);
     }
 
@@ -168,6 +168,16 @@ public class shipmentManagement {
         return "";
     }
 
+
+    public Truck searchTruckByID(String truckNumber){
+        for (Truck truck : trucks){
+            if (truck.getTruckNumber().equals(truckNumber)){
+                return truck;
+            }
+        }
+        return null;
+    }
+
     /**
      * This function prints every truck in the system.
      */
@@ -278,6 +288,17 @@ public class shipmentManagement {
                 return site;
         }
         return null;
+    }
+
+    private void removeLastSiteFromShipment(Shipment shipment){
+        for (ItemsDoc doc : shipment.getDocs()){
+            if (Objects.equals(doc.getSiteName(), shipment.getDestinations().get(shipment.getDestinations().size() - 1).getName())){
+                createOrder(shipment.getSource().getName(), doc.getSiteName());
+                while(!doc.isEmpty()){
+
+                }
+            }
+        }
     }
 
 
@@ -424,16 +445,42 @@ public class shipmentManagement {
         Shipment shipment = availableShipments.get(0);
         System.out.println("U have arrived to ur destination: ");
         shipment.getSource().printSite();
+        Truck currTruck = searchTruckByID(shipment.getTruckNumber());
         Scanner scanner = new Scanner(System.in);
         String input = "";
         System.out.println("Please enter the weight of the truck with the items (in KG): ");
         int weight;
         weight = scanner.nextInt();
-        while(!scanner.hasNextInt()){
-            System.out.println("The input was incorrect, please enter only numbers");
-        }
-        if ()
+        while (true) {
+            while (!scanner.hasNextInt()) {
+                System.out.println("The input was incorrect, please enter only numbers");
+                weight = scanner.nextInt();
+            }
+            if (weight > currTruck.getTotalWeight()) {
+                while (!Objects.equals(input, "1") && !Objects.equals(input, "2") && !Objects.equals(input, "3")) {
+                    System.out.println("The truck exceeded the max carry weight, in order to proceed with the shipment\n" +
+                            "please choose one of the options: ");
+                    System.out.println("1. Take out some of the items");
+                    System.out.println("2. Switch to a bigger truck");
+                    if (shipment.getDestinations().size() != 1)
+                        System.out.println("3. remove the last site from this shipment");
+                    input = scanner.nextLine();
+                    switch (input){
 
+                        case "1":
+                            itemsToDelete();
+                            break;
+
+                        case "2":
+                            break;
+
+                        case "3":
+                            removeLastSiteFromShipment(shipment);
+                    }
+                }
+
+            }
+        }
     }
 }
 

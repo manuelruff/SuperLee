@@ -39,6 +39,16 @@ public class Shipment {
         return source;
     }
 
+    public String getTruckNumber(){return truckNumber;}
+
+    public List<Site> getDestinations() {
+        return destinations;
+    }
+
+    public List<ItemsDoc> getDocs() {
+        return docs;
+    }
+
     public Status getShipmentStatus() {
         return shipmentStatus;
     }

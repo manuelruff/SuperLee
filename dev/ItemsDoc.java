@@ -31,6 +31,11 @@ public class ItemsDoc {
             this.addItemToDoc(item);
         }
     }
-
+    public void deleteItem(Item removeItem){
+        itemList.remove(removeItem);
+    }
+    public boolean isEmpty(){
+        return itemList.isEmpty();
+    }
 
 }
