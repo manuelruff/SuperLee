@@ -18,7 +18,7 @@ public class Shipment {
         this.source = source;
         this.destinations = destinations;
         this.docs = docs;
-        this.shipmentStatus = null;
+        this.shipmentStatus = Status.NoChanges;
     }
 
 
@@ -61,5 +61,14 @@ public class Shipment {
         this.shipmentStatus = shipmentStatus;
     }
 
+    public void deleteItemDoc(ItemsDoc itemsDoc){
+        docs.remove(itemsDoc);
+    }
+    public boolean checkItemDocEmpty(){
+        return docs.isEmpty();
+    }
+    public void removeSite(Site site){
+        destinations.remove(site);
+    }
 
 }

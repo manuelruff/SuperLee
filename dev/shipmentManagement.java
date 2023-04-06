@@ -169,9 +169,9 @@ public class shipmentManagement {
     }
 
 
-    public Truck searchTruckByID(String truckNumber){
-        for (Truck truck : trucks){
-            if (truck.getTruckNumber().equals(truckNumber)){
+    public Truck searchTruckByID(String truckNumber) {
+        for (Truck truck : trucks) {
+            if (truck.getTruckNumber().equals(truckNumber)) {
                 return truck;
             }
         }
@@ -282,6 +282,12 @@ public class shipmentManagement {
         return false;
     }
 
+    /**
+     * This function search for a site in the system and returns it
+     *
+     * @param name string, name of the site.
+     * @return the site if found.
+     */
     public Site getSite(String name) {
         for (Site site : sites) {
             if (Objects.equals(site.getName(), name))
@@ -290,13 +296,17 @@ public class shipmentManagement {
         return null;
     }
 
-    private void removeLastSiteFromShipment(Shipment shipment){
-        for (ItemsDoc doc : shipment.getDocs()){
-            if (Objects.equals(doc.getSiteName(), shipment.getDestinations().get(shipment.getDestinations().size() - 1).getName())){
-                createOrder(shipment.getSource().getName(), doc.getSiteName());
-                while(!doc.isEmpty()){
-
+    private void removeLastSiteFromShipment(Shipment shipment) {
+        String source = shipment.getSource().getName();
+        Order order;
+        for (ItemsDoc doc : shipment.getDocs()) {
+            if (Objects.equals(doc.getSiteName(), shipment.getDestinations().get(shipment.getDestinations().size() - 1).getName())) {
+                createOrder(source, doc.getSiteName());
+                for (Item item : doc.getItemList()) {
+                    order = vendorMap.get(source).get(vendorMap.get(source).size() - 1);
+                    order.addItemToOrder(item);
                 }
+                shipment.getDocs().remove(doc);
             }
         }
     }
@@ -357,9 +367,10 @@ public class shipmentManagement {
      * the function will go over the orders and combine those with same delivery zones and creating a new shipments.
      * the function finds a matching driver truck pair, the type of the truck is decided by the type of the first
      * item that was checked.
+     *
      * @param dayOfWeek int representing the date. //todo maybe change later ****important****
-     * @param ID string, the ID of the shipment.
-     * @param source string, Vendor.
+     * @param ID        string, the ID of the shipment.
+     * @param source    string, Vendor.
      * @return True/false if the shipment was created.
      */
     public boolean createShipment(int dayOfWeek, String ID, String source) {
@@ -437,7 +448,8 @@ public class shipmentManagement {
             return true;
         }
     }
-    public void executeShipment(){
+
+    public void executeShipment() {
         if (availableShipments.isEmpty()) {
             System.out.println("There is no available shipment!");
             return;
@@ -451,10 +463,13 @@ public class shipmentManagement {
         System.out.println("Please enter the weight of the truck with the items (in KG): ");
         int weight;
         weight = scanner.nextInt();
+        int firstWeight = weight;
         while (true) {
             while (!scanner.hasNextInt()) {
                 System.out.println("The input was incorrect, please enter only numbers");
                 weight = scanner.nextInt();
+                System.out.println("The input was incorrect, please enter only numbers");
+
             }
             if (weight > currTruck.getTotalWeight()) {
                 while (!Objects.equals(input, "1") && !Objects.equals(input, "2") && !Objects.equals(input, "3")) {
@@ -465,22 +480,105 @@ public class shipmentManagement {
                     if (shipment.getDestinations().size() != 1)
                         System.out.println("3. remove the last site from this shipment");
                     input = scanner.nextLine();
-                    switch (input){
+                    switch (input) {
 
                         case "1":
-                            itemsToDelete();
+                            if (itemsToDelete(shipment)){
+                                System.out.println("There is no items left in the shipment, so the shipment is canceled");
+                                shipment.setShipmentStatus(Status.Canceled);
+                                return;
+                            }
+                            shipment.setShipmentStatus(Status.ItemsChange);
                             break;
 
                         case "2":
+                            changeTruck(shipment);
+                            shipment.setShipmentStatus(Status.TruckExchange);
                             break;
 
                         case "3":
                             removeLastSiteFromShipment(shipment);
+                            shipment.setShipmentStatus(Status.SiteChange);
+                            break;
                     }
                 }
 
             }
+            else{
+                break;
+            }
         }
+        shipments.add(availableShipments.get(0));
+    }
+
+    private void changeTruck(Shipment shipment) {
+
+    }
+
+    private boolean itemsToDelete(Shipment shipment) {
+        System.out.println("Those are the branches of the shipments: ");
+        for (Site site : shipment.getDestinations()){
+            site.printSite();
+            System.out.println();
+        }
+        // choose site to delete item from.
+        System.out.println("Please choose the one you want to delete the item from, enter the name of the site.");
+        Scanner scanner = new Scanner(System.in);
+        String answer = scanner.nextLine();
+        boolean found = false;
+        while(!found) {
+            for (Site site : shipment.getDestinations()){
+                if (Objects.equals(answer, site.getName())) { // the site is in the shipment.
+                    found = true;
+                    break;
+                }
+            }
+            if (found)
+                continue;
+            System.out.println("This site is not exist, please enter again");
+            answer = scanner.nextLine();
+        }
+        ItemsDoc itemsD = null;
+        // finds the item document that goes the site.
+        for (ItemsDoc itemsDoc : shipment.getDocs()){
+            if (Objects.equals(itemsDoc.getSiteName(), answer)){
+                itemsDoc.printItemsDoc();
+                itemsD = itemsDoc;
+            }
+        }
+        System.out.println("Please choose an item you want to delete.");
+        answer = scanner.nextLine();
+        while(true){
+            if (itemsD != null) {
+                // finding the item and change it.
+                for(Item item : itemsD.getItemList()){
+                    if (Objects.equals(item.getName(), answer)){
+                        System.out.println("Please enter the amount: ");
+                        int amount = scanner.nextInt();
+                        while(!scanner.hasNextInt()){
+                            System.out.println("Please enter the amount: ");
+                            amount = scanner.nextInt();
+                        }
+                        // if the input was higher, then delete the item.
+                        if (amount > item.getQuantity()){
+                            itemsD.deleteItem(item);
+                            if (itemsD.isEmpty()){ // if it was the las item of the doc.
+                                shipment.deleteItemDoc(itemsD);
+                                shipment.removeSite(getSite(itemsD.getSiteName()));
+                                return shipment.checkItemDocEmpty();  // in case it was the last doc in the shipment, then return true.
+                            }
+                        }
+                        else{
+                            item.setQuantity(amount);
+                        }
+                        return false;
+                    }
+                }
+                System.out.println("This item does not exist, Please choose an item you want to delete.");
+                answer = scanner.nextLine();
+            }
+        }
+
     }
 }
 

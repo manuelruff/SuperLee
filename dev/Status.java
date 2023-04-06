@@ -1,5 +1,10 @@
 public enum Status {
     ItemsChange,
     TruckExchange,
-    SiteChange
+    SiteChange,
+    Canceled,
+
+    NoChanges
+
+
 }

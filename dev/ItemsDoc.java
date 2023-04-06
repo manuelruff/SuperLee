@@ -31,6 +31,11 @@ public class ItemsDoc {
             this.addItemToDoc(item);
         }
     }
+
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
     public void deleteItem(Item removeItem){
         itemList.remove(removeItem);
     }
@@ -38,4 +43,6 @@ public class ItemsDoc {
         return itemList.isEmpty();
     }
 
+    public void printItemsDoc() {
+    }
 }
