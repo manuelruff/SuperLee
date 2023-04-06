@@ -53,7 +53,6 @@ public class Constraints {
         }
     }
 
-
     //function that checks if the day and time of the shift and tells if he can work there
     public boolean CanWork(Days day, double s, double e){
         List<CantWork> curr=cantWork.get(day);
@@ -64,7 +63,7 @@ public class Constraints {
         //if i find something i need to check if he has anything at the time of the shift
         else{
             for (int i=0;i<curr.size();i++){
-                if (curr.get(i).getStart()>s &&curr.get(i).getEnd()<e){
+                if ((curr.get(i).getStart()<e && curr.get(i).getEnd()>e) || (curr.get(i).getStart()<s && curr.get(i).getEnd()>s)){
                     return false;
                 }
             }

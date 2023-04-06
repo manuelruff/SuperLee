@@ -21,6 +21,8 @@ public class Shift {
         WorkerList=new HashMap<>();
         this.start=start;
         this.end=end;
+        //we also add the manager to the list
+        this.AddWorker(managerID,managerName);
     }
     public void AddWorker(String ID, String Name){
         this.WorkerList.put(ID,Name);
@@ -54,7 +56,10 @@ public class Shift {
         System.out.println("the manager is "+this.managerName +" with ID: "+this.managerID);
 
         for (String ID:this.WorkerList.keySet()){
-            System.out.println(ID + " - "+ this.WorkerList.get(ID) );
+            //we dont need to print the manager twice
+            if(ID!=this.managerID) {
+                System.out.println(ID + " - " + this.WorkerList.get(ID));
+            }
         }
     }
 }
