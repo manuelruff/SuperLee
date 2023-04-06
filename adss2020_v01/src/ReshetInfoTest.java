@@ -57,18 +57,27 @@ class ReshetInfoTest {
         assertFalse(info.CheckTimeValidate(12.56,20.70));
         assertTrue(info.CheckTimeValidate(12.56,20));
         assertTrue(info.CheckTimeValidate(12,20.2));
-
     }
-
     @Test
     void getWorkerByID() {
+        ReshetInfo info=new ReshetInfo();
+        assertEquals("manu",info.GetWorkerByID("1").GetName());
+        assertEquals("david",info.GetWorkerByID("2").GetName());
     }
-
     @Test
     void isWorksInSuper() {
+        ReshetInfo info=new ReshetInfo();
+        assertTrue(info.IsWorksInSuper("1","yakarmeod"));
+        assertTrue(info.IsWorksInSuper("2","yakarmeod"));
+        assertTrue(info.IsWorksInSuper("3","yakarmeod"));
     }
 
     @Test
     void canDoJob() {
+        ReshetInfo info=new ReshetInfo();
+        assertTrue(info.CanDoJob("1",Jobs.ShiftManager));
+        assertTrue(info.CanDoJob("14",Jobs.StoreKeeper));
+        assertTrue(info.CanDoJob("19",Jobs.GeneralEmp));
+        assertTrue(info.CanDoJob("22",Jobs.Guard));
     }
 }

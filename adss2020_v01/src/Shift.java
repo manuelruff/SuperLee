@@ -36,6 +36,8 @@ public class Shift {
         return WorkerList.get(ID) != null ;
     }
 
+    /* do we need this?
+
     public LocalDate GetDate(){
         return this.date;
     }
@@ -50,6 +52,8 @@ public class Shift {
         return ret;
     }
 
+
+     */
     public void PrintMe(){
         System.out.println(this.date + " " + this.shift_time +"\n" +
                 "from: "+this.start+ " until: "+this.end);
