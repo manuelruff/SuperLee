@@ -505,23 +505,35 @@ public class ReshetInfo {
         double end_dec = end - Math.floor(end);
         return (! (start < 0 || start > end || end > 24 || start_dec >= 0.60 || end_dec >= 0.60));
     }
-    // calculate salary for worker without a bonus
-    public double CalculateMonthlySalary(String ID){
-        if (!isExistWorker(ID)) {
-            System.out.println("this worker is not working at our markets");
-            return -1;
+
+    // send payment to the workers
+    public void Payment(){
+        for(Worker worker: Workers.values() ){
+            worker.CalculateSalary();
+            worker.resetBonus();
+            ResetWorkDaysWorkers();
         }
-        double salary = Workers.get(ID).getShiftWorked()*Workers.get(ID).getWage();
-        return salary;
+        System.out.println("Payment done!");
     }
-    // with bonus
-    public double CalculateMonthlySalary(String ID,double bonus){
-        if (!isExistWorker(ID)) {
-            System.out.println("this worker is not working at our markets");
-            return -1;
-        }
-        double salary = Workers.get(ID).getShiftWorked()*Workers.get(ID).getWage() + bonus;
-        return salary;
+
+    // add bonus to worker by given ID
+
+    public void addBonusToWorker(String ID,double bonus){
+        Workers.get(ID).addBonus(bonus);
+        System.out.println("bonus added successfully to: "+Workers.get(ID).GetName());
+    }
+
+    public void addNewInfo(String ID,String reason, String info){
+        Workers.get(ID).addInfo(reason, info);
+    }
+
+    public void removeInfo(String ID,String reason){
+        Workers.get(ID).removeInfo(reason);
+    }
+
+    public void removeBonusToWorker(String ID,double bonus){
+        Workers.get(ID).removeBonus(bonus);
+        System.out.println("bonus added removed from: "+Workers.get(ID).GetName());
     }
     // reset the number of shifts to all workers
     public void ResetWorkDaysWorkers (){

@@ -192,13 +192,15 @@ public class UI {
             switch (choice){
                 case 1:
                     int op1_choice=-1;
-                    while (op1_choice!=3) {
+                    while (op1_choice!=6) {
                         System.out.println("hello " + info.GetWorkerByID(ID).GetName() + " please choose the detail you want to change");
                         System.out.println("1. change password ");
                         System.out.println("2. change name");
                         System.out.println("3. change bank account");
-                        System.out.println("4. Back");
-                        op1_choice = AskForNumber(1,4);
+                        System.out.println("4. add new personal information");
+                        System.out.println("5. remove personal information");
+                        System.out.println("6. Back");
+                        op1_choice = AskForNumber(1,6);
                         switch (op1_choice){
                             case 1:
                                 System.out.println("please enter new password:");
@@ -208,7 +210,7 @@ public class UI {
                                 // change it to function in reshet info
                                 info.ChangeWorkerPassword(ID,input_changepass); // change the password
                                 //after we did what we want we stop
-                                op1_choice=4;
+                                op1_choice=6;
                                 break;
                             case 2:
                                 System.out.println("please enter new name:");
@@ -217,18 +219,36 @@ public class UI {
                                 String input_changename = myObj_changename.nextLine();  // Read user input
                                 info.ChangeWorkerName(ID,input_changename);// change name
                                 //after we did what we want we stop
-                                op1_choice=4;
+                                op1_choice=6;
                                 break;
                             case 3:
                                 System.out.println("please enter new bank details:");
                                 int newBank = AskForIntNumber();
                                 info.ChangeWorkerBank(ID,newBank );
                                 //after we did what we want we stop
-                                op1_choice=4;
+                                op1_choice=6;
                                 break;
                             case 4:
+                                System.out.println("please enter the reason about your information:");
+                                Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+                                String reason = myObj.nextLine();  // Read user input
+                                System.out.println("please enter more details about the new information:");
+                                String information = myObj.nextLine();  // Read user input
+                                info.addNewInfo(ID,reason,information);
+                                //after we did what we want we stop
+                                op1_choice=6;
+                                break;
+                            case 5:
+                                System.out.println("please enter the reason about your information:");
+                                myObj = new Scanner(System.in);  // Create a Scanner object
+                                String remove_reason = myObj.nextLine();  // Read user input
+                                info.removeInfo(ID,remove_reason);
+                                //after we did what we want we stop
+                                op1_choice=6;
+                                break;
+                            case 6:
                                 //stop the loop and go back to previous window
-                                op1_choice=3;
+                                op1_choice=6;
                                 break;
                             default:
                                 System.out.println("please enter a valid option");
@@ -354,15 +374,16 @@ public class UI {
     //window with everything the manager can do
     public static void ManagerOptions(){
         int choice=-1;
-        while (choice!=5){
-            System.out.println("please choose your action: ");
+        while (choice!=6){
+            System.out.println("please choose your action:");
             System.out.println("1. work on a branch (snif)");
             System.out.println("2. send weekly shifts to history for all branches");
-            System.out.println("3. update employee ");
-            System.out.println("4. change password ");
-            System.out.println("5. Exit ");
+            System.out.println("3. update employee");
+            System.out.println("4. change password");
+            System.out.println("5. pay salaries");
+            System.out.println("6. Exit ");
             //ask for input num
-            choice=AskForNumber(1,5);
+            choice=AskForNumber(1,6);
             switch (choice){
                 case 1:
                     String Name=AskForBranch();
@@ -542,7 +563,7 @@ public class UI {
                     break;
                 case 3:
                     int choice3 = -1;
-                    while (choice3 != 7) {
+                    while (choice3 != 9) {
                         String ID;
                         System.out.println("hello manager, please choose what you want to do: ");
                         System.out.println("1. add new worker");
@@ -551,9 +572,11 @@ public class UI {
                         System.out.println("4. add job for worker");
                         System.out.println("5. change worker wage");
                         System.out.println("6. change worker contract");
-                        System.out.println("7. Back");
+                        System.out.println("7. add bonus to worker");
+                        System.out.println("8. remove bonus from worker");
+                        System.out.println("9. Back");
                         //ask for input
-                        choice3=AskForNumber(1,7);
+                        choice3=AskForNumber(1,9);
                         switch (choice3) {
                             case 1:
                                 String BranchName= AskForBranch();
@@ -572,7 +595,7 @@ public class UI {
                                 ID = AskForWorkerID();
                                 System.out.println("please enter the new worker's first role: \n" +
                                         "ShiftManager-1 , Cashier-2, StoreKeeper-3, GeneralEmp-4, Guard-5, Cleaner-6, Usher-7");
-                                int role_choice = AskForNumber(1,8);
+                                int role_choice = AskForNumber(1,7);
                                 info.AddJobToWorker(ID,role_choice);
                                 break;
                             case 5:
@@ -589,7 +612,19 @@ public class UI {
                                 info.ChangeContract(ID,input_Contract);
                                 break;
                             case 7:
-                                choice3 = 7;
+                                ID = AskForWorkerID();
+                                System.out.println("please enter the bonus you want to add: ");
+                                double a_bonus = AskForDoubleNumber();
+                                info.addBonusToWorker(ID,a_bonus);
+                                break;
+                            case 8:
+                                ID = AskForWorkerID();
+                                System.out.println("please enter the amount of bonus that you want to remove: ");
+                                double r_bonus = AskForDoubleNumber();
+                                info.removeBonusToWorker(ID,r_bonus);
+                                break;
+                            case 9:
+                                choice3 = 9;
                                 break;
                             default:
                                 System.out.println("please enter a valid option");
@@ -606,6 +641,15 @@ public class UI {
                     System.out.println("password has changed");
                     break;
                 case 5:
+                    System.out.println("are you sure that you want to pay salaries?" +
+                            "1. Yes" +
+                            "2. No");
+                    int payment_choice = AskForNumber(1,2);
+                    if(payment_choice == 1){
+                        info.Payment();
+                    }
+                    break;
+                case 6:
                     System.out.println("have a good day");
                     //stops the program
                     System.exit(0);

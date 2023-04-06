@@ -1,6 +1,7 @@
 import java.lang.management.LockInfo;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,9 +39,9 @@ public class Worker {
         this.Password=Password;
         //puts the date if starting the job
         this.StartDate=LocalDate.now();
-
+        this.info = new HashMap<>();
         this.ShiftWorked=0;
-
+        this.Bonus = 0;
         //sets the Constraints to everyday until he updates it
         this.ShiftsCanWork= new Constraints();
 
@@ -128,6 +129,20 @@ public class Worker {
 
     public void setWage(double wage){this.Wage = wage;}
 
+    public void addBonus(double bonus){this.Bonus+=bonus;}
+
+    public void removeBonus(double bonus){
+        if(this.Bonus<bonus){
+            resetBonus();
+        }
+        else {
+            this.Bonus-=bonus;
+        }
+    }
+    public void resetBonus(){this.Bonus=0;}
+
+    public double CalculateSalary(){return this.Wage*this.ShiftWorked+this.Bonus;}
+
     public void setContract(String contract){this.Contract = contract;}
 
     // function to set the number of shifts worker works
@@ -136,5 +151,9 @@ public class Worker {
     }
 
     public double getWage(){return this.Wage;}
+
+    public void addInfo(String reason, String info){this.info.put(reason,info);}
+
+    public void removeInfo(String reason){this.info.remove(reason);}
 
 }
