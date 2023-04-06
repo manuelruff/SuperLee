@@ -130,6 +130,10 @@ public class ReshetInfo {
         return Superim.get(Name) != null;
     }
 
+    public void addSuper(Super new_super){
+        Superim.put(new_super.GetName(),new_super);
+    }
+
     //creates weeklysheeft for a branch
     public void CreateWeekly(String Name){
         //we get the object of the super we wanna add a weekly to

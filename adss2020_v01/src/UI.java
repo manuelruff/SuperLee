@@ -377,13 +377,14 @@ public class UI {
         while (choice!=6){
             System.out.println("please choose your action:");
             System.out.println("1. work on a branch (snif)");
-            System.out.println("2. send weekly shifts to history for all branches");
-            System.out.println("3. update employee");
-            System.out.println("4. change password");
-            System.out.println("5. pay salaries");
-            System.out.println("6. Exit ");
+            System.out.println("2. add new branch");
+            System.out.println("3. send weekly shifts to history for all branches");
+            System.out.println("4. update employee");
+            System.out.println("5. change password");
+            System.out.println("6. pay salaries");
+            System.out.println("7. Exit ");
             //ask for input num
-            choice=AskForNumber(1,6);
+            choice=AskForNumber(1,7);
             switch (choice){
                 case 1:
                     String Name=AskForBranch();
@@ -553,6 +554,11 @@ public class UI {
                         }
                     break;
                 case 2:
+                    Super new_super = CreateNewSuper();
+                    info.addSuper(new_super);
+                    System.out.println(new_super.GetName() +" added successfully");
+                    break;
+                case 3:
                     //check if he created the weekly for everyone
                     if(!info.CheckAllHaveWeekly()){
                         System.out.println("not all the branches has a weekly plan create them first and then you can send");
@@ -561,7 +567,7 @@ public class UI {
                     //send all to history
                     info.SendConstraintsToHistory();
                     break;
-                case 3:
+                case 4:
                     int choice3 = -1;
                     while (choice3 != 9) {
                         String ID;
@@ -632,7 +638,7 @@ public class UI {
                         }
                     }
                     break;
-                case 4:
+                case 5:
                     System.out.println("enter new password: ");
                     Scanner scanner1 = new Scanner(System.in);  // Create a Scanner object
                     String pass1 = scanner1.nextLine();  // Read user input
@@ -640,7 +646,7 @@ public class UI {
                     //after we did what we want we stop
                     System.out.println("password has changed");
                     break;
-                case 5:
+                case 6:
                     System.out.println("are you sure that you want to pay salaries?" +
                             "1. Yes" +
                             "2. No");
@@ -649,7 +655,7 @@ public class UI {
                         info.Payment();
                     }
                     break;
-                case 6:
+                case 7:
                     System.out.println("have a good day");
                     //stops the program
                     System.exit(0);
@@ -795,6 +801,25 @@ public class UI {
         // create a generic password for the new worker
         String generic_Password = "1111";
         return new Worker(input_newName,input_newID,bankNum,input_newContract,wage,Jobs.values()[role_choice-1],generic_Password);
+    }
+
+    public static Super CreateNewSuper(){
+        boolean new_super_flag = false;
+        String input_newSuper = "";
+        // as long as the id is not new - keep asking the manager to add one
+        while(!new_super_flag){
+            System.out.println("please enter the name of the new super");
+            // get the new name from the manager
+            Scanner myObj_newSuper = new Scanner(System.in);  // Create a Scanner object
+            input_newSuper = myObj_newSuper.nextLine();  // Read user input
+            if (info.CheckSuperName(input_newSuper)) {
+                System.out.println("this super is already exists");
+            }
+            else {
+                new_super_flag = true;
+            }
+        }
+        return new Super(input_newSuper);
     }
 
     /**

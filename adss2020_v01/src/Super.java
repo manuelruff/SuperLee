@@ -37,7 +37,7 @@ public class Super {
         start_evening=new HashMap<>();
         end_evening=new HashMap<>();
 
-        //sets the basic hourse of each day to work from 7 to 14 and then from 14 to 23
+        //sets the basic hours of each day to work from 7 to 14 and then from 14 to 23
         this.setHours();
     }
     public void setHours(){
