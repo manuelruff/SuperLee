@@ -17,6 +17,9 @@ public class shipmentManagement {
         sites = new ArrayList<>();
         shipments = new ArrayList<>();
         availableShipments = new ArrayList<>();
+        loadDrivers();
+        loadTrucks();
+        loadSites();
     }
 
     /****************************** Drivers related Methods ******************************/
@@ -121,15 +124,15 @@ public class shipmentManagement {
     public void addTruck(String truckNumber, int totalWeight, int truckWeight, String model, int train) {
         Truck truck = null;
         switch (train) {
-            case 1:
+            case 0:
                 truck = new RegularTruck(truckNumber, totalWeight, truckWeight, model);
                 break;
 
-            case 2:
+            case 1:
                 truck = new CoolingTruck(truckNumber, totalWeight, truckWeight, model);
                 break;
 
-            case 3:
+            case 2:
                 truck = new FreezerTruck(truckNumber, totalWeight, truckWeight, model);
                 break;
         }
@@ -530,8 +533,8 @@ public class shipmentManagement {
                         else
                         {
                             shipment.setTruckNumber(truck.getTruckNumber());
-                            truck.addNewDay(NumInToDay(shipment.getDate().getDay()));
-                            currentTruck.removeDay(NumInToDay(shipment.getDate().getDay()));
+                            truck.addNewDay(Days.values()[shipment.getDate().getDay()]);
+                            currentTruck.removeDay(Days.values()[shipment.getDate().getDay()]);
                             System.out.println("Truck Changed");
                         }
                     }
@@ -543,6 +546,7 @@ public class shipmentManagement {
 
     public String changeDriver(String driverName, Truck truck,int day)
     {
+        Days days = Days.values()[day];
         Driver driver = getDriver(driverName);
         if(driver.getAbility().ordinal() >= truck.getStorageType().ordinal())
         {
@@ -556,15 +560,15 @@ public class shipmentManagement {
         {
             for (Driver driver1 : drivers)
             {
-                if(driver.checkDay(Days.values()[day])) {
+                if(driver.checkDay(days)) {
                     if (driver1.getAbility().ordinal() >= truck.getStorageType().ordinal()) {
                         if (driver1.getLicense() == 'd') {
-                            driver1.addNewDay(NumInToDay(day));
-                            driver.removeDay(NumInToDay(day));
+                            driver1.addNewDay(days);
+                            driver.removeDay(days);
                             return driver1.getName();
                         } else if (driver.getLicense() == 'c' && truck.getTotalWeight() <= 12000) {
-                            driver1.addNewDay(NumInToDay(day));
-                            driver.removeDay(NumInToDay(day));
+                            driver1.addNewDay(days);
+                            driver.removeDay(days);
                             return driver1.getName();
                         }
                     }
@@ -573,27 +577,6 @@ public class shipmentManagement {
         }
         return null;
     }
-
-    public Days NumInToDay(int day)
-    {
-        switch (day)
-        {
-            case 0:
-                return Days.Sunday;
-            case 1:
-                return Days.Monday;
-            case 2:
-                return Days.Tuesday;
-            case 3:
-                return Days.Wednesday;
-            case 4:
-                return Days.Thursday;
-            case 5:
-                return Days.Friday;
-        }
-        return Days.Friday;
-    }
-
     public Truck getTruck(String truckNumber)
     {
         for(Truck truck : trucks)
@@ -676,11 +659,53 @@ public class shipmentManagement {
                 answer = scanner.nextLine();
             }
         }
+    }
 
+    public void loadDrivers(){
+        addDriver("Ron", "000000000", 'C', 0);
+        addDriver("Roee", "000000001", 'D', 1);
+        addDriver("tom", "000000002", 'D', 2);
+        addDriver("omer", "000000003", 'D', 0);
+        addDriver("yuval", "000000004", 'D', 1);
+        addDriver("ido", "000000005", 'C', 2);
+        addDriver("manu", "000000006", 'C', 0);
+        addDriver("matan", "000000007", 'C', 1);
+        addDriver("omri", "000000008", 'D',2);
+        addDriver("freshi", "000000009", 'C', 1);
+    }
+
+    public void loadTrucks(){
+        addTruck("0000", 15000, 2000, "mercedes", 0);
+        addTruck("0001", 13000, 2000, "mercedes", 1);
+        addTruck("0002", 12000, 2000, "mercedes", 2);
+        addTruck("0003", 10000, 2000, "mercedes", 0);
+        addTruck("0004", 8000, 1000, "mercedes", 1);
+        addTruck("0005", 9000, 1000, "mercedes", 2);
+        addTruck("0006", 16000, 2000, "mercedes", 0);
+        addTruck("0007", 7000, 1000, "mercedes", 1);
+        addTruck("0008", 8000, 1000, "mercedes", 2);
+        addTruck("0009", 11000, 2000, "mercedes", 0);
+        addTruck("0010", 12000, 2000, "mercedes", 1);
+    }
+
+
+    public void loadSites(){
+        addVendor("Osem", "beer sheva", "0547388475", "luffy");
+        addVendor("tnuva", "TLV", "0547388476", "sanji");
+        addVendor("teva", "TLV", "0547388477", "zorro");
+        addVendor("shtraus", "kiryat gat", "0547388478", "chopper");
+        addVendor("elit", "haifa", "0547388479", "brook");
+        addVendor("shufersal", "givataim", "0547388123", "nami");
+
+
+        addBranch("snif1", "beer sheva", "0542318475", "jinbi", 2);
+        addBranch("snif2", "kiryat gat", "0542318476", "robin", 2);
+        addBranch("snif3", "TLV", "0542318477", "garp", 1);
+        addBranch("snif4", "givataim", "0542318478", "shanks", 1);
+        addBranch("snif5", "katzrin", "0542318479", "kaido", 0);
+        addBranch("snif6", "haifa", "0542318470", "oden", 0);
 
     }
 }
 
-/**
- * roee u are stupid as fuck
- */
+

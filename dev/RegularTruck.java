@@ -10,5 +10,4 @@ public class RegularTruck extends Truck{
         return Training.Regular;
     }
 
-
 }
