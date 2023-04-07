@@ -36,24 +36,6 @@ public class Shift {
         return WorkerList.get(ID) != null ;
     }
 
-    /* do we need this?
-
-    public LocalDate GetDate(){
-        return this.date;
-    }
-    public ShiftTime GetShiftTime(){
-        return this.shift_time;
-    }
-    public List<String> GetWorkers(){
-        List<String> ret=new ArrayList<>();
-        for (String ID:this.WorkerList.values()){
-            ret.add(ID);
-        }
-        return ret;
-    }
-
-
-     */
     public void PrintMe(){
         System.out.println(this.date + " " + this.shift_time +"\n" +
                 "from: "+this.start+ " until: "+this.end);
