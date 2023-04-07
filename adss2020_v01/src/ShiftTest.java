@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -8,7 +9,7 @@ class ShiftTest {
 
     @Test
     void addWorker() {
-        Shift tester=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift tester=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         assertFalse(tester.IsWorkerAtShift("2"));
         assertFalse(tester.IsWorkerAtShift("3"));
         tester.AddWorker("2","lala");
@@ -20,7 +21,7 @@ class ShiftTest {
 
     @Test
     void removeWorker() {
-        Shift tester=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift tester=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         tester.AddWorker("2","lala");
         tester.AddWorker("3","lali");
         tester.RemoveWorker("2");
@@ -32,7 +33,7 @@ class ShiftTest {
 
     @Test
     void isWorkerAtShift() {
-        Shift tester=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift tester=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         tester.AddWorker("2","lala");
         tester.AddWorker("3","lali");
         assertTrue(tester.IsWorkerAtShift("1"));

@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -11,13 +12,13 @@ class WeeklyTest {
     void addShift() {
         Weekly week=new Weekly();
         assertNotNull(week);
-        Shift shift=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         week.AddShift(shift);
-        Shift shift1=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         week.AddShift(shift1);
-        Shift shift2=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift shift2=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         week.AddShift(shift2);
-        Shift shift3=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift shift3=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         week.AddShift(shift3);
         assertNotNull(week.GetShift(0));
         assertNotNull(week.GetShift(1));
@@ -27,13 +28,13 @@ class WeeklyTest {
     @Test
     void getShift() {
         Weekly week=new Weekly();
-        Shift shift=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         week.AddShift(shift);
-        Shift shift1=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         week.AddShift(shift1);
-        Shift shift2=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift shift2=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         week.AddShift(shift2);
-        Shift shift3=new Shift(LocalDate.now(),ShiftTime.Morning,10,16,"1","manu");
+        Shift shift3=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
         week.AddShift(shift3);
         assertNotNull(week.GetShift(0));
         assertNotNull(week.GetShift(1));

@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -33,10 +34,10 @@ class ReshetInfoTest {
         workers.add("2");
         workers.add("3");
         workers.add("4");
-        assertEquals("1",info.GetAvailableEmployee(Days.Sunday,Jobs.ShiftManager,ShiftTime.Morning,workers,"yakarmeod").get(0));
-        assertEquals("2",info.GetAvailableEmployee(Days.Sunday,Jobs.ShiftManager,ShiftTime.Morning,workers,"yakarmeod").get(1));
-        assertEquals("3",info.GetAvailableEmployee(Days.Sunday,Jobs.ShiftManager,ShiftTime.Morning,workers,"yakarmeod").get(2));
-        assertEquals("4",info.GetAvailableEmployee(Days.Sunday,Jobs.ShiftManager,ShiftTime.Morning,workers,"yakarmeod").get(3));
+        assertEquals("1",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,workers,"yakarmeod").get(0));
+        assertEquals("2",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,workers,"yakarmeod").get(1));
+        assertEquals("3",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,workers,"yakarmeod").get(2));
+        assertEquals("4",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,workers,"yakarmeod").get(3));
     }
     @Test
     void isTruePassword() {
@@ -75,9 +76,9 @@ class ReshetInfoTest {
     @Test
     void canDoJob() {
         ReshetInfo info=new ReshetInfo();
-        assertTrue(info.CanDoJob("1",Jobs.ShiftManager));
-        assertTrue(info.CanDoJob("14",Jobs.StoreKeeper));
-        assertTrue(info.CanDoJob("19",Jobs.GeneralEmp));
-        assertTrue(info.CanDoJob("22",Jobs.Guard));
+        assertTrue(info.CanDoJob("1", Jobs.ShiftManager));
+        assertTrue(info.CanDoJob("14", Jobs.StoreKeeper));
+        assertTrue(info.CanDoJob("19", Jobs.GeneralEmp));
+        assertTrue(info.CanDoJob("22", Jobs.Guard));
     }
 }
