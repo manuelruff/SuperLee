@@ -5,5 +5,10 @@ public class RegularTruck extends Truck{
         super(truck_Number, totalWeight, truckWeight, model);
     }
 
+    @Override
+    public Training getStorageType() {
+        return Training.Regular;
+    }
+
 
 }

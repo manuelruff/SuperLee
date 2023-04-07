@@ -37,13 +37,31 @@ public class Driver {
         return ability;
     }
 
-    public boolean addNewDay(Days newDay){
-        for (Days day : workingDays){
-            if(day == newDay)
+    public boolean addNewDay(Days newDay) {
+        for (Days day : workingDays) {
+            if (day == newDay)
                 return false;
         }
         workingDays.add(newDay);
         return true;
+    }
+
+    public boolean checkDay(Days cday)
+    {
+        for(Days day : workingDays)
+        {
+            if(day == cday)
+                return false;
+        }
+        return true;
+    }
+
+    public void removeDay(Days dayToRemove)
+    {
+        for (Days day : workingDays){
+            if(day == dayToRemove)
+                workingDays.remove(dayToRemove);
+        }
     }
 
     public void printDriver() {

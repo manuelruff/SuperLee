@@ -512,7 +512,106 @@ public class shipmentManagement {
     }
 
     private void changeTruck(Shipment shipment) {
+        Truck currentTruck = getTruck(shipment.getTruckNumber());
+        String currentDriverName = shipment.getDriverName();;
+        for(Truck truck : trucks)
+        {
+            if(currentTruck.getTotalWeight() < truck.getTotalWeight())
+            {
+                if(truck.checkDay(shipment.getDate().getDay())) //check about getDay function
+                {
+                    if (((truck instanceof FreezerTruck) && (currentTruck instanceof FreezerTruck))
+                            || ((truck instanceof CoolingTruck) && (currentTruck instanceof CoolingTruck))
+                            || ((truck instanceof RegularTruck) && (currentTruck instanceof RegularTruck)))
+                    {
+                        shipment.setTruckNumber(truck.getTruckNumber());
+                        truck.addNewDay(NumInToDay(shipment.getDate().getDay()));
+                        currentTruck.removeDay(NumInToDay(shipment.getDate().getDay()));
+                        System.out.println("Truck Changed");
+                        shipment.setDriverName(changeDriver(shipment.getDriverName(), truck,shipment.getDate().getDay()));
+                        if(shipment.getDriverName() == null)
+                        {
+                            System.out.println("no driver available for the new truck, truck cannot be changed");
+                            shipment.setTruckNumber(currentTruck.getTruckNumber());
+                            shipment.setDriverName(currentDriverName);
+                        }
+                    }
+                }
 
+            }
+        }
+    }
+
+    public String changeDriver(String driverName, Truck truck,int day)
+    {
+        Driver driver = getDriver(driverName);
+        if(driver.getAbility().ordinal() >= truck.getStorageType().ordinal())
+        {
+            if(driver.getLicense() == 'd')
+                return driverName;
+            else if (driver.getLicense() == 'c' && truck.getTotalWeight() <= 12000) {
+                return driverName;
+            }
+        }
+        else
+        {
+            for (Driver driver1 : drivers)
+            {
+                if(driver.checkDay(Days.values()[day])) {
+                    if (driver1.getAbility().ordinal() >= truck.getStorageType().ordinal()) {
+                        if (driver1.getLicense() == 'd') {
+                            driver1.addNewDay(NumInToDay(day));
+                            driver.removeDay(NumInToDay(day));
+                            return driver1.getName();
+                        } else if (driver.getLicense() == 'c' && truck.getTotalWeight() <= 12000) {
+                            driver1.addNewDay(NumInToDay(day));
+                            driver.removeDay(NumInToDay(day));
+                            return driver1.getName();
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public Days NumInToDay(int day)
+    {
+        switch (day)
+        {
+            case 0:
+                return Days.Sunday;
+            case 1:
+                return Days.Monday;
+            case 2:
+                return Days.Tuesday;
+            case 3:
+                return Days.Wednesday;
+            case 4:
+                return Days.Thursday;
+            case 5:
+                return Days.Friday;
+        }
+        return Days.Friday;
+    }
+
+    public Truck getTruck(String truckNumber)
+    {
+        for(Truck truck : trucks)
+        {
+            if(truck.getTruckNumber().equals(truckNumber))
+                return truck;
+        }
+        return null;
+    }
+    public Driver getDriver(String driverName)
+    {
+        for (Driver driver : drivers)
+        {
+            if(driver.getName().equals(driverName))
+                return driver;
+        }
+        return null;
     }
 
     private boolean itemsToDelete(Shipment shipment) {

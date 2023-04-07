@@ -34,6 +34,13 @@ public abstract class Truck {
         return model;
     }
 
+    public List<Days> getInUse()
+    {
+        return inUse;
+    }
+
+    public abstract Training getStorageType();
+
     public boolean addNewDay(Days newDay){
         for (Days day : inUse){
             if (day == newDay)
@@ -43,6 +50,42 @@ public abstract class Truck {
         return true;
     }
 
+    public void removeDay(Days dayToRemove)
+    {
+        for(Days day : inUse)
+        {
+            if(day == dayToRemove)
+                inUse.remove(dayToRemove);
+        }
+    }
+    public boolean checkDay(int dayNum)
+    {
+        for(Days day : inUse)
+        {
+            if(dayNum == dayInToNum(day))
+                return false;
+        }
+        return true;
+    }
+    public int dayInToNum(Days day)
+    {
+        switch (day.name())
+        {
+            case "Sunday":
+                return 0;
+            case "Monday":
+                return 1;
+            case "Tuesday":
+                return 2;
+            case "Wednesday":
+                return 3;
+            case "Thursday":
+                return 4;
+            case "Friday":
+                return 5;
+        }
+        return 10;
+    }
 
     public void printTruck() {
     }

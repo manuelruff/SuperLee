@@ -41,6 +41,7 @@ public class Shipment {
 
     public String getTruckNumber(){return truckNumber;}
 
+
     public List<Site> getDestinations() {
         return destinations;
     }
@@ -71,4 +72,12 @@ public class Shipment {
         destinations.remove(site);
     }
 
+    public void setTruckNumber(String number)
+    {
+        this.truckNumber = number;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
 }
