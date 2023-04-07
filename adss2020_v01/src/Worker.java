@@ -18,7 +18,7 @@ public class Worker {
     private Map<String ,String >info;
     private String Password;
     //the shifts he can work at
-    private Constraints ShiftsCanWork;
+    private Constraints ShiftsCantWork;
     //a list of jobes he can do
     private List<Jobs> Roles;//need to be size 7 for all the roles in the end
 
@@ -43,7 +43,7 @@ public class Worker {
         this.ShiftWorked=0;
         this.Bonus = 0;
         //sets the Constraints to everyday until he updates it
-        this.ShiftsCanWork= new Constraints();
+        this.ShiftsCantWork= new Constraints();
 
         this.WeeklyWorkingDays=new ArrayList<>();
     }
@@ -65,11 +65,11 @@ public class Worker {
 
     //called when we create a new Constraints
     public void AddCantWork(Days day,double s,double e,String r){
-        ShiftsCanWork.AddCantWork(day,s,e,r);
+        ShiftsCantWork.AddCantWork(day,s,e,r);
     }
     //called when we delete an Constraints
     public void RemoveCantWork(Days day,double s,double e){
-        ShiftsCanWork.RemoveCantWork(day,s,e);
+        ShiftsCantWork.RemoveCantWork(day,s,e);
     }
 
     //check if entered right password
@@ -91,7 +91,7 @@ public class Worker {
             return false;
         }
         //return if he can work there or not
-        return ShiftsCanWork.CanWork(day, s, e);
+        return ShiftsCantWork.CanWork(day, s, e);
     }
 
     public String GetName(){
@@ -124,7 +124,7 @@ public class Worker {
     // used to add new Constraints
 
     public void ShowConstraints(){
-        this.ShiftsCanWork.PrintMe();
+        this.ShiftsCantWork.PrintMe();
     }
 
     public void setWage(double wage){this.Wage = wage;}
