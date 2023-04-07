@@ -524,16 +524,15 @@ public class shipmentManagement {
                             || ((truck instanceof CoolingTruck) && (currentTruck instanceof CoolingTruck))
                             || ((truck instanceof RegularTruck) && (currentTruck instanceof RegularTruck)))
                     {
-                        shipment.setTruckNumber(truck.getTruckNumber());
-                        truck.addNewDay(NumInToDay(shipment.getDate().getDay()));
-                        currentTruck.removeDay(NumInToDay(shipment.getDate().getDay()));
-                        System.out.println("Truck Changed");
                         shipment.setDriverName(changeDriver(shipment.getDriverName(), truck,shipment.getDate().getDay()));
                         if(shipment.getDriverName() == null)
-                        {
-                            System.out.println("no driver available for the new truck, truck cannot be changed");
-                            shipment.setTruckNumber(currentTruck.getTruckNumber());
                             shipment.setDriverName(currentDriverName);
+                        else
+                        {
+                            shipment.setTruckNumber(truck.getTruckNumber());
+                            truck.addNewDay(NumInToDay(shipment.getDate().getDay()));
+                            currentTruck.removeDay(NumInToDay(shipment.getDate().getDay()));
+                            System.out.println("Truck Changed");
                         }
                     }
                 }
