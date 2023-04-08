@@ -314,11 +314,10 @@ public class UI {
                         System.out.println("2 - Delete order");
                         System.out.println("3 - Print All orders");
                         System.out.println("4 - Add item to order");
-                        System.out.println("5 - Exist");
+                        System.out.println("5 - Exit");
                         ch4 = scanner.nextInt();
                         switch (ch4){
                             case 1:
-                                List<Item> itemsAdded = new ArrayList<>();
                                 boolean check4 =true,check41=true,check40=true, itemCheck=true, check401 =true;
                                 String sourceSite;
                                 String destinationSite;
@@ -334,7 +333,7 @@ public class UI {
                                                 System.out.println("Please enter Destination site:");
                                                 destinationSite = scanner.nextLine();
                                                 if (Smanagement.checkBranch(destinationSite)) {
-                                                    scanner.nextLine();
+                                                    Smanagement.createOrder(sourceSite, destinationSite);
                                                     while(cho != 3)
                                                     {
                                                         System.out.println("Item menu:");
@@ -346,10 +345,12 @@ public class UI {
                                                         {
                                                             case 1:
                                                                 System.out.println("Please enter item name:");
-                                                                String itemName = scanner.nextLine();
+                                                                String itemName;
                                                                 scanner.nextLine();
+                                                                itemName = scanner.nextLine();
+                                                                check401 = true;
                                                                 while(check401) {
-                                                                    System.out.println("Please enter the amount of the item you want to order");
+                                                                    System.out.println("Please enter the amount of the item you want to order:");
                                                                     amount = scanner.nextInt();
                                                                     if(amount <= 0)
                                                                         System.out.println("please enter only a positive number");
@@ -369,14 +370,9 @@ public class UI {
                                                                 }
                                                                 Smanagement.addItemToOrder(sourceSite,itemName,amount,training);
                                                                 System.out.println("Item add to order");
-                                                                Item item = new Item(itemName, amount, Training.values()[training]);
-                                                                itemsAdded.add(item);
                                                                 break;
                                                             case 2:
-                                                                System.out.println("Items added so far:");
-                                                                System.out.println("Total items added so far: " + itemsAdded.size() +"\n");
-                                                                for(Item item1 : itemsAdded)
-                                                                    item1.printItem();;
+                                                                Smanagement.printLastOrder(sourceSite);
                                                                 break;
                                                             case 3:
                                                                 cho = 3;
@@ -385,7 +381,6 @@ public class UI {
                                                                 System.out.println("Invalid details");
                                                         }
                                                     }
-                                                    Smanagement.createOrder(sourceSite, destinationSite);
                                                     System.out.println("Order was added to the system");
                                                     check4 = false;
                                                     check41 = false;
@@ -514,6 +509,7 @@ public class UI {
                                     if(day < 1 || day > 6)
                                         System.out.println("please enter a number between 1 - 6 only");
                                     else {
+                                        scanner.nextLine();
                                         while (check50)
                                         {
                                             System.out.println("Please enter ID for the shipment");

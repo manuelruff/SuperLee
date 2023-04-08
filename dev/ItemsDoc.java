@@ -1,19 +1,23 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ItemsDoc {
     private String ID;
     private String siteName;
     private List<Item> itemList;
 
-    public ItemsDoc(String ID, String siteName) {
-        this.ID = ID;
+    private static int count;
+    public ItemsDoc(String siteName) {
+        count++;
+        this.ID = String.valueOf(count);
         this.siteName = siteName;
         itemList = new ArrayList<>();
+
     }
     public void printItemsDoc() {
         System.out.println("Item Document details:");
-        System.out.println("Document ID:" + ID);
+        System.out.println("Document ID: " + ID);
         System.out.println("Destination: " + siteName);
         for(Item item : itemList)
             item.printItem();
@@ -27,11 +31,18 @@ public class ItemsDoc {
     public String getSiteName() {
         return siteName;
     }
-    public void addItemToDoc(Item item)
+    public void addItemToDoc(Item newItem)
     {
-        itemList.add(item);
+        if (!itemList.isEmpty()) {
+            for (int i = 0; i < itemList.size(); i++) {
+                if (Objects.equals(newItem.getName(), itemList.get(i).getName())) {
+                    itemList.get(i).setQuantity(newItem.getQuantity() + itemList.get(i).getQuantity());
+                    return;
+                }
+            }
+        }
+        itemList.add(newItem);
     }
-
     public void addListOfItems(List<Item> items){
         if (items.isEmpty())
             return;
@@ -51,5 +62,8 @@ public class ItemsDoc {
         return itemList.isEmpty();
     }
 
+    public static int getCount(){
+        return count;
+    }
 
 }

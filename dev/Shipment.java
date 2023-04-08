@@ -4,17 +4,19 @@ import java.util.List;
 public class Shipment {
 
     private String ID, truckNumber, driverName;
-    private Date date, departureTime;
+    private Days dayOfTheWeek;
+
+    private Date departureTime;
     private Site source;
     private List<Site> destinations;
     private List<ItemsDoc> docs;
     private Status shipmentStatus;
 
-    public Shipment(String ID, String truckNumber, String driverName, Date date, Site source, List<Site> destinations, List<ItemsDoc> docs) {
+    public Shipment(String ID, String truckNumber, String driverName, Days day, Site source, List<Site> destinations, List<ItemsDoc> docs) {
         this.ID = ID;
         this.truckNumber = truckNumber;
         this.driverName = driverName;
-        this.date = date;
+        this.dayOfTheWeek = day;
         this.source = source;
         this.destinations = destinations;
         this.docs = docs;
@@ -45,8 +47,8 @@ public class Shipment {
         return driverName;
     }
 
-    public Date getDate() {
-        return date;
+    public Days getDayOfTheWeek() {
+        return dayOfTheWeek;
     }
 
     public Site getSource() {

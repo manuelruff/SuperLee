@@ -7,7 +7,11 @@ public class Order {
     private Zone zone;
     private List<Item> itemList;
 
+    private String ID;
+    private  static int count;
     public Order(String destination, Zone zone) {
+        count++;
+        this.ID = String.valueOf(count);
         this.destination = destination;
         this.zone = zone;
         itemList = new ArrayList<>();
@@ -31,7 +35,6 @@ public class Order {
                     itemList.get(i).setQuantity(item.getQuantity() + itemList.get(i).getQuantity());
                     return;
                 }
-
             }
         }
         itemList.add(item);
@@ -48,7 +51,7 @@ public class Order {
             return null;
         }
         else {
-            for(int i=0; i< itemList.size(); i++)
+            for(int i=itemList.size() - 1; i >= 0 ; i--)
             {
                 if(itemList.get(i).getStorageCondition() == ability)
                     deliveryList.add(itemList.remove(i));
@@ -70,10 +73,15 @@ public class Order {
     }
 
     public void printOrder() {
+        System.out.println("Order ID: " + ID);
         System.out.println("Destination: " + destination);
-        System.out.println("Items: ");
-        for (Item item : itemList){
-            item.printItem();
+        if (itemList.isEmpty())
+            System.out.println("No items currently in the order");
+        else {
+            System.out.println("Items: ");
+            for (Item item : itemList) {
+                item.printItem();
+            }
         }
     }
 }

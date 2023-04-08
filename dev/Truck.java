@@ -58,33 +58,9 @@ public abstract class Truck {
                 inUse.remove(dayToRemove);
         }
     }
-    public boolean checkDay(int dayNum)
+    public boolean checkDay(Days dayNum)
     {
-        for(Days day : inUse)
-        {
-            if(dayNum == dayInToNum(day))
-                return false;
-        }
-        return true;
-    }
-    public int dayInToNum(Days day)
-    {
-        switch (day.name())
-        {
-            case "Sunday":
-                return 0;
-            case "Monday":
-                return 1;
-            case "Tuesday":
-                return 2;
-            case "Wednesday":
-                return 3;
-            case "Thursday":
-                return 4;
-            case "Friday":
-                return 5;
-        }
-        return 10;
+        return !(inUse.contains(dayNum));
     }
 
     public abstract void printTruck();

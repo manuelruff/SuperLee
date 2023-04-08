@@ -10,6 +10,7 @@ public class shipmentManagement {
 
     private List<Shipment> availableShipments;
 
+
     public shipmentManagement() {
         vendorMap = new HashMap<>();
         drivers = new ArrayList<>();
@@ -21,7 +22,7 @@ public class shipmentManagement {
         loadTrucks();
         loadSites();
         LoadOrder();
-        TestShipment();
+        //TestShipment();
     }
 
     /****************************** Drivers related Methods ******************************/
@@ -76,8 +77,11 @@ public class shipmentManagement {
      * @param day   int represent the day of the week.
      * @return the available driver.
      */
-    public Driver searchForDriver(Training train, int day) {
+    public Driver searchForDriver(Training train, int day, List<String> driverNameList) {
         for (Driver driver : drivers) {
+            if (driverNameList.contains(driver.getName())){
+                continue;
+            }
             if (driver.getAbility().ordinal() <= train.ordinal())
                 if (driver.addNewDay(Days.values()[day])) {
                     return driver;
@@ -163,13 +167,14 @@ public class shipmentManagement {
      * @param day   int, represent the day of the week.
      * @return string, the truck Number.
      */
-    public String searchForTruck(Training train, int day) {
+    public String searchForTruck(Training train, int day, char licence) {
         for (Truck truck : trucks) {
-            if (truck.addNewDay(Days.values()[day])) {
-                if (((truck instanceof FreezerTruck) && (train == Training.Freezer))
-                        || ((truck instanceof CoolingTruck) && (train == Training.Cooling))
-                        || ((truck instanceof RegularTruck) && (train == Training.Regular)))
-                    return truck.getTruckNumber();
+            if (licence == 'D' || truck.getTotalWeight() < 12000)
+                if (truck.addNewDay(Days.values()[day])) {
+                    if (((truck instanceof FreezerTruck) && (train == Training.Freezer))
+                            || ((truck instanceof CoolingTruck) && (train == Training.Cooling))
+                            || ((truck instanceof RegularTruck) && (train == Training.Regular)))
+                        return truck.getTruckNumber();
             }
         }
         return "";
@@ -350,8 +355,16 @@ public class shipmentManagement {
         vendorMap.get(source).add(order);
     }
 
+    public void printLastOrder(String source){
+        vendorMap.get(source).get(vendorMap.get(source).size() - 1).printOrder();
+    }
     public void printOrders() {
         for (Map.Entry<String, List<Order>> entry : vendorMap.entrySet()){
+            System.out.println("********** " + entry.getKey() + " **********");
+            if (entry.getValue().isEmpty()) {
+                System.out.println("No orders");
+            }
+            System.out.println();
             for (Order order : entry.getValue()){
                 order.printOrder();
             }
@@ -415,13 +428,17 @@ public class shipmentManagement {
     }
 
 
+    /**
+     * This function get a shipment and add it to the shipment array sorted by date.
+     * @param shipment Shipment, the shipment to add.
+     */
     private void addShipmentSorted(Shipment shipment){
         if (availableShipments.isEmpty()){
             availableShipments.add(shipment);
             return;
         }
         for (int i=0; i < availableShipments.size(); i++){
-            if (shipment.getDate().compareTo(availableShipments.get(i).getDate()) <= 0){
+            if (shipment.getDayOfTheWeek().ordinal() <= availableShipments.get(i).getDayOfTheWeek().ordinal()){
                 availableShipments.add(i, shipment);
                 return;
             }
@@ -441,9 +458,11 @@ public class shipmentManagement {
      * @return True/false if the shipment was created.
      */
     public boolean createShipment(int dayOfWeek, String ID, String source) {
-        Date date = new Date();
         ItemsDoc itemsDoc;
         Shipment shipment;
+        Driver driverForShipment = null;
+        String truckNumberForShipment = "";
+
         if (vendorMap.get(source).isEmpty()) {
             System.out.println("This vendor: " + source + " does not have any orders");
             return false;
@@ -451,6 +470,7 @@ public class shipmentManagement {
         // initialize the lists
         List<Site> branchList = new ArrayList<>();
         List<ItemsDoc> itemsDocList = new ArrayList<>();
+        List<String> driverNameList = new ArrayList<>();
 
         // saving the values of the first order.
         Order firstOrder = vendorMap.get(source).get(0);
@@ -460,22 +480,29 @@ public class shipmentManagement {
         Site vendor = getSite(source);
 
         // finding driver and truck
-        Driver driverForShipment = searchForDriver(trainToSearchBy, dayOfWeek);
-        String truckNumberForShipment = searchForTruck(trainToSearchBy, dayOfWeek);
-
+        while (driverForShipment == null || Objects.equals(truckNumberForShipment, "")) {
+            driverForShipment = searchForDriver(trainToSearchBy, dayOfWeek, driverNameList);
+            if (driverForShipment == null){
+                System.out.println("There isn't any available driver for this shipment at that day");
+                return false;
+            }
+            driverNameList.add(driverForShipment.getName());
+            truckNumberForShipment = searchForTruck(trainToSearchBy, dayOfWeek, driverForShipment.getLicense());
+        }
         // creating the first item doc and adding it to the list of items.
-        itemsDoc = new ItemsDoc(ID, firstOrder.getDestination());
+        itemsDoc = new ItemsDoc(firstOrder.getDestination());
         itemsDoc.addListOfItems(firstOrder.getItemsForShipping(trainToSearchBy));
         itemsDocList.add(itemsDoc);
 
         // in case there is only one order from the specific vendor
         if (vendorMap.get(source).size() == 1) {
-            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment.getName(), date, vendor, branchList, itemsDocList);
+            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment.getName(), Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList);
             addShipmentSorted(shipment);
             if (firstOrder.checkIfEmpty())
                 vendorMap.get(source).remove(firstOrder);
             return true;
-        } else {
+        }
+        else {
             boolean skip = true;
             boolean found;
             // in case there is more than 1 order.
@@ -492,8 +519,6 @@ public class shipmentManagement {
                         if (Objects.equals(order.getDestination(), itemD.getSiteName())) {
                             itemD.addListOfItems(order.getItemsForShipping(trainToSearchBy));
                             // checking if the order is empty, to delete.
-                            if (firstOrder.checkIfEmpty())
-                                vendorMap.get(source).remove(firstOrder);
                             found = true;
                             break;
                         }
@@ -503,14 +528,14 @@ public class shipmentManagement {
                         continue;
                     // in case of a new site.
                     branchList.add(getSite(order.getDestination()));
-                    itemsDoc = new ItemsDoc(ID, order.getDestination());
+                    itemsDoc = new ItemsDoc(order.getDestination());
                     itemsDoc.addListOfItems(order.getItemsForShipping(trainToSearchBy));
                     itemsDocList.add(itemsDoc);
-                    if (firstOrder.checkIfEmpty())
-                        vendorMap.get(source).remove(firstOrder);
+
                 }
             }
-            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment.getName(), date, vendor, branchList, itemsDocList);
+            vendorMap.get(source).removeIf(Order::checkIfEmpty);
+            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment.getName(), Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList);
             addShipmentSorted(shipment);
             return true;
         }
@@ -529,30 +554,32 @@ public class shipmentManagement {
         shipment.getSource().printSite();
         Truck currTruck = searchTruckByID(shipment.getTruckNumber());
         Scanner scanner = new Scanner(System.in);
-        String input = "";
         System.out.println("Please enter the weight of the truck with the items (in KG): ");
         int weight;
         weight = scanner.nextInt();
         int firstWeight = weight;
         while (true) {
-            while (!scanner.hasNextInt()) {
+            if (shipment.getShipmentStatus() != Status.NoChanges) {
+                System.out.println("Please enter the new Weight (in kG):");
+                weight = scanner.nextInt();
+            }
+            while (weight > firstWeight) {
                 System.out.println("The input was incorrect, please enter only numbers");
                 weight = scanner.nextInt();
-                System.out.println("The input was incorrect, please enter only numbers");
-
             }
             if (weight > currTruck.getTotalWeight()) {
-                while (!Objects.equals(input, "1") && !Objects.equals(input, "2") && !Objects.equals(input, "3")) {
+                int input = 0;
+                while (input != 1 && input != 2 && input != 3) {
                     System.out.println("The truck exceeded the max carry weight, in order to proceed with the shipment\n" +
                             "please choose one of the options: ");
                     System.out.println("1. Take out some of the items");
                     System.out.println("2. Switch to a bigger truck");
                     if (shipment.getDestinations().size() != 1)
                         System.out.println("3. remove the last site from this shipment");
-                    input = scanner.nextLine();
+                    input = scanner.nextInt();
                     switch (input) {
 
-                        case "1":
+                        case 1:
                             if (itemsToDelete(shipment)){
                                 System.out.println("There is no items left in the shipment, so the shipment is canceled");
                                 shipment.setShipmentStatus(Status.Canceled);
@@ -561,12 +588,17 @@ public class shipmentManagement {
                             shipment.setShipmentStatus(Status.ItemsChange);
                             break;
 
-                        case "2":
+                        case 2:
                             changeTruck(shipment);
-                            shipment.setShipmentStatus(Status.TruckExchange);
+                            if (!Objects.equals(currTruck.getTruckNumber(), shipment.getTruckNumber()))
+                                shipment.setShipmentStatus(Status.TruckExchange);
+                            else{
+                                System.out.println("There isn't a bigger truck available at the moment");
+                            }
+                            currTruck = searchTruckByID(shipment.getTruckNumber());
                             break;
 
-                        case "3":
+                        case 3:
                             removeLastSiteFromShipment(shipment);
                             shipment.setShipmentStatus(Status.SiteChange);
                             break;
@@ -578,7 +610,8 @@ public class shipmentManagement {
                 break;
             }
         }
-        shipments.add(availableShipments.get(0));
+        shipments.add(shipment);
+        availableShipments.remove(shipment);
     }
 
     private void changeTruck(Shipment shipment) {
@@ -588,21 +621,22 @@ public class shipmentManagement {
         {
             if(currentTruck.getTotalWeight() < truck.getTotalWeight())
             {
-                if(truck.checkDay(shipment.getDate().getDay())) //check about getDay function
+                if(truck.checkDay(shipment.getDayOfTheWeek())) //check about getDay function
                 {
                     if (((truck instanceof FreezerTruck) && (currentTruck instanceof FreezerTruck))
                             || ((truck instanceof CoolingTruck) && (currentTruck instanceof CoolingTruck))
                             || ((truck instanceof RegularTruck) && (currentTruck instanceof RegularTruck)))
                     {
-                        shipment.setDriverName(changeDriver(shipment.getDriverName(), truck,shipment.getDate().getDay()));
+                        shipment.setDriverName(changeDriver(shipment.getDriverName(), truck, shipment.getDayOfTheWeek()));
                         if(shipment.getDriverName() == null)
                             shipment.setDriverName(currentDriverName);
                         else
                         {
                             shipment.setTruckNumber(truck.getTruckNumber());
-                            truck.addNewDay(Days.values()[shipment.getDate().getDay()]);
-                            currentTruck.removeDay(Days.values()[shipment.getDate().getDay()]);
+                            truck.addNewDay(shipment.getDayOfTheWeek());
+                            currentTruck.removeDay(shipment.getDayOfTheWeek());
                             System.out.println("Truck Changed");
+                            return;
                         }
                     }
                 }
@@ -611,15 +645,14 @@ public class shipmentManagement {
         }
     }
 
-    public String changeDriver(String driverName, Truck truck,int day)
+    public String changeDriver(String driverName, Truck truck,Days day)
     {
-        Days days = Days.values()[day];
         Driver driver = getDriver(driverName);
         if(driver.getAbility().ordinal() >= truck.getStorageType().ordinal())
         {
-            if(driver.getLicense() == 'd')
+            if(driver.getLicense() == 'D')
                 return driverName;
-            else if (driver.getLicense() == 'c' && truck.getTotalWeight() <= 12000) {
+            else if (driver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
                 return driverName;
             }
         }
@@ -627,15 +660,15 @@ public class shipmentManagement {
         {
             for (Driver driver1 : drivers)
             {
-                if(driver.checkDay(days)) {
+                if(driver.checkDay(day)) {
                     if (driver1.getAbility().ordinal() >= truck.getStorageType().ordinal()) {
-                        if (driver1.getLicense() == 'd') {
-                            driver1.addNewDay(days);
-                            driver.removeDay(days);
+                        if (driver1.getLicense() == 'D') {
+                            driver1.addNewDay(day);
+                            driver.removeDay(day);
                             return driver1.getName();
-                        } else if (driver.getLicense() == 'c' && truck.getTotalWeight() <= 12000) {
-                            driver1.addNewDay(days);
-                            driver.removeDay(days);
+                        } else if (driver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
+                            driver1.addNewDay(day);
+                            driver.removeDay(day);
                             return driver1.getName();
                         }
                     }
@@ -670,7 +703,7 @@ public class shipmentManagement {
             System.out.println();
         }
         // choose site to delete item from.
-        System.out.println("Please choose the one you want to delete the item from, enter the name of the site.");
+        System.out.println("Please choose the one you want to delete the item from, enter the name of the site: ");
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
         boolean found = false;
@@ -694,21 +727,21 @@ public class shipmentManagement {
                 itemsD = itemsDoc;
             }
         }
-        System.out.println("Please choose an item you want to delete.");
+        System.out.println("Please choose an item you want to delete:");
         answer = scanner.nextLine();
+        int amount = 0;
         while(true){
             if (itemsD != null) {
                 // finding the item and change it.
                 for(Item item : itemsD.getItemList()){
                     if (Objects.equals(item.getName(), answer)){
                         System.out.println("Please enter the amount: ");
-                        int amount = scanner.nextInt();
-                        while(!scanner.hasNextInt()){
-                            System.out.println("Please enter the amount: ");
-                            amount = scanner.nextInt();
-                        }
+//                        while(){
+//                            System.out.println("Please enter the amount: ");}
+                        amount = scanner.nextInt();
                         // if the input was higher, then delete the item.
                         if (amount > item.getQuantity()){
+                            System.out.println("the item: " + item.getName() + " was deleted");
                             itemsD.deleteItem(item);
                             if (itemsD.isEmpty()){ // if it was the las item of the doc.
                                 shipment.deleteItemDoc(itemsD);
@@ -718,12 +751,16 @@ public class shipmentManagement {
                         }
                         else{
                             item.setQuantity(amount);
+                            System.out.println("the item amount: " + item.getName() + " was reduced to: " + amount);
                         }
                         return false;
                     }
                 }
                 System.out.println("This item does not exist, Please choose an item you want to delete.");
                 answer = scanner.nextLine();
+            }
+            else{
+                return false;
             }
         }
     }
@@ -742,7 +779,7 @@ public class shipmentManagement {
     }
 
     public void loadTrucks(){
-        addTruck("0000", 15000, 2000, "mercedes", 0);
+        addTruck("0000", 6000, 2000, "mercedes", 0);
         addTruck("0001", 13000, 2000, "mercedes", 1);
         addTruck("0002", 12000, 2000, "mercedes", 2);
         addTruck("0003", 10000, 2000, "mercedes", 0);
@@ -783,15 +820,19 @@ public class shipmentManagement {
             createOrder("Osem", "snif1");
             addItemToOrder("Osem", "ketchup", 10, 0);
             addItemToOrder("Osem", "y", 20, 1);
+            createOrder("Osem", "snif2");
+            addItemToOrder("Osem", "z", 10, 0);
+            addItemToOrder("Osem", "v", 20, 1);
+            addItemToOrder("Osem", "a", 10, 0);
+            addItemToOrder("Osem", "b", 20, 2);
             printOrders();
         }
 
 
-        public void TestShipment(){
-        createShipment(1, "123123", "Osem");
-        executeShipment();
-        }
-
+//    public void TestShipment(){
+//        createShipment(1, "123123", "Osem");
+//        executeShipment();
+//        }
 }
 
 
