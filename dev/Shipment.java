@@ -21,6 +21,20 @@ public class Shipment {
         this.shipmentStatus = Status.NoChanges;
     }
 
+    public void printShipment()
+    {
+        System.out.println("Shipment details: ");
+        System.out.println("Shipment ID: " + ID);
+        System.out.println("Truck number: " + truckNumber);
+        System.out.println("Driver Name: "+ driverName);
+        System.out.println("Vendor: "+ source.getName());
+        System.out.println("Destinations:");
+        for(Site site : destinations)
+            site.printSite();
+        System.out.println("Item doc:");
+        for(ItemsDoc itemsDoc : docs)
+            itemsDoc.printItemsDoc();
+    }
 
 
     public String getID() {
