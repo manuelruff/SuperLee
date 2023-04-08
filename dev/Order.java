@@ -25,14 +25,16 @@ public class Order {
      */
     public void addItemToOrder(Item item)
     {
-        for(int i=0;i< itemList.size();i++)
-        {
-            if(Objects.equals(item.getName(), itemList.get(i).getName()))
-            {
-             itemList.get(i).setQuantity(item.getQuantity() + itemList.get(i).getQuantity());
+        if (!itemList.isEmpty()) {
+            for (int i = 0; i < itemList.size(); i++) {
+                if (Objects.equals(item.getName(), itemList.get(i).getName())) {
+                    itemList.get(i).setQuantity(item.getQuantity() + itemList.get(i).getQuantity());
+                    return;
+                }
+
             }
-            itemList.add(item);
         }
+        itemList.add(item);
     }
     /*
     this function gets a storage condition as a parameter and returns a list of items

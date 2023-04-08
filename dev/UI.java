@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UI {
@@ -61,6 +63,7 @@ public class UI {
                                     int siteType = scanner.nextInt();
                                     if(siteType == 1) {
                                         Smanagement.addVendor(siteName, siteAddress, sitePhoneNumber, contactName);
+                                        System.out.println("Vendor added to the system");
                                         check = false;
                                     }
                                     else if (siteType == 2) {
@@ -76,6 +79,7 @@ public class UI {
                                                 System.out.println("Please enter a number between 0 - 2");
                                         }
                                         Smanagement.addBranch(siteName,siteAddress,sitePhoneNumber,contactName,zone);
+                                        System.out.println("Branch added to the system");
                                         check = false;
                                     }
                                 }
@@ -160,6 +164,7 @@ public class UI {
                                         System.out.println("Please enter a number between 0 - 2");
                                 }
                                 Smanagement.addTruck(truckNumber,truckCarryWeight, truckWeight,truckModel,storage);
+                                System.out.println("Truck added to the system");
                                 break;
                             case 2:
                                 check2 = true;
@@ -210,12 +215,19 @@ public class UI {
                         switch (ch3)
                         {
                             case 1 :
-                                boolean check3 = true;
+                                boolean check3 = true, check31 =true;
                                 String driverID = null;
                                 scanner.nextLine();
                                 while (check3) {
-                                    System.out.println("Please enter drivers ID:");
-                                    driverID = scanner.nextLine();
+                                    while (check31)
+                                    {
+                                        System.out.println("Please enter drivers ID:");
+                                        driverID = scanner.nextLine();
+                                        if(driverID.matches("[0-9]+"))
+                                            check31 = false;
+                                        else
+                                            System.out.println("Please enter numbers only");
+                                    }
                                     check3 = Smanagement.checkID(driverID);
                                     if (check3)
                                         System.out.println("Driver already exist in the system");
@@ -231,7 +243,7 @@ public class UI {
                                             C - for trucks under 12 ton
                                             D - for above 12 ton""");
                                     driverLicence = scanner.next().charAt(0);
-                                    if(driverLicence == 'C' || driverLicence == 'D')
+                                    if(driverLicence == 'C' || driverLicence == 'D' || driverLicence == 'c' || driverLicence == 'd')
                                         check3 = false;
                                     else
                                         System.out.println("Invalid input");
@@ -247,7 +259,9 @@ public class UI {
                                     if(training < 0 || training > 2)
                                         System.out.println("Please enter a number between 0 - 2");
                                 }
+                                driverLicence = Character.toUpperCase(driverLicence);
                                 Smanagement.addDriver(driverName,driverID,driverLicence,training);
+                                System.out.println("Driver added to the system");
                                 break;
                             case 2:
                                 boolean check32 = true;
@@ -262,13 +276,18 @@ public class UI {
                                         System.out.println("do you still want to remove a driver?");
                                         System.out.println("1 - yes\n2 - no");//not checking input
                                         int ch1 = scanner.nextInt();
-                                        if(ch1 == 1)
+                                        if(ch1 == 1) {
                                             check32 = true;
+                                            scanner.nextLine();
+                                        }
+                                        else {
+                                            scanner.nextLine();
+                                        }
                                     }
                                     else {
                                         check32 = false;
                                         Smanagement.removeDriver(driversIDToRemove);
-                                        System.out.println("driver removed from system");
+                                        System.out.println("driver has been removed from system");
                                     }
                                 }
                                 break;
@@ -299,10 +318,12 @@ public class UI {
                         ch4 = scanner.nextInt();
                         switch (ch4){
                             case 1:
-                                boolean check4 =true,check41=true,check40=true;
+                                List<Item> itemsAdded = new ArrayList<>();
+                                boolean check4 =true,check41=true,check40=true, itemCheck=true, check401 =true;
                                 String sourceSite;
                                 String destinationSite;
                                 String OrderID;
+                                int amount = 0,cho = 0;
                                 while (check40) {
                                     scanner.nextLine();
                                     while (check4) {
@@ -313,16 +334,70 @@ public class UI {
                                                 System.out.println("Please enter Destination site:");
                                                 destinationSite = scanner.nextLine();
                                                 if (Smanagement.checkBranch(destinationSite)) {
+                                                    scanner.nextLine();
+                                                    while(cho != 3)
+                                                    {
+                                                        System.out.println("Item menu:");
+                                                        System.out.println("1 - Add item");
+                                                        System.out.println("2 - Print items added so far");
+                                                        System.out.println("3 - Exit");
+                                                        cho = scanner.nextInt();
+                                                        switch (cho)
+                                                        {
+                                                            case 1:
+                                                                System.out.println("Please enter item name:");
+                                                                String itemName = scanner.nextLine();
+                                                                scanner.nextLine();
+                                                                while(check401) {
+                                                                    System.out.println("Please enter the amount of the item you want to order");
+                                                                    amount = scanner.nextInt();
+                                                                    if(amount <= 0)
+                                                                        System.out.println("please enter only a positive number");
+                                                                    else
+                                                                        check401 = false;
+                                                                }
+                                                                int training = 4;
+                                                                while(training < 0 || training > 2) {
+                                                                    System.out.println("""
+                                                                                Please enter storage condition for the item:
+                                                                                0 - Regular
+                                                                                1 - Cooling
+                                                                                2 - Freezer""");
+                                                                    training = scanner.nextInt();
+                                                                    if(training < 0 || training > 2)
+                                                                        System.out.println("Please enter a number between 0 - 2");
+                                                                }
+                                                                Smanagement.addItemToOrder(sourceSite,itemName,amount,training);
+                                                                System.out.println("Item add to order");
+                                                                Item item = new Item(itemName, amount, Training.values()[training]);
+                                                                itemsAdded.add(item);
+                                                                break;
+                                                            case 2:
+                                                                System.out.println("Items added so far:");
+                                                                System.out.println("Total items added so far: " + itemsAdded.size() +"\n");
+                                                                for(Item item1 : itemsAdded)
+                                                                    item1.printItem();;
+                                                                break;
+                                                            case 3:
+                                                                cho = 3;
+                                                                break;
+                                                            default:
+                                                                System.out.println("Invalid details");
+                                                        }
+                                                    }
                                                     Smanagement.createOrder(sourceSite, destinationSite);
                                                     System.out.println("Order was added to the system");
                                                     check4 = false;
                                                     check41 = false;
                                                     check40 = false;
-                                                } else
-                                                    System.out.println("Destination does not exist in the system");
+                                                }
+                                                else{
+                                                    System.out.println("Destination does not exist in the system");}
                                             }
-                                        } else
+                                        }
+                                        else {
                                             System.out.println("Source does not exist in the system");
+                                        }
 
                                     }
 
@@ -366,7 +441,7 @@ public class UI {
                                 boolean check44 = true, check441=true;
                                 String source1;
                                 String itemName;
-                                int amount=0;
+                                int amount1=0;
                                 while(check44)
                                 {
                                     System.out.println("Please enter the vendor name you want to add an item from");
@@ -377,8 +452,8 @@ public class UI {
                                         itemName = scanner.nextLine();
                                         while(check441) {
                                             System.out.println("Please enter the amount of the item you want to order");
-                                            amount = scanner.nextInt();
-                                            if(amount <= 0)
+                                            amount1 = scanner.nextInt();
+                                            if(amount1 <= 0)
                                                 System.out.println("please enter only a positive number");
                                             else
                                                 check441 = false;
@@ -394,7 +469,7 @@ public class UI {
                                             if(training < 0 || training > 2)
                                                 System.out.println("Please enter a number between 0 - 2");
                                         }
-                                        Smanagement.addItemToOrder(source1,itemName,amount,training);
+                                        Smanagement.addItemToOrder(source1,itemName,amount1,training);
                                         System.out.println("Item add to order");
                                         check44 =false;
                                     }
