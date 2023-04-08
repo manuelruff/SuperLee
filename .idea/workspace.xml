@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9dc29f01-c075-4b08-9384-5a0662412a4d" name="Changes" comment=" all changes before fuckup">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev/shipmentManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/dev/shipmentManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ADSS_Group_J.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ADSS_Group_J.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/dev/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="207991019_208372672" />
+        <entry key="$PROJECT_DIR$" value="RON" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -72,6 +74,21 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="adss_v0.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/release/adss_v0.jar" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JAR Application.adss_v0.jar" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JAR Application.adss_v0.jar" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -244,6 +261,7 @@
     <MESSAGE value="changeTruck" />
     <MESSAGE value="changes" />
     <MESSAGE value=" all changes before fuckup" />
-    <option name="LAST_COMMIT_MESSAGE" value=" all changes before fuckup" />
+    <MESSAGE value="shipmentManagement" />
+    <option name="LAST_COMMIT_MESSAGE" value="shipmentManagement" />
   </component>
 </project>
