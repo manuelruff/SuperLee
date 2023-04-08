@@ -52,8 +52,10 @@ public class UI {
                                 check = true;
                                 while (check)
                                 {
-                                    System.out.println("Please enter site type:\n" +
-                                            "1 - Vendor\n2 - Branch");
+                                    System.out.println("""
+                                            Please enter site type:
+                                            1 - Vendor
+                                            2 - Branch""");
                                     int siteType = scanner.nextInt();
                                     if(siteType == 1) {
                                         Smanagement.addVendor(siteName, siteAddress, sitePhoneNumber, contactName);
@@ -62,8 +64,11 @@ public class UI {
                                     else if (siteType == 2) {
                                         int zone = 4;
                                         while(zone < 0 || zone > 2) {
-                                            System.out.println("Please enter branch zone:\n" +
-                                                    "0 - North\n1 - Center\n2 - South");
+                                            System.out.println("""
+                                                    Please enter branch zone:
+                                                    0 - North
+                                                    1 - Center
+                                                    2 - South""");
                                             zone = scanner.nextInt();
                                             if(zone < 0 || zone > 2)
                                                 System.out.println("Please enter a number between 0 - 2");
@@ -138,8 +143,11 @@ public class UI {
                                 int truckCarryWeight = scanner.nextInt();
                                 int storage = 4;
                                 while(storage < 0 || storage > 2) {
-                                    System.out.println("Please enter truck storage capabilities:\n" +
-                                            "0 - Regular\n1 - Cooling\n2 - Freezer");
+                                    System.out.println("""
+                                            Please enter truck storage capabilities:
+                                            0 - Regular
+                                            1 - Cooling
+                                            2 - Freezer""");
                                     storage = scanner.nextInt();
                                     if(storage < 0 || storage > 2)
                                         System.out.println("Please enter a number between 0 - 2");
@@ -206,8 +214,10 @@ public class UI {
                                 char driverLicence = '0';
                                 while(check3)
                                 {
-                                    System.out.println("Please enter licence type :\n" +
-                                            "c - for trucks under 12 ton\nd - for above 12 ton");
+                                    System.out.println("""
+                                            Please enter licence type :
+                                            c - for trucks under 12 ton
+                                            d - for above 12 ton""");
                                     driverLicence = scanner.next().charAt(0);
                                     if(driverLicence == 'c' || driverLicence == 'd')
                                         check3 = false;
@@ -216,8 +226,11 @@ public class UI {
                                 }
                                 int training = 4;
                                 while(training < 0 || training > 2) {
-                                    System.out.println("Please enter driver storage capabilities training:\n" +
-                                            "0 - Regular\n1 - Cooling\n2 - Freezer");
+                                    System.out.println("""
+                                            Please enter driver storage capabilities training:
+                                            0 - Regular
+                                            1 - Cooling
+                                            2 - Freezer""");
                                     training = scanner.nextInt();
                                     if(training < 0 || training > 2)
                                         System.out.println("Please enter a number between 0 - 2");
@@ -278,37 +291,31 @@ public class UI {
                                 String destinationSite;
                                 String OrderID;
                                 while (check40) {
-                                    System.out.println("Please enter order ID");
-                                    OrderID = scanner.nextLine();
-                                    if(!Smanagement.checkOrderID(OrderID)) {
-                                        while (check4) {
-                                            System.out.println("Please enter a Vendor as a source");
-                                            sourceSite = scanner.nextLine();
-                                            if (Smanagement.checkVendor(sourceSite)) {
-                                                while (check41) {
-                                                    System.out.println("Please enter Destination site");
-                                                    destinationSite = scanner.nextLine();
-                                                    if (Smanagement.checkBranch(destinationSite)) {
-                                                        Smanagement.createOrder(sourceSite, destinationSite);
-                                                        System.out.println("Order was added to the system");
-                                                        check4 = false;
-                                                        check41 = false;
-                                                        check40 = false;
-                                                    } else
-                                                        System.out.println("Destination does not exist in the system");
-                                                }
-                                            } else
-                                                System.out.println("Source does not exist in the system");
+                                    while (check4) {
+                                        System.out.println("Please enter a Vendor as a source");
+                                        sourceSite = scanner.nextLine();
+                                        if (Smanagement.checkVendor(sourceSite)) {
+                                            while (check41) {
+                                                System.out.println("Please enter Destination site");
+                                                destinationSite = scanner.nextLine();
+                                                if (Smanagement.checkBranch(destinationSite)) {
+                                                    Smanagement.createOrder(sourceSite, destinationSite);
+                                                    System.out.println("Order was added to the system");
+                                                    check4 = false;
+                                                    check41 = false;
+                                                    check40 = false;
+                                                } else
+                                                    System.out.println("Destination does not exist in the system");
+                                            }
+                                        } else
+                                            System.out.println("Source does not exist in the system");
 
-                                        }
                                     }
-                                    else
-                                        System.out.println("Order ID already exist in the system");
 
                                 }
                                 break;
                             case 2:
-                                boolean check42 = true, check420 = true;
+                                /**boolean check42 = true, check420 = true;
                                 String orderIDToRemove;
                                 String source;
                                 while (check420) {
@@ -336,7 +343,7 @@ public class UI {
                                     }
                                     else
                                         System.out.println("Vendor does not exist in the system");
-                                }
+                                }*/
                                 break;
                             case 3:
                                 //todo:print all orders
@@ -364,8 +371,11 @@ public class UI {
                                         }
                                         int training = 4;
                                         while(training < 0 || training > 2) {
-                                            System.out.println("Please enter storage condition for the item:\n" +
-                                                    "0 - Regular\n1 - Cooling\n2 - Freezer");
+                                            System.out.println("""
+                                                    Please enter storage condition for the item:
+                                                    0 - Regular
+                                                    1 - Cooling
+                                                    2 - Freezer""");
                                             training = scanner.nextInt();
                                             if(training < 0 || training > 2)
                                                 System.out.println("Please enter a number between 0 - 2");
@@ -392,8 +402,8 @@ public class UI {
                         System.out.println("1 - Add shipment");
                         System.out.println("2 - Delete shipment");
                         System.out.println("3 - Print All shipment");
-                        System.out.println("4 - execute nearest shipment");
-                        System.out.println("5 - execute shipment by ID");
+                        System.out.println("4 - Print all available shipments");
+                        System.out.println("5 - execute nearest shipment");
                         System.out.println("6 - Exit");
                         ch5 = scanner.nextInt();
                         switch (ch5) {
@@ -403,13 +413,14 @@ public class UI {
                                 String shipmentID,vendor;
                                 while(check5)
                                 {
-                                    System.out.println("Please enter a day for the shipment:" +
-                                            "1 - Sunday\n" +
-                                            "2 - Monday\n" +
-                                            "3 - Tuesday\n" +
-                                            "4 - Wednesday\n" +
-                                            "5 - Thursday\n" +
-                                            "6 - Friday");
+                                    System.out.println("""
+                                            Please enter a day for the shipment:
+                                            1 - Sunday
+                                            2 - Monday
+                                            3 - Tuesday
+                                            4 - Wednesday
+                                            5 - Thursday
+                                            6 - Friday""");
                                     day = scanner.nextInt();
                                     if(day < 1 || day > 6)
                                         System.out.println("please enter a number between 1 - 6 only");
@@ -445,7 +456,7 @@ public class UI {
                                 break;
                             case 2:
                                 boolean check52=true, check53=true;
-                                while (check52)
+                                /**while (check52)
                                 {
                                     System.out.println("Please enter shipment ID to delete");
                                     String shipmentIDToDelete = scanner.nextLine();
@@ -463,28 +474,16 @@ public class UI {
                                         if(ch1 == 2)
                                             check52 = false;
                                     }
-                                }
+                                }*/
                                 break;
                             case 3:
                                 Smanagement.printShipments();
                                 break;
                             case 4:
-                                //todo: function or inputs from the user
+                                Smanagement.printAvailableShipments();
                                 break;
                             case 5:
-                                boolean check55 = true;
-                                String shipmentIDToExecute;
-                                while (check55)
-                                {
-                                    System.out.println("Please enter  shipment ID to execute");
-                                    shipmentIDToExecute = scanner.nextLine();
-                                    if(Smanagement.checkShipmentID(shipmentIDToExecute)) {
-                                        Smanagement.executeShipment(shipmentIDToExecute);
-                                        check55  =false;
-                                    }
-                                    else
-                                        System.out.println("Shipment ID does not exist in the system");
-                                }
+                                Smanagement.executeShipment();
                                 break;
                             case 6:
                                 ch5 = 6;
