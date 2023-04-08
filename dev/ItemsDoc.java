@@ -11,6 +11,14 @@ public class ItemsDoc {
         this.siteName = siteName;
         itemList = new ArrayList<>();
     }
+    public void printItemsDoc() {
+        System.out.println("Item Document details:");
+        System.out.println("Document ID:" + ID);
+        System.out.println("Destination: " + siteName);
+        for(Item item : itemList)
+            item.printItem();
+    }
+
 
     public String getID() {
         return ID;
@@ -43,6 +51,5 @@ public class ItemsDoc {
         return itemList.isEmpty();
     }
 
-    public void printItemsDoc() {
-    }
+
 }

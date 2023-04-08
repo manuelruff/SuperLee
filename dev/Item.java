@@ -8,6 +8,13 @@ public class Item {
         this.quantity = quantity;
         this.storageCondition = storageCondition;
     }
+    public void printItem()
+    {
+        System.out.println("Item details:");
+        System.out.println("Item name: " + name);
+        System.out.println("Quantity: "+ quantity);
+        System.out.println("Storage Condition: " + storageCondition.name());
+    }
 
     public String getName() {
         return name;

@@ -87,6 +87,5 @@ public abstract class Truck {
         return 10;
     }
 
-    public void printTruck() {
-    }
+    public abstract void printTruck();
 }
