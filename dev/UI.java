@@ -32,7 +32,7 @@ public class UI {
                         switch (ch) {
                             case 1:
                                 boolean check = true;
-                                String siteName = null;
+                                String siteName = scanner.nextLine();
                                 while(check) {
                                     System.out.println("Please enter site name:");
                                     siteName = scanner.nextLine();
@@ -42,12 +42,14 @@ public class UI {
                                 }
                                 System.out.println("Please enter Site Address:");
                                 String siteAddress = scanner.nextLine();
-                                String sitePhoneNumber = "000000000";
-                                while(sitePhoneNumber.length() != 10 && !sitePhoneNumber.matches("[0-9]+")) {
+                                String sitePhoneNumber;
+                                System.out.println("Please enter site phone number (10 digits - only numbers):");
+                                sitePhoneNumber = scanner.nextLine();
+                                while(sitePhoneNumber.length() != 10 || !sitePhoneNumber.matches("[0-9]+")) {
                                     System.out.println("Please enter site phone number (10 digits - only numbers):");
                                     sitePhoneNumber = scanner.nextLine();
                                 }
-                                System.out.println("Please enter contact name");
+                                System.out.println("Please enter contact name:");
                                 String contactName = scanner.nextLine();
                                 check = true;
                                 while (check)
@@ -81,9 +83,10 @@ public class UI {
 
                             case 2:
                                 boolean check1 = true;
+                                scanner.nextLine();
                                 while (check1)
                                 {
-                                    System.out.println("Please enter site name you want to remove");
+                                    System.out.println("Please enter site name you want to remove:");
                                     String siteToDelete = scanner.nextLine();
                                     if(Smanagement.checkSite(siteToDelete)) {
                                         Smanagement.deleteSite(siteToDelete);
@@ -97,11 +100,14 @@ public class UI {
                                         int ch1 = scanner.nextInt();
                                         if(ch1 == 2)
                                             check1 = false;
+                                        else{
+                                            scanner.nextLine();
+                                        }
                                     }
                                 }
                                 break;
                             case 3:
-                                // todo :prints all sites
+                                Smanagement.printSites();
                                 break;
                             case 4:
                                 // todo: update site
@@ -120,7 +126,7 @@ public class UI {
                     while(ch2 != 4) {
                         System.out.println("Truck Menu:");
                         System.out.println("1 - Add Truck");
-                        System.out.println("2 - Delete Site");
+                        System.out.println("2 - Delete Truck");
                         System.out.println("3 - Print All Trucks");
                         System.out.println("4 - Exit");
                         ch2 = scanner.nextInt();
@@ -128,18 +134,19 @@ public class UI {
                             case 1:
                                 boolean check2 = true;
                                 String truckNumber = null;
+                                scanner.nextLine();
                                 while (check2) {
-                                    System.out.println("Please enter the truck number");
+                                    System.out.println("Please enter the truck number:");
                                     truckNumber = scanner.nextLine();
                                     check2 = Smanagement.checkTruckNumber(truckNumber);
                                     if (check2)
                                         System.out.println("Truck already exist in the system");
                                 }
-                                System.out.println("Please enter the truck model");
+                                System.out.println("Please enter the truck model:");
                                 String truckModel = scanner.nextLine();
-                                System.out.println("Please Enter the truck weight in KG");
+                                System.out.println("Please Enter the truck weight in KG:");
                                 int truckWeight = scanner.nextInt();
-                                System.out.println("Please enter the truck maximum carry weight in KG");
+                                System.out.println("Please enter the truck maximum carry weight in KG:");
                                 int truckCarryWeight = scanner.nextInt();
                                 int storage = 4;
                                 while(storage < 0 || storage > 2) {
@@ -152,18 +159,19 @@ public class UI {
                                     if(storage < 0 || storage > 2)
                                         System.out.println("Please enter a number between 0 - 2");
                                 }
-                                Smanagement.addTruck(truckNumber,truckWeight,truckCarryWeight,truckModel,storage);
+                                Smanagement.addTruck(truckNumber,truckCarryWeight, truckWeight,truckModel,storage);
                                 break;
                             case 2:
                                 check2 = true;
+                                scanner.nextLine();
                                 while (check2)
                                 {
-                                    System.out.println("Please enter the truck number");
+                                    System.out.println("Please enter the truck number:");
                                     truckNumber = scanner.nextLine();
                                     if(Smanagement.checkTruckNumber(truckNumber)) {
                                         Smanagement.removeTruck(truckNumber);
                                         check2 = false;
-                                        System.out.println("truck removed from system");
+                                        System.out.println("truck has been removed from the system");
                                     }
                                     else {
                                         System.out.println("truck number does not exist in the system");
@@ -172,6 +180,9 @@ public class UI {
                                         int ch1 = scanner.nextInt();
                                         if(ch1 == 2)
                                             check2 = false;
+                                        else{
+                                            scanner.nextLine();
+                                        }
                                     }
                                 }
                                 break;
@@ -194,15 +205,16 @@ public class UI {
                         System.out.println("2 - remove driver");
                         System.out.println("3 - Print All drivers");
                         System.out.println("4 - Update driver licence/training");
-                        System.out.println("5 - Exist");
+                        System.out.println("5 - Exit");
                         ch3 = scanner.nextInt();
                         switch (ch3)
                         {
                             case 1 :
                                 boolean check3 = true;
                                 String driverID = null;
+                                scanner.nextLine();
                                 while (check3) {
-                                    System.out.println("Please enter drivers ID");
+                                    System.out.println("Please enter drivers ID:");
                                     driverID = scanner.nextLine();
                                     check3 = Smanagement.checkID(driverID);
                                     if (check3)
@@ -216,10 +228,10 @@ public class UI {
                                 {
                                     System.out.println("""
                                             Please enter licence type :
-                                            c - for trucks under 12 ton
-                                            d - for above 12 ton""");
+                                            C - for trucks under 12 ton
+                                            D - for above 12 ton""");
                                     driverLicence = scanner.next().charAt(0);
-                                    if(driverLicence == 'c' || driverLicence == 'd')
+                                    if(driverLicence == 'C' || driverLicence == 'D')
                                         check3 = false;
                                     else
                                         System.out.println("Invalid input");
@@ -240,8 +252,9 @@ public class UI {
                             case 2:
                                 boolean check32 = true;
                                 String driversIDToRemove;
+                                scanner.nextLine();
                                 while (check32) {
-                                    System.out.println("Please enter drivers ID");
+                                    System.out.println("Please enter drivers ID:");
                                     driversIDToRemove = scanner.nextLine();
                                     check32 = Smanagement.checkID(driversIDToRemove);
                                     if (!check32) {
@@ -279,7 +292,7 @@ public class UI {
                     while(ch4 != 5) {
                         System.out.println("Order Menu:");
                         System.out.println("1 - Add order");
-                        System.out.println("2 - Delete order ");
+                        System.out.println("2 - Delete order");
                         System.out.println("3 - Print All orders");
                         System.out.println("4 - Add item to order");
                         System.out.println("5 - Exist");
@@ -291,12 +304,13 @@ public class UI {
                                 String destinationSite;
                                 String OrderID;
                                 while (check40) {
+                                    scanner.nextLine();
                                     while (check4) {
-                                        System.out.println("Please enter a Vendor as a source");
+                                        System.out.println("Please enter a Vendor as a source:");
                                         sourceSite = scanner.nextLine();
                                         if (Smanagement.checkVendor(sourceSite)) {
                                             while (check41) {
-                                                System.out.println("Please enter Destination site");
+                                                System.out.println("Please enter Destination site:");
                                                 destinationSite = scanner.nextLine();
                                                 if (Smanagement.checkBranch(destinationSite)) {
                                                     Smanagement.createOrder(sourceSite, destinationSite);
@@ -346,7 +360,7 @@ public class UI {
                                 }*/
                                 break;
                             case 3:
-                                //todo:print all orders
+                                Smanagement.printOrders();
                                 break;
                             case 4:
                                 boolean check44 = true, check441=true;

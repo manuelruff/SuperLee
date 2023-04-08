@@ -14,12 +14,11 @@ public class CoolingTruck extends Truck{
     @Override
     public void printTruck()
     {
-        System.out.println("Truck details:");
         System.out.println("Truck number: " + getTruckNumber());
         System.out.println("Truck weight: " + getTruckWeight());
         System.out.println("Truck Total weight: " + getTotalWeight());
         System.out.println("Truck model: " + getModel());
-        System.out.println("Truck storage capability's: Cooling");
+        System.out.println("Truck storage capability's: Cooling\n");
     }
 
 }

@@ -6,11 +6,10 @@ public class Vendor extends Site{
     }
     @Override
     public void printSite() {
-        System.out.println("**** SITE DETAILS ****");
         System.out.println("Site Type: Vendor");
         System.out.println("Name: " + getName());
         System.out.println("Address: " + getAddress());
         System.out.println("Phone Number: " + getPhoneNumber());
-        System.out.println("Contact Name: " + getContactName());
+        System.out.println("Contact Name: " + getContactName() + "\n");
     }
 }

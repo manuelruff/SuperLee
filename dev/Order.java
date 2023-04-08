@@ -67,5 +67,12 @@ public class Order {
         return itemList.isEmpty();
     }
 
+    public void printOrder() {
+        System.out.println("Destination: " + destination);
+        System.out.println("Items: ");
+        for (Item item : itemList){
+            item.printItem();
+        }
+    }
 }
 

@@ -62,6 +62,7 @@ public class shipmentManagement {
         for (Driver driver : drivers) {
             if (Objects.equals(driver.getID(), ID)) {
                 drivers.remove(driver);
+                return;
             }
         }
     }
@@ -148,6 +149,7 @@ public class shipmentManagement {
         for (Truck truck : trucks) {
             if (Objects.equals(truckNumber, truck.getTruckNumber())) {
                 trucks.remove(truck);
+                return;
             }
         }
     }
@@ -185,8 +187,11 @@ public class shipmentManagement {
      * This function prints every truck in the system.
      */
     public void printTrucks() {
+        System.out.println("******* Trucks details *******");
+        System.out.println("Number of truck: " + trucks.size() + "\n");
         for (Truck truck : trucks) {
             truck.printTruck();
+
         }
     }
 
@@ -252,6 +257,7 @@ public class shipmentManagement {
             if (Objects.equals(site.getName(), name)) {
                 sites.remove(site);
                 vendorMap.remove(name);
+                return;
             }
         }
     }
@@ -299,6 +305,14 @@ public class shipmentManagement {
         return null;
     }
 
+    public void printSites(){
+        System.out.println("******* SITE DETAILS *******");
+        System.out.println("Number of Sites: " + sites.size() + "\n");
+        for (Site site : sites){
+            site.printSite();
+        }
+    }
+
     private void removeLastSiteFromShipment(Shipment shipment) {
         String source = shipment.getSource().getName();
         Order order;
@@ -334,6 +348,13 @@ public class shipmentManagement {
         vendorMap.get(source).add(order);
     }
 
+    public void printOrders() {
+        for (Map.Entry<String, List<Order>> entry : vendorMap.entrySet()){
+            for (Order order : entry.getValue()){
+                order.printOrder();
+            }
+        }
+    }
 
 
 
@@ -749,6 +770,8 @@ public class shipmentManagement {
         addBranch("snif5", "katzrin", "0542318479", "kaido", 0);
         addBranch("snif6", "haifa", "0542318470", "oden", 0);
     }
+
+
 }
 
 
