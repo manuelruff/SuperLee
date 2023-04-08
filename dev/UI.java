@@ -69,9 +69,11 @@ public class UI {
                                                 System.out.println("Please enter a number between 0 - 2");
                                         }
                                         Smanagement.addBranch(siteName,siteAddress,sitePhoneNumber,contactName,zone);
+                                        check = false;
                                     }
                                 }
                                 break;
+
                             case 2:
                                 boolean check1 = true;
                                 while (check1)
