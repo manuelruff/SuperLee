@@ -20,6 +20,8 @@ public class shipmentManagement {
         loadDrivers();
         loadTrucks();
         loadSites();
+        LoadOrder();
+        TestShipment();
     }
 
     /****************************** Drivers related Methods ******************************/
@@ -771,6 +773,24 @@ public class shipmentManagement {
         addBranch("snif6", "haifa", "0542318470", "oden", 0);
     }
 
+
+        public void LoadOrder()
+        {
+            createOrder("Osem", "snif1");
+            addItemToOrder("Osem", "ketchup", 10, 0);
+            addItemToOrder("Osem", "mayo", 10, 0);
+            addItemToOrder("Osem", "x", 20, 0);
+            createOrder("Osem", "snif1");
+            addItemToOrder("Osem", "ketchup", 10, 0);
+            addItemToOrder("Osem", "y", 20, 1);
+            printOrders();
+        }
+
+
+        public void TestShipment(){
+        createShipment(1, "123123", "Osem");
+        executeShipment();
+        }
 
 }
 
