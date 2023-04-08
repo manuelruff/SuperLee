@@ -349,6 +349,31 @@ public class shipmentManagement {
     }
 
 
+
+
+    /************************************* Shipment related methods *************************************/
+
+
+    /**
+     * This function prints every shipment in the system.
+     */
+    public void printShipments(){
+        for (Shipment shipment : shipments){
+            shipment.printShipment();
+        }
+    }
+
+    /**
+     * This function prints every shipment that is ready to be executed.
+     */
+    public void printAvailableShipments(){
+        for ( Shipment shipment : availableShipments){
+            shipment.printShipment();
+        }
+    }
+
+
+
     /**
      * This function checks if a shipment is already exist in the system.
      *
@@ -364,6 +389,20 @@ public class shipmentManagement {
         return false;
     }
 
+
+    private void addShipmentSorted(Shipment shipment){
+        if (availableShipments.isEmpty()){
+            availableShipments.add(shipment);
+            return;
+        }
+        for (int i=0; i < availableShipments.size(); i++){
+            if (shipment.getDate().compareTo(availableShipments.get(i).getDate()) <= 0){
+                availableShipments.add(i, shipment);
+                return;
+            }
+        }
+        availableShipments.add(shipment);
+    }
 
     /**
      * This function creates a new shipment, first the function checks if the vendor has orders, if an order was found,
@@ -407,7 +446,7 @@ public class shipmentManagement {
         // in case there is only one order from the specific vendor
         if (vendorMap.get(source).size() == 1) {
             shipment = new Shipment(ID, truckNumberForShipment, driverForShipment.getName(), date, vendor, branchList, itemsDocList);
-            availableShipments.add(shipment);
+            addShipmentSorted(shipment);
             if (firstOrder.checkIfEmpty())
                 vendorMap.get(source).remove(firstOrder);
             return true;
@@ -447,11 +486,14 @@ public class shipmentManagement {
                 }
             }
             shipment = new Shipment(ID, truckNumberForShipment, driverForShipment.getName(), date, vendor, branchList, itemsDocList);
-            availableShipments.add(shipment);
+            addShipmentSorted(shipment);
             return true;
         }
     }
 
+    /**
+     * This function executes the shipment with the closest date.
+     */
     public void executeShipment() {
         if (availableShipments.isEmpty()) {
             System.out.println("There is no available shipment!");
@@ -704,7 +746,6 @@ public class shipmentManagement {
         addBranch("snif4", "givataim", "0542318478", "shanks", 1);
         addBranch("snif5", "katzrin", "0542318479", "kaido", 0);
         addBranch("snif6", "haifa", "0542318470", "oden", 0);
-
     }
 }
 
