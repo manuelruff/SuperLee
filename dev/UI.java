@@ -203,7 +203,7 @@ public class UI {
                                 System.out.println("Please enter driver's name:");
                                 String driverName = scanner.nextLine();
                                 check3 = true;
-                                char driverLicence = 0;
+                                char driverLicence = '0';
                                 while(check3)
                                 {
                                     System.out.println("Please enter licence type :\n" +
@@ -303,7 +303,7 @@ public class UI {
                                         }
                                     }
                                     else
-                                        System.out.println("Order ID does not exist in the system");
+                                        System.out.println("Order ID already exist in the system");
 
                                 }
                                 break;
