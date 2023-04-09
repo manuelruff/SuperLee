@@ -1,3 +1,6 @@
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class shipmentManagement {
@@ -71,6 +74,21 @@ public class shipmentManagement {
     }
 
     /**
+     * This function search for a specific driver and return it.
+     * @param driverName String, the name of the driver
+     * @return found driver/ null
+     */
+    public Driver getDriver(String driverName)
+    {
+        for (Driver driver : drivers)
+        {
+            if(driver.getName().equals(driverName))
+                return driver;
+        }
+        return null;
+    }
+
+    /**
      * This function search for a driver that can do a shipment.
      *
      * @param train enum, his ability to driver truck.
@@ -117,6 +135,21 @@ public class shipmentManagement {
             }
         }
         return false;
+    }
+
+    /**
+     * This function looks for a specific truck and return it.
+     * @param truckNumber String, ID of the truck.
+     * @return found truck/null
+     */
+    public Truck getTruck(String truckNumber)
+    {
+        for(Truck truck : trucks)
+        {
+            if(truck.getTruckNumber().equals(truckNumber))
+                return truck;
+        }
+        return null;
     }
 
     /**
@@ -320,17 +353,24 @@ public class shipmentManagement {
         }
     }
 
+    /**
+     * This function removes the last site from the shipment, and creates an order of the item that were deleted.
+     * @param shipment object shipment.
+     */
     private void removeLastSiteFromShipment(Shipment shipment) {
         String source = shipment.getSource().getName();
         Order order;
+        Site siteToRemove = shipment.getDestinations().get(shipment.getDestinations().size() - 1);
         for (ItemsDoc doc : shipment.getDocs()) {
-            if (Objects.equals(doc.getSiteName(), shipment.getDestinations().get(shipment.getDestinations().size() - 1).getName())) {
+            if (Objects.equals(doc.getSiteName(), siteToRemove.getName())){
                 createOrder(source, doc.getSiteName());
                 for (Item item : doc.getItemList()) {
                     order = vendorMap.get(source).get(vendorMap.get(source).size() - 1);
                     order.addItemToOrder(item);
                 }
                 shipment.getDocs().remove(doc);
+                System.out.println("The site: " + siteToRemove.getName() + " was removed from the shipment");
+                return;
             }
         }
     }
@@ -550,10 +590,23 @@ public class shipmentManagement {
             return;
         }
         Shipment shipment = availableShipments.get(0);
-        System.out.println("U have arrived to ur destination: ");
+        Scanner scanner = new Scanner(System.in);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime time = null;
+        while (time == null) {
+            System.out.print("Enter the time (in HH:MM format): ");
+            String timeStr = scanner.nextLine();
+
+            try {
+                time = LocalTime.parse(timeStr, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid time format. Please enter time in HH:MM format.");
+            }
+        }
+        shipment.setDepartureTime(time);
+        System.out.println("U have arrived at ur destination: ");
         shipment.getSource().printSite();
         Truck currTruck = searchTruckByID(shipment.getTruckNumber());
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the weight of the truck with the items (in KG): ");
         int weight;
         weight = scanner.nextInt();
@@ -567,7 +620,7 @@ public class shipmentManagement {
                 System.out.println("The input was incorrect, please enter only numbers");
                 weight = scanner.nextInt();
             }
-            if (weight > currTruck.getTotalWeight()) {
+            if (weight > currTruck.getTotalWeight() - currTruck.getTruckWeight()) {
                 int input = 0;
                 while (input != 1 && input != 2 && input != 3) {
                     System.out.println("The truck exceeded the max carry weight, in order to proceed with the shipment\n" +
@@ -612,6 +665,8 @@ public class shipmentManagement {
         }
         shipments.add(shipment);
         availableShipments.remove(shipment);
+        System.out.println("The items were delivered to the branches!");
+        shipment.printShipment();
     }
 
     private void changeTruck(Shipment shipment) {
@@ -677,24 +732,9 @@ public class shipmentManagement {
         }
         return null;
     }
-    public Truck getTruck(String truckNumber)
-    {
-        for(Truck truck : trucks)
-        {
-            if(truck.getTruckNumber().equals(truckNumber))
-                return truck;
-        }
-        return null;
-    }
-    public Driver getDriver(String driverName)
-    {
-        for (Driver driver : drivers)
-        {
-            if(driver.getName().equals(driverName))
-                return driver;
-        }
-        return null;
-    }
+
+
+
 
     private boolean itemsToDelete(Shipment shipment) {
         System.out.println("Those are the branches of the shipments: ");
@@ -735,12 +775,19 @@ public class shipmentManagement {
                 // finding the item and change it.
                 for(Item item : itemsD.getItemList()){
                     if (Objects.equals(item.getName(), answer)){
-                        System.out.println("Please enter the amount: ");
-//                        while(){
-//                            System.out.println("Please enter the amount: ");}
-                        amount = scanner.nextInt();
+                        while (true) {
+                            System.out.println("Please enter the amount: ");
+                            if (scanner.hasNextInt()) {
+                                amount = scanner.nextInt();
+                                break;
+                            } else {
+                                scanner.nextLine(); // consume the invalid input
+                                System.out.println("Invalid input. Please enter an integer next");
+                            }
+                         }
+
                         // if the input was higher, then delete the item.
-                        if (amount > item.getQuantity()){
+                        if (amount >= item.getQuantity()){
                             System.out.println("the item: " + item.getName() + " was deleted");
                             itemsD.deleteItem(item);
                             if (itemsD.isEmpty()){ // if it was the las item of the doc.
@@ -750,8 +797,8 @@ public class shipmentManagement {
                             }
                         }
                         else{
-                            item.setQuantity(amount);
-                            System.out.println("the item amount: " + item.getName() + " was reduced to: " + amount);
+                            item.setQuantity(item.getQuantity() - amount);
+                            System.out.println("the item amount: " + item.getName() + " was reduced to: " + item.getQuantity());
                         }
                         return false;
                     }
