@@ -225,7 +225,7 @@ public class ReshetInfo {
                     end=Superim.get(Name).getEnd_evening(day);
                 }
                 //crete the shift and now we need to add to it
-                Shift CurrShift=new Shift(week.getStartDate().plusDays(day.ordinal()),time,start,end,CanWorkList.get(num-1),Workers.get(CanWorkList.get(num-1)));
+                Shift CurrShift=new Shift(week.getStartDate().plusDays(day.ordinal()),time,start,end,CanWorkList.get(num-1),Workers.get(CanWorkList.get(num-1)).GetID());
                 //update the menager shift
                 Workers.get(CanWorkList.get(num-1)).AddShift(day);
                 //then we need to let him see the rest without shift manager
@@ -294,7 +294,7 @@ public class ReshetInfo {
                         // we will decrese one so it will be the index from the list
                         choice=choice-1;
                         //add to the shift
-                        CurrShift.AddWorker(CanWorkList.get(choice),Workers.get(CanWorkList.get(choice)));
+                        CurrShift.AddWorker(CanWorkList.get(choice),Workers.get(CanWorkList.get(choice)).GetID());
                         //now i need to update the worker propertyly
                         Workers.get(CanWorkList.get(choice)).AddShift(day);
                         //remove from the available workers
@@ -373,7 +373,7 @@ public class ReshetInfo {
         }
         else{
             //whem were here we have a good number for employee so we add him
-            Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID,Workers.get(ID));
+            Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID,Workers.get(ID).GetID());
             // add the shift to the workers shifts
             Workers.get(ID).AddShift(Days.values()[day]);
         }
