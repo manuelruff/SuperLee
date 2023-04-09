@@ -4,7 +4,9 @@ import java.util.List;
 
 public class Shipment {
 
-    private String ID, truckNumber, driverName;
+    private String ID, truckNumber;
+
+    private Driver driver;
     private Days dayOfTheWeek;
 
     private LocalTime departureTime;
@@ -13,10 +15,10 @@ public class Shipment {
     private List<ItemsDoc> docs;
     private Status shipmentStatus;
 
-    public Shipment(String ID, String truckNumber, String driverName, Days day, Site source, List<Site> destinations, List<ItemsDoc> docs) {
+    public Shipment(String ID, String truckNumber, Driver driver, Days day, Site source, List<Site> destinations, List<ItemsDoc> docs) {
         this.ID = ID;
         this.truckNumber = truckNumber;
-        this.driverName = driverName;
+        this.driver = driver;
         this.dayOfTheWeek = day;
         this.source = source;
         this.destinations = destinations;
@@ -34,7 +36,7 @@ public class Shipment {
         }
         else{System.out.println("shipment scheduled for this " + dayOfTheWeek.toString());}
         System.out.println("Truck number: " + truckNumber);
-        System.out.println("Driver Name: "+ driverName);
+        System.out.println("Driver Name: "+ driver.getName());
         System.out.println("Vendor: "+ source.getName());
         if(shipmentStatus == Status.NoChanges)
             System.out.println("There isn't any changes in this shipment as of this moment");
@@ -53,8 +55,8 @@ public class Shipment {
         return ID;
     }
 
-    public String getDriverName() {
-        return driverName;
+    public Driver getDriver() {
+        return driver;
     }
 
     public Days getDayOfTheWeek() {
@@ -103,7 +105,7 @@ public class Shipment {
         this.truckNumber = number;
     }
 
-    public void setDriverName(String driverName) {
-        this.driverName = driverName;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 }
