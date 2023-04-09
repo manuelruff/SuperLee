@@ -952,7 +952,7 @@ public class shipmentManagement {
 
 
 
-        public void loadALL(){
+        public void loadAll(){
             loadDrivers();
             loadTrucks();
             loadSites();
