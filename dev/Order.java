@@ -21,6 +21,10 @@ public class Order {
         return destination;
     }
 
+    public void addListOfItems(List<Item> items){
+        itemList = items;
+    }
+
     public Zone getZone() {
         return zone;
     }

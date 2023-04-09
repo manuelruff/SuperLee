@@ -46,6 +46,44 @@ public class shipmentManagement {
         return false;
     }
 
+
+    /**
+     * This function update the licence of a specific driver
+     * @param ID String, driver ID
+     * @param licence char, licence type.(C/D)
+     */
+    public void updateDriverLicence(String ID, char licence){
+        for (Driver driver : drivers){
+            if (ID.equals(driver.getID())){
+                if (driver.getLicense() < licence) {
+                    driver.setLicense(licence);
+                    System.out.println("This driver licence has been upgraded to " + licence);
+                }
+                else {
+                    System.out.println("This driver licence is " + driver.getLicense() + " which is already higher then " + licence);
+                }
+                return;
+            }
+        }
+    }
+
+    /**
+     * This function update the ability of a specific driver.
+     * @param ID String, driver ID
+     * @param training int, will indicate the Training Enum.
+     */
+    public void updateDriverTraining(String ID, int training) {
+        for (Driver driver : drivers) {
+            if (ID.equals(driver.getID())) {
+                if (driver.getAbility().ordinal() < training){
+                    driver.setAbility(Training.values()[training]);
+                    System.out.println("This driver training has been upgraded to " + driver.getAbility().toString());
+                }
+                else{System.out.println("This driver training is " + driver.getLicense() + " which is already higher then " + Training.values()[training]);}
+                return;
+            }
+        }
+    }
     /**
      * This function creates a new driver and adds it to the system.
      *
@@ -75,14 +113,14 @@ public class shipmentManagement {
 
     /**
      * This function search for a specific driver and return it.
-     * @param driverName String, the name of the driver
+     * @param ID String, ID of the driver
      * @return found driver/ null
      */
-    public Driver getDriver(String driverName)
+    public Driver getDriver(String ID)
     {
         for (Driver driver : drivers)
         {
-            if(driver.getName().equals(driverName))
+            if(driver.getID().equals(ID))
                 return driver;
         }
         return null;
@@ -117,6 +155,47 @@ public class shipmentManagement {
             System.out.println(" ");
         }
     }
+
+    /**
+     * This function search for a new driver in case of truck exchange, if the old driver is suitable for the new
+     * truck, there is no changes.
+     * @param oldDriver Driver, old driver of the shipment.
+     * @param truck Truck, the new truck that was assigned to the shipment.
+     * @param day Days enum, the day of the week.
+     * @return Driver. (old Driver\new Driver).
+     */
+    private Driver changeDriver(Driver oldDriver, Truck truck,Days day)
+    {
+        if(oldDriver.getAbility().ordinal() >= truck.getStorageType().ordinal())
+        {
+            if(oldDriver.getLicense() == 'D')
+                return oldDriver;
+            else if (oldDriver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
+                return oldDriver;
+            }
+        }
+        else
+        {
+            for (Driver driver1 : drivers)
+            {
+                if(oldDriver.checkDay(day)) {
+                    if (driver1.getAbility().ordinal() >= truck.getStorageType().ordinal()) {
+                        if (driver1.getLicense() == 'D') {
+                            driver1.addNewDay(day);
+                            oldDriver.removeDay(day);
+                            return driver1;
+                        } else if (oldDriver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
+                            driver1.addNewDay(day);
+                            oldDriver.removeDay(day);
+                            return driver1;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 
 
     /****************************** Truck related Methods ******************************/
@@ -232,6 +311,38 @@ public class shipmentManagement {
         for (Truck truck : trucks) {
             truck.printTruck();
 
+        }
+    }
+
+
+    private void changeTruck(Shipment shipment) {
+        Truck currentTruck = getTruck(shipment.getTruckNumber());
+        Driver currentDriver = shipment.getDriver();;
+        for(Truck truck : trucks)
+        {
+            if(currentTruck.getTotalWeight() < truck.getTotalWeight())
+            {
+                if(truck.checkDay(shipment.getDayOfTheWeek())) //check about getDay function
+                {
+                    if (((truck instanceof FreezerTruck) && (currentTruck instanceof FreezerTruck))
+                            || ((truck instanceof CoolingTruck) && (currentTruck instanceof CoolingTruck))
+                            || ((truck instanceof RegularTruck) && (currentTruck instanceof RegularTruck)))
+                    {
+                        shipment.setDriver(changeDriver(shipment.getDriver(), truck, shipment.getDayOfTheWeek()));
+                        if(shipment.getDriver() == null)
+                            shipment.setDriver(currentDriver);
+                        else
+                        {
+                            shipment.setTruckNumber(truck.getTruckNumber());
+                            truck.addNewDay(shipment.getDayOfTheWeek());
+                            currentTruck.removeDay(shipment.getDayOfTheWeek());
+                            System.out.println("Truck Changed");
+                            return;
+                        }
+                    }
+                }
+
+            }
         }
     }
 
@@ -546,7 +657,7 @@ public class shipmentManagement {
 
         // in case there is only one order from the specific vendor
         if (vendorMap.get(source).size() == 1) {
-            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment.getName(), Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList);
+            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment, Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList);
             addShipmentSorted(shipment);
             if (firstOrder.checkIfEmpty())
                 vendorMap.get(source).remove(firstOrder);
@@ -585,7 +696,7 @@ public class shipmentManagement {
                 }
             }
             vendorMap.get(source).removeIf(Order::checkIfEmpty);
-            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment.getName(), Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList);
+            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment, Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList);
             addShipmentSorted(shipment);
             return true;
         }
@@ -679,71 +790,30 @@ public class shipmentManagement {
         shipment.printShipment();
     }
 
-    private void changeTruck(Shipment shipment) {
-        Truck currentTruck = getTruck(shipment.getTruckNumber());
-        String currentDriverName = shipment.getDriverName();;
-        for(Truck truck : trucks)
-        {
-            if(currentTruck.getTotalWeight() < truck.getTotalWeight())
-            {
-                if(truck.checkDay(shipment.getDayOfTheWeek())) //check about getDay function
-                {
-                    if (((truck instanceof FreezerTruck) && (currentTruck instanceof FreezerTruck))
-                            || ((truck instanceof CoolingTruck) && (currentTruck instanceof CoolingTruck))
-                            || ((truck instanceof RegularTruck) && (currentTruck instanceof RegularTruck)))
-                    {
-                        shipment.setDriverName(changeDriver(shipment.getDriverName(), truck, shipment.getDayOfTheWeek()));
-                        if(shipment.getDriverName() == null)
-                            shipment.setDriverName(currentDriverName);
-                        else
-                        {
-                            shipment.setTruckNumber(truck.getTruckNumber());
-                            truck.addNewDay(shipment.getDayOfTheWeek());
-                            currentTruck.removeDay(shipment.getDayOfTheWeek());
-                            System.out.println("Truck Changed");
-                            return;
-                        }
-                    }
-                }
-
+    /**
+     * This function deletes a specific shipment from the system, the orders that were in this shipment returns to the
+     * map.
+     * @param ID String, Shipment ID.
+     */
+    public void deleteShipment(String ID){
+        Shipment shipmentToDelete = null;
+        for(Shipment shipment : availableShipments){
+            if (shipment.getID().equals(ID)){
+                shipmentToDelete = shipment;
+                break;
             }
         }
+        assert shipmentToDelete != null;
+        String source = String.valueOf(shipmentToDelete.getSource());
+        for(int i = 0; i < shipmentToDelete.getDestinations().size(); i++){
+            createOrder(source, shipmentToDelete.getDestinations().get(i).getName());
+            Order order = vendorMap.get(source).get(vendorMap.get(source).size() - 1);
+            order.addListOfItems(shipmentToDelete.getDocs().get(i).getItemList());
+        }
+        shipmentToDelete.printShipment();
+        availableShipments.remove(shipmentToDelete);
+        System.out.println("This shipment has been deleted!");
     }
-
-    public String changeDriver(String driverName, Truck truck,Days day)
-    {
-        Driver driver = getDriver(driverName);
-        if(driver.getAbility().ordinal() >= truck.getStorageType().ordinal())
-        {
-            if(driver.getLicense() == 'D')
-                return driverName;
-            else if (driver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
-                return driverName;
-            }
-        }
-        else
-        {
-            for (Driver driver1 : drivers)
-            {
-                if(driver.checkDay(day)) {
-                    if (driver1.getAbility().ordinal() >= truck.getStorageType().ordinal()) {
-                        if (driver1.getLicense() == 'D') {
-                            driver1.addNewDay(day);
-                            driver.removeDay(day);
-                            return driver1.getName();
-                        } else if (driver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
-                            driver1.addNewDay(day);
-                            driver.removeDay(day);
-                            return driver1.getName();
-                        }
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-
 
 
     private boolean itemsToDelete(Shipment shipment) {
@@ -808,7 +878,7 @@ public class shipmentManagement {
                         }
                         else{
                             item.setQuantity(item.getQuantity() - amount);
-                            System.out.println("the item amount: " + item.getName() + " was reduced to: " + item.getQuantity());
+                            System.out.println("the item: " + item.getName() + " amount was reduced to: " + item.getQuantity());
                         }
                         return false;
                     }
@@ -821,7 +891,6 @@ public class shipmentManagement {
             }
         }
     }
-
     public void loadDrivers(){
         addDriver("Ron", "000000000", 'C', 0);
         addDriver("Roee", "000000001", 'D', 1);
@@ -884,7 +953,6 @@ public class shipmentManagement {
             addItemToOrder("Osem", "b", 20, 2);
             printOrders();
         }
-
 
 //    public void TestShipment(){
 //        createShipment(1, "123123", "Osem");

@@ -37,6 +37,10 @@ public class Driver {
         return ability;
     }
 
+    public void setLicense(char newLicence){license = newLicence;}
+
+    public void setAbility(Training training) {ability = training;}
+
     public boolean addNewDay(Days newDay) {
         for (Days day : workingDays) {
             if (day == newDay)
