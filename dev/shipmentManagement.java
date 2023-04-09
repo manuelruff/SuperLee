@@ -916,37 +916,100 @@ public class shipmentManagement {
 
     public void loadSites(){
         addVendor("Osem", "beer sheva", "0547388475", "luffy");
-        addVendor("tnuva", "TLV", "0547388476", "sanji");
-        addVendor("teva", "TLV", "0547388477", "zorro");
-        addVendor("shtraus", "kiryat gat", "0547388478", "chopper");
-        addVendor("elit", "haifa", "0547388479", "brook");
-        addVendor("shufersal", "givataim", "0547388123", "nami");
+        addVendor("Tnuva", "TLV", "0547388476", "sanji");
+        addVendor("Zogloveg", "TLV", "0547388477", "zorro");
+        addVendor("Strauss", "kiryat gat", "0547388478", "chopper");
+        addVendor("Elit", "haifa", "0547388479", "brook");
 
-
-        addBranch("snif1", "beer sheva", "0542318475", "jinbi", 2);
-        addBranch("snif2", "kiryat gat", "0542318476", "robin", 2);
-        addBranch("snif3", "TLV", "0542318477", "garp", 1);
-        addBranch("snif4", "givataim", "0542318478", "shanks", 1);
-        addBranch("snif5", "katzrin", "0542318479", "kaido", 0);
-        addBranch("snif6", "haifa", "0542318470", "oden", 0);
+        addBranch("branch1", "beer sheva", "0542318475", "jinbi", 2);
+        addBranch("branch2", "kiryat gat", "0542318476", "robin", 2);
+        addBranch("branch3", "TLV", "0542318477", "garp", 1);
+        addBranch("branch4", "givataim", "0542318478", "shanks", 1);
+        addBranch("branch5", "katzrin", "0542318479", "kaido", 0);
+        addBranch("branch6", "haifa", "0542318470", "oden", 0);
     }
 
 
         public void LoadOrder()
         {
-            createOrder("Osem", "snif1");
+            createOrder("Osem", "branch1");
             addItemToOrder("Osem", "ketchup", 10, 0);
             addItemToOrder("Osem", "mayo", 10, 0);
-            addItemToOrder("Osem", "x", 20, 0);
-            createOrder("Osem", "snif1");
+            addItemToOrder("Osem", "spaghetti", 20, 0);
+            createOrder("Osem", "branch1");
             addItemToOrder("Osem", "ketchup", 10, 0);
-            addItemToOrder("Osem", "y", 20, 1);
-            createOrder("Osem", "snif2");
-            addItemToOrder("Osem", "z", 10, 0);
-            addItemToOrder("Osem", "v", 20, 1);
-            addItemToOrder("Osem", "a", 10, 0);
-            addItemToOrder("Osem", "b", 20, 2);
-            printOrders();
+            addItemToOrder("Osem", "apropo", 20, 1);
+            createOrder("Osem", "branch2");
+            addItemToOrder("Osem", "pene", 10, 0);
+            addItemToOrder("Osem", "bamba", 20, 1);
+            addItemToOrder("Osem", "peti ber", 10, 0);
+            addItemToOrder("Osem", "bisli", 20, 2);
+            createOrder("Zogloveg", "branch3");
+            addItemToOrder("Zogloveg", "pastrama", 10, 1);
+            addItemToOrder("Zogloveg", "hot dog", 20, 2);
+            addItemToOrder("Zogloveg", "salami", 10, 1);
+            addItemToOrder("Zogloveg", "hamburger", 20, 2);
+            createOrder("Zogloveg", "branch4");
+            addItemToOrder("Zogloveg", "pastrama", 10, 1);
+            addItemToOrder("Zogloveg", "hot dog", 20, 2);
+            addItemToOrder("Zogloveg", "salami", 10, 1);
+            addItemToOrder("Zogloveg", "hamburger", 20, 2);
+            createOrder("Zogloveg", "branch5");
+            addItemToOrder("Zogloveg", "pastrama", 10, 1);
+            addItemToOrder("Zogloveg", "hot dog", 20, 2);
+            addItemToOrder("Zogloveg", "salami", 10, 1);
+            addItemToOrder("Zogloveg", "hamburger", 20, 2);
+            createOrder("Zogloveg", "branch6");
+            addItemToOrder("Zogloveg", "pastrama", 10, 1);
+            addItemToOrder("Zogloveg", "hot dog", 20, 2);
+            addItemToOrder("Zogloveg", "salami", 10, 1);
+            addItemToOrder("Zogloveg", "hamburger", 20, 2);
+            createOrder("Elit", "branch3");
+            addItemToOrder("Elit", "chocolate", 100, 0);
+            addItemToOrder("Elit", "dark chocolate", 10, 0);
+            addItemToOrder("Elit", "Egozi", 76, 0);
+            addItemToOrder("Elit", "Nutella", 100, 0);
+            createOrder("Elit", "branch4");
+            addItemToOrder("Elit", "chocolate", 100, 0);
+            addItemToOrder("Elit", "dark chocolate", 10, 0);
+            addItemToOrder("Elit", "Egozi", 76, 0);
+            addItemToOrder("Elit", "Nutella", 100, 0);
+            createOrder("Tnuva", "branch5");
+            addItemToOrder("Tnuva", "milk", 100, 1);
+            addItemToOrder("Tnuva", "white cheese", 100, 1);
+            addItemToOrder("Tnuva", "koteg", 100, 1);
+            addItemToOrder("Tnuva", "butter", 130, 1);
+            createOrder("Tnuva", "branch4");
+            addItemToOrder("Tnuva", "milk", 100, 1);
+            addItemToOrder("Tnuva", "white cheese", 100, 1);
+            addItemToOrder("Tnuva", "koteg", 90, 1);
+            addItemToOrder("Tnuva", "butter", 30, 1);
+            createOrder("Tnuva", "branch6");
+            addItemToOrder("Tnuva", "milk", 100, 1);
+            addItemToOrder("Tnuva", "white cheese", 100, 1);
+            addItemToOrder("Tnuva", "koteg", 100, 1);
+            addItemToOrder("Tnuva", "butter", 100, 1);
+            createOrder("Strauss", "branch2");
+            addItemToOrder("Strauss", "coffee", 100, 0);
+            addItemToOrder("Strauss", "doritos", 60, 0);
+            addItemToOrder("Strauss", "chips", 100, 0);
+            addItemToOrder("Strauss", "milki", 100, 1);
+            createOrder("Strauss", "branch6");
+            addItemToOrder("Strauss", "coffee", 100, 0);
+            addItemToOrder("Strauss", "doritos", 100, 0);
+            addItemToOrder("Strauss", "chips", 60, 0);
+            addItemToOrder("Strauss", "milki", 100, 1);
+            createOrder("Strauss", "branch4");
+            addItemToOrder("Strauss", "coffee", 100, 0);
+            addItemToOrder("Strauss", "doritos", 60, 0);
+            addItemToOrder("Strauss", "chips", 100, 0);
+            addItemToOrder("Strauss", "milki", 60, 1);
+            createOrder("Strauss", "branch3");
+            addItemToOrder("Strauss", "coffee", 60, 0);
+            addItemToOrder("Strauss", "doritos", 100, 0);
+            addItemToOrder("Strauss", "chips", 60, 0);
+            addItemToOrder("Strauss", "milki", 100, 1);
+
         }
 
 
