@@ -115,7 +115,7 @@ public class UI {
                                 Smanagement.printDrivers();
                                 break;
                             case 4:
-                                updateDriverLiecence(Smanagement);
+                                updateDriverLicence(Smanagement);
                                 break;
                             case 5:
                                 updateDriverTraining(Smanagement);
@@ -221,7 +221,7 @@ public class UI {
     }
 
 
-    public void updateDriverLiecence(shipmentManagement Smanagement)
+    public void updateDriverLicence(shipmentManagement Smanagement)
     {
         Scanner scanner = new Scanner(System.in);
         boolean check3 = true, check31 =true;
