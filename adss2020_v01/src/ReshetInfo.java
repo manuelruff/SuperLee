@@ -115,11 +115,47 @@ public class ReshetInfo {
         //create a super
         Super Super1 = new Super("zolretzah");
         Super Super2 = new Super("yakarmeod");
+        //add all the employees to the reshet info and to each super
+        Workers.put("1",ShiftManager1);
+        Workers.put("2",ShiftManager2);
+        Workers.put("3",ShiftManager3);
+        Workers.put("4",ShiftManager4);
+        Workers.put("5",ShiftManager5);
+        Workers.put("6",ShiftManager6);
+        Workers.put("7",ShiftManager7);
+        Workers.put("8",ShiftManager8);
+        Workers.put("9",ShiftManager9);
+        Workers.put("10",Cashier1);
+        Workers.put("11",Cashier2);
+        Workers.put("12",Cashier3);
+        Workers.put("13",Cashier4);
+        Workers.put("14",StoreKeeper1);
+        Workers.put("15",StoreKeeper2);
+        Workers.put("16",StoreKeeper3);
+        Workers.put("17",StoreKeeper4);
+        Workers.put("18",GeneralEmp1);
+        Workers.put("19",GeneralEmp2);
+        Workers.put("20",GeneralEmp3);
+        Workers.put("21",GeneralEmp4);
+        Workers.put("22",Guard1);
+        Workers.put("23",Guard2);
+        Workers.put("24",Guard3);
+        Workers.put("25",Guard4);
+        Workers.put("26",Cleaner1);
+        Workers.put("27",Cleaner2);
+        Workers.put("28",Cleaner3);
+        Workers.put("29",Cleaner4);
+        Workers.put("30",Usher1);
+        Workers.put("31",Usher2);
+        Workers.put("32",Usher3);
+        Workers.put("33",Usher4);
+
         //add all the employees to the supers
         for (int i=1;i<=33;i++) {
             Super1.AddWorker(Integer.toString(i));
             Super2.AddWorker(Integer.toString(i));
         }
+
         //add the super to the super list
         Superim.put("zolretzah",Super1);
         Superim.put("yakarmeod",Super2);
@@ -189,7 +225,7 @@ public class ReshetInfo {
                     end=Superim.get(Name).getEnd_evening(day);
                 }
                 //crete the shift and now we need to add to it
-                Shift CurrShift=new Shift(week.getStartDate().plusDays(day.ordinal()),time,start,end,CanWorkList.get(num-1),Workers.get(CanWorkList.get(num-1)).GetName());
+                Shift CurrShift=new Shift(week.getStartDate().plusDays(day.ordinal()),time,start,end,CanWorkList.get(num-1),Workers.get(CanWorkList.get(num-1)));
                 //update the menager shift
                 Workers.get(CanWorkList.get(num-1)).AddShift(day);
                 //then we need to let him see the rest without shift manager
@@ -258,7 +294,7 @@ public class ReshetInfo {
                         // we will decrese one so it will be the index from the list
                         choice=choice-1;
                         //add to the shift
-                        CurrShift.AddWorker(CanWorkList.get(choice),Workers.get(CanWorkList.get(choice)).GetName());
+                        CurrShift.AddWorker(CanWorkList.get(choice),Workers.get(CanWorkList.get(choice)));
                         //now i need to update the worker propertyly
                         Workers.get(CanWorkList.get(choice)).AddShift(day);
                         //remove from the available workers
@@ -337,7 +373,7 @@ public class ReshetInfo {
         }
         else{
             //whem were here we have a good number for employee so we add him
-            Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID,Workers.get(ID).GetName());
+            Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID,Workers.get(ID));
             // add the shift to the workers shifts
             Workers.get(ID).AddShift(Days.values()[day]);
         }

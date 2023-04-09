@@ -12,13 +12,14 @@ class WeeklyTest {
     void addShift() {
         Weekly week=new Weekly();
         assertNotNull(week);
-        Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Worker work0 = new Worker("manu" , "1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1",work0);
         week.AddShift(shift);
-        Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1",work0);
         week.AddShift(shift1);
-        Shift shift2=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift2=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1",work0);
         week.AddShift(shift2);
-        Shift shift3=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift3=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1",work0);
         week.AddShift(shift3);
         assertNotNull(week.GetShift(0));
         assertNotNull(week.GetShift(1));
@@ -27,21 +28,24 @@ class WeeklyTest {
     }
     @Test
     void getShift() {
+        Worker work0 = new Worker("manu" , "1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Weekly week=new Weekly();
-        Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1",work0);
         week.AddShift(shift);
-        Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1",work0);
         week.AddShift(shift1);
-        Shift shift2=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift2=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1",work0);
         week.AddShift(shift2);
-        Shift shift3=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift3=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1",work0);
         week.AddShift(shift3);
         assertNotNull(week.GetShift(0));
         assertNotNull(week.GetShift(1));
         assertNotNull(week.GetShift(2));
         assertNotNull(week.GetShift(3));
-        shift.AddWorker("2","lala");
-        shift.AddWorker("3","lali");
+        Worker work1 = new Worker("lala" , "2", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker work2 = new Worker("lali" , "3", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        shift.AddWorker("2",work1);
+        shift.AddWorker("3",work2);
         assertTrue(week.GetShift(0).IsWorkerAtShift("1"));
         assertTrue(week.GetShift(0).IsWorkerAtShift("2"));
         assertTrue(week.GetShift(0).IsWorkerAtShift("3"));
