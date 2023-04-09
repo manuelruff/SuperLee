@@ -10,9 +10,9 @@ public class Item {
     }
     public void printItem()
     {
-        System.out.println("Item name: " + name);
-        System.out.println("Quantity: "+ quantity);
-        System.out.println("Storage Condition: " + storageCondition.name() + "\n");
+        System.out.println("\tItem name: " + name);
+        System.out.println("\tQuantity: "+ quantity);
+        System.out.println("\tStorage Condition: " + storageCondition.name() + "\n");
     }
 
     public String getName() {
