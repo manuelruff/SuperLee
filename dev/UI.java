@@ -254,7 +254,7 @@ public class UI {
                     else if( driverLicence == 'd' || driverLicence == 'D') {
                         check3 = false;
                         driverLicence = Character.toUpperCase(driverLicence);
-                        Smanagement.updateDriverLiecence(driverID,driverLicence);
+                        Smanagement.updateDriverLicence(driverID,driverLicence);
                     }
                     else
                         System.out.println("Invalid input");
