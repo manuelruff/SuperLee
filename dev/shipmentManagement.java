@@ -436,6 +436,11 @@ public class shipmentManagement {
      * This function prints every shipment in the system.
      */
     public void printShipments(){
+        if (shipments.isEmpty()) {
+            System.out.println("There isn't any shipments!");
+            return;
+        }
+        System.out.println("******************** SHIPMENTS ********************");
         for (Shipment shipment : shipments){
             shipment.printShipment();
         }
@@ -445,6 +450,11 @@ public class shipmentManagement {
      * This function prints every shipment that is ready to be executed.
      */
     public void printAvailableShipments(){
+        if (availableShipments.isEmpty()) {
+            System.out.println("There isn't any shipments!");
+            return;
+        }
+        System.out.println("******************** SHIPMENTS ********************");
         for ( Shipment shipment : availableShipments){
             shipment.printShipment();
         }

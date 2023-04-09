@@ -1,5 +1,5 @@
 import java.time.LocalTime;
-import java.util.Date;
+
 import java.util.List;
 
 public class Shipment {
@@ -27,7 +27,7 @@ public class Shipment {
 
     public void printShipment()
     {
-        System.out.println("Shipment details: ");
+        System.out.println("****** Shipment details ******");
         System.out.println("Shipment ID: " + ID);
         if (departureTime != null) {
             System.out.println("shipment occurred on " + dayOfTheWeek.toString() + " at " + departureTime);
