@@ -156,6 +156,47 @@ public class shipmentManagement {
         }
     }
 
+    /**
+     * This function search for a new driver in case of truck exchange, if the old driver is suitable for the new
+     * truck, there is no changes.
+     * @param oldDriver Driver, old driver of the shipment.
+     * @param truck Truck, the new truck that was assigned to the shipment.
+     * @param day Days enum, the day of the week.
+     * @return Driver. (old Driver\new Driver).
+     */
+    private Driver changeDriver(Driver oldDriver, Truck truck,Days day)
+    {
+        if(oldDriver.getAbility().ordinal() >= truck.getStorageType().ordinal())
+        {
+            if(oldDriver.getLicense() == 'D')
+                return oldDriver;
+            else if (oldDriver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
+                return oldDriver;
+            }
+        }
+        else
+        {
+            for (Driver driver1 : drivers)
+            {
+                if(oldDriver.checkDay(day)) {
+                    if (driver1.getAbility().ordinal() >= truck.getStorageType().ordinal()) {
+                        if (driver1.getLicense() == 'D') {
+                            driver1.addNewDay(day);
+                            oldDriver.removeDay(day);
+                            return driver1;
+                        } else if (oldDriver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
+                            driver1.addNewDay(day);
+                            oldDriver.removeDay(day);
+                            return driver1;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+
 
     /****************************** Truck related Methods ******************************/
 
@@ -773,40 +814,6 @@ public class shipmentManagement {
         availableShipments.remove(shipmentToDelete);
         System.out.println("This shipment has been deleted!");
     }
-
-    public Driver changeDriver(Driver oldDriver, Truck truck,Days day)
-    {
-        if(oldDriver.getAbility().ordinal() >= truck.getStorageType().ordinal())
-        {
-            if(oldDriver.getLicense() == 'D')
-                return oldDriver;
-            else if (oldDriver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
-                return oldDriver;
-            }
-        }
-        else
-        {
-            for (Driver driver1 : drivers)
-            {
-                if(oldDriver.checkDay(day)) {
-                    if (driver1.getAbility().ordinal() >= truck.getStorageType().ordinal()) {
-                        if (driver1.getLicense() == 'D') {
-                            driver1.addNewDay(day);
-                            oldDriver.removeDay(day);
-                            return driver1;
-                        } else if (oldDriver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
-                            driver1.addNewDay(day);
-                            oldDriver.removeDay(day);
-                            return driver1;
-                        }
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-
 
 
     private boolean itemsToDelete(Shipment shipment) {
