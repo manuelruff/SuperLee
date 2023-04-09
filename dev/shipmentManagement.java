@@ -21,11 +21,6 @@ public class shipmentManagement {
         sites = new ArrayList<>();
         shipments = new ArrayList<>();
         availableShipments = new ArrayList<>();
-        loadDrivers();
-        loadTrucks();
-        loadSites();
-        LoadOrder();
-        //TestShipment();
     }
 
     /****************************** Drivers related Methods ******************************/
@@ -954,10 +949,15 @@ public class shipmentManagement {
             printOrders();
         }
 
-//    public void TestShipment(){
-//        createShipment(1, "123123", "Osem");
-//        executeShipment();
-//        }
+
+
+
+        public void loadALL(){
+            loadDrivers();
+            loadTrucks();
+            loadSites();
+            LoadOrder();
+        }
 }
 
 
