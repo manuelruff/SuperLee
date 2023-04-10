@@ -13,7 +13,6 @@ public class ItemsDoc {
         this.ID = String.valueOf(count);
         this.siteName = siteName;
         itemList = new ArrayList<>();
-
     }
     public void printItemsDoc() {
         System.out.println("Item Document details:");
@@ -61,9 +60,4 @@ public class ItemsDoc {
     public boolean isEmpty(){
         return itemList.isEmpty();
     }
-
-    public static int getCount(){
-        return count;
-    }
-
 }

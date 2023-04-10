@@ -776,7 +776,6 @@ public class UI {
             if(Smanagement.checkShipmentID(shipmentIDToDelete))
             {
                 Smanagement.deleteShipment(shipmentIDToDelete);
-                System.out.println("Shipment deleted");
                 check52 = false;
             }
             else {

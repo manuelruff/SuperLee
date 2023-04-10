@@ -801,7 +801,7 @@ public class shipmentManagement {
             }
         }
         assert shipmentToDelete != null;
-        String source = String.valueOf(shipmentToDelete.getSource());
+        String source = shipmentToDelete.getSource().getName();
         for(int i = 0; i < shipmentToDelete.getDestinations().size(); i++){
             createOrder(source, shipmentToDelete.getDestinations().get(i).getName());
             Order order = vendorMap.get(source).get(vendorMap.get(source).size() - 1);
@@ -813,6 +813,11 @@ public class shipmentManagement {
     }
 
 
+    /**
+     * This function delete items from shipment in case there were
+     * @param shipment
+     * @return
+     */
     private boolean itemsToDelete(Shipment shipment) {
         System.out.println("Those are the branches of the shipments: ");
         for (Site site : shipment.getDestinations()){
@@ -1011,7 +1016,6 @@ public class shipmentManagement {
             addItemToOrder("Strauss", "doritos", 100, 0);
             addItemToOrder("Strauss", "chips", 60, 0);
             addItemToOrder("Strauss", "milki", 100, 1);
-
         }
 
         public void loadAll(){
