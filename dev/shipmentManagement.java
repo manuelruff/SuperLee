@@ -757,7 +757,7 @@ public class shipmentManagement {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime time = null;
         while (time == null) {
-            System.out.print("Enter the time (in HH:MM format): ");
+            System.out.println("Enter the time (in HH:MM format): ");
             String timeStr = UI.scanner.nextLine();
 
             try {
@@ -770,9 +770,18 @@ public class shipmentManagement {
         System.out.println("U have arrived at ur destination: ");
         shipment.getSource().printSite();
         Truck currTruck = searchTruckByID(shipment.getTruckNumber());
-        System.out.println("Please enter the weight of the truck with the items (in KG): ");
         int weight;
-        weight = UI.scanner.nextInt();
+        while (true){
+            try{
+                System.out.println("Please enter the weight of the truck with the items (in KG): ");
+                weight = Integer.parseInt(UI.scanner.nextLine());
+                break;
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("Please enter an Integer");
+            }
+        }
         int firstWeight = weight;
         while (true) {
             if (shipment.getShipmentStatus() != Status.NoChanges) {
@@ -787,8 +796,15 @@ public class shipmentManagement {
 
             }
             while (weight > firstWeight) {
-                System.out.println("The input was incorrect, please enter only numbers");
-                weight = UI.scanner.nextInt();
+                try {
+                    System.out.println("The input was incorrect, please enter only numbers");
+                    weight = Integer.parseInt(UI.scanner.nextLine());
+                    break;
+                }
+                catch (NumberFormatException e)
+                {
+                    System.out.println("Please enter an Integer");
+                }
             }
             if (weight > currTruck.getTotalWeight() - currTruck.getTruckWeight()) {
                 String input = "0";
@@ -825,10 +841,6 @@ public class shipmentManagement {
                     }
                 }
 
-            }
-            else if(shipment.getShipmentStatus() == Status.NoChanges){
-                UI.scanner.nextLine();
-                break;
             }
             else{
                 break;
