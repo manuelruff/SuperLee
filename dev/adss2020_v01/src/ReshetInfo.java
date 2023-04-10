@@ -189,22 +189,6 @@ public class ReshetInfo {
                     System.out.println("it looks like you are out of managers or you dont have enough, go assing some new ones so you can make the shifts.");
                     return;
                 }
-                //prints the list of workers available - name and id
-                for (int j = 0; j < CanWorkList.size(); j++) {
-                    System.out.println(j + 1 + ". " + Workers.get(CanWorkList.get(j)).GetName() + " with ID: " + CanWorkList.get(j));
-                }
-                System.out.println("if you dont want this shift to happen enter 0.");
-                int num =AskForNumber(0,CanWorkList.size());
-                //if he dont want anyone in the shift we create an empty shift
-                if (num==0){
-                    Shift CurrShift = new Shift(week.getStartDate().plusDays(day.ordinal()), time);
-                    week.AddShift(CurrShift);
-                    //we go to evening shift
-                    time = ShiftTime.Evening;
-                    //go to next iteration
-                    continue;
-                }
-                //when we get here we have a good choice for the shift manager
                 //get the time of the shift
                 double start;
                 double end;
@@ -215,6 +199,22 @@ public class ReshetInfo {
                     start = Superim.get(Name).getStart_evening(day);
                     end = Superim.get(Name).getEnd_evening(day);
                 }
+                //prints the list of workers available - name and id
+                for (int j = 0; j < CanWorkList.size(); j++) {
+                    System.out.println(j + 1 + ". " + Workers.get(CanWorkList.get(j)).GetName() + " with ID: " + CanWorkList.get(j));
+                }
+                System.out.println("if you dont want this shift to happen enter 0.");
+                int num =AskForNumber(0,CanWorkList.size());
+                //if he dont want anyone in the shift we create an empty shift
+                if (num==0){
+                    Shift CurrShift = new Shift(week.getStartDate().plusDays(day.ordinal()), time, start, end);
+                    week.AddShift(CurrShift);
+                    //we go to evening shift
+                    time = ShiftTime.Evening;
+                    //go to next iteration
+                    continue;
+                }
+                //when we get here we have a good choice for the shift manager
                 //crete the shift and now we need to add to it
                 Shift CurrShift = new Shift(week.getStartDate().plusDays(day.ordinal()), time, start, end, CanWorkList.get(num - 1), Workers.get(CanWorkList.get(num - 1)).GetID());
                 //update the menager shift
@@ -296,6 +296,11 @@ public class ReshetInfo {
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum).RemoveWorker(ID);
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum + 1).RemoveWorker(ID);
         Workers.get(ID).RemoveShift(Days.values()[day]);
+        //if shift is empty ill set it to an empty shift
+        if(Superim.get(branch).GetWeekShifts().GetShift(shiftnum + 1).IsEmptyShift()){
+            Superim.get(branch).GetWeekShifts().GetShift(day).setManagerID("-1");
+            Superim.get(branch).GetWeekShifts().GetShift(day).setManagerName("-1");
+        }
     }
 
     //checks if worker works in specific shift in a branch
@@ -321,12 +326,28 @@ public class ReshetInfo {
             System.out.println("this worker can't work at this shift");
             return;
         } else {
-            //whem were here we have a good number for employee so we add him
-            Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID, Workers.get(ID).GetID());
-            // add the shift to the workers shifts
-            Workers.get(ID).AddShift(Days.values()[day]);
+            //check if the shift  is empty
+            if (Superim.get(branch).GetWeekShifts().GetShift(day).IsEmptyShift()){
+                if(!Workers.get(ID).CanDoJob(Jobs.ShiftManager)){
+                    System.out.println("this shift is empty you need to add a shift manager first");
+                }
+                else{
+                    //if we are here he added a manager to an empty shift
+                    //whem were here we have a good number for employee so we add him
+                    Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID, Workers.get(ID).GetID());
+                    // add the shift to the workers shifts
+                    Workers.get(ID).AddShift(Days.values()[day]);
+                    Superim.get(branch).GetWeekShifts().GetShift(day).setManagerID(Workers.get(ID).GetID());
+                    Superim.get(branch).GetWeekShifts().GetShift(day).setManagerName(Workers.get(ID).GetName());
+                }
+            }
+            else {
+                //whem were here we have a good number for employee so we add him
+                Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID, Workers.get(ID).GetID());
+                // add the shift to the workers shifts
+                Workers.get(ID).AddShift(Days.values()[day]);
+            }
         }
-
     }
 
     //prints current weekly shifts of a branch

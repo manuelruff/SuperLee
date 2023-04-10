@@ -45,4 +45,12 @@ public class ShiftTest {
         assertFalse(tester.IsWorkerAtShift("2"));
         assertFalse(tester.IsWorkerAtShift("3"));
     }
+
+    @Test
+    public void isEmptyShift() {
+        Shift tester=new Shift(LocalDate.now(), ShiftTime.Morning,10,16);
+        assertTrue(tester.IsEmptyShift());
+        tester=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        assertFalse(tester.IsEmptyShift());
+    }
 }

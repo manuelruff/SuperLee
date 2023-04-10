@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="ADSS_Group_J:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/ADSS_Group_J_jar</output-path>
+  <artifact type="jar" name="adss2023_v01:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/adss2023_v01_jar</output-path>
     <root id="archive" name="ADSS_Group_J.jar">
       <element id="module-output" name="ADSS_Group_J" />
       <element id="extracted-dir" path="$PROJECT_DIR$/release/ADSS_Group_J.jar" path-in-jar="/" />

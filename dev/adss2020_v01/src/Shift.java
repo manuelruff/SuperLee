@@ -25,15 +25,24 @@ public class Shift {
         this.AddWorker(managerID,managerName);
     }
     //builder for empty shift
-    public Shift(LocalDate date,ShiftTime ShiftTime){
+    public Shift(LocalDate date,ShiftTime ShiftTime,double start,double end){
         this.date=date;
         this.shift_time=ShiftTime;
         this.managerID="-1";
         this.managerName="-1";
         WorkerList=new HashMap<>();
-        this.start=0;
-        this.end=0;
+        this.start=start;
+        this.end=end;
     }
+
+    public void setManagerID(String managerID) {
+        this.managerID = managerID;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
+    }
+
     public void AddWorker(String ID, String Name){
         this.WorkerList.put(ID,Name);
     }
@@ -44,6 +53,14 @@ public class Shift {
 
     public boolean IsWorkerAtShift(String ID){
         return WorkerList.get(ID) != null ;
+    }
+
+    //check if the shift is empty
+    public boolean IsEmptyShift(){
+        if (this.managerID=="-1" || WorkerList.size()==0){
+            return true;
+        }
+        return false;
     }
 
     public void PrintMe(){
@@ -58,7 +75,7 @@ public class Shift {
 
             for (String ID : this.WorkerList.keySet()) {
                 //we dont need to print the manager twice
-                if (ID != this.managerID) {
+                if (!ID.equals( this.managerID)) {
                     System.out.println(ID + " - " + this.WorkerList.get(ID));
                 }
             }
