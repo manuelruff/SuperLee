@@ -415,13 +415,13 @@ public class ReshetInfo {
     }
 
     // add Constraints to worker by given Id
-    public void AddConstraints(String ID, int day, double s_hour, double e_hour, String r) {
-        Workers.get(ID).AddCantWork(Days.values()[day - 1], s_hour, e_hour, r);
+    public boolean AddConstraints(String ID, int day, double s_hour, double e_hour, String r) {
+        return Workers.get(ID).AddCantWork(Days.values()[day - 1], s_hour, e_hour, r);
     }
 
     // remove Constraintss for worker by id
-    public void RemoveConstraints(String ID, int day, double s_hour, double e_hour) {
-        Workers.get(ID).RemoveCantWork(Days.values()[day - 1], s_hour, e_hour);
+    public boolean RemoveConstraints(String ID, int day, double s_hour, double e_hour) {
+        return Workers.get(ID).RemoveCantWork(Days.values()[day - 1], s_hour, e_hour);
     }
 
     //changes a worker password

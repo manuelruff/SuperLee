@@ -13,27 +13,35 @@ public class Constraints {
         cantWork=new HashMap<>();
     }
 
-    public void AddCantWork(Days day,double s,double e,String r ){
+    public boolean AddCantWork(Days day,double s,double e,String r ){
         List<CantWork> curr=cantWork.get(day);
         //if its null we need to add a new one
         if (curr==null){
             curr=new ArrayList<>();
             curr.add(new CantWork(s,e,r));
             cantWork.put(day,curr);
+            return true;
         }
         // if not null we add a value to what we already have
         else{
+            for(CantWork cw : curr){
+                if(cw.getStart()<=s || cw.getEnd()>=e){
+                    return false;
+                }
+            }
             curr.add(new CantWork(s,e,r));
+            return true;
         }
     }
 
-    public void RemoveCantWork(Days day,double s,double e){
+    public boolean RemoveCantWork(Days day,double s,double e){
         List<CantWork> curr=cantWork.get(day);
         int i=0;
         //a flag that will tell if we need to delete something
         boolean check=false;
         //if its null we need to add a new one
         if (curr==null){
+            return false;
             //we dont need to do anything if not existing
         }
         // if not null we check if we have a time like he mentioned
@@ -48,9 +56,10 @@ public class Constraints {
             //we remove the one we found
             if (check) {
                 curr.remove(i);
+                return true;
             }
-
         }
+        return false;
     }
 
     //function that checks if the day and time of the shift and tells if he can work there

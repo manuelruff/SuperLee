@@ -279,7 +279,12 @@ public class UI {
                                 System.out.println("please enter reason:");
                                 String reason=myConstraints.nextLine();  // Read user input
                                 // if the Constraints is valid - add the Constraints at the day the user gave
-                                info.AddConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end,reason);
+                                if(info.AddConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end,reason)){
+                                    System.out.println("your constraint added");
+                                }
+                                else{
+                                    System.out.println("you already have constraint in identical time");
+                                }
                                 //stop the loop
                                 day_choice =8;
                                 break;
@@ -298,7 +303,7 @@ public class UI {
                 case 3:
                     day_choice = -1;
                     while (day_choice != 8) {
-                        System.out.println("please enter the number of the day which you want to add constraints in \n" +
+                        System.out.println("please enter the number of the day which you want to remove constraints from \n" +
                                 "Sunday-1 , Monday-2, Tuesday-3, Wednesday-4, Thursday-5, Friday-6, Saturday-7 \n"+
                                 "if you want to exit - press 8 ");
                         day_choice = AskForNumber(1,8);
@@ -314,7 +319,12 @@ public class UI {
                                     break;
                                 }
                                 // if the Constraints is valid - remove the Constraints at the day the user gave if exists
-                                info.RemoveConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end);
+                                if(info.RemoveConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end)){
+                                    System.out.println("the constraint removed");
+                                }
+                                else{
+                                    System.out.println("the constraint is invalid - please look at your constrains ant insert the exact day and time");
+                                }
                                 day_choice =8;
                                 break;
                                 // exit option

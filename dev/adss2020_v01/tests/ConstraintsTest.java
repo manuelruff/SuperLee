@@ -26,7 +26,7 @@ public class ConstraintsTest {
         tester.AddCantWork(Days.Tuesday,12,22,"blabla");
         tester.RemoveCantWork(Days.Saturday,12,20);
         tester.RemoveCantWork(Days.Sunday,12,20);
-        //it seposed to still be false because there is no listing of 12-20, he needs to fiil the right times of the listing to remove it
+        //it supposed to still be false because there is no listing of 12-20, he needs to fiil the right times of the listing to remove it
         assertFalse(tester.CanWork(Days.Sunday,8,13));
         assertFalse(tester.CanWork(Days.Saturday,10,19));
     }

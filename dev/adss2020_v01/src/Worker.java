@@ -64,12 +64,12 @@ public class Worker {
     }
 
     //called when we create a new Constraints
-    public void AddCantWork(Days day,double s,double e,String r){
-        ShiftsCantWork.AddCantWork(day,s,e,r);
+    public boolean AddCantWork(Days day,double s,double e,String r){
+        return ShiftsCantWork.AddCantWork(day,s,e,r);
     }
     //called when we delete an Constraints
-    public void RemoveCantWork(Days day,double s,double e){
-        ShiftsCantWork.RemoveCantWork(day,s,e);
+    public boolean RemoveCantWork(Days day,double s,double e){
+        return ShiftsCantWork.RemoveCantWork(day,s,e);
     }
 
     //check if entered right password
