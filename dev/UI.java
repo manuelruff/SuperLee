@@ -230,6 +230,7 @@ public class UI {
         }
     }
 
+    /********************************************** HELPER FUNCTIONS **********************************************/
 
     public void updateDriverLicence(shipmentManagement Smanagement)
     {
