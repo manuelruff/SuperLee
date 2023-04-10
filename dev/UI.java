@@ -27,7 +27,8 @@ public class UI {
             System.out.println("3 - Drivers Menu");
             System.out.println("4 - Order Menu");
             System.out.println("5 - Shipping Menu");
-            System.out.println("6 - Exit");
+            System.out.println("6 - Print all shipped item docs");
+            System.out.println("7 - Exit");
             choice = scanner.nextLine();
             switch (choice)
             {
@@ -217,6 +218,9 @@ public class UI {
                     }
                     break;
                 case "6":
+                    Smanagement.printAllDocs();
+                    break;
+                case "7":
                     scanner.close();
                     return;
                 default:
