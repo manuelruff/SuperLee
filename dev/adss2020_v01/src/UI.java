@@ -271,7 +271,7 @@ public class UI {
                                 double Constraints_num_start=AskForDoubleNumber();
                                 System.out.println("please enter the end of the time that you cant work at (it needs to look like: 10.00 for 10): ");
                                 double Constraints_num_end=AskForDoubleNumber();
-                                if (info.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
+                                if (!info.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
                                     System.out.println("not valid, please try again");
                                     break;
                                 }
@@ -309,7 +309,7 @@ public class UI {
                                 System.out.println("please enter the end of the time that you cant work at (it needs to look like: 22.00 for 22pm): ");
                                 double Constraints_num_end=AskForDoubleNumber();
                                 // check if the Constraints number is valid
-                                if (info.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
+                                if (!info.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
                                     System.out.println("not valid, please try again");
                                     break;
                                 }
@@ -527,7 +527,7 @@ public class UI {
                                         double Constraints_num_morning_end = Double.parseDouble(input_Constraints_2);
                                         double Constraints_num_evening_start = Double.parseDouble(input_Constraints_3);
                                         double Constraints_num_evening_end = Double.parseDouble(input_Constraints_4);
-                                        if(info.CheckTimeValidate(Constraints_num_morning_start, Constraints_num_morning_end) || info.CheckTimeValidate(Constraints_num_evening_start, Constraints_num_evening_end)){
+                                        if(!info.CheckTimeValidate(Constraints_num_morning_start, Constraints_num_morning_end) || !info.CheckTimeValidate(Constraints_num_evening_start, Constraints_num_evening_end)){
                                             System.out.println("invalid time input - hours should be between 10.00-24.59 (note that seconds is .0-.59!");
                                         }
                                         else {
