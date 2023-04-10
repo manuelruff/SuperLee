@@ -41,6 +41,7 @@ public class UI {
                             case 1:
                                 addSite(Smanagement);
                                 break;
+                                //asd
 
                             case 2:
                                 deleteSite(Smanagement);
