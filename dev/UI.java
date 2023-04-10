@@ -204,6 +204,7 @@ public class UI {
         driverID = scanner.nextLine();
         while (check3) {
             while (check31)
+
             {
                 System.out.println("Please enter drivers ID:");
                 driverID = scanner.nextLine();
