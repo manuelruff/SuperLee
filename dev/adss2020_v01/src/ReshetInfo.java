@@ -544,7 +544,7 @@ public class ReshetInfo {
     public boolean CheckTimeValidate(double start, double end) {
         double start_dec = start - Math.floor(start);
         double end_dec = end - Math.floor(end);
-        return (!(start < 0 || start > end || end > 24 || start_dec >= 0.60 || end_dec >= 0.60));
+        return (!(start < 0 || start > end || end > 24 || start_dec >= 0.591 || end_dec >= 0.591));
     }
 
     // send payment to the workers
