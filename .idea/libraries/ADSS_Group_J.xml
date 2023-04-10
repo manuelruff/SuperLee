@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ADSS_Group_J">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/release/ADSS_Group_J.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
