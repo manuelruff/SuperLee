@@ -288,6 +288,11 @@ public class shipmentManagement {
     }
 
 
+    /**
+     * This function finds a truck by ID and retruns it
+     * @param truckNumber String of the truck.
+     * @return the found truck.
+     */
     public Truck searchTruckByID(String truckNumber) {
         for (Truck truck : trucks) {
             if (truck.getTruckNumber().equals(truckNumber)) {
@@ -310,6 +315,10 @@ public class shipmentManagement {
     }
 
 
+    /**
+     * This function searching for a new truck for the shipment.
+     * @param shipment shipment that needs the new truck.
+     */
     private void changeTruck(Shipment shipment) {
         Truck currentTruck = getTruck(shipment.getTruckNumber());
         Driver currentDriver = shipment.getDriver();;
@@ -632,12 +641,22 @@ public class shipmentManagement {
     }
 
     /**
+     * This function prints all the shipment item docs of the system.
+     */
+    public void printAllDocs(){
+        for(Shipment shipment : shipments){
+            for(ItemsDoc itemsDoc : shipment.getDocs()){
+                itemsDoc.printItemsDoc();
+            }
+        }
+    }
+    /**
      * This function creates a new shipment, first the function checks if the vendor has orders, if an order was found,
      * the function will go over the orders and combine those with same delivery zones and creating a new shipments.
      * the function finds a matching driver truck pair, the type of the truck is decided by the type of the first
      * item that was checked.
      *
-     * @param dayOfWeek int representing the date. //todo maybe change later ****important****
+     * @param dayOfWeek int representing the date.
      * @param ID        string, the ID of the shipment.
      * @param source    string, Vendor.
      * @return True/false if the shipment was created.
@@ -845,8 +864,8 @@ public class shipmentManagement {
 
     /**
      * This function delete items from shipment in case there were
-     * @param shipment
-     * @return
+     * @param shipment shipment to delete items from
+     * @return true/false.
      */
     private boolean itemsToDelete(Shipment shipment) {
         System.out.println("Those are the branches of the shipments: ");
