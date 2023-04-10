@@ -408,6 +408,39 @@ public class UI {
      * and adds the new truck to the system
      * @param Smanagement - the shipmentManagement object which the truck is added too
      */
+
+    public void updateSite(shipmentManagement Smanagement)
+    {
+        System.out.println("Please enter the name of the site you would like to update:");
+        String siteName = scanner.nextLine();
+        if(Smanagement.checkSite(siteName)){
+            while (true) {
+                System.out.println("""
+                        What would you like to change:
+                        1 - Site name
+                        2 - Site address
+                        3 - Contact name
+                        4 - Contact phone number""");
+                String str = scanner.nextLine();
+                try {
+                    int num = Integer.parseInt(str);
+                    if (num >= 1 && num <= 4) {
+                        System.out.println("Enter the new details");
+                        String change = scanner.nextLine();
+                        Smanagement.updateSite(siteName,change,num);
+                        return;
+                    }
+                    else {
+                        System.out.println("The string must be a number between 1 and 4.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("The string does not contain a valid integer.");
+                }
+            }
+        }
+        else
+            System.out.println("Site does not exist in the system");
+    }
     public void addTruck(shipmentManagement Smanagement)
     {
         boolean check2 = true;
@@ -654,52 +687,7 @@ public class UI {
         }
         scanner.nextLine();
     }
-    /**
-     * this fuction gets input from the user and adds items to a specific order
-     * @param Smanagement - the shipmentManagement object which the items are added too
-     */
-//    public void addItemOrder(shipmentManagement Smanagement)
-//    {
-//        Scanner scanner = new Scanner(System.in);
-//        boolean check44 = true, check441=true;
-//        String source1;
-//        String itemName;
-//        int amount1=0;
-//        while(check44)
-//        {
-//            System.out.println("Please enter the vendor name you want to add an item from");
-//            source1 = scanner.nextLine();
-//            if(Smanagement.checkVendor(source1))
-//            {
-//                System.out.println("Please enter an item name");
-//                itemName = scanner.nextLine();
-//                while(check441) {
-//                    System.out.println("Please enter the amount of the item you want to order");
-//                    amount1 = scanner.nextInt();
-//                    if(amount1 <= 0)
-//                        System.out.println("please enter only a positive number");
-//                    else
-//                        check441 = false;
-//                }
-//                int training = 4;
-//                while(training < 0 || training > 2) {
-//                    System.out.println("""
-//                                                    Please enter storage condition for the item:
-//                                                    0 - Regular
-//                                                    1 - Cooling
-//                                                    2 - Freezer""");
-//                    training = scanner.nextInt();
-//                    if(training < 0 || training > 2)
-//                        System.out.println("Please enter a number between 0 - 2");
-//                }
-//                Smanagement.addItemToOrder(source1,itemName,amount1,training);
-//                System.out.println("Item add to order");
-//                check44 =false;
-//            }
-//            else
-//                System.out.println("Vendor does not exist in the system");
-//        }
-//    }
+
     /**
      * this function gets input from the user about a new shipment he wants to add
      * and adds the new shipment to the system
