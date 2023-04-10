@@ -54,8 +54,10 @@ public abstract class Truck {
     {
         for(Days day : inUse)
         {
-            if(day == dayToRemove)
+            if(day == dayToRemove) {
                 inUse.remove(dayToRemove);
+                return;
+            }
         }
     }
     public boolean checkDay(Days dayNum)

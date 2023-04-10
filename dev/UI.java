@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class UI {
-    private  static Scanner scanner;
+    public  static Scanner scanner;
     private shipmentManagement Smanagement;
     public UI(){
          Smanagement = new shipmentManagement();
@@ -61,7 +61,7 @@ public class UI {
                                 Smanagement.printSites();
                                 break;
                             case 4:
-                                // todo: update site
+                                updateSite(Smanagement);
                                 break;
                             case 5:
                                 chF=false;
@@ -217,6 +217,7 @@ public class UI {
                     }
                     break;
                 case "6":
+                    scanner.close();
                     return;
                 default:
                     System.out.println("Invalid input");

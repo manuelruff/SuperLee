@@ -735,12 +735,11 @@ public class shipmentManagement {
             return;
         }
         Shipment shipment = availableShipments.get(0);
-        Scanner scanner = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime time = null;
         while (time == null) {
             System.out.print("Enter the time (in HH:MM format): ");
-            String timeStr = scanner.nextLine();
+            String timeStr = UI.scanner.nextLine();
 
             try {
                 time = LocalTime.parse(timeStr, formatter);
@@ -754,29 +753,36 @@ public class shipmentManagement {
         Truck currTruck = searchTruckByID(shipment.getTruckNumber());
         System.out.println("Please enter the weight of the truck with the items (in KG): ");
         int weight;
-        weight = scanner.nextInt();
+        weight = UI.scanner.nextInt();
         int firstWeight = weight;
         while (true) {
             if (shipment.getShipmentStatus() != Status.NoChanges) {
-                System.out.println("Please enter the new Weight (in kG):");
-                weight = scanner.nextInt();
+                try{
+                    System.out.println("Please enter the new Weight (in KG):");
+                    weight = Integer.parseInt(UI.scanner.nextLine());
+                }
+                catch (NumberFormatException e)
+                {
+                    System.out.println("Please enter an Integer");
+                }
+
             }
             while (weight > firstWeight) {
                 System.out.println("The input was incorrect, please enter only numbers");
-                weight = scanner.nextInt();
+                weight = UI.scanner.nextInt();
             }
             if (weight > currTruck.getTotalWeight() - currTruck.getTruckWeight()) {
-                int input = 0;
-                while (input != 1 && input != 2 && input != 3) {
+                String input = "0";
+                while (!input.equals("1") && !input.equals("2") && !input.equals("3")) {
                     System.out.println("The truck exceeded the max carry weight, in order to proceed with the shipment\n" +
                             "please choose one of the options: ");
                     System.out.println("1. Take out some of the items");
                     System.out.println("2. Switch to a bigger truck");
                     if (shipment.getDestinations().size() != 1)
                         System.out.println("3. remove the last site from this shipment");
-                    input = scanner.nextInt();
+                    input = UI.scanner.nextLine();
                     switch (input) {
-                        case 1 -> {
+                        case "1" -> {
                             if (itemsToDelete(shipment)) {
                                 System.out.println("There is no items left in the shipment, so the shipment is canceled");
                                 shipment.setShipmentStatus(Status.Canceled);
@@ -784,7 +790,7 @@ public class shipmentManagement {
                             }
                             shipment.setShipmentStatus(Status.ItemsChange);
                         }
-                        case 2 -> {
+                        case "2" -> {
                             changeTruck(shipment);
                             if (!Objects.equals(currTruck.getTruckNumber(), shipment.getTruckNumber()))
                                 shipment.setShipmentStatus(Status.TruckExchange);
@@ -793,7 +799,7 @@ public class shipmentManagement {
                             }
                             currTruck = searchTruckByID(shipment.getTruckNumber());
                         }
-                        case 3 -> {
+                        case "3" -> {
                             removeLastSiteFromShipment(shipment);
                             shipment.setShipmentStatus(Status.SiteChange);
                         }
@@ -850,8 +856,7 @@ public class shipmentManagement {
         }
         // choose site to delete item from.
         System.out.println("Please choose the one you want to delete the item from, enter the name of the site: ");
-        Scanner scanner = new Scanner(System.in);
-        String answer = scanner.nextLine();
+        String answer = UI.scanner.nextLine();
         boolean found = false;
         while(!found) {
             for (Site site : shipment.getDestinations()){
@@ -863,7 +868,7 @@ public class shipmentManagement {
             if (found)
                 continue;
             System.out.println("This site is not exist, please enter again");
-            answer = scanner.nextLine();
+            answer = UI.scanner.nextLine();
         }
         ItemsDoc itemsD = null;
         // finds the item document that goes the site.
@@ -874,23 +879,21 @@ public class shipmentManagement {
             }
         }
         System.out.println("Please choose an item you want to delete:");
-        answer = scanner.nextLine();
+        answer = UI.scanner.nextLine();
         int amount = 0;
         while(true){
             if (itemsD != null) {
                 // finding the item and change it.
                 for(Item item : itemsD.getItemList()){
                     if (Objects.equals(item.getName(), answer)){
-                        while (true) {
-                            System.out.println("Please enter the amount: ");
-                            if (scanner.hasNextInt()) {
-                                amount = scanner.nextInt();
-                                break;
-                            } else {
-                                scanner.nextLine(); // consume the invalid input
-                                System.out.println("Invalid input. Please enter an integer next");
-                            }
-                         }
+                        try{
+                            System.out.println("Please enter the amount you want to remove");
+                            amount = Integer.parseInt(UI.scanner.nextLine());
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            System.out.println("Please enter an Integer");
+                        }
 
                         // if the input was higher, then delete the item.
                         if (amount >= item.getQuantity()){
@@ -910,7 +913,7 @@ public class shipmentManagement {
                     }
                 }
                 System.out.println("This item does not exist, Please choose an item you want to delete.");
-                answer = scanner.nextLine();
+                answer = UI.scanner.nextLine();
             }
             else{
                 return false;
