@@ -359,6 +359,30 @@ public class shipmentManagement {
         return false;
     }
 
+    /**
+     * This site updates the data of the site.
+     * @param oldSite String, name of the site to change.
+     * @param somethingToChane String, somthing to change.
+     * @param number int, represent what to change.
+     */
+    public void updateSite(String oldSite ,String somethingToChane, int number){
+        Site site = getSite(oldSite);
+        switch (number){
+            case 1:
+                site.setName(somethingToChane);
+                break;
+            case 2:
+                site.setAddress(somethingToChane);
+                break;
+            case 3:
+                site.setContactName(somethingToChane);
+                break;
+            case 4:
+                site.setPhoneNumber(somethingToChane);
+                break;
+        }
+    }
+
 
     /**
      * This function creates a new vendor and adds it to the system.
