@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="adaa2023_v01.jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/adaa2023_v01_jar</output-path>
+    <root id="archive" name="ADSS_Group_J.jar">
+      <element id="module-output" name="ADSS_Group_J" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/dev/adss2020_v01/lib/junit-4.13.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/dev/adss2020_v01/lib/hamcrest-core-1.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/release/ADSS_Group_J.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
