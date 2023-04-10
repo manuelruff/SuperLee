@@ -826,6 +826,10 @@ public class shipmentManagement {
                 }
 
             }
+            else if(shipment.getShipmentStatus() == Status.NoChanges){
+                UI.scanner.nextLine();
+                break;
+            }
             else{
                 break;
             }
