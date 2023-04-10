@@ -799,7 +799,7 @@ public class UI {
                 "ShiftManager-1 , Cashier-2, StoreKeeper-3, GeneralEmp-4, Guard-5, Cleaner-6, Usher-7");
         role_choice = AskForNumber(1,7);
         // create a generic password for the new worker
-        String generic_Password = "1111";
+        String generic_Password = "123";
         return new Worker(input_newName,input_newID,bankNum,input_newContract,wage,Jobs.values()[role_choice-1],generic_Password);
     }
 
