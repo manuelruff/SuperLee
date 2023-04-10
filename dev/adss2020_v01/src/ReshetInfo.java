@@ -574,7 +574,7 @@ public class ReshetInfo {
 
     public void removeBonusToWorker(String ID, double bonus) {
         Workers.get(ID).removeBonus(bonus);
-        System.out.println("bonus added removed from: " + Workers.get(ID).GetName());
+        System.out.println("bonus removed from: " + Workers.get(ID).GetName());
     }
 
     // reset the number of shifts to all workers
