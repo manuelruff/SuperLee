@@ -1,21 +1,26 @@
 import java.util.*;
 
 public class UI {
-    private Scanner scanner = new Scanner(System.in);
-
+    private  static Scanner scanner;
+    private shipmentManagement Smanagement;
+    public UI(){
+         Smanagement = new shipmentManagement();
+         scanner = new Scanner(System.in);
+         shippingMenu();
+    }
 
     public void shippingMenu()
     {
-        shipmentManagement Smanagement = new shipmentManagement();
+
         System.out.println("if you wish to start the system with data please enter - yes, " +
                 "otherwise enter other input ");
         String answer = scanner.nextLine();
         answer = answer.toLowerCase(Locale.ROOT);
         if(answer.equals("yes"))
             Smanagement.loadAll();
-        char choice ='a';
+        String choice;
 
-        while(choice != '6') {
+        while(true) {
             System.out.println("Shipping Main Menu:");
             System.out.println("1 - Site Menu");
             System.out.println("2 - Truck Menu");
@@ -23,20 +28,26 @@ public class UI {
             System.out.println("4 - Order Menu");
             System.out.println("5 - Shipping Menu");
             System.out.println("6 - Exit");
-
-            choice = scanner.next().charAt(0);
+            choice = scanner.nextLine();
             switch (choice)
             {
-                case '1':
-                    int ch=0;
-                    while(ch != 5) {
+                case "1":
+                    boolean chF=true;
+                    while(chF) {
                         System.out.println("Site Menu:");
                         System.out.println("1 - Add Site");
                         System.out.println("2 - Remove Site");
                         System.out.println("3 - Print All Sites ");
                         System.out.println("4 - Update site info");
                         System.out.println("5 - Exit");
-                        ch = scanner.nextInt();
+                        int ch = 0;
+                        try{
+                            ch = Integer.parseInt(scanner.nextLine());
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            System.out.println("Please enter a number from the menu");
+                        }
                         switch (ch) {
                             case 1:
                                 addSite(Smanagement);
@@ -53,15 +64,14 @@ public class UI {
                                 // todo: update site
                                 break;
                             case 5:
-                                ch= 5;
+                                chF=false;
                                 break;
                             default:
                                 System.out.println("please enter a number between 1 - 5");
-                                break;
                         }
                     }
                     break;
-                case '2':
+                case "2":
                     int ch2=0;
                     while(ch2 != 4) {
                         System.out.println("Truck Menu:");
@@ -69,7 +79,13 @@ public class UI {
                         System.out.println("2 - Delete Truck");
                         System.out.println("3 - Print All Trucks");
                         System.out.println("4 - Exit");
-                        ch2 = scanner.nextInt();
+                        try{
+                            ch2 = Integer.parseInt(scanner.nextLine());
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            System.out.println("Please enter a number from the menu");
+                        }
                         switch (ch2) {
                             case 1:
                                 addTruck(Smanagement);
@@ -81,16 +97,15 @@ public class UI {
                                 Smanagement.printTrucks();
                                 break;
                             case 4:
-                                ch2 = 4;
                                 break;
                             default:
                                 System.out.println("Invalid input");
                         }
                     }
                     break;
-                case '3':
+                case "3":
                     int ch3=0;
-                    while(ch3 != 5) {
+                    while(ch3 != 6) {
                         System.out.println("Drivers Menu:");
                         System.out.println("1 - Add driver");
                         System.out.println("2 - remove driver");
@@ -98,7 +113,13 @@ public class UI {
                         System.out.println("4 - Update driver licence");
                         System.out.println("5 - Update driver training");
                         System.out.println("6 - Exit");
-                        ch3 = scanner.nextInt();
+                        try{
+                            ch3 = Integer.parseInt(scanner.nextLine());
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            System.out.println("Please enter a number from the menu");
+                        }
                         switch (ch3)
                         {
                             case 1 :
@@ -117,7 +138,6 @@ public class UI {
                                 updateDriverTraining(Smanagement);
                                 break;
                             case 6:
-                                ch=6;
                                 break;
                             default:
                                 System.out.println("Invalid input");
@@ -125,14 +145,20 @@ public class UI {
                         }
                     }
                     break;
-                case '4':
+                case "4":
                     int ch4=0;
                     while(ch4 != 3) {
                         System.out.println("Order Menu:");
                         System.out.println("1 - Add order");
                         System.out.println("2 - Print All orders");
                         System.out.println("3 - Exit");
-                        ch4 = scanner.nextInt();
+                        try{
+                            ch4 = Integer.parseInt(scanner.nextLine());
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            System.out.println("Please enter a number from the menu");
+                        }
                         switch (ch4){
                             case 1:
                                 addOrder(Smanagement);
@@ -141,7 +167,6 @@ public class UI {
                                 Smanagement.printOrders();
                                 break;
                             case 3:
-                                ch4 =3;
                                 break;
                             default:
                                 System.out.println("Invalid input");
@@ -150,10 +175,9 @@ public class UI {
                     }
                     break;
 
-                case '5':
-                    String ch5 = "";
-                    scanner.nextLine();
-                    while(!ch5.equals("6")) {
+                case "5":
+                    int ch5 = 0;
+                    while(ch5 != 6) {
                         System.out.println("Shipment  Menu:");
                         System.out.println("1 - Add shipment");
                         System.out.println("2 - Delete shipment");
@@ -161,25 +185,30 @@ public class UI {
                         System.out.println("4 - Print all available shipments");
                         System.out.println("5 - execute nearest shipment");
                         System.out.println("6 - Exit");
-                        ch5 = scanner.nextLine();
+                        try{
+                            ch5 = Integer.parseInt(scanner.nextLine());
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            System.out.println("Please enter a number from the menu");
+                        }
                         switch (ch5) {
-                            case "1":
+                            case 1:
                                 addShipment(Smanagement);
                                 break;
-                            case "2":
+                            case 2:
                                 deleteShipment(Smanagement);
                                 break;
-                            case "3":
+                            case 3:
                                 Smanagement.printShipments();
                                 break;
-                            case "4":
+                            case 4:
                                 Smanagement.printAvailableShipments();
                                 break;
-                            case "5":
+                            case 5:
                                 Smanagement.executeShipment();
                                 break;
-                            case "6":
-                                ch5 = "6";
+                            case 6:
                                 break;
                             default:
                                 System.out.println("Invalid input");
@@ -187,9 +216,8 @@ public class UI {
                         }
                     }
                     break;
-                case '6':
-                    choice = '6';
-                    break;
+                case "6":
+                    return;
                 default:
                     System.out.println("Invalid input");
                     break;
@@ -201,8 +229,7 @@ public class UI {
     public void updateDriverLicence(shipmentManagement Smanagement)
     {
         boolean check3 = true, check31 =true;
-        String driverID;
-        driverID = scanner.nextLine();
+        String driverID=null;
         while (check3) {
             while (check31)
 
@@ -226,7 +253,7 @@ public class UI {
                     Please enter licence type :
                     C - for trucks under 12 ton
                     D - for above 12 ton""");
-                    driverLicence = scanner.next().charAt(0);
+                    driverLicence = scanner.nextLine().charAt(0);
                     if(driverLicence == 'C' || driverLicence == 'c')
                         System.out.println("All drivers have at least C licence(cannot upgrade licence to C type) ");
                     else if( driverLicence == 'd' || driverLicence == 'D') {
@@ -244,9 +271,8 @@ public class UI {
     public void updateDriverTraining(shipmentManagement Smanagement)
     {
         boolean check3 = true, check31 =true;
-        String driverID;
+        String driverID=null;
         int training;
-        driverID = scanner.nextLine();
         while (check3) {
             while (check31)
             {
@@ -283,6 +309,7 @@ public class UI {
                 }
             }
         }
+        scanner.nextLine();
     }
     /**
      * this function gets input from the user about a new site he wants to add
@@ -292,8 +319,7 @@ public class UI {
     public void addSite(shipmentManagement Smanagement)
     {
         boolean check = true;
-        String siteName;
-        siteName = scanner.nextLine();
+        String siteName = null;
         while(check) {
             System.out.println("Please enter site name:");
             siteName = scanner.nextLine();
@@ -352,6 +378,7 @@ public class UI {
                 check = false;
             }
         }
+        scanner.nextLine();
     }
     /**
      * this function gets input from the user about a site to delete
@@ -362,7 +389,6 @@ public class UI {
     {
         boolean check1 = true;
         String siteToDelete;
-        scanner.nextLine();
         while (check1)
         {
             System.out.println("Please enter site name you want to remove:");
@@ -385,9 +411,8 @@ public class UI {
     public void addTruck(shipmentManagement Smanagement)
     {
         boolean check2 = true;
-        String truckNumber;
+        String truckNumber = null;
         int truckWeight=2,truckCarryWeight=1;
-        truckNumber = scanner.nextLine();
         while (check2) {
             System.out.println("Please enter the truck number:");
             truckNumber = scanner.nextLine();
@@ -432,6 +457,7 @@ public class UI {
         }
         Smanagement.addTruck(truckNumber,truckCarryWeight, truckWeight,truckModel,storage);
         System.out.println("Truck added to the system");
+        scanner.nextLine();
     }
     /**
      * this function gets input from the user about a truck to delete
@@ -464,8 +490,7 @@ public class UI {
     public void addDriver(shipmentManagement Smanagement)
     {
         boolean check3 = true, check31 =true;
-        String driverID;
-        driverID = scanner.nextLine();
+        String driverID=null;
         while (check3) {
             while (check31)
             {
@@ -510,6 +535,7 @@ public class UI {
         driverLicence = Character.toUpperCase(driverLicence);
         Smanagement.addDriver(driverName,driverID,driverLicence,training);
         System.out.println("Driver added to the system");
+        scanner.nextLine();
     }
     /**
      * this function gets input from the user about a driver to delete
@@ -520,13 +546,13 @@ public class UI {
     {
         boolean check32 = true;
         String driversIDToRemove;
-        scanner.nextLine();
         while (check32) {
             System.out.println("Please enter drivers ID:");
             driversIDToRemove = scanner.nextLine();
             check32 = Smanagement.checkID(driversIDToRemove);
             if (!check32) {
                 System.out.println("Driver does not exist in the system");
+                return;
             }
             else {
                 check32 = false;
@@ -545,7 +571,6 @@ public class UI {
         boolean check4 =true,check41=true,check40=true, check401;
         String sourceSite;
         String destinationSite;
-        scanner.nextLine();
         int amount = 0,cho = 0;
         while (check40) {
             while (check4) {
@@ -606,7 +631,6 @@ public class UI {
                                         Smanagement.printLastOrder(sourceSite);
                                         break;
                                     case 3:
-                                        cho = 3;
                                         break;
                                     default:
                                         System.out.println("Invalid details");
@@ -628,6 +652,7 @@ public class UI {
             }
 
         }
+        scanner.nextLine();
     }
     /**
      * this fuction gets input from the user and adds items to a specific order
