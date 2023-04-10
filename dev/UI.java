@@ -12,7 +12,7 @@ public class UI {
     {
         shipmentManagement Smanagement = new shipmentManagement();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("if you wish to start the system with data please enter - yes" +
+        System.out.println("if you wish to start the system with data please enter - yes, " +
                 "otherwise enter other input ");
         String answer = scanner.nextLine();
         answer = answer.toLowerCase(Locale.ROOT);

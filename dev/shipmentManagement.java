@@ -580,6 +580,11 @@ public class shipmentManagement {
                 return true;
             }
         }
+        for (Shipment ship : availableShipments){
+            if (Objects.equals(ship.getID(), ID)) {
+                return true;
+        }
+        }
         return false;
     }
 
@@ -747,30 +752,27 @@ public class shipmentManagement {
                         System.out.println("3. remove the last site from this shipment");
                     input = scanner.nextInt();
                     switch (input) {
-
-                        case 1:
-                            if (itemsToDelete(shipment)){
+                        case 1 -> {
+                            if (itemsToDelete(shipment)) {
                                 System.out.println("There is no items left in the shipment, so the shipment is canceled");
                                 shipment.setShipmentStatus(Status.Canceled);
                                 return;
                             }
                             shipment.setShipmentStatus(Status.ItemsChange);
-                            break;
-
-                        case 2:
+                        }
+                        case 2 -> {
                             changeTruck(shipment);
                             if (!Objects.equals(currTruck.getTruckNumber(), shipment.getTruckNumber()))
                                 shipment.setShipmentStatus(Status.TruckExchange);
-                            else{
+                            else {
                                 System.out.println("There isn't a bigger truck available at the moment");
                             }
                             currTruck = searchTruckByID(shipment.getTruckNumber());
-                            break;
-
-                        case 3:
+                        }
+                        case 3 -> {
                             removeLastSiteFromShipment(shipment);
                             shipment.setShipmentStatus(Status.SiteChange);
-                            break;
+                        }
                     }
                 }
 
@@ -1011,9 +1013,6 @@ public class shipmentManagement {
             addItemToOrder("Strauss", "milki", 100, 1);
 
         }
-
-
-
 
         public void loadAll(){
             loadDrivers();
