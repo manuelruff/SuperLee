@@ -171,26 +171,7 @@ public class UI {
                                 addShipment(Smanagement);
                                 break;
                             case 2:
-                                boolean check52=true;
-                                while (check52)
-                                {
-                                    System.out.println("Please enter shipment ID to delete");
-                                    String shipmentIDToDelete = scanner.nextLine();
-                                    if(Smanagement.checkShipmentID(shipmentIDToDelete))
-                                    {
-                                        Smanagement.deleteShipment(shipmentIDToDelete);
-                                        System.out.println("Shipment deleted");
-                                        check52 = false;
-                                    }
-                                    else {
-                                        System.out.println("Shipment does not exist in the system");
-                                        System.out.println("do you still want to delete a shipment?");
-                                        System.out.println("1 - yes\n2 - no");//not checking input
-                                        int ch1 = scanner.nextInt();
-                                        if(ch1 == 2)
-                                            check52 = false;
-                                    }
-                                }
+                                deleteShipment(Smanagement);
                                 break;
                             case 3:
                                 Smanagement.printShipments();
@@ -781,6 +762,32 @@ public class UI {
                     }
 
                 }
+            }
+        }
+    }
+    public void deleteShipment(shipmentManagement Smanagement)
+    {
+        Scanner scanner = new Scanner(System.in);
+        boolean check52=true;
+        while (check52)
+        {
+            System.out.println("Please enter shipment ID to delete");
+            String shipmentIDToDelete = scanner.nextLine();
+            if(Smanagement.checkShipmentID(shipmentIDToDelete))
+            {
+                Smanagement.deleteShipment(shipmentIDToDelete);
+                System.out.println("Shipment deleted");
+                check52 = false;
+            }
+            else {
+                System.out.println("Shipment does not exist in the system");
+                System.out.println("do you still want to delete a shipment?");
+                System.out.println("1 - yes\n2 - no");//not checking input
+                int ch1 = scanner.nextInt();
+                if(ch1 == 2)
+                    check52 = false;
+                else
+                    scanner.nextLine();
             }
         }
     }
