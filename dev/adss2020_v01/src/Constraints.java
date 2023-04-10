@@ -84,7 +84,7 @@ public class Constraints {
     public void PrintMe(){
         for (Days day:Days.values()){
             System.out.println(day.toString() +":");
-            if(cantWork.get(day) == null){
+            if(cantWork.get(day) == null || cantWork.get(day).size()==0){
                 System.out.println("there are no Constraintss in this day");
                 continue;
             }
