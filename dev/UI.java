@@ -1,17 +1,12 @@
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class UI {
-
+    private Scanner scanner = new Scanner(System.in);
 
 
     public void shippingMenu()
     {
         shipmentManagement Smanagement = new shipmentManagement();
-        Scanner scanner = new Scanner(System.in);
         System.out.println("if you wish to start the system with data please enter - yes, " +
                 "otherwise enter other input ");
         String answer = scanner.nextLine();
@@ -131,22 +126,21 @@ public class UI {
                     break;
                 case '4':
                     int ch4=0;
-                    while(ch4 != 4) {
+                    while(ch4 != 3) {
                         System.out.println("Order Menu:");
                         System.out.println("1 - Add order");
-                        System.out.println("2 - Delete order");
-                        System.out.println("3 - Print All orders");
-                        System.out.println("4 - Exit");
+                        System.out.println("2 - Print All orders");
+                        System.out.println("3 - Exit");
                         ch4 = scanner.nextInt();
                         switch (ch4){
                             case 1:
                                 addOrder(Smanagement);
                                 break;
-                            case 3:
+                            case 2:
                                 Smanagement.printOrders();
                                 break;
-                            case 4:
-                                ch4 =4;
+                            case 3:
+                                ch4 =3;
                                 break;
                             default:
                                 System.out.println("Invalid input");
@@ -156,8 +150,9 @@ public class UI {
                     break;
 
                 case '5':
-                    int ch5=0;
-                    while(ch5 != 6) {
+                    String ch5 = "";
+                    scanner.nextLine();
+                    while(!ch5.equals("6")) {
                         System.out.println("Shipment  Menu:");
                         System.out.println("1 - Add shipment");
                         System.out.println("2 - Delete shipment");
@@ -165,25 +160,25 @@ public class UI {
                         System.out.println("4 - Print all available shipments");
                         System.out.println("5 - execute nearest shipment");
                         System.out.println("6 - Exit");
-                        ch5 = scanner.nextInt();
+                        ch5 = scanner.nextLine();
                         switch (ch5) {
-                            case 1:
+                            case "1":
                                 addShipment(Smanagement);
                                 break;
-                            case 2:
+                            case "2":
                                 deleteShipment(Smanagement);
                                 break;
-                            case 3:
+                            case "3":
                                 Smanagement.printShipments();
                                 break;
-                            case 4:
+                            case "4":
                                 Smanagement.printAvailableShipments();
                                 break;
-                            case 5:
+                            case "5":
                                 Smanagement.executeShipment();
                                 break;
-                            case 6:
-                                ch5 = 6;
+                            case "6":
+                                ch5 = "6";
                                 break;
                             default:
                                 System.out.println("Invalid input");
@@ -204,9 +199,9 @@ public class UI {
 
     public void updateDriverLicence(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check3 = true, check31 =true;
-        String driverID = null;
+        String driverID;
+        driverID = scanner.nextLine();
         while (check3) {
             while (check31)
             {
@@ -246,10 +241,10 @@ public class UI {
 
     public void updateDriverTraining(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check3 = true, check31 =true;
-        String driverID = null;
+        String driverID;
         int training;
+        driverID = scanner.nextLine();
         while (check3) {
             while (check31)
             {
@@ -294,9 +289,9 @@ public class UI {
      */
     public void addSite(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check = true;
-        String siteName=null;
+        String siteName;
+        siteName = scanner.nextLine();
         while(check) {
             System.out.println("Please enter site name:");
             siteName = scanner.nextLine();
@@ -320,7 +315,10 @@ public class UI {
         while (check)
         {
             while (true) {
-                System.out.println("Please enter the amount: ");
+                System.out.println("""
+                        Please enter Site type:
+                        1 - Vendor
+                        2 - Branch""");
                 if (scanner.hasNextInt()) {
                     siteType = scanner.nextInt();
                     break;
@@ -360,12 +358,13 @@ public class UI {
      */
     public void deleteSite(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check1 = true;
+        String siteToDelete;
+        scanner.nextLine();
         while (check1)
         {
             System.out.println("Please enter site name you want to remove:");
-            String siteToDelete = scanner.nextLine();
+            siteToDelete = scanner.nextLine();
             if(Smanagement.checkSite(siteToDelete)) {
                 Smanagement.deleteSite(siteToDelete);
                 System.out.println("site deleted");
@@ -373,14 +372,6 @@ public class UI {
             }
             else {
                 System.out.println("Site does not exist in the system");
-                System.out.println("do you still want to delete a site?");
-                System.out.println("1 - yes\n2 - no");
-                int ch1 = scanner.nextInt();
-                if(ch1 == 2)
-                    check1 = false;
-                else{
-                    scanner.nextLine();
-                }
             }
         }
     }
@@ -391,10 +382,10 @@ public class UI {
      */
     public void addTruck(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check2 = true;
-        String truckNumber = null;
+        String truckNumber;
         int truckWeight=2,truckCarryWeight=1;
+        truckNumber = scanner.nextLine();
         while (check2) {
             System.out.println("Please enter the truck number:");
             truckNumber = scanner.nextLine();
@@ -447,7 +438,6 @@ public class UI {
      */
     public void deleteTruck(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check2 = true;
         String truckNumber;
         while (check2)
@@ -461,14 +451,6 @@ public class UI {
             }
             else {
                 System.out.println("truck number does not exist in the system");
-                System.out.println("do you still want to delete a truck?");
-                System.out.println("1 - yes\n2 - no");
-                int ch1 = scanner.nextInt();
-                if(ch1 == 2)
-                    check2 = false;
-                else{
-                    scanner.nextLine();
-                }
             }
         }
     }
@@ -479,9 +461,9 @@ public class UI {
      */
     public void addDriver(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check3 = true, check31 =true;
-        String driverID = null;
+        String driverID;
+        driverID = scanner.nextLine();
         while (check3) {
             while (check31)
             {
@@ -534,25 +516,15 @@ public class UI {
      */
     public void deleteDriver(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check32 = true;
         String driversIDToRemove;
+        scanner.nextLine();
         while (check32) {
             System.out.println("Please enter drivers ID:");
             driversIDToRemove = scanner.nextLine();
             check32 = Smanagement.checkID(driversIDToRemove);
             if (!check32) {
                 System.out.println("Driver does not exist in the system");
-                System.out.println("do you still want to remove a driver?");
-                System.out.println("1 - yes\n2 - no");//not checking input
-                int ch1 = scanner.nextInt();
-                if(ch1 == 1) {
-                    check32 = true;
-                    scanner.nextLine();
-                }
-                else {
-                    scanner.nextLine();
-                }
             }
             else {
                 check32 = false;
@@ -568,11 +540,10 @@ public class UI {
      */
     public void addOrder(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check4 =true,check41=true,check40=true, check401;
         String sourceSite;
         String destinationSite;
-        String OrderID;
+        scanner.nextLine();
         int amount = 0,cho = 0;
         while (check40) {
             while (check4) {
@@ -709,7 +680,6 @@ public class UI {
      */
     public void addShipment(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check5 = true,check50 = true, check51 = true;
         int day;
         String shipmentID,vendor;
@@ -767,7 +737,6 @@ public class UI {
     }
     public void deleteShipment(shipmentManagement Smanagement)
     {
-        Scanner scanner = new Scanner(System.in);
         boolean check52=true;
         while (check52)
         {
@@ -780,13 +749,6 @@ public class UI {
             }
             else {
                 System.out.println("Shipment does not exist in the system");
-                System.out.println("do you still want to delete a shipment?");
-                System.out.println("1 - yes\n2 - no");//not checking input
-                int ch1 = scanner.nextInt();
-                if(ch1 == 2)
-                    check52 = false;
-                else
-                    scanner.nextLine();
             }
         }
     }
