@@ -1,0 +1,897 @@
+if you wish to start the system with data please enter - yes, otherwise enter other input 
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
+3 - Drivers Menu
+4 - Order Menu
+5 - Shipping Menu
+6 - Print all shipped item docs
+7 - Exit
+Site Menu:
+1 - Add Site
+2 - Remove Site
+3 - Print All Sites 
+4 - Update site info
+5 - Exit
+******* SITE DETAILS *******
+Number of Sites: 11
+
+Site Type: Vendor
+Name: Osem
+Address: beer sheva
+Contact Name: luffy
+Phone Number: 0547388475
+
+Site Type: Vendor
+Name: Tnuva
+Address: TLV
+Contact Name: sanji
+Phone Number: 0547388476
+
+Site Type: Vendor
+Name: Zogloveg
+Address: TLV
+Contact Name: zorro
+Phone Number: 0547388477
+
+Site Type: Vendor
+Name: Strauss
+Address: kiryat gat
+Contact Name: chopper
+Phone Number: 0547388478
+
+Site Type: Vendor
+Name: Elit
+Address: haifa
+Contact Name: brook
+Phone Number: 0547388479
+
+Site Type: Branch
+Name: branch1
+Address: beer sheva
+Contact Name: jinbi
+Phone Number: 0542318475
+Zone: south
+
+Site Type: Branch
+Name: branch2
+Address: kiryat gat
+Contact Name: robin
+Phone Number: 0542318476
+Zone: south
+
+Site Type: Branch
+Name: branch3
+Address: TLV
+Contact Name: garp
+Phone Number: 0542318477
+Zone: Center
+
+Site Type: Branch
+Name: branch4
+Address: givataim
+Contact Name: shanks
+Phone Number: 0542318478
+Zone: Center
+
+Site Type: Branch
+Name: branch5
+Address: katzrin
+Contact Name: kaido
+Phone Number: 0542318479
+Zone: North
+
+Site Type: Branch
+Name: branch6
+Address: haifa
+Contact Name: oden
+Phone Number: 0542318470
+Zone: North
+
+Site Menu:
+1 - Add Site
+2 - Remove Site
+3 - Print All Sites 
+4 - Update site info
+5 - Exit
+Please enter site name you want to remove:
+Site does not exist in the system
+Please enter site name you want to remove:
+Site does not exist in the system
+Please enter site name you want to remove:
+site deleted
+Site Menu:
+1 - Add Site
+2 - Remove Site
+3 - Print All Sites 
+4 - Update site info
+5 - Exit
+******* SITE DETAILS *******
+Number of Sites: 10
+
+Site Type: Vendor
+Name: Osem
+Address: beer sheva
+Contact Name: luffy
+Phone Number: 0547388475
+
+Site Type: Vendor
+Name: Tnuva
+Address: TLV
+Contact Name: sanji
+Phone Number: 0547388476
+
+Site Type: Vendor
+Name: Zogloveg
+Address: TLV
+Contact Name: zorro
+Phone Number: 0547388477
+
+Site Type: Vendor
+Name: Strauss
+Address: kiryat gat
+Contact Name: chopper
+Phone Number: 0547388478
+
+Site Type: Vendor
+Name: Elit
+Address: haifa
+Contact Name: brook
+Phone Number: 0547388479
+
+Site Type: Branch
+Name: branch1
+Address: beer sheva
+Contact Name: jinbi
+Phone Number: 0542318475
+Zone: south
+
+Site Type: Branch
+Name: branch2
+Address: kiryat gat
+Contact Name: robin
+Phone Number: 0542318476
+Zone: south
+
+Site Type: Branch
+Name: branch3
+Address: TLV
+Contact Name: garp
+Phone Number: 0542318477
+Zone: Center
+
+Site Type: Branch
+Name: branch5
+Address: katzrin
+Contact Name: kaido
+Phone Number: 0542318479
+Zone: North
+
+Site Type: Branch
+Name: branch6
+Address: haifa
+Contact Name: oden
+Phone Number: 0542318470
+Zone: North
+
+Site Menu:
+1 - Add Site
+2 - Remove Site
+3 - Print All Sites 
+4 - Update site info
+5 - Exit
+Please enter the name of the site you would like to update:
+Site does not exist in the system
+Site Menu:
+1 - Add Site
+2 - Remove Site
+3 - Print All Sites 
+4 - Update site info
+5 - Exit
+Please enter the name of the site you would like to update:
+What would you like to change:
+1 - Site name
+2 - Site address
+3 - Contact name
+4 - Contact phone number
+Enter the new details
+Site Menu:
+1 - Add Site
+2 - Remove Site
+3 - Print All Sites 
+4 - Update site info
+5 - Exit
+******* SITE DETAILS *******
+Number of Sites: 10
+
+Site Type: Vendor
+Name: Osem
+Address: beer sheva
+Contact Name: luffy
+Phone Number: 0547388475
+
+Site Type: Vendor
+Name: Tnuva
+Address: TLV
+Contact Name: sanji
+Phone Number: 0547388476
+
+Site Type: Vendor
+Name: Zogloveg
+Address: TLV
+Contact Name: zorro
+Phone Number: 0547388477
+
+Site Type: Vendor
+Name: Strauss
+Address: kiryat gat
+Contact Name: chopper
+Phone Number: 0547388478
+
+Site Type: Vendor
+Name: Elit
+Address: haifa
+Contact Name: brook
+Phone Number: 0547388479
+
+Site Type: Branch
+Name: branch1
+Address: beer sheva
+Contact Name: jinbi
+Phone Number: 0542318475
+Zone: south
+
+Site Type: Branch
+Name: branch2
+Address: kiryat gat
+Contact Name: robin
+Phone Number: 0542318476
+Zone: south
+
+Site Type: Branch
+Name: branch3
+Address: TLV
+Contact Name: alibaba
+Phone Number: 0542318477
+Zone: Center
+
+Site Type: Branch
+Name: branch5
+Address: katzrin
+Contact Name: kaido
+Phone Number: 0542318479
+Zone: North
+
+Site Type: Branch
+Name: branch6
+Address: haifa
+Contact Name: oden
+Phone Number: 0542318470
+Zone: North
+
+Site Menu:
+1 - Add Site
+2 - Remove Site
+3 - Print All Sites 
+4 - Update site info
+5 - Exit
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
+3 - Drivers Menu
+4 - Order Menu
+5 - Shipping Menu
+6 - Print all shipped item docs
+7 - Exit
+Truck Menu:
+1 - Add Truck
+2 - Delete Truck
+3 - Print All Trucks
+4 - Exit
+******* Trucks details *******
+Number of truck: 11
+
+Truck number: 0000
+Truck weight: 2000
+Truck Total weight: 6000
+Truck model: mercedes
+Truck storage capability's: Regular
+
+Truck number: 0001
+Truck weight: 2000
+Truck Total weight: 13000
+Truck model: mercedes
+Truck storage capability's: Cooling
+
+Truck number: 0002
+Truck weight: 2000
+Truck Total weight: 12000
+Truck model: mercedes
+Truck storage capability's: Freezer
+
+Truck number: 0003
+Truck weight: 2000
+Truck Total weight: 10000
+Truck model: mercedes
+Truck storage capability's: Regular
+
+Truck number: 0004
+Truck weight: 1000
+Truck Total weight: 8000
+Truck model: mercedes
+Truck storage capability's: Cooling
+
+Truck number: 0005
+Truck weight: 1000
+Truck Total weight: 9000
+Truck model: mercedes
+Truck storage capability's: Freezer
+
+Truck number: 0006
+Truck weight: 2000
+Truck Total weight: 16000
+Truck model: mercedes
+Truck storage capability's: Regular
+
+Truck number: 0007
+Truck weight: 1000
+Truck Total weight: 7000
+Truck model: mercedes
+Truck storage capability's: Cooling
+
+Truck number: 0008
+Truck weight: 1000
+Truck Total weight: 8000
+Truck model: mercedes
+Truck storage capability's: Freezer
+
+Truck number: 0009
+Truck weight: 2000
+Truck Total weight: 11000
+Truck model: mercedes
+Truck storage capability's: Regular
+
+Truck number: 0010
+Truck weight: 2000
+Truck Total weight: 12000
+Truck model: mercedes
+Truck storage capability's: Cooling
+
+Truck Menu:
+1 - Add Truck
+2 - Delete Truck
+3 - Print All Trucks
+4 - Exit
+Please enter the truck number:
+truck number does not exist in the system
+Please enter the truck number:
+truck has been removed from the system
+Truck Menu:
+1 - Add Truck
+2 - Delete Truck
+3 - Print All Trucks
+4 - Exit
+******* Trucks details *******
+Number of truck: 10
+
+Truck number: 0000
+Truck weight: 2000
+Truck Total weight: 6000
+Truck model: mercedes
+Truck storage capability's: Regular
+
+Truck number: 0001
+Truck weight: 2000
+Truck Total weight: 13000
+Truck model: mercedes
+Truck storage capability's: Cooling
+
+Truck number: 0002
+Truck weight: 2000
+Truck Total weight: 12000
+Truck model: mercedes
+Truck storage capability's: Freezer
+
+Truck number: 0003
+Truck weight: 2000
+Truck Total weight: 10000
+Truck model: mercedes
+Truck storage capability's: Regular
+
+Truck number: 0004
+Truck weight: 1000
+Truck Total weight: 8000
+Truck model: mercedes
+Truck storage capability's: Cooling
+
+Truck number: 0005
+Truck weight: 1000
+Truck Total weight: 9000
+Truck model: mercedes
+Truck storage capability's: Freezer
+
+Truck number: 0006
+Truck weight: 2000
+Truck Total weight: 16000
+Truck model: mercedes
+Truck storage capability's: Regular
+
+Truck number: 0008
+Truck weight: 1000
+Truck Total weight: 8000
+Truck model: mercedes
+Truck storage capability's: Freezer
+
+Truck number: 0009
+Truck weight: 2000
+Truck Total weight: 11000
+Truck model: mercedes
+Truck storage capability's: Regular
+
+Truck number: 0010
+Truck weight: 2000
+Truck Total weight: 12000
+Truck model: mercedes
+Truck storage capability's: Cooling
+
+Truck Menu:
+1 - Add Truck
+2 - Delete Truck
+3 - Print All Trucks
+4 - Exit
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
+3 - Drivers Menu
+4 - Order Menu
+5 - Shipping Menu
+6 - Print all shipped item docs
+7 - Exit
+Drivers Menu:
+1 - Add driver
+2 - remove driver
+3 - Print All drivers
+4 - Update driver licence
+5 - Update driver training
+6 - Exit
+Name: Ron
+ID: 000000000
+License type: C
+Trainings: Regular
+Ron doesn't work this week
+ 
+Name: Roee
+ID: 000000001
+License type: D
+Trainings: Cooling
+Roee doesn't work this week
+ 
+Name: tom
+ID: 000000002
+License type: D
+Trainings: Freezer
+tom doesn't work this week
+ 
+Name: omer
+ID: 000000003
+License type: D
+Trainings: Regular
+omer doesn't work this week
+ 
+Name: yuval
+ID: 000000004
+License type: D
+Trainings: Cooling
+yuval doesn't work this week
+ 
+Name: ido
+ID: 000000005
+License type: C
+Trainings: Freezer
+ido doesn't work this week
+ 
+Name: manu
+ID: 000000006
+License type: C
+Trainings: Regular
+manu doesn't work this week
+ 
+Name: matan
+ID: 000000007
+License type: C
+Trainings: Cooling
+matan doesn't work this week
+ 
+Name: omri
+ID: 000000008
+License type: D
+Trainings: Freezer
+omri doesn't work this week
+ 
+Name: freshi
+ID: 000000009
+License type: C
+Trainings: Cooling
+freshi doesn't work this week
+ 
+Drivers Menu:
+1 - Add driver
+2 - remove driver
+3 - Print All drivers
+4 - Update driver licence
+5 - Update driver training
+6 - Exit
+Please enter drivers ID:
+Please enter driver's name:
+Please enter licence type :
+C - for trucks under 12 ton
+D - for above 12 ton
+Please enter driver storage capabilities training:
+0 - Regular
+1 - Cooling
+2 - Freezer
+Driver added to the system
+Drivers Menu:
+1 - Add driver
+2 - remove driver
+3 - Print All drivers
+4 - Update driver licence
+5 - Update driver training
+6 - Exit
+Name: Ron
+ID: 000000000
+License type: C
+Trainings: Regular
+Ron doesn't work this week
+ 
+Name: Roee
+ID: 000000001
+License type: D
+Trainings: Cooling
+Roee doesn't work this week
+ 
+Name: tom
+ID: 000000002
+License type: D
+Trainings: Freezer
+tom doesn't work this week
+ 
+Name: omer
+ID: 000000003
+License type: D
+Trainings: Regular
+omer doesn't work this week
+ 
+Name: yuval
+ID: 000000004
+License type: D
+Trainings: Cooling
+yuval doesn't work this week
+ 
+Name: ido
+ID: 000000005
+License type: C
+Trainings: Freezer
+ido doesn't work this week
+ 
+Name: manu
+ID: 000000006
+License type: C
+Trainings: Regular
+manu doesn't work this week
+ 
+Name: matan
+ID: 000000007
+License type: C
+Trainings: Cooling
+matan doesn't work this week
+ 
+Name: omri
+ID: 000000008
+License type: D
+Trainings: Freezer
+omri doesn't work this week
+ 
+Name: freshi
+ID: 000000009
+License type: C
+Trainings: Cooling
+freshi doesn't work this week
+ 
+Name: roee
+ID: 1111
+License type: C
+Trainings: Regular
+roee doesn't work this week
+ 
+Drivers Menu:
+1 - Add driver
+2 - remove driver
+3 - Print All drivers
+4 - Update driver licence
+5 - Update driver training
+6 - Exit
+Please enter drivers ID:
+Driver does not exist in the system
+Drivers Menu:
+1 - Add driver
+2 - remove driver
+3 - Print All drivers
+4 - Update driver licence
+5 - Update driver training
+6 - Exit
+Please enter drivers ID:
+driver has been removed from system
+Drivers Menu:
+1 - Add driver
+2 - remove driver
+3 - Print All drivers
+4 - Update driver licence
+5 - Update driver training
+6 - Exit
+Name: Ron
+ID: 000000000
+License type: C
+Trainings: Regular
+Ron doesn't work this week
+ 
+Name: Roee
+ID: 000000001
+License type: D
+Trainings: Cooling
+Roee doesn't work this week
+ 
+Name: tom
+ID: 000000002
+License type: D
+Trainings: Freezer
+tom doesn't work this week
+ 
+Name: omer
+ID: 000000003
+License type: D
+Trainings: Regular
+omer doesn't work this week
+ 
+Name: yuval
+ID: 000000004
+License type: D
+Trainings: Cooling
+yuval doesn't work this week
+ 
+Name: ido
+ID: 000000005
+License type: C
+Trainings: Freezer
+ido doesn't work this week
+ 
+Name: manu
+ID: 000000006
+License type: C
+Trainings: Regular
+manu doesn't work this week
+ 
+Name: matan
+ID: 000000007
+License type: C
+Trainings: Cooling
+matan doesn't work this week
+ 
+Name: omri
+ID: 000000008
+License type: D
+Trainings: Freezer
+omri doesn't work this week
+ 
+Name: freshi
+ID: 000000009
+License type: C
+Trainings: Cooling
+freshi doesn't work this week
+ 
+Drivers Menu:
+1 - Add driver
+2 - remove driver
+3 - Print All drivers
+4 - Update driver licence
+5 - Update driver training
+6 - Exit
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
+3 - Drivers Menu
+4 - Order Menu
+5 - Shipping Menu
+6 - Print all shipped item docs
+7 - Exit
+Shipment  Menu:
+1 - Add shipment
+2 - Delete shipment
+3 - Print All shipment
+4 - Print all available shipments
+5 - execute nearest shipment
+6 - Exit
+There isn't any shipments!
+Shipment  Menu:
+1 - Add shipment
+2 - Delete shipment
+3 - Print All shipment
+4 - Print all available shipments
+5 - execute nearest shipment
+6 - Exit
+There isn't any shipments!
+Shipment  Menu:
+1 - Add shipment
+2 - Delete shipment
+3 - Print All shipment
+4 - Print all available shipments
+5 - execute nearest shipment
+6 - Exit
+Please enter a day for the shipment:
+1 - Sunday
+2 - Monday
+3 - Tuesday
+4 - Wednesday
+5 - Thursday
+6 - Friday
+Please enter ID for the shipment:
+Please enter a vendor name:
+Shipment created
+Shipment  Menu:
+1 - Add shipment
+2 - Delete shipment
+3 - Print All shipment
+4 - Print all available shipments
+5 - execute nearest shipment
+6 - Exit
+******************** SHIPMENTS ********************
+****** Shipment details ******
+Shipment ID: 12345
+shipment scheduled for this Tuesday
+Truck number: 0000
+Driver Name: Ron
+Vendor: Osem
+There isn't any changes in this shipment as of this moment
+Destinations:
+Site Type: Branch
+Name: branch1
+Address: beer sheva
+Contact Name: jinbi
+Phone Number: 0542318475
+Zone: south
+
+Site Type: Branch
+Name: branch2
+Address: kiryat gat
+Contact Name: robin
+Phone Number: 0542318476
+Zone: south
+
+Item doc:
+Item Document details:
+Document ID: 1
+Destination: branch1
+	Item name: spaghetti
+	Quantity: 20
+	Storage Condition: Regular
+
+	Item name: mayo
+	Quantity: 10
+	Storage Condition: Regular
+
+	Item name: ketchup
+	Quantity: 20
+	Storage Condition: Regular
+
+Item Document details:
+Document ID: 2
+Destination: branch2
+	Item name: peti ber
+	Quantity: 10
+	Storage Condition: Regular
+
+	Item name: pene
+	Quantity: 10
+	Storage Condition: Regular
+
+Shipment  Menu:
+1 - Add shipment
+2 - Delete shipment
+3 - Print All shipment
+4 - Print all available shipments
+5 - execute nearest shipment
+6 - Exit
+Please enter shipment ID to delete
+Shipment does not exist in the system
+Please enter shipment ID to delete
+Shipment does not exist in the system
+Please enter shipment ID to delete
+****** Shipment details ******
+Shipment ID: 12345
+shipment scheduled for this Tuesday
+Truck number: 0000
+Driver Name: Ron
+Vendor: Osem
+There isn't any changes in this shipment as of this moment
+Destinations:
+Site Type: Branch
+Name: branch1
+Address: beer sheva
+Contact Name: jinbi
+Phone Number: 0542318475
+Zone: south
+
+Site Type: Branch
+Name: branch2
+Address: kiryat gat
+Contact Name: robin
+Phone Number: 0542318476
+Zone: south
+
+Item doc:
+Item Document details:
+Document ID: 1
+Destination: branch1
+	Item name: spaghetti
+	Quantity: 20
+	Storage Condition: Regular
+
+	Item name: mayo
+	Quantity: 10
+	Storage Condition: Regular
+
+	Item name: ketchup
+	Quantity: 20
+	Storage Condition: Regular
+
+Item Document details:
+Document ID: 2
+Destination: branch2
+	Item name: peti ber
+	Quantity: 10
+	Storage Condition: Regular
+
+	Item name: pene
+	Quantity: 10
+	Storage Condition: Regular
+
+This shipment has been deleted!
+Shipment  Menu:
+1 - Add shipment
+2 - Delete shipment
+3 - Print All shipment
+4 - Print all available shipments
+5 - execute nearest shipment
+6 - Exit
+There isn't any shipments!
+Shipment  Menu:
+1 - Add shipment
+2 - Delete shipment
+3 - Print All shipment
+4 - Print all available shipments
+5 - execute nearest shipment
+6 - Exit
+There isn't any shipments!
+Shipment  Menu:
+1 - Add shipment
+2 - Delete shipment
+3 - Print All shipment
+4 - Print all available shipments
+5 - execute nearest shipment
+6 - Exit
+There is no available shipment!
+Shipment  Menu:
+1 - Add shipment
+2 - Delete shipment
+3 - Print All shipment
+4 - Print all available shipments
+5 - execute nearest shipment
+6 - Exit
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
+3 - Drivers Menu
+4 - Order Menu
+5 - Shipping Menu
+6 - Print all shipped item docs
+7 - Exit
