@@ -1,3 +1,7 @@
+import Domain.Days;
+import Domain.Jobs;
+import Domain.ReshetInfo;
+import Domain.ShiftTime;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

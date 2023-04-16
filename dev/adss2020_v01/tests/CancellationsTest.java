@@ -1,3 +1,4 @@
+import Domain.Cancellations;
 import org.junit.Test;
 
 import java.time.LocalDateTime;

@@ -1,3 +1,5 @@
+package Domain;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,7 +82,7 @@ public class Constraints {
         return true;
     }
 
-    //function to print Constraints - updated 29.3
+    //function to print Domain.Constraints - updated 29.3
     public void PrintMe(){
         for (Days day:Days.values()){
             System.out.println(day.toString() +":");

@@ -1,3 +1,7 @@
+import Domain.Jobs;
+import Domain.Shift;
+import Domain.ShiftTime;
+import Domain.Worker;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

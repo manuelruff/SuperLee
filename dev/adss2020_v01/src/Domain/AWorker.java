@@ -1,3 +1,5 @@
+package Domain;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +41,7 @@ public abstract class AWorker {
         this.info = new HashMap<>();
         this.ShiftWorked=0;
         this.Bonus = 0;
-        //sets the Constraints to everyday until he updates it
+        //sets the Domain.Constraints to everyday until he updates it
         this.ShiftsCantWork= new Constraints();
         this.WeeklyWorkingDays=new ArrayList<>();
     }
@@ -58,11 +60,11 @@ public abstract class AWorker {
         this.ShiftWorked = 0;
     }
 
-    //called when we create a new Constraints
+    //called when we create a new Domain.Constraints
     public boolean AddCantWork(Days day,double s,double e,String r){
         return ShiftsCantWork.AddCantWork(day,s,e,r);
     }
-    //called when we delete an Constraints
+    //called when we delete an Domain.Constraints
     public boolean RemoveCantWork(Days day,double s,double e){
         return ShiftsCantWork.RemoveCantWork(day,s,e);
     }
@@ -116,7 +118,7 @@ public abstract class AWorker {
     public void SetBank(int newBank){
         this.Bank=newBank;
     }
-    // used to add new Constraints
+    // used to add new Domain.Constraints
 
     public void ShowConstraints(){
         this.ShiftsCantWork.PrintMe();

@@ -1,3 +1,6 @@
+import Domain.Days;
+import Domain.Jobs;
+import Domain.Worker;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
