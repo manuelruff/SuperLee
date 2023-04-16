@@ -1,8 +1,7 @@
 package Domain;
-
 import DataAccess.StartData;
-
 import java.util.*;
+
 
 public class ReshetInfo {
     //all the branches of the company
@@ -10,10 +9,8 @@ public class ReshetInfo {
     //all the Workers in the company
     private static Map<String, Worker> Workers;
 
-
     //builder for reshetinfo
     public ReshetInfo() {
-
         Superim = new HashMap<>();
         Workers = new HashMap<>();
         //create supers and Workers and insert them to where i need
