@@ -296,11 +296,6 @@ public class ReshetInfo {
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum).RemoveWorker(ID);
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum + 1).RemoveWorker(ID);
         Workers.get(ID).RemoveShift(Days.values()[day]);
-        //if shift is empty ill set it to an empty shift
-        if(Superim.get(branch).GetWeekShifts().GetShift(shiftnum + 1).IsEmptyShift()){
-            Superim.get(branch).GetWeekShifts().GetShift(day).setManagerID("-1");
-            Superim.get(branch).GetWeekShifts().GetShift(day).setManagerName("-1");
-        }
     }
 
     //checks if worker works in specific shift in a branch
@@ -343,10 +338,22 @@ public class ReshetInfo {
                 //print what role this worker can do and he decides what he wants him to do
                 //whem were here we have a good number for employee so we add him
 
-
-                // Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID, Workers.get(ID).GetID());
-
-                
+                //add all the jobs he can do
+                List<Jobs> job_list=new ArrayList<>();
+                for(Jobs job:Jobs.values()){
+                    if(Workers.get(ID).CanDoJob(job)){
+                        job_list.add(job);
+                    }
+                }
+                //show the manager what he can do so he will choose
+                System.out.println("please choose the role you want to put him in");
+                int i=1;
+                for(Jobs job:job_list){
+                    System.out.println(i+". "+job);
+                    i++;
+                }
+                int num=AskForNumber(1,job_list.size());
+                Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(job_list.get(num-1), Workers.get(ID));
                 // add the shift to the workers shifts
                 Workers.get(ID).AddShift(Days.values()[day]);
             }
