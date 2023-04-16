@@ -27,6 +27,7 @@ public class Weekly {
     public void PrintMe(){
         for (int i=0;i<this.ShiftList.size();i++){
             this.ShiftList.get(i).PrintMe();
+            System.out.println();
         }
     }
     public Shift GetShift(int day){

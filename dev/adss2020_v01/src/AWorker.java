@@ -151,5 +151,7 @@ public abstract class AWorker {
 
     public void removeInfo(String reason){this.info.remove(reason);}
 
-    public abstract void Print();
+    public void Printme(){
+        System.out.println("Name: "+ this.GetName()+" with ID: "+this.GetID());
+    }
 }

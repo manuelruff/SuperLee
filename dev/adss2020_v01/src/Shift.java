@@ -31,6 +31,10 @@ public class Shift {
     }
 
     public void AddWorker(Jobs job, Worker worker){
+        //if not exists yet we ceate first
+        if ( this.WorkerList.get(job)==null){
+            this.WorkerList.put(job,new ArrayList<>());
+        }
         this.WorkerList.get(job).add(worker);
     }
 
@@ -39,6 +43,10 @@ public class Shift {
             for (Worker worker:WorkerList.get(job)){
                 if(worker.GetID()==ID){
                     WorkerList.get(job).remove(worker);
+                    //if empty after deletion we remove the list and value
+                    if(WorkerList.get(job).size()==0){
+                        WorkerList.remove(job);
+                    }
                 }
             }
         }
@@ -75,7 +83,7 @@ public class Shift {
                 if(WorkerList.get(job).size()!=0){
                     System.out.println("as: "+job+" the workers are:");
                     for (Worker worker: WorkerList.get(job)){
-                        System.out.println(worker);
+                        worker.Printme();
                     }
                 }
             }
