@@ -1,187 +1,28 @@
 package Domain;
 
+import DataAccess.StartData;
+
 import java.util.*;
 
 public class ReshetInfo {
     //all the branches of the company
     private static Map<String, Super> Superim;
-    //all the ret in the company
-    private static Map<String, Worker> ret;
+    //all the Workers in the company
+    private static Map<String, Worker> Workers;
 
 
     //builder for reshetinfo
     public ReshetInfo() {
 
         Superim = new HashMap<>();
-        ret = new HashMap<>();
-        //create supers and ret and insert them to where i need
-        StartData();
+        Workers = new HashMap<>();
+        //create supers and Workers and insert them to where i need
+        StartData.GetWorkers(Workers,Superim);
     }
 
     /**
      * this function will create database for beginning
      */
-    public void StartData() {
-
-        //creating shift managers:
-        Worker ShiftManager1 = new Worker("manu", "1", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager2 = new Worker("david", "2", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager3 = new Worker("muhamad", "3", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager4 = new Worker("omri", "4", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager5 = new Worker("oded", "5", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager6 = new Worker("oded2", "6", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager7 = new Worker("peleg", "7", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager8 = new Worker("mitzi", "8", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager9 = new Worker("hatul", "9", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        //puts them in the worker list
-        ret.put("1", ShiftManager1);
-        ret.put("2", ShiftManager2);
-        ret.put("3", ShiftManager3);
-        ret.put("4", ShiftManager4);
-        ret.put("5", ShiftManager5);
-        ret.put("6", ShiftManager6);
-        ret.put("7", ShiftManager7);
-        ret.put("8", ShiftManager8);
-        ret.put("9", ShiftManager9);
-
-        //create cashiers
-        Worker Cashier1 = new Worker("mikel", "10", 318, "ata ahla gever", 60, Jobs.Cashier, "123");
-        Worker Cashier2 = new Worker("migul", "11", 318, "ata ahla gever", 60, Jobs.Cashier, "123");
-        Worker Cashier3 = new Worker("huan", "12", 318, "ata ahla gever", 60, Jobs.Cashier, "123");
-        Worker Cashier4 = new Worker("omri-escopar", "13", 318, "ata ahla gever", 60, Jobs.Cashier, "123");
-        //puts them in the worker list
-        ret.put("10", Cashier1);
-        ret.put("11", Cashier2);
-        ret.put("12", Cashier3);
-        ret.put("13", Cashier4);
-
-        //create StoreKeeper
-        Worker StoreKeeper1 = new Worker("oded", "14", 318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
-        Worker StoreKeeper2 = new Worker("gal", "15", 318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
-        Worker StoreKeeper3 = new Worker("papi", "16", 318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
-        Worker StoreKeeper4 = new Worker("hatul", "17", 318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
-        //puts them in the worker list
-        ret.put("14", StoreKeeper1);
-        ret.put("15", StoreKeeper2);
-        ret.put("16", StoreKeeper3);
-        ret.put("17", StoreKeeper4);
-
-
-        //create GeneralEmployee
-        Worker GeneralEmp1 = new Worker("odedi", "18", 318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
-        Worker GeneralEmp2 = new Worker("shimun", "19", 318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
-        Worker GeneralEmp3 = new Worker("sara", "20", 318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
-        Worker GeneralEmp4 = new Worker("gebi", "21", 318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
-        //puts them in the worker list
-        ret.put("18", GeneralEmp1);
-        ret.put("19", GeneralEmp2);
-        ret.put("20", GeneralEmp3);
-        ret.put("21", GeneralEmp4);
-
-        //create guards
-        Worker Guard1 = new Worker("yuri", "22", 318, "ata ahla gever", 50, Jobs.Guard, "123");
-        Worker Guard2 = new Worker("dor", "23", 318, "ata ahla gever", 50, Jobs.Guard, "123");
-        Worker Guard3 = new Worker("shalev", "24", 318, "ata ahla gever", 50, Jobs.Guard, "123");
-        Worker Guard4 = new Worker("harel", "25", 318, "ata ahla gever", 50, Jobs.Guard, "123");
-        //puts them in the worker list
-        ret.put("22", Guard1);
-        ret.put("23", Guard2);
-        ret.put("24", Guard3);
-        ret.put("25", Guard4);
-
-        //create cleaner
-        Worker Cleaner1 = new Worker("rohama", "26", 318, "ata ahla gever", 10, Jobs.Cleaner, "123");
-        Worker Cleaner2 = new Worker("avraham", "27", 318, "ata ahla gever", 10, Jobs.Cleaner, "123");
-        Worker Cleaner3 = new Worker("shoshana", "28", 318, "ata ahla gever", 10, Jobs.Cleaner, "123");
-        Worker Cleaner4 = new Worker("alo", "29", 318, "ata ahla gever", 10, Jobs.Cleaner, "123");
-        //puts them in the worker list
-        ret.put("26", Cleaner1);
-        ret.put("27", Cleaner2);
-        ret.put("28", Cleaner3);
-        ret.put("29", Cleaner4);
-
-        //create usher
-        Worker Usher1 = new Worker("ahrak", "30", 318, "ata ahla gever", 15, Jobs.Usher, "123");
-        Worker Usher2 = new Worker("midbar", "31", 318, "ata ahla gever", 15, Jobs.Usher, "123");
-        Worker Usher3 = new Worker("sahara", "32", 318, "ata ahla gever", 15, Jobs.Usher, "123");
-        Worker Usher4 = new Worker("alosantos", "33", 318, "ata ahla gever", 15, Jobs.Usher, "123");
-        //puts them in the worker list
-        ret.put("30", Usher1);
-        ret.put("31", Usher2);
-        ret.put("32", Usher3);
-        ret.put("33", Usher4);
-
-        //create a super
-        Super Super1 = new Super("zolretzah");
-        Super Super2 = new Super("yakarmeod");
-        
-        //add to supers
-        Super1.AddWorker(ShiftManager1);
-        Super1.AddWorker(ShiftManager2);
-        Super1.AddWorker(ShiftManager3);
-        Super1.AddWorker(ShiftManager4);
-        Super2.AddWorker(ShiftManager1);
-        Super2.AddWorker(ShiftManager2);
-        Super2.AddWorker(ShiftManager3);
-        Super2.AddWorker(ShiftManager4);
-
-        Super1.AddWorker(Cashier1);
-        Super1.AddWorker(Cashier2);
-        Super1.AddWorker(Cashier3);
-        Super1.AddWorker(Cashier4);
-        Super2.AddWorker(Cashier1);
-        Super2.AddWorker(Cashier2);
-        Super2.AddWorker(Cashier3);
-        Super2.AddWorker(Cashier4);
-
-        Super1.AddWorker(StoreKeeper1);
-        Super1.AddWorker(StoreKeeper2);
-        Super1.AddWorker(StoreKeeper3);
-        Super1.AddWorker(StoreKeeper4);
-        Super2.AddWorker(StoreKeeper1);
-        Super2.AddWorker(StoreKeeper2);
-        Super2.AddWorker(StoreKeeper3);
-        Super2.AddWorker(StoreKeeper4);
-
-        Super1.AddWorker(GeneralEmp1);
-        Super1.AddWorker(GeneralEmp2);
-        Super1.AddWorker(GeneralEmp3);
-        Super1.AddWorker(GeneralEmp4);
-        Super2.AddWorker(GeneralEmp1);
-        Super2.AddWorker(GeneralEmp2);
-        Super2.AddWorker(GeneralEmp3);
-        Super2.AddWorker(GeneralEmp4);
-
-        Super1.AddWorker(Guard1);
-        Super1.AddWorker(Guard2);
-        Super1.AddWorker(Guard3);
-        Super1.AddWorker(Guard4);
-        Super2.AddWorker(Guard1);
-        Super2.AddWorker(Guard2);
-        Super2.AddWorker(Guard3);
-        Super2.AddWorker(Guard4);
-
-        Super1.AddWorker(Cleaner1);
-        Super1.AddWorker(Cleaner2);
-        Super1.AddWorker(Cleaner3);
-        Super1.AddWorker(Cleaner4);
-        Super2.AddWorker(Cleaner1);
-        Super2.AddWorker(Cleaner2);
-        Super2.AddWorker(Cleaner3);
-        Super2.AddWorker(Cleaner4);
-
-        Super1.AddWorker(Usher1);
-        Super1.AddWorker(Usher2);
-        Super1.AddWorker(Usher3);
-        Super1.AddWorker(Usher4);
-        Super2.AddWorker(Usher1);
-        Super2.AddWorker(Usher2);
-        Super2.AddWorker(Usher3);
-        Super2.AddWorker(Usher4);
-        //add the super to the super list
-        Superim.put("zolretzah", Super1);
-        Superim.put("yakarmeod", Super2);
-    }
 
     //checks if the name of a super exists
     public boolean CheckSuperName(String Name) {
@@ -207,7 +48,7 @@ public class ReshetInfo {
                 //first we need to choose the manager to start the shift
                 System.out.println("first choose the shift manager: ");
                 //ill get the list of available managers
-                CanWorkList = GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetretIDS(), curr.GetName());
+                CanWorkList = GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkersIDS(), curr.GetName());
                 if (CanWorkList.size() == 0) {
                     System.out.println("it looks like you are out of managers or you dont have enough, go assing some new ones so you can make the shifts.");
                     return;
@@ -222,9 +63,9 @@ public class ReshetInfo {
                     start = Superim.get(Name).getStart_evening(day);
                     end = Superim.get(Name).getEnd_evening(day);
                 }
-                //prints the list of ret available - name and id
+                //prints the list of Workers available - name and id
                 for (int j = 0; j < CanWorkList.size(); j++) {
-                    System.out.println(j + 1 + ". " + ret.get(CanWorkList.get(j)).GetName() + " with ID: " + CanWorkList.get(j));
+                    System.out.println(j + 1 + ". " + Workers.get(CanWorkList.get(j)).GetName() + " with ID: " + CanWorkList.get(j));
                 }
                 System.out.println("if you dont want this shift to happen enter 0.");
                 int num =AskForNumber(0,CanWorkList.size());
@@ -238,10 +79,10 @@ public class ReshetInfo {
                     continue;
                 }
                 //when we get here we have a good choice for the shift manager
-                //crete the shift and now we need to add to it
-                Shift CurrShift = new Shift(week.getStartDate().plusDays(day.ordinal()), time, start, end, ret.get(CanWorkList.get(num - 1)));
+                //cWorkerse the shift and now we need to add to it
+                Shift CurrShift = new Shift(week.getStartDate().plusDays(day.ordinal()), time, start, end, Workers.get(CanWorkList.get(num - 1)));
                 //update the menager shift
-                ret.get(CanWorkList.get(num - 1)).AddShift(day);
+                Workers.get(CanWorkList.get(num - 1)).AddShift(day);
                 //then we need to let him see the rest without shift manager
                 //then we send it to the curr shift
 
@@ -253,27 +94,27 @@ public class ReshetInfo {
                     if (job == Jobs.ShiftManager) {
                         continue;
                     }
-                    //we will get the available ret
-                    CanWorkList = GetAvailableEmployee(day, job, time, curr.GetretIDS(), curr.GetName());
-                    System.out.print(" how many ret as " + job + " you want? ");
+                    //we will get the available Workers
+                    CanWorkList = GetAvailableEmployee(day, job, time, curr.GetWorkersIDS(), curr.GetName());
+                    System.out.print(" how many Workers as " + job + " you want? ");
                     num = AskForNumber(0,CanWorkList.size());
 
                     //if i got here i have a good number
                     int k = 0;
                     while (k < num) {
-                        System.out.println("the ret that can be in this shift are: ");
+                        System.out.println("the Workers that can be in this shift are: ");
                         for (int j = 0; j < CanWorkList.size(); j++) {
-                            System.out.println((j + 1) + ". " + ret.get(CanWorkList.get(j)).GetName() + " with ID: " + CanWorkList.get(j));
+                            System.out.println((j + 1) + ". " + Workers.get(CanWorkList.get(j)).GetName() + " with ID: " + CanWorkList.get(j));
                         }
                         int choice = AskForNumber(1,CanWorkList.size());
                         //if i got here i have a good index for a worker
                         // we will decrese one so it will be the index from the list
                         choice = choice - 1;
                         //add to the shift
-                        CurrShift.AddWorker(job, ret.get(CanWorkList.get(choice)));
+                        CurrShift.AddWorker(job, Workers.get(CanWorkList.get(choice)));
                         //now i need to update the worker propertyly
-                        ret.get(CanWorkList.get(choice)).AddShift(day);
-                        //remove from the available ret
+                        Workers.get(CanWorkList.get(choice)).AddShift(day);
+                        //remove from the available Workers
                         CanWorkList.remove(choice);
                         k++;
                     }
@@ -318,7 +159,7 @@ public class ReshetInfo {
         //whem were here we have a good number for employee so we remove him
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum).RemoveWorker(ID);
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum + 1).RemoveWorker(ID);
-        ret.get(ID).RemoveShift(Days.values()[day]);
+        Workers.get(ID).RemoveShift(Days.values()[day]);
     }
 
     //checks if worker works in specific shift in a branch
@@ -340,21 +181,21 @@ public class ReshetInfo {
             e = Superim.get(branch).getEnd_evening(Days.values()[day]);
             day = day + 1;
         }
-        if (!ret.get(ID).IsFree(Days.values()[day], s, e)) {
+        if (!Workers.get(ID).IsFree(Days.values()[day], s, e)) {
             System.out.println("this worker can't work at this shift");
             return;
         } else {
             //check if the shift  is empty
             if (Superim.get(branch).GetWeekShifts().GetShift(day).IsEmptyShift()){
-                if(!ret.get(ID).CanDoJob(Jobs.ShiftManager)){
+                if(!Workers.get(ID).CanDoJob(Jobs.ShiftManager)){
                     System.out.println("this shift is empty you need to add a shift manager first");
                 }
                 else{
                     //if we are here he added a manager to an empty shift
                     //whem were here we have a good number for employee so we add him
-                    Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.ShiftManager, ret.get(ID));
-                    // add the shift to the ret shifts
-                    ret.get(ID).AddShift(Days.values()[day]);
+                    Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.ShiftManager, Workers.get(ID));
+                    // add the shift to the Workers shifts
+                    Workers.get(ID).AddShift(Days.values()[day]);
                 }
             }
             else {
@@ -364,7 +205,7 @@ public class ReshetInfo {
                 //add all the jobs he can do
                 List<Jobs> job_list=new ArrayList<>();
                 for(Jobs job:Jobs.values()){
-                    if(ret.get(ID).CanDoJob(job)){
+                    if(Workers.get(ID).CanDoJob(job)){
                         job_list.add(job);
                     }
                 }
@@ -376,9 +217,9 @@ public class ReshetInfo {
                     i++;
                 }
                 int num=AskForNumber(1,job_list.size());
-                Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(job_list.get(num-1), ret.get(ID));
-                // add the shift to the ret shifts
-                ret.get(ID).AddShift(Days.values()[day]);
+                Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(job_list.get(num-1), Workers.get(ID));
+                // add the shift to the Workers shifts
+                Workers.get(ID).AddShift(Days.values()[day]);
             }
         }
     }
@@ -401,7 +242,7 @@ public class ReshetInfo {
 
     // check if worker is exists by id
     public boolean isExistWorker(String ID) {
-        return ret.get(ID) != null;
+        return Workers.get(ID) != null;
     }
 
     //remove a worker from a branch by id
@@ -411,8 +252,8 @@ public class ReshetInfo {
         curr.RemoveWorker(ID);
     }
 
-    //get day job and a list of ret and checks if the worker can do the work in the shift and these conditions
-    public List<String> GetAvailableEmployee(Days day, Jobs job, ShiftTime time, List<String> retID, String SuperName) {
+    //get day job and a list of Workers and checks if the worker can do the work in the shift and these conditions
+    public List<String> GetAvailableEmployee(Days day, Jobs job, ShiftTime time, List<String> WorkersID, String SuperName) {
         List<String> ret = new ArrayList<>();
         //we will save the start and end of the shift
         double start = 0;
@@ -426,8 +267,8 @@ public class ReshetInfo {
             end = Superim.get(SuperName).getEnd_evening(day);
         }
         //checking each employee
-        for (String id : retID) {
-            Worker curr = ret.get(id);
+        for (String id : WorkersID) {
+            Worker curr = Workers.get(id);
             //check if he is qualified for the job
             if (curr.CanDoJob(job)) {
                 //check if he is free by his Domain.Constraints
@@ -444,37 +285,37 @@ public class ReshetInfo {
         if (!isExistWorker(ID)) {
             return false;
         }
-        return ret.get(ID).CheckPassword(password);
+        return Workers.get(ID).CheckPassword(password);
     }
 
     // add Domain.Constraints to worker by given Id
     public boolean AddConstraints(String ID, int day, double s_hour, double e_hour, String r) {
-        return ret.get(ID).AddCantWork(Days.values()[day - 1], s_hour, e_hour, r);
+        return Workers.get(ID).AddCantWork(Days.values()[day - 1], s_hour, e_hour, r);
     }
 
     // remove Constraintss for worker by id
     public boolean RemoveConstraints(String ID, int day, double s_hour, double e_hour) {
-        return ret.get(ID).RemoveCantWork(Days.values()[day - 1], s_hour, e_hour);
+        return Workers.get(ID).RemoveCantWork(Days.values()[day - 1], s_hour, e_hour);
     }
 
     //changes a worker password
     public void ChangeWorkerPassword(String ID, String newPassword) {
-        ret.get(ID).SetPassword(newPassword);
+        Workers.get(ID).SetPassword(newPassword);
     }
 
     //changes a worker name
     public void ChangeWorkerName(String ID, String newName) {
-        ret.get(ID).SetName(newName);
+        Workers.get(ID).SetName(newName);
     }
 
     //changes a worker bank info
     public void ChangeWorkerBank(String ID, int newBank) {
-        ret.get(ID).SetBank(newBank);
+        Workers.get(ID).SetBank(newBank);
     }
 
     //prints constraints of worker
     public void ShowConstraints(String ID) {
-        ret.get(ID).ShowConstraints();
+        Workers.get(ID).ShowConstraints();
     }
 
     //sends weekly of all branches to their history
@@ -483,8 +324,8 @@ public class ReshetInfo {
         for (Super sup : Superim.values()) {
             sup.SendConstraintsToHistory();
         }
-        //prepare the ret state for next weekly
-        for (Worker worker : ret.values()) {
+        //prepare the Workers state for next weekly
+        for (Worker worker : Workers.values()) {
             worker.ResetDaysOfWork();
         }
     }
@@ -511,7 +352,7 @@ public class ReshetInfo {
     //add a cash cancellations
     public void AddCancellations(String Name, String item, double amount, String ID) {
         //create the cancallation
-        Cancellations cancel = new Cancellations(amount, item, ID, ret.get(ID).GetName());
+        Cancellations cancel = new Cancellations(amount, item, ID, Workers.get(ID).GetName());
         //add the cancellation to the super
         Superim.get(Name).get_cash_register().AddCancalation(cancel);
     }
@@ -528,7 +369,7 @@ public class ReshetInfo {
         for (Map.Entry<String, Super> entry : Superim.entrySet()) {
             if (entry.getKey().equals(branchName)) {
                 Superim.get(entry.getKey()).AddWorker(newEmployee);
-                ret.put(newEmployee.GetID(), newEmployee);
+                Workers.put(newEmployee.GetID(), newEmployee);
                 System.out.println(newEmployee.GetID() + " added successfully to: " + branchName);
             }
         }
@@ -536,12 +377,12 @@ public class ReshetInfo {
 
     //add worker by id to branch
     public void AddWorkerToBranch(String ID, String branchName) {
-        if (Superim.get(branchName).GetretIDS().contains(ID)) {
+        if (Superim.get(branchName).GetWorkersIDS().contains(ID)) {
             System.out.println("the worker is already in this branch");
             return;
         }
-        // add the worker to the ret map
-        Superim.get(branchName).AddWorker(ret.get(ID));
+        // add the worker to the Workers map
+        Superim.get(branchName).AddWorker(Workers.get(ID));
         System.out.println(ID + " added successfully to: " + branchName);
     }
 
@@ -554,23 +395,23 @@ public class ReshetInfo {
                 System.out.println("worker removed successfully from " + Superim.get(entry.getKey()).GetName());
             }
         }
-        // remove it from the map of all ret
-        ret.remove(ID);
+        // remove it from the map of all Workers
+        Workers.remove(ID);
     }
 
     //add a job for a worker (role) by id
     public void AddJobToWorker(String ID, int job_index) {
-        ret.get(ID).AddJob(Jobs.values()[job_index - 1]);
+        Workers.get(ID).AddJob(Jobs.values()[job_index - 1]);
     }
 
     //changes the wage of a worker by id
     public void ChangeWage(String ID, int wage) {
-        ret.get(ID).setWage(wage);
+        Workers.get(ID).setWage(wage);
     }
 
     //changes the contract of a worker by id
     public void ChangeContract(String ID, String input_Contract) {
-        ret.get(ID).setContract(input_Contract);
+        Workers.get(ID).setContract(input_Contract);
     }
 
     //check that a given number is in a time structure (hours and minuts)
@@ -580,12 +421,12 @@ public class ReshetInfo {
         return (!(start < 0 || start > end || end > 24 || start_dec >= 0.591 || end_dec >= 0.591));
     }
 
-    // send payment to the ret
+    // send payment to the Workers
     public void Payment() {
-        for (Worker worker : ret.values()) {
+        for (Worker worker : Workers.values()) {
             worker.CalculateSalary();
             worker.resetBonus();
-            ResetWorkDaysret();
+            ResetWorkDaysWorkers();
         }
         System.out.println("Payment done!");
     }
@@ -593,44 +434,44 @@ public class ReshetInfo {
     // add bonus to worker by given ID
 
     public void addBonusToWorker(String ID, double bonus) {
-        ret.get(ID).addBonus(bonus);
-        System.out.println("bonus added successfully to: " + ret.get(ID).GetName());
+        Workers.get(ID).addBonus(bonus);
+        System.out.println("bonus added successfully to: " + Workers.get(ID).GetName());
     }
 
     public void addNewInfo(String ID, String reason, String info) {
-        ret.get(ID).addInfo(reason, info);
+        Workers.get(ID).addInfo(reason, info);
     }
 
     public void removeInfo(String ID, String reason) {
-        ret.get(ID).removeInfo(reason);
+        Workers.get(ID).removeInfo(reason);
     }
 
     public void removeBonusToWorker(String ID, double bonus) {
-        ret.get(ID).removeBonus(bonus);
-        System.out.println("bonus removed from: " + ret.get(ID).GetName());
+        Workers.get(ID).removeBonus(bonus);
+        System.out.println("bonus removed from: " + Workers.get(ID).GetName());
     }
 
-    // reset the number of shifts to all ret
-    public void ResetWorkDaysret() {
-        for (String ID : ret.keySet()) {
-            ret.get(ID).ResetShiftsAmount();
+    // reset the number of shifts to all Workers
+    public void ResetWorkDaysWorkers() {
+        for (String ID : Workers.keySet()) {
+            Workers.get(ID).ResetShiftsAmount();
         }
     }
 
     //returns worker by id
     public Worker GetWorkerByID(String ID) {
-        return ret.get(ID);
+        return Workers.get(ID);
     }
 
     //check by id if worker works in specific super
     public boolean IsWorksInSuper(String ID, String SuperName) {
-        return Superim.get(SuperName).GetretIDS().contains(ID);
+        return Superim.get(SuperName).GetWorkersIDS().contains(ID);
 
     }
 
     //check if a worker can to a job\role
     public boolean CanDoJob(String ID, Jobs job) {
-        return ret.get(ID).CanDoJob(job);
+        return Workers.get(ID).CanDoJob(job);
     }
 
 

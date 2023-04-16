@@ -14,7 +14,7 @@ public class ReshetInfoTest {
     public void hasWeekly() {
         ReshetInfo info=new ReshetInfo();
         assertFalse(info.HasWeekly("yakarmeod"));
-        assertFalse(info.HasWeekly("zolretzah"));
+        assertFalse(info.HasWeekly("zolWorkerszah"));
     }
     @Test
     public void isExistWorker() {
@@ -31,15 +31,15 @@ public class ReshetInfoTest {
     @Test
     public void getAvailableEmployee() {
         ReshetInfo info=new ReshetInfo();
-        List<String> ret=new ArrayList<>();
-        ret.add("1");
-        ret.add("2");
-        ret.add("3");
-        ret.add("4");
-        assertEquals("1",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,ret,"yakarmeod").get(0));
-        assertEquals("2",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,ret,"yakarmeod").get(1));
-        assertEquals("3",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,ret,"yakarmeod").get(2));
-        assertEquals("4",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,ret,"yakarmeod").get(3));
+        List<String> Workers=new ArrayList<>();
+        Workers.add("1");
+        Workers.add("2");
+        Workers.add("3");
+        Workers.add("4");
+        assertEquals("1",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,Workers,"yakarmeod").get(0));
+        assertEquals("2",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,Workers,"yakarmeod").get(1));
+        assertEquals("3",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,Workers,"yakarmeod").get(2));
+        assertEquals("4",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,Workers,"yakarmeod").get(3));
     }
     @Test
     public void isTruePassword() {
