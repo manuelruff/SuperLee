@@ -7,7 +7,8 @@ import java.util.Map;
 
 public class Super {
     private String Name;
-    private List<String> WorkerList;
+    //map<id, worker>
+    private Map<String,Worker> WorkerList;
     //this week working sheet
     private Weekly WeekShifts;
     //history of all the shifts
@@ -28,7 +29,7 @@ public class Super {
     //builder for super
     public Super(String Name){
         this.Name=Name;
-        WorkerList=new ArrayList<>();
+        WorkerList=new HashMap<>();
         WeeklyHist=new ArrayList<>();
         cash_register=new CashRegister();
 
@@ -49,32 +50,37 @@ public class Super {
         }
     }
     //a function that adds a worker to the workers list
-    public void AddWorker(String WorkerID){
-        WorkerList.add(WorkerID);
+    public void AddWorker(Worker worker){WorkerList.put(worker.GetID(),worker);
     }
 
     public boolean RemoveWorker(String ID){
-        return WorkerList.remove(ID);
+        if(WorkerList.get(ID)!=null){
+            WorkerList.remove(ID);
+            return true;
+        }
+        return false;
     }
 
     public String GetName(){
         return this.Name;
     }
 
-    public List<String> GetWorkers(){
-        return WorkerList;
+    public List<String> GetWorkersIDS(){
+        List<String> ret=new ArrayList<>();
+        for(String id:WorkerList.keySet()){
+            ret.add(id);
+        }
+        return ret;
     }
 
 //add a weekly to the super
     public void AddWeekly(Weekly week){
         this.WeekShifts=week;
     }
-
     public boolean HasWeekly(){
         return this.WeekShifts!=null;
     }
     public Weekly GetWeekShifts(){return this.WeekShifts;}
-
     public void PrintWeekFromHistByDate(int year,int month,int day) {
         boolean is_printed=false;
         for (Weekly week : this.WeeklyHist) {
@@ -88,7 +94,6 @@ public class Super {
             System.out.println("there is no weekly in that date");
         }
     }
-
     public void SendConstraintsToHistory(){
         //add the current one to history
         this.WeeklyHist.add(this.WeekShifts);

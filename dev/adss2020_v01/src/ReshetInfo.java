@@ -148,13 +148,69 @@ public class ReshetInfo {
         Workers.put("31", Usher2);
         Workers.put("32", Usher3);
         Workers.put("33", Usher4);
+        //add to supers
+        Super1.AddWorker(ShiftManager1);
+        Super1.AddWorker(ShiftManager2);
+        Super1.AddWorker(ShiftManager3);
+        Super1.AddWorker(ShiftManager4);
+        Super2.AddWorker(ShiftManager1);
+        Super2.AddWorker(ShiftManager2);
+        Super2.AddWorker(ShiftManager3);
+        Super2.AddWorker(ShiftManager4);
 
-        //add all the employees to the supers
-        for (int i = 1; i <= 33; i++) {
-            Super1.AddWorker(Integer.toString(i));
-            Super2.AddWorker(Integer.toString(i));
-        }
+        Super1.AddWorker(Cashier1);
+        Super1.AddWorker(Cashier2);
+        Super1.AddWorker(Cashier3);
+        Super1.AddWorker(Cashier4);
+        Super2.AddWorker(Cashier1);
+        Super2.AddWorker(Cashier2);
+        Super2.AddWorker(Cashier3);
+        Super2.AddWorker(Cashier4);
 
+        Super1.AddWorker(StoreKeeper1);
+        Super1.AddWorker(StoreKeeper2);
+        Super1.AddWorker(StoreKeeper3);
+        Super1.AddWorker(StoreKeeper4);
+        Super2.AddWorker(StoreKeeper1);
+        Super2.AddWorker(StoreKeeper2);
+        Super2.AddWorker(StoreKeeper3);
+        Super2.AddWorker(StoreKeeper4);
+
+        Super1.AddWorker(GeneralEmp1);
+        Super1.AddWorker(GeneralEmp2);
+        Super1.AddWorker(GeneralEmp3);
+        Super1.AddWorker(GeneralEmp4);
+        Super2.AddWorker(GeneralEmp1);
+        Super2.AddWorker(GeneralEmp2);
+        Super2.AddWorker(GeneralEmp3);
+        Super2.AddWorker(GeneralEmp4);
+
+        Super1.AddWorker(Guard1);
+        Super1.AddWorker(Guard2);
+        Super1.AddWorker(Guard3);
+        Super1.AddWorker(Guard4);
+        Super2.AddWorker(Guard1);
+        Super2.AddWorker(Guard2);
+        Super2.AddWorker(Guard3);
+        Super2.AddWorker(Guard4);
+
+        Super1.AddWorker(Cleaner1);
+        Super1.AddWorker(Cleaner2);
+        Super1.AddWorker(Cleaner3);
+        Super1.AddWorker(Cleaner4);
+        Super2.AddWorker(Cleaner1);
+        Super2.AddWorker(Cleaner2);
+        Super2.AddWorker(Cleaner3);
+        Super2.AddWorker(Cleaner4);
+
+        Super1.AddWorker(Usher1);
+        Super1.AddWorker(Usher2);
+        Super1.AddWorker(Usher3);
+        Super1.AddWorker(Usher4);
+        Super2.AddWorker(Usher1);
+        Super2.AddWorker(Usher2);
+        Super2.AddWorker(Usher3);
+        Super2.AddWorker(Usher4);
         //add the super to the super list
         Superim.put("zolretzah", Super1);
         Superim.put("yakarmeod", Super2);
@@ -184,7 +240,7 @@ public class ReshetInfo {
                 //first we need to choose the manager to start the shift
                 System.out.println("first choose the shift manager: ");
                 //ill get the list of available managers
-                CanWorkList = GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkers(), curr.GetName());
+                CanWorkList = GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkersIDS(), curr.GetName());
                 if (CanWorkList.size() == 0) {
                     System.out.println("it looks like you are out of managers or you dont have enough, go assing some new ones so you can make the shifts.");
                     return;
@@ -231,7 +287,7 @@ public class ReshetInfo {
                         continue;
                     }
                     //we will get the available workers
-                    CanWorkList = GetAvailableEmployee(day, job, time, curr.GetWorkers(), curr.GetName());
+                    CanWorkList = GetAvailableEmployee(day, job, time, curr.GetWorkersIDS(), curr.GetName());
                     System.out.print(" how many workers as " + job + " you want? ");
                     num = AskForNumber(0,CanWorkList.size());
 
@@ -504,7 +560,7 @@ public class ReshetInfo {
         //Worker new_worker = new Worker(ID, name, bank, contract, wage, job, password);
         for (Map.Entry<String, Super> entry : Superim.entrySet()) {
             if (entry.getKey().equals(branchName)) {
-                Superim.get(entry.getKey()).AddWorker(newEmployee.GetID());
+                Superim.get(entry.getKey()).AddWorker(newEmployee);
                 Workers.put(newEmployee.GetID(), newEmployee);
                 System.out.println(newEmployee.GetID() + " added successfully to: " + branchName);
             }
@@ -513,12 +569,12 @@ public class ReshetInfo {
 
     //add worker by id to branch
     public void AddWorkerToBranch(String ID, String branchName) {
-        if (Superim.get(branchName).GetWorkers().contains(ID)) {
+        if (Superim.get(branchName).GetWorkersIDS().contains(ID)) {
             System.out.println("the worker is already in this branch");
             return;
         }
         // add the worker to the workers map
-        Superim.get(branchName).AddWorker(ID);
+        Superim.get(branchName).AddWorker(Workers.get(ID));
         System.out.println(ID + " added successfully to: " + branchName);
     }
 
@@ -601,7 +657,7 @@ public class ReshetInfo {
 
     //check by id if worker works in specific super
     public boolean IsWorksInSuper(String ID, String SuperName) {
-        return Superim.get(SuperName).GetWorkers().contains(ID);
+        return Superim.get(SuperName).GetWorkersIDS().contains(ID);
 
     }
 

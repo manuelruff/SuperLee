@@ -8,19 +8,23 @@ public class SuperTest {
     @Test
     public void addWorker() {
         Super Super1 = new Super("zolretzah");
-        Super1.AddWorker("1");
-        Super1.AddWorker("2");
-        assertEquals(2,Super1.GetWorkers().size());
+        Worker worker1 = new Worker("manu" , " 1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker worker2 = new Worker("manu" , " 2", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Super1.AddWorker(worker1);
+        Super1.AddWorker(worker2);
+        assertEquals(2,Super1.GetWorkersIDS().size());
     }
     @Test
     public void removeWorker() {
         Super Super1 = new Super("zolretzah");
-        Super1.AddWorker("1");
-        Super1.AddWorker("2");
-        assertEquals(2,Super1.GetWorkers().size());
+        Worker worker1 = new Worker("manu" , " 1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker worker2 = new Worker("manu" , " 2", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Super1.AddWorker(worker1);
+        Super1.AddWorker(worker2);
+        assertEquals(2,Super1.GetWorkersIDS().size());
         Super1.RemoveWorker("1");
         Super1.RemoveWorker("2");
-        assertEquals(0,Super1.GetWorkers().size());
+        assertEquals(0,Super1.GetWorkersIDS().size());
     }
     @Test
     public void getName() {
