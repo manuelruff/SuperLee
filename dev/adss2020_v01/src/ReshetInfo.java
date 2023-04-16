@@ -216,7 +216,7 @@ public class ReshetInfo {
                 }
                 //when we get here we have a good choice for the shift manager
                 //crete the shift and now we need to add to it
-                Shift CurrShift = new Shift(week.getStartDate().plusDays(day.ordinal()), time, start, end, CanWorkList.get(num - 1), Workers.get(CanWorkList.get(num - 1)).GetID());
+                Shift CurrShift = new Shift(week.getStartDate().plusDays(day.ordinal()), time, start, end, Workers.get(CanWorkList.get(num - 1)));
                 //update the menager shift
                 Workers.get(CanWorkList.get(num - 1)).AddShift(day);
                 //then we need to let him see the rest without shift manager
@@ -247,7 +247,7 @@ public class ReshetInfo {
                         // we will decrese one so it will be the index from the list
                         choice = choice - 1;
                         //add to the shift
-                        CurrShift.AddWorker(CanWorkList.get(choice), Workers.get(CanWorkList.get(choice)).GetID());
+                        CurrShift.AddWorker(job, Workers.get(CanWorkList.get(choice)));
                         //now i need to update the worker propertyly
                         Workers.get(CanWorkList.get(choice)).AddShift(day);
                         //remove from the available workers
@@ -334,16 +334,19 @@ public class ReshetInfo {
                 else{
                     //if we are here he added a manager to an empty shift
                     //whem were here we have a good number for employee so we add him
-                    Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID, Workers.get(ID).GetID());
+                    Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.ShiftManager, Workers.get(ID));
                     // add the shift to the workers shifts
                     Workers.get(ID).AddShift(Days.values()[day]);
-                    Superim.get(branch).GetWeekShifts().GetShift(day).setManagerID(Workers.get(ID).GetID());
-                    Superim.get(branch).GetWeekShifts().GetShift(day).setManagerName(Workers.get(ID).GetName());
                 }
             }
             else {
+                //print what role this worker can do and he decides what he wants him to do
                 //whem were here we have a good number for employee so we add him
-                Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID, Workers.get(ID).GetID());
+
+
+                // Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(ID, Workers.get(ID).GetID());
+
+                
                 // add the shift to the workers shifts
                 Workers.get(ID).AddShift(Days.values()[day]);
             }

@@ -151,4 +151,5 @@ public abstract class AWorker {
 
     public void removeInfo(String reason){this.info.remove(reason);}
 
+    public abstract void Print();
 }
