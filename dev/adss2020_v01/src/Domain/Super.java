@@ -68,9 +68,7 @@ public class Super {
 
     public List<String> GetWorkersIDS(){
         List<String> Workers=new ArrayList<>();
-        for(String id:WorkerList.keySet()){
-            Workers.add(id);
-        }
+        Workers.addAll(WorkerList.keySet());
         return Workers;
     }
 

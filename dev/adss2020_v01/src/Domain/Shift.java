@@ -43,7 +43,7 @@ public class Shift {
     public void RemoveWorker(String ID){
         for(Jobs job:WorkerList.keySet()){
             for (Worker worker:WorkerList.get(job)){
-                if(worker.GetID()==ID){
+                if(worker.GetID().equals(ID)){
                     WorkerList.get(job).remove(worker);
                     //if empty after deletion we remove the list and value
                     if(WorkerList.get(job).size()==0){
@@ -57,7 +57,7 @@ public class Shift {
     public boolean IsWorkerAtShift(String ID){
         for(Jobs job:WorkerList.keySet()){
             for (Worker worker:WorkerList.get(job)){
-                if(worker.GetID()==ID){
+                if(worker.GetID().equals(ID)){
                     return true;
                 }
             }
@@ -83,12 +83,13 @@ public class Shift {
                     "from: " + this.start + " until: " + this.end);
             for (Jobs job : this.WorkerList.keySet()) {
                 if(WorkerList.get(job).size()!=0){
-                    System.out.println("as: "+job+" the Workers are:");
+                    System.out.println("as "+job+" the Workers are:");
                     for (Worker worker: WorkerList.get(job)){
                         worker.Printme();
                     }
                 }
             }
+            System.out.println();
         }
     }
 }
