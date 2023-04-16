@@ -9,7 +9,7 @@ public class Shift {
     private ShiftTime shift_time;
     private double start;
     private double end;
-    //all the workers in the shift
+    //all the ret in the shift
     //<Job , worker>
     private Map<Jobs,List<Worker>> WorkerList;
 
@@ -83,7 +83,7 @@ public class Shift {
                     "from: " + this.start + " until: " + this.end);
             for (Jobs job : this.WorkerList.keySet()) {
                 if(WorkerList.get(job).size()!=0){
-                    System.out.println("as: "+job+" the workers are:");
+                    System.out.println("as: "+job+" the ret are:");
                     for (Worker worker: WorkerList.get(job)){
                         worker.Printme();
                     }

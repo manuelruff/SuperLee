@@ -31,15 +31,15 @@ public class ReshetInfoTest {
     @Test
     public void getAvailableEmployee() {
         ReshetInfo info=new ReshetInfo();
-        List<String> workers=new ArrayList<>();
-        workers.add("1");
-        workers.add("2");
-        workers.add("3");
-        workers.add("4");
-        assertEquals("1",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,workers,"yakarmeod").get(0));
-        assertEquals("2",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,workers,"yakarmeod").get(1));
-        assertEquals("3",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,workers,"yakarmeod").get(2));
-        assertEquals("4",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,workers,"yakarmeod").get(3));
+        List<String> ret=new ArrayList<>();
+        ret.add("1");
+        ret.add("2");
+        ret.add("3");
+        ret.add("4");
+        assertEquals("1",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,ret,"yakarmeod").get(0));
+        assertEquals("2",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,ret,"yakarmeod").get(1));
+        assertEquals("3",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,ret,"yakarmeod").get(2));
+        assertEquals("4",info.GetAvailableEmployee(Days.Sunday, Jobs.ShiftManager, ShiftTime.Morning,ret,"yakarmeod").get(3));
     }
     @Test
     public void isTruePassword() {

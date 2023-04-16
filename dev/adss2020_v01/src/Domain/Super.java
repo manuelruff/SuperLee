@@ -50,7 +50,7 @@ public class Super {
             end_evening.put(day,23.00);
         }
     }
-    //a function that adds a worker to the workers list
+    //a function that adds a worker to the ret list
     public void AddWorker(Worker worker){WorkerList.put(worker.GetID(),worker);
     }
 
@@ -66,7 +66,7 @@ public class Super {
         return this.Name;
     }
 
-    public List<String> GetWorkersIDS(){
+    public List<String> GetretIDS(){
         List<String> ret=new ArrayList<>();
         for(String id:WorkerList.keySet()){
             ret.add(id);

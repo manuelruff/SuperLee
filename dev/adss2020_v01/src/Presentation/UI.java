@@ -176,7 +176,7 @@ public class UI {
     }
 
     /**
-     *  will open the options for workers
+     *  will open the options for ret
      * @param ID make the changes on the worker with given id
      */
     public static void WorkerOption(String ID){

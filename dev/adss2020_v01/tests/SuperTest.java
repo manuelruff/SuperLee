@@ -13,7 +13,7 @@ public class SuperTest {
         Worker worker2 = new Worker("manu" , " 2", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Super1.AddWorker(worker1);
         Super1.AddWorker(worker2);
-        assertEquals(2,Super1.GetWorkersIDS().size());
+        assertEquals(2,Super1.GetretIDS().size());
     }
     @Test
     public void removeWorker() {
@@ -22,10 +22,10 @@ public class SuperTest {
         Worker worker2 = new Worker("manu" , " 2", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Super1.AddWorker(worker1);
         Super1.AddWorker(worker2);
-        assertEquals(2,Super1.GetWorkersIDS().size());
+        assertEquals(2,Super1.GetretIDS().size());
         Super1.RemoveWorker("1");
         Super1.RemoveWorker("2");
-        assertEquals(0,Super1.GetWorkersIDS().size());
+        assertEquals(0,Super1.GetretIDS().size());
     }
     @Test
     public void getName() {
