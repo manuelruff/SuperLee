@@ -173,16 +173,18 @@ public class ReshetInfo {
     public void AddToDay(String ID, String branch, int shift_op, int day) {
         double s = 0;
         double e = 0;
+        //savres it to use in day
+        int days_day=day;
         day = day * 2;
         if (shift_op == 1) {
-            s = Superim.get(branch).getStart_morning(Days.values()[day]);
-            e = Superim.get(branch).getEnd_morning(Days.values()[day]);
+            s = Superim.get(branch).getStart_morning(Days.values()[days_day]);
+            e = Superim.get(branch).getEnd_morning(Days.values()[days_day]);
         } else {
-            s = Superim.get(branch).getStart_evening(Days.values()[day]);
-            e = Superim.get(branch).getEnd_evening(Days.values()[day]);
+            s = Superim.get(branch).getStart_evening(Days.values()[days_day]);
+            e = Superim.get(branch).getEnd_evening(Days.values()[days_day]);
             day = day + 1;
         }
-        if (!Workers.get(ID).IsFree(Days.values()[day], s, e)) {
+        if (!Workers.get(ID).IsFree(Days.values()[days_day], s, e)) {
             System.out.println("this worker can't work at this shift");
             return;
         } else {
@@ -196,7 +198,7 @@ public class ReshetInfo {
                     //whem were here we have a good number for employee so we add him
                     Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.ShiftManager, Workers.get(ID));
                     // add the shift to the Workers shifts
-                    Workers.get(ID).AddShift(Days.values()[day]);
+                    Workers.get(ID).AddShift(Days.values()[days_day]);
                 }
             }
             else {
@@ -220,7 +222,7 @@ public class ReshetInfo {
                 int num=AskForNumber(1,job_list.size());
                 Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(job_list.get(num-1), Workers.get(ID));
                 // add the shift to the Workers shifts
-                Workers.get(ID).AddShift(Days.values()[day]);
+                Workers.get(ID).AddShift(Days.values()[days_day]);
             }
         }
     }

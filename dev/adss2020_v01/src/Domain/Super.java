@@ -33,12 +33,10 @@ public class Super {
         WorkerList=new HashMap<>();
         WeeklyHist=new ArrayList<>();
         cash_register=new CashRegister();
-
         start_morning=new HashMap<>();
         end_morning=new HashMap<>();
         start_evening=new HashMap<>();
         end_evening=new HashMap<>();
-
         //sets the basic hours of each day to work from 7 to 14 and then from 14 to 23
         this.setHours();
     }

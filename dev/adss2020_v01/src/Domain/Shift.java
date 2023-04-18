@@ -62,6 +62,10 @@ public class Shift {
         }
         //if no one as this role we delete it from the list in the shift
         if(changed && WorkerList.get(jobremove).size()==0){
+            //if he deletes the shift manager we tell him the shift will be empty
+            if(jobremove==Jobs.ShiftManager){
+                System.out.println("you removed the shift manager so the shift will be canceled");
+            }
             WorkerList.remove(jobremove);
         }
     }
@@ -89,6 +93,7 @@ public class Shift {
         //if its an empty shift we just print that its empty
         if(this.IsEmptyShift()){
             System.out.println("at "+this.date + " " + this.shift_time  +" there is no shift ");
+            System.out.println();
         }
         else {
             System.out.println(this.date + " " + this.shift_time + "\n" +
