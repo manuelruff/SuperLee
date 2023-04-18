@@ -1,6 +1,6 @@
 package Presentation;
 
-import Domain.*;
+import Domain.ReshetInfo;
 
 import java.util.Scanner;
 
@@ -18,9 +18,9 @@ public class GeneralUI {
         int choice=-1;
         while (choice!=3){
             System.out.println("please choose an option: ");
-            System.out.println("1. Domain.Worker");
+            System.out.println("1. Worker");
             System.out.println("2. Manager");
-            System.out.println("3. Domain.Cancellations");
+            System.out.println("3. Cancellations");
             System.out.println("4. Exit");
             Scanner myObj = new Scanner(System.in);  // Create a Scanner object
             String input = myObj.nextLine();  // Read user input

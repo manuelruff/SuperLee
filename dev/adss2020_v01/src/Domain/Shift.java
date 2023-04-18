@@ -41,16 +41,28 @@ public class Shift {
     }
 
     public void RemoveWorker(String ID){
+        //remember the role of the worker deleted
+        Jobs jobremove=Jobs.Cashier;
+        //we changed it to true if we deleted someone
+        boolean changed=false;
         for(Jobs job:WorkerList.keySet()){
             for (Worker worker:WorkerList.get(job)){
                 if(worker.GetID().equals(ID)){
                     WorkerList.get(job).remove(worker);
                     //if empty after deletion we remove the list and value
-                    if(WorkerList.get(job).size()==0){
-                        WorkerList.remove(job);
-                    }
+                    jobremove=job;
+                    changed=true;
+                    break;
+                }
+                //if we deleted someone were done
+                if (changed){
+                    break;
                 }
             }
+        }
+        //if no one as this role we delete it from the list in the shift
+        if(changed && WorkerList.get(jobremove).size()==0){
+            WorkerList.remove(jobremove);
         }
     }
 

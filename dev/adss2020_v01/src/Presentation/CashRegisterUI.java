@@ -6,7 +6,6 @@ import Domain.ReshetInfo;
 import java.util.Scanner;
 
 public class CashRegisterUI {
-
     private static ReshetInfo info=ReshetInfo.getInstance();
     /**
      * option for the cashregistry
