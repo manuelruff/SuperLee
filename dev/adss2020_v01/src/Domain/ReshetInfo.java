@@ -469,14 +469,12 @@ public class ReshetInfo {
     //check by id if worker works in specific super
     public boolean IsWorksInSuper(String ID, String SuperName) {
         return Superim.get(SuperName).GetWorkersIDS().contains(ID);
-
     }
 
     //check if a worker can to a job\role
     public boolean CanDoJob(String ID, Jobs job) {
         return Workers.get(ID).CanDoJob(job);
     }
-
 
     /**
      * a function that asks for a number until its int the given range
@@ -505,4 +503,6 @@ public class ReshetInfo {
             }
         }
     }
+
+
 }
