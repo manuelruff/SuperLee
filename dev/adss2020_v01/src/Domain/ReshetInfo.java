@@ -9,12 +9,17 @@ public class ReshetInfo {
     //all the Workers in the company
     private static Map<String, Worker> Workers;
 
+    //this wil be a singleton
+    private static ReshetInfo reshetinfo= new ReshetInfo();
     //builder for reshetinfo
-    public ReshetInfo() {
+    private ReshetInfo() {
         Superim = new HashMap<>();
         Workers = new HashMap<>();
         //create supers and Workers and insert them to where i need
         StartData.GetWorkers(Workers,Superim);
+    }
+    public static ReshetInfo getInstance(){
+        return reshetinfo;
     }
 
     /**

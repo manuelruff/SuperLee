@@ -4,19 +4,17 @@ import Domain.*;
 
 import java.util.Scanner;
 
-public class UI {
+public class GeneralUI {
     // all the info will come form there
     //the creation will create the beginning data
-    private static ReshetInfo info=new ReshetInfo();
+    private static ReshetInfo info=ReshetInfo.getInstance();
     //saves the Manager Password - started as 1234 and he can change it
     private static String ManagerPass="1234";
-
     /**
      * entering screen, the user will choose his role or if he want to add cancellation to cash
      */
     //we will call this function from the main and all the user interface will be from here
     public static void StartMe(){
-
         //start the ui here
         int choice=-1;
         while (choice!=3){

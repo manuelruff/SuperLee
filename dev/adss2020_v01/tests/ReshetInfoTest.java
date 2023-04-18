@@ -12,13 +12,13 @@ public class ReshetInfoTest {
 
     @Test
     public void hasWeekly() {
-        ReshetInfo info=new ReshetInfo();
+        ReshetInfo info=ReshetInfo.getInstance();
         assertFalse(info.HasWeekly("yakarmeod"));
         assertFalse(info.HasWeekly("zolWorkerszah"));
     }
     @Test
     public void isExistWorker() {
-        ReshetInfo info=new ReshetInfo();
+        ReshetInfo info=ReshetInfo.getInstance();
         assertTrue(info.isExistWorker("1"));
         assertTrue(info.isExistWorker("2"));
         assertTrue(info.isExistWorker("12"));
@@ -30,7 +30,7 @@ public class ReshetInfoTest {
     }
     @Test
     public void getAvailableEmployee() {
-        ReshetInfo info=new ReshetInfo();
+        ReshetInfo info=ReshetInfo.getInstance();
         List<String> Workers=new ArrayList<>();
         Workers.add("1");
         Workers.add("2");
@@ -43,18 +43,18 @@ public class ReshetInfoTest {
     }
     @Test
     public void isTruePassword() {
-        ReshetInfo info=new ReshetInfo();
+        ReshetInfo info=ReshetInfo.getInstance();
         assertTrue(info.IsTruePassword("1","123"));
         assertFalse(info.IsTruePassword("1","1234"));
     }
     @Test
     public void checkAllHaveWeekly() {
-        ReshetInfo info=new ReshetInfo();
+        ReshetInfo info=ReshetInfo.getInstance();
         assertFalse(info.CheckAllHaveWeekly());
     }
     @Test
     public void checkTimeValidate() {
-        ReshetInfo info=new ReshetInfo();
+        ReshetInfo info=ReshetInfo.getInstance();
         assertFalse(info.CheckTimeValidate(12.56,26));
         assertFalse(info.CheckTimeValidate(12.61,20));
         assertFalse(info.CheckTimeValidate(12.56,20.70));
@@ -63,13 +63,13 @@ public class ReshetInfoTest {
     }
     @Test
     public void getWorkerByID() {
-        ReshetInfo info=new ReshetInfo();
+        ReshetInfo info=ReshetInfo.getInstance();
         assertEquals("manu",info.GetWorkerByID("1").GetName());
         assertEquals("david",info.GetWorkerByID("2").GetName());
     }
     @Test
     public void isWorksInSuper() {
-        ReshetInfo info=new ReshetInfo();
+        ReshetInfo info=ReshetInfo.getInstance();
         assertTrue(info.IsWorksInSuper("1","yakarmeod"));
         assertTrue(info.IsWorksInSuper("2","yakarmeod"));
         assertTrue(info.IsWorksInSuper("3","yakarmeod"));
@@ -77,7 +77,7 @@ public class ReshetInfoTest {
 
     @Test
     public void canDoJob() {
-        ReshetInfo info=new ReshetInfo();
+        ReshetInfo info=ReshetInfo.getInstance();
         assertTrue(info.CanDoJob("1", Jobs.ShiftManager));
         assertTrue(info.CanDoJob("14", Jobs.StoreKeeper));
         assertTrue(info.CanDoJob("19", Jobs.GeneralEmp));

@@ -1,8 +1,8 @@
-import Presentation.UI;
+import Presentation.GeneralUI;
 
 public class Main {
     public static void main(String[] args) {
-        //calls the ui object
-        UI.StartMe();
+        //calls the GeneralUI object starting function
+        GeneralUI.StartMe();
     }
 }
