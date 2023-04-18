@@ -93,7 +93,6 @@ public class Shift {
         //if its an empty shift we just print that its empty
         if(this.IsEmptyShift()){
             System.out.println("at "+this.date + " " + this.shift_time  +" there is no shift ");
-            System.out.println();
         }
         else {
             System.out.println(this.date + " " + this.shift_time + "\n" +
@@ -106,7 +105,7 @@ public class Shift {
                     }
                 }
             }
-            System.out.println();
+
         }
     }
 }

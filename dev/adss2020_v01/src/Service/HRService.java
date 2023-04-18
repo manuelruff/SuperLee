@@ -9,7 +9,10 @@ public class HRService {
         return false;
     }
 
-
+    //gets a date and returns if we have a StoreKeeper in that shift
+    public boolean HasStoreKeeper(int year,int month,int day, int mornning_evening){
+        return false;
+    }
 
 }
 
