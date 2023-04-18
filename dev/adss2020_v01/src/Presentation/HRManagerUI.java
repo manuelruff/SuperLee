@@ -45,7 +45,7 @@ public class HRManagerUI {
             System.out.println("4. update employee");
             System.out.println("5. change password");
             System.out.println("6. pay salaries");
-            System.out.println("7. Exit ");
+            System.out.println("7. Back ");
             //ask for input num
             choice=UIGeneralFnctions.AskForNumber(1,7);
             switch (choice){

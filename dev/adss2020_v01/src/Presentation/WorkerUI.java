@@ -47,7 +47,7 @@ public class WorkerUI {
             System.out.println("2. add new constraints ");
             System.out.println("3. remove constraints ");
             System.out.println("4. show constraints ");
-            System.out.println("5. Exit");
+            System.out.println("5. Back");
             //ask for input
             choice=UIGeneralFnctions.AskForNumber(1,5);
             switch (choice){

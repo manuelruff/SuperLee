@@ -45,15 +45,6 @@ public class ReshetInfo {
         for (Days day : Days.values()) {
             ShiftTime time = ShiftTime.Morning;
             for (int i = 0; i < 2; i++) {
-                System.out.println("we are working on: " + day + " at the " + time + " shift");
-                //first we need to choose the manager to start the shift
-                System.out.println("first choose the shift manager: ");
-                //ill get the list of available managers
-                CanWorkList = GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkersIDS(), curr.GetName());
-                if (CanWorkList.size() == 0) {
-                    System.out.println("it looks like you are out of managers or you dont have enough, go assing some new ones so you can make the shifts.");
-                    return;
-                }
                 //get the time of the shift
                 double start;
                 double end;
@@ -63,6 +54,15 @@ public class ReshetInfo {
                 } else {
                     start = Superim.get(Name).getStart_evening(day);
                     end = Superim.get(Name).getEnd_evening(day);
+                }
+                System.out.println("we are working on: " + day + " at the " + time + " shift");
+                //first we need to choose the manager to start the shift
+                System.out.println("first choose the shift manager: ");
+                //ill get the list of available managers
+                CanWorkList = GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkersIDS(), curr.GetName());
+                if (CanWorkList.size() == 0) {
+                    System.out.println("it looks like you are out of managers or you dont have enough, go assing some new ones so you can make the shifts.");
+                    return;
                 }
                 //prints the list of Workers available - name and id
                 for (int j = 0; j < CanWorkList.size(); j++) {
