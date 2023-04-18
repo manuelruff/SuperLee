@@ -320,8 +320,6 @@ public class HRManagerUI {
                     break;
                 case 7:
                     System.out.println("have a good day");
-                    //stops the program
-                    System.exit(0);
                     break;
                 default:
                     System.out.println("please enter a valid option");

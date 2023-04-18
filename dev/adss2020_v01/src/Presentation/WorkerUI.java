@@ -205,8 +205,6 @@ public class WorkerUI {
                     break;
                 case 5:
                     System.out.println("have a good day");
-                    //stops the program
-                    System.exit(0);
                     break;
                 default:
                     System.out.println("please enter a valid option");
