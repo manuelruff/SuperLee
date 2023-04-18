@@ -2,7 +2,6 @@ package Domain;
 import DataAccess.StartData;
 import java.util.*;
 
-
 public class ReshetInfo {
     //all the branches of the company
     private static Map<String, Super> Superim;
@@ -99,7 +98,7 @@ public class ReshetInfo {
                     //we will get the available Workers
                     CanWorkList = GetAvailableEmployee(day, job, time, curr.GetWorkersIDS(), curr.GetName());
                     System.out.print(" how many Workers as " + job + " you want? ");
-                    num = AskForNumber(0,CanWorkList.size());
+                    num =AskForNumber(0,CanWorkList.size());
 
                     //if i got here i have a good number
                     int k = 0;
