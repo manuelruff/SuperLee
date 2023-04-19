@@ -37,7 +37,7 @@ public class HRManagerUI {
     //window with everything the manager can do
     public static void ManagerOptions(){
         int choice=-1;
-        while (choice!=6){
+        while (choice!=7){
             System.out.println("please choose your action:");
             System.out.println("1. work on a branch (snif)");
             System.out.println("2. add new branch");
