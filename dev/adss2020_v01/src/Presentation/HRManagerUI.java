@@ -83,6 +83,8 @@ public class HRManagerUI {
                                         "if you want to exit - press 8 ");
                                 //get the day he wants to edit
                                 int day_choice = UIGeneralFnctions.AskForNumber(1,8);
+                                if(day_choice==8)
+                                    break;
                                 //prints this day's info
                                 System.out.println("the shift in " + Days.values()[day_choice-1] + " is:" );
                                 //print the shift og the day he chose
