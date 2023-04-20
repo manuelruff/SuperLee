@@ -330,7 +330,6 @@ public class HRManagerUI {
         }
     }
 
-
     public static Worker CreateNewWorker(){
         boolean new_id_flag = false;
         String input_newID = "";
@@ -411,4 +410,5 @@ public class HRManagerUI {
         }
         return new Super(input_newSuper);
     }
+
 }
