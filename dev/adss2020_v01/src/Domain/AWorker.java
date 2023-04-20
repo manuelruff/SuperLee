@@ -20,21 +20,18 @@ public abstract class AWorker {
     private String Password;
     //the shifts he can work at
     private Constraints ShiftsCantWork;
-    //a list of jobes he can do
-    private List<Jobs> Roles;//need to be size 7 for all the roles in the end
 
     //saves the number of days that he worked so we can pay him
     private int ShiftWorked;
     //saves the days of the week that he is already working
     private List<Days> WeeklyWorkingDays;
-    public AWorker(String Name, String ID, int Bank,String Contract, int Wage , Jobs FirstJob, String Password){
+    public AWorker(String Name, String ID, int Bank,String Contract, int Wage , String Password){
         this.Name=Name;
         this.ID=ID;
         this.Bank=Bank;
         this.Contract=Contract;
         this.Wage=Wage;
-        this.Roles=new ArrayList<>();
-        this.Roles.add(FirstJob);
+
         this.Password=Password;
         //puts the date if starting the job
         this.StartDate=LocalDate.now();
@@ -44,10 +41,6 @@ public abstract class AWorker {
         //sets the Domain.Constraints to everyday until he updates it
         this.ShiftsCantWork= new Constraints();
         this.WeeklyWorkingDays=new ArrayList<>();
-    }
-    //a function to add a job to the worker
-    public void AddJob(Jobs job){
-        this.Roles.add(job);
     }
 
     //at the end of the week we need to put 0 here
@@ -76,11 +69,6 @@ public abstract class AWorker {
     //used to change password
     public void SetPassword(String Password){
         this.Password=Password;
-    }
-
-    //gets a jobs and return a boolean that tells if he can do it or not
-    public boolean CanDoJob(Jobs job){
-        return this.Roles.contains(job);
     }
 
     public boolean IsFree(Days day,double s,double e){
