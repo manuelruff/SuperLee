@@ -398,12 +398,11 @@ public class ReshetInfo {
             worker.resetBonus();
             ResetWorkDaysWorkers();
         }
-        System.out.println("Payment done!");
     }
     // add bonus to worker by given ID
-    public void addBonusToWorker(String ID, double bonus) {
+    public String addBonusToWorker(String ID, double bonus) {
         Workers.get(ID).addBonus(bonus);
-        System.out.println("bonus added successfully to: " + Workers.get(ID).GetName());
+        return Workers.get(ID).GetName();
     }
     public void addNewInfo(String ID, String reason, String info) {
         Workers.get(ID).addInfo(reason, info);
@@ -411,9 +410,9 @@ public class ReshetInfo {
     public void removeInfo(String ID, String reason) {
         Workers.get(ID).removeInfo(reason);
     }
-    public void removeBonusToWorker(String ID, double bonus) {
+    public String  removeBonusToWorker(String ID, double bonus) {
         Workers.get(ID).removeBonus(bonus);
-        System.out.println("bonus removed from: " + Workers.get(ID).GetName());
+        return Workers.get(ID).GetName();
     }
     // reset the number of shifts to all Workers
     public void ResetWorkDaysWorkers() {

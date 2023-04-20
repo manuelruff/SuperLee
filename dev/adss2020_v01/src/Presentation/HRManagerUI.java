@@ -286,13 +286,13 @@ public class HRManagerUI {
                                 ID = UIGeneralFnctions.AskForWorkerID();
                                 System.out.println("please enter the bonus you want to add: ");
                                 double a_bonus = UIGeneralFnctions.AskForDoubleNumber();
-                                info.addBonusToWorker(ID,a_bonus);
+                                System.out.println("bonuss added to: "+info.addBonusToWorker(ID,a_bonus));
                                 break;
                             case 8:
                                 ID = UIGeneralFnctions.AskForWorkerID();
                                 System.out.println("please enter the amount of bonus that you want to remove: ");
                                 double r_bonus = UIGeneralFnctions.AskForDoubleNumber();
-                                info.removeBonusToWorker(ID,r_bonus);
+                                System.out.println("bonus removed from: " +info.removeBonusToWorker(ID,r_bonus));
                                 break;
                             case 9:
                                 choice3 = 9;
@@ -318,6 +318,7 @@ public class HRManagerUI {
                     int payment_choice = UIGeneralFnctions.AskForNumber(1,2);
                     if(payment_choice == 1){
                         info.Payment();
+                        System.out.println("Payment done!");
                     }
                     break;
                 case 7:
