@@ -14,7 +14,5 @@ public class CashRegisterController {
         }
         return instance;
     }
-    
-
 
 }

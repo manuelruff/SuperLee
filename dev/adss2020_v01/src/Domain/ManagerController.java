@@ -34,4 +34,5 @@ public class ManagerController {
         ManagerPasswordMapper.setManagerPassword(password);
     }
 
+
 }
