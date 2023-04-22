@@ -100,7 +100,9 @@ public class HRManagerUI {
                                 switch (ActionChoice){
                                     case 1:
                                         String ID = UIGeneralFnctions.AskForWorkerID();
-                                        info.RemoveFromDay(ID, Name,day_choice-1);
+                                        if(!info.RemoveFromDay(ID, Name,day_choice-1)){
+                                            System.out.println("this worker doesn't works at this shift");
+                                        }
                                         break;
                                     case 2:
                                         ID = UIGeneralFnctions.AskForWorkerID();
@@ -117,7 +119,9 @@ public class HRManagerUI {
                                 break;
                             case 3:
                                 //print the current weekly plan
-                                info.PrintWeekly(Name);
+                                if(!info.PrintWeekly(Name)){
+                                    System.out.println("no weekly shift yet");
+                                }
                                 break;
                             case 4:
                                 //we need to get the date of sunday of that week
