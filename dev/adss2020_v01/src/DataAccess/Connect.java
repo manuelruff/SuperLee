@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 //this will be singleton class
 public class Connect {
+    private static Connection conn;
     private static Connect instance=new Connect();
-    private static Connection conn=null;
     private Connect() {
         connect();
     }
@@ -20,8 +20,7 @@ public class Connect {
            String url = "jdbc:sqlite:dev/adss2020_v01/resource/HRDB/HRDB";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
-
-            System.out.println("Connection to SQLite has been established.");
+//            System.out.println("Connection to SQLite has been established.");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
