@@ -352,14 +352,13 @@ public class ReshetInfo {
         }
     }
     //add worker by id to branch
-    public void AddWorkerToBranch(String ID, String branchName) {
+    public boolean AddWorkerToBranch(String ID, String branchName) {
         if (Superim.get(branchName).GetWorkersIDS().contains(ID)) {
-            System.out.println("the worker is already in this branch");
-            return;
+            return false;
         }
         // add the worker to the Workers map
         Superim.get(branchName).AddWorker(Workers.get(ID));
-        System.out.println(ID + " added successfully to: " + branchName);
+        return true;
     }
     //removes a worker from the company
     public void RemoveWorkerAllBranches(String ID) {
