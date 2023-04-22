@@ -16,11 +16,22 @@ public class ManagerController {
         }
         return instance;
     }
+
+    /**
+     * @param password input password
+     * @return true if password is correct
+     */
    public boolean checkPassword(String password){
         return password.equals(ManagerPassword);
    }
+
+    /**
+     * change the password in the database and the instance
+     * @param password new password
+     */
     public void setManagerPassword(String password){
         ManagerPassword=password;
         ManagerPasswordMapper.setManagerPassword(password);
     }
+
 }
