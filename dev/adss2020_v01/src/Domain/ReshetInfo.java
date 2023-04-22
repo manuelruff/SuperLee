@@ -133,9 +133,7 @@ public class ReshetInfo {
         //we get the object of the super
         Super curr = Superim.get(Name);
         Weekly week = curr.GetWeekShifts();
-        if (week == null) {
-            System.out.println("nothing in this week yet");
-        } else {
+        if (week != null) {
             //each day has 2 shifts so we show him both of them
             day = day * 2;
             week.GetShift(day).PrintMe();
@@ -143,22 +141,23 @@ public class ReshetInfo {
         }
     }
     // remove worker from a shift of a branch
-    public void RemoveFromDay(String ID, String branch, int day) {
+    public boolean RemoveFromDay(String ID, String branch, int day) {
         if (!IsWorkAtDay(branch, ID, day)) {
-            System.out.println("this worker doesn't works at this shift");
-            return;
+            return false;
         }
         int shiftnum = day * 2;
         //whem were here we have a good number for employee so we remove him
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum).RemoveWorker(ID);
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum + 1).RemoveWorker(ID);
         Workers.get(ID).RemoveShift(Days.values()[day]);
+        return true;
     }
     //checks if worker works in specific shift in a branch
     public static boolean IsWorkAtDay(String branch, String ID, int day) {
         day = day * 2;
         return (Superim.get(branch).GetWeekShifts().GetShift(day).IsWorkerAtShift(ID) || Superim.get(branch).GetWeekShifts().GetShift(day + 1).IsWorkerAtShift(ID));
     }
+
     // add worker to a shift int a branch
     public void AddToDay(String ID, String branch, int shift_op, int day) {
         double s = 0;
@@ -217,13 +216,14 @@ public class ReshetInfo {
         }
     }
     //prints current weekly shifts of a branch
-    public void PrintWeekly(String Name) {
+    public boolean PrintWeekly(String Name) {
         //we get the object of the weekly
         Weekly week = Superim.get(Name).GetWeekShifts();
         if (week == null) {
-            System.out.println("no weekly shift yet");
+            return false;
         } else {
             week.PrintMe();
+            return true;
         }
     }
     //print a shift from history of a branch by its date if exists
