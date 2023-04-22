@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class HRManagerUI {
     private static ReshetInfo info=ReshetInfo.getInstance();
     //saves the Manager Password - started as 1234 and he can change it
-    private static String ManagerPass="1234";
+    private static ManagerController mgcontroler=ManagerController.getInstance();
     /**
      * manager (HR manager) needs to log in and it will be checked here
      */
@@ -18,7 +18,7 @@ public class HRManagerUI {
             Scanner myObj = new Scanner(System.in);  // Create a Scanner object
             System.out.println("Password: ");
             String input = myObj.nextLine();  // Read user input
-            if(!input.equals(ManagerPass)){
+            if(!mgcontroler.checkPassword(input)){
                 System.out.println("Wrong password please try again");
             }
             else{
@@ -315,7 +315,7 @@ public class HRManagerUI {
                     System.out.println("enter new password: ");
                     Scanner scanner1 = new Scanner(System.in);  // Create a Scanner object
                     String pass1 = scanner1.nextLine();  // Read user input
-                    ManagerPass=pass1;
+                    mgcontroler.setManagerPassword(pass1);
                     //after we did what we want we stop
                     System.out.println("password has changed");
                     break;
