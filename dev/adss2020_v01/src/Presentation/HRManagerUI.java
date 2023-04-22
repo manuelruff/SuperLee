@@ -260,7 +260,11 @@ public class HRManagerUI {
                             case 2:
                                 ID = UIGeneralFnctions.AskForWorkerID();
                                 String branch_name= UIGeneralFnctions.AskForBranch();
-                                info.AddWorkerToBranch(ID,branch_name);
+                                if(!info.AddWorkerToBranch(ID,branch_name)){
+                                    System.out.println("the worker is already in this branch - please try again");
+                                    break;
+                                }
+                                System.out.println(ID + " added successfully to: " + branch_name);
                                 break;
                             case 3:
                                 ID = UIGeneralFnctions.AskForWorkerID();
