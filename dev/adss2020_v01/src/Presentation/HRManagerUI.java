@@ -5,7 +5,8 @@ import Domain.*;
 import java.util.Scanner;
 
 public class HRManagerUI {
-    private static ReshetInfo info=ReshetInfo.getInstance();
+    //private static ReshetInfo info=ReshetInfo.getInstance();
+    private static ManagerController managerController = ManagerController.getInstance();
     //saves the Manager Password - started as 1234 and he can change it
     private static ManagerController mgcontroler=ManagerController.getInstance();
     /**
@@ -66,15 +67,15 @@ public class HRManagerUI {
                         switch (choice2) {
                             case 1:
                                 //check if there is not a weekly created already
-                                if(info.HasWeekly(Name)){
+                                if(managerController.HasWeekly(Name)){
                                     System.out.println("you already created a weekly, now you can just edit it or send all the weekly to history to start again");
                                     break;
                                 }
                                 //create the weekly plan
-                                info.CreateWeekly(Name);
+                                managerController.CreateWeekly(Name);
                                 break;
                             case 2:
-                                if(!info.HasWeekly(Name)){
+                                if(!managerController.HasWeekly(Name)){
                                     System.out.println("no weekly yet, go create one first");
                                     break;
                                 }
@@ -88,7 +89,7 @@ public class HRManagerUI {
                                 //prints this day's info
                                 System.out.println("the shift in " + Days.values()[day_choice-1] + " is:" );
                                 //print the shift og the day he chose
-                                info.PrintDay(Name,day_choice-1);
+                                managerController.PrintDay(Name,day_choice-1);
                                 //ask if he wants to add someone, remove or replace
                                 System.out.println("please choose the action you want to do: \n" +
                                         "1. remove an employee  \n"+
@@ -100,7 +101,7 @@ public class HRManagerUI {
                                 switch (ActionChoice){
                                     case 1:
                                         String ID = UIGeneralFnctions.AskForWorkerID();
-                                        if(!info.RemoveFromDay(ID, Name,day_choice-1)){
+                                        if(!managerController.RemoveFromDay(ID, Name,day_choice-1)){
                                             System.out.println("this worker doesn't works at this shift");
                                         }
                                         break;
@@ -111,7 +112,7 @@ public class HRManagerUI {
                                                 1. morning\s
                                                 2. Evening""");
                                         int shift_op = UIGeneralFnctions.AskForNumber(1,2);
-                                        info.AddToDay(ID,Name,shift_op,day_choice-1);
+                                        managerController.AddToDay(ID,Name,shift_op,day_choice-1);
                                         break;
                                     case 3:
                                         break;
@@ -119,7 +120,7 @@ public class HRManagerUI {
                                 break;
                             case 3:
                                 //print the current weekly plan
-                                if(!info.PrintWeekly(Name)){
+                                if(!managerController.PrintWeekly(Name)){
                                     System.out.println("no weekly shift yet");
                                 }
                                 break;
@@ -151,7 +152,7 @@ public class HRManagerUI {
                                     catch (Exception e){
                                         System.out.println("please enter a valid date ");
                                     }
-                                    info.PrintWeeklyFromHist(Name,Year,Month,Day);
+                                    managerController.PrintWeeklyFromHist(Name,Year,Month,Day);
                                     break;
                                 }
                                 break;
@@ -160,12 +161,12 @@ public class HRManagerUI {
                                 boolean CheckName=false;
                                 while (!CheckName){
                                     String ID=UIGeneralFnctions.AskForWorkerID();
-                                    CheckName=info.IsWorksInSuper(ID,Name);
+                                    CheckName=managerController.IsWorksInSuper(ID,Name);
                                     if (!CheckName){
                                         System.out.println("this branch doesnt have an employee with this ID, try again");
                                     }
                                     else {
-                                        info.RemoveWorker(ID,Name);
+                                        managerController.RemoveWorker(ID,Name);
                                         break;
                                     }
                                 }
@@ -196,12 +197,12 @@ public class HRManagerUI {
                                         double Constraints_num_morning_end = Double.parseDouble(input_Constraints_2);
                                         double Constraints_num_evening_start = Double.parseDouble(input_Constraints_3);
                                         double Constraints_num_evening_end = Double.parseDouble(input_Constraints_4);
-                                        if(!info.CheckTimeValidate(Constraints_num_morning_start, Constraints_num_morning_end) || !info.CheckTimeValidate(Constraints_num_evening_start, Constraints_num_evening_end)){
+                                        if(!managerController.CheckTimeValidate(Constraints_num_morning_start, Constraints_num_morning_end) || !info.CheckTimeValidate(Constraints_num_evening_start, Constraints_num_evening_end)){
                                             System.out.println("invalid time input - hours should be between 10.00-24.59 (note that seconds is .0-.59!");
                                         }
                                         else {
                                             // if the times are valid ill send them to the super for update
-                                            info.UpdateSuperTimes(Name, Days.values()[day_choice1 - 1], Constraints_num_morning_start, Constraints_num_morning_end, Constraints_num_evening_start, Constraints_num_evening_end);
+                                            managerController.UpdateSuperTimes(Name, Days.values()[day_choice1 - 1], Constraints_num_morning_start, Constraints_num_morning_end, Constraints_num_evening_start, Constraints_num_evening_end);
                                             //we can stop the loop
                                             choice4 = 8;
                                             break;
@@ -224,17 +225,17 @@ public class HRManagerUI {
                     break;
                 case 2:
                     Super new_super = CreateNewSuper();
-                    info.addSuper(new_super);
+                    managerController.addSuper(new_super);
                     System.out.println(new_super.GetName() +" added successfully");
                     break;
                 case 3:
                     //check if he created the weekly for everyone
-                    if(!info.CheckAllHaveWeekly()){
+                    if(!managerController.CheckAllHaveWeekly()){
                         System.out.println("not all the branches has a weekly plan create them first and then you can send");
                         break;
                     }
                     //send all to history
-                    info.SendConstraintsToHistory();
+                    managerController.SendConstraintsToHistory();
                     break;
                 case 4:
                     int choice3 = -1;
@@ -255,12 +256,12 @@ public class HRManagerUI {
                         switch (choice3) {
                             case 1:
                                 String BranchName= UIGeneralFnctions.AskForBranch();
-                                info.AddNewWorker(CreateNewWorker(),BranchName);
+                                managerController.AddNewWorker(CreateNewWorker(),BranchName);
                                 break;
                             case 2:
                                 ID = UIGeneralFnctions.AskForWorkerID();
                                 String branch_name= UIGeneralFnctions.AskForBranch();
-                                if(!info.AddWorkerToBranch(ID,branch_name)){
+                                if(!managerController.AddWorkerToBranch(ID,branch_name)){
                                     System.out.println("the worker is already in this branch - please try again");
                                     break;
                                 }
@@ -268,39 +269,39 @@ public class HRManagerUI {
                                 break;
                             case 3:
                                 ID = UIGeneralFnctions.AskForWorkerID();
-                                info.RemoveWorkerAllBranches(ID);
+                                managerController.RemoveWorkerAllBranches(ID);
                                 break;
                             case 4:
                                 ID = UIGeneralFnctions.AskForWorkerID();
                                 System.out.println("please enter the new worker's first role: \n" +
                                         "ShiftManager-1 , Cashier-2, StoreKeeper-3, GeneralEmp-4, Guard-5, Cleaner-6, Usher-7");
                                 int role_choice = UIGeneralFnctions.AskForNumber(1,7);
-                                info.AddJobToWorker(ID,role_choice);
+                                managerController.AddJobToWorker(ID,role_choice);
                                 break;
                             case 5:
                                 ID = UIGeneralFnctions.AskForWorkerID();
                                 System.out.println("please enter the wage: ");
                                 int wage_choice=UIGeneralFnctions.AskForIntNumber();
-                                info.ChangeWage(ID,wage_choice);
+                                managerController.ChangeWage(ID,wage_choice);
                                 break;
                             case 6:
                                 ID = UIGeneralFnctions.AskForWorkerID();
                                 System.out.println("please enter the contract: ");
                                 Scanner myObj_Contract = new Scanner(System.in);  // Create a Scanner object
                                 String input_Contract = myObj_Contract.nextLine();  // Read user input
-                                info.ChangeContract(ID,input_Contract);
+                                managerController.ChangeContract(ID,input_Contract);
                                 break;
                             case 7:
                                 ID = UIGeneralFnctions.AskForWorkerID();
                                 System.out.println("please enter the bonus you want to add: ");
                                 double a_bonus = UIGeneralFnctions.AskForDoubleNumber();
-                                System.out.println("bonuss added to: "+info.addBonusToWorker(ID,a_bonus));
+                                System.out.println("bonuss added to: "+managerController.addBonusToWorker(ID,a_bonus));
                                 break;
                             case 8:
                                 ID = UIGeneralFnctions.AskForWorkerID();
                                 System.out.println("please enter the amount of bonus that you want to remove: ");
                                 double r_bonus = UIGeneralFnctions.AskForDoubleNumber();
-                                System.out.println("bonus removed from: " +info.removeBonusToWorker(ID,r_bonus));
+                                System.out.println("bonus removed from: " +managerController.removeBonusToWorker(ID,r_bonus));
                                 break;
                             case 9:
                                 choice3 = 9;
@@ -325,7 +326,7 @@ public class HRManagerUI {
                             "2. No");
                     int payment_choice = UIGeneralFnctions.AskForNumber(1,2);
                     if(payment_choice == 1){
-                        info.Payment();
+                        managerController.Payment();
                         System.out.println("Payment done!");
                     }
                     break;
@@ -348,7 +349,7 @@ public class HRManagerUI {
             // get the new id from the manager
             Scanner myObj_newID = new Scanner(System.in);  // Create a Scanner object
             input_newID = myObj_newID.nextLine();  // Read user input
-            if (info.isExistWorker(input_newID)) {
+            if (managerController.isExistWorker(input_newID)) {
                 System.out.println("this worker is already working at our markets");
             }
             else {
@@ -410,7 +411,7 @@ public class HRManagerUI {
             // get the new name from the manager
             Scanner myObj_newSuper = new Scanner(System.in);  // Create a Scanner object
             input_newSuper = myObj_newSuper.nextLine();  // Read user input
-            if (info.CheckSuperName(input_newSuper)) {
+            if (managerController.CheckSuperName(input_newSuper)) {
                 System.out.println("this super is already exists");
             }
             else {

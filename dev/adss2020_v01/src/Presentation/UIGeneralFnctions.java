@@ -1,14 +1,12 @@
 package Presentation;
 
-import Domain.Jobs;
-import Domain.ReshetInfo;
-import Domain.Super;
-import Domain.Worker;
+import Domain.*;
 
 import java.util.Scanner;
 
 public class UIGeneralFnctions {
-    private static ReshetInfo info=ReshetInfo.getInstance();
+    //private static ReshetInfo info=ReshetInfo.getInstance();
+    private static GeneralController generalController = GeneralController.getInstance();
     // function to ask the user for an ID input
     /**
      * a function that asks for an id until its a valid one
@@ -23,7 +21,7 @@ public class UIGeneralFnctions {
             // get the new id from the manager
             Scanner myObj_newID = new Scanner(System.in);  // Create a Scanner object
             ID = myObj_newID.nextLine();
-            if(!info.isExistWorker(ID)){
+            if(!GeneralController.isExistWorker(ID)){
                 System.out.println("this worker is not working at our markets! try again");
                 continue;
             }
@@ -45,7 +43,7 @@ public class UIGeneralFnctions {
             //in the beginning there will be a few options, he is supposed to know them
             Scanner myObj_BranchName = new Scanner(System.in);  // Create a Scanner object
             BranchName = myObj_BranchName.nextLine();
-            BranchCheck=info.CheckSuperName(BranchName);
+            BranchCheck= GeneralController.CheckSuperName(BranchName);
             if (!BranchCheck){
                 System.out.println("this branch doesn't exists, try again!");
                 continue;

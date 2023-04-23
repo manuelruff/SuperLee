@@ -7,7 +7,8 @@ import Domain.ReshetInfo;
 import java.util.Scanner;
 
 public class CashRegisterUI {
-    private static ReshetInfo info= ReshetInfo.getInstance();
+//    private static ReshetInfo info= ReshetInfo.getInstance();
+    private static CashRegisterController cashRegisterController = CashRegisterController.getInstance();
     /**
      * option for the cashregistry
      */
@@ -59,7 +60,7 @@ public class CashRegisterUI {
                         }
                     }
                     //if we get here we have numbers for the date, well send it and see what we get back
-                    info.PrintCancellation(Name,Year,Month,Day);
+                    cashRegisterController.PrintCancellation(Name,Year,Month,Day);
                     //after we did what we want we stop
                     choice=4;
                     break;
@@ -67,7 +68,7 @@ public class CashRegisterUI {
                     String ID = UIGeneralFnctions.AskForWorkerID();
                     boolean isShiftManager = false;
                     while(!isShiftManager){
-                        if(!info.CanDoJob(ID, Jobs.ShiftManager)){
+                        if(!cashRegisterController.CheckWorkerCanCancel(ID)){
                             System.out.println("access denied - this action is for Domain.Shift Manager only!");
                             continue;
                         }
@@ -79,7 +80,7 @@ public class CashRegisterUI {
                     String item = myObj.nextLine();  // Read user input
                     System.out.println("please enter the amount of the item which you want to cancel: ");
                     double amount = UIGeneralFnctions.AskForDoubleNumber();
-                    info.AddCancellations(Name,item,amount,ID);
+                    cashRegisterController.AddCancellations(Name,item,amount,ID);
                     //after we did what we want we stop
                     choice=4;
                     break;

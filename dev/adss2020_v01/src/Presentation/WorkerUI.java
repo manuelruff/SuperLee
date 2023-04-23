@@ -1,12 +1,14 @@
 package Presentation;
 
 import Domain.ReshetInfo;
+import Domain.WorkerController;
 
 import java.util.Scanner;
 
 public class WorkerUI {
 
-    private static ReshetInfo info=ReshetInfo.getInstance();
+//    private static ReshetInfo info=ReshetInfo.getInstance();
+    private static WorkerController workerController = WorkerController.getInstance();
 
     /**
      * worker needs to log in and it will be checked here
@@ -22,7 +24,7 @@ public class WorkerUI {
             System.out.println("Password: ");
             String passwordInput = myObj.nextLine();  // Read user input
             // check if the worker enter valid inputs
-            if(!info.isExistWorker(ID) || !info.IsTruePassword(ID,passwordInput)){
+            if(!workerController.isExistWorker(ID) || !workerController.IsTruePassword(ID,passwordInput)){
                 System.out.println("invalid input - try again!");
             }
             // if the inputs were valid - call to WorkerOption menu
@@ -54,7 +56,7 @@ public class WorkerUI {
                 case 1:
                     int op1_choice=-1;
                     while (op1_choice!=6) {
-                        System.out.println("hello " + info.GetWorkerByID(ID).GetName() + " please choose the detail you want to change");
+                        System.out.println("hello " + workerController.GetWorkerByID(ID).GetName() + " please choose the detail you want to change");
                         System.out.println("1. change password ");
                         System.out.println("2. change name");
                         System.out.println("3. change bank account");
@@ -69,7 +71,7 @@ public class WorkerUI {
                                 Scanner myObj_changepass = new Scanner(System.in);  // Create a Scanner object
                                 String input_changepass = myObj_changepass.nextLine();  // Read user input
                                 // change it to function in reshet info
-                                info.ChangeWorkerPassword(ID,input_changepass); // change the password
+                                workerController.ChangeWorkerPassword(ID,input_changepass); // change the password
                                 //after we did what we want we stop
                                 op1_choice=6;
                                 break;
@@ -78,14 +80,14 @@ public class WorkerUI {
                                 // get the new password from the worker
                                 Scanner myObj_changename = new Scanner(System.in);  // Create a Scanner object
                                 String input_changename = myObj_changename.nextLine();  // Read user input
-                                info.ChangeWorkerName(ID,input_changename);// change name
+                                workerController.ChangeWorkerName(ID,input_changename);// change name
                                 //after we did what we want we stop
                                 op1_choice=6;
                                 break;
                             case 3:
                                 System.out.println("please enter new bank details:");
                                 int newBank = UIGeneralFnctions.AskForIntNumber();
-                                info.ChangeWorkerBank(ID,newBank );
+                                workerController.ChangeWorkerBank(ID,newBank );
                                 //after we did what we want we stop
                                 op1_choice=6;
                                 break;
@@ -95,7 +97,7 @@ public class WorkerUI {
                                 String reason = myObj.nextLine();  // Read user input
                                 System.out.println("please enter more details about the new information:");
                                 String information = myObj.nextLine();  // Read user input
-                                info.addNewInfo(ID,reason,information);
+                                workerController.addNewInfo(ID,reason,information);
                                 //after we did what we want we stop
                                 op1_choice=6;
                                 break;
@@ -103,7 +105,7 @@ public class WorkerUI {
                                 System.out.println("please enter the reason about your information:");
                                 myObj = new Scanner(System.in);  // Create a Scanner object
                                 String remove_reason = myObj.nextLine();  // Read user input
-                                info.removeInfo(ID,remove_reason);
+                                workerController.removeInfo(ID,remove_reason);
                                 //after we did what we want we stop
                                 op1_choice=6;
                                 break;
@@ -132,7 +134,7 @@ public class WorkerUI {
                                 double Constraints_num_start=UIGeneralFnctions.AskForDoubleNumber();
                                 System.out.println("please enter the end of the time that you cant work at (it needs to look like: 10.00 for 10): ");
                                 double Constraints_num_end=UIGeneralFnctions.AskForDoubleNumber();
-                                if (!info.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
+                                if (!workerController.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
                                     System.out.println("not valid, please try again");
                                     break;
                                 }
@@ -140,7 +142,7 @@ public class WorkerUI {
                                 System.out.println("please enter reason:");
                                 String reason=myConstraints.nextLine();  // Read user input
                                 // if the Domain.Constraints is valid - add the Domain.Constraints at the day the user gave
-                                if(info.AddConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end,reason)){
+                                if(workerController.AddConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end,reason)){
                                     System.out.println("your constraint added");
                                 }
                                 else{
@@ -175,12 +177,12 @@ public class WorkerUI {
                                 System.out.println("please enter the end of the time that you cant work at (it needs to look like: 22.00 for 22pm): ");
                                 double Constraints_num_end=UIGeneralFnctions.AskForDoubleNumber();
                                 // check if the Domain.Constraints number is valid
-                                if (!info.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
+                                if (!workerController.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
                                     System.out.println("not valid, please try again");
                                     break;
                                 }
                                 // if the Domain.Constraints is valid - remove the Domain.Constraints at the day the user gave if exists
-                                if(info.RemoveConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end)){
+                                if(workerController.RemoveConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end)){
                                     System.out.println("the constraint removed");
                                 }
                                 else{
@@ -200,7 +202,7 @@ public class WorkerUI {
                     }
                     break;
                 case 4:
-                    info.ShowConstraints(ID);
+                    workerController.ShowConstraints(ID);
                     //after we did what we want we stop
                     break;
                 case 5:
