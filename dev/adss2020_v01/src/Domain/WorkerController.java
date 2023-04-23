@@ -49,4 +49,12 @@ public class WorkerController {
         GeneralController.Workers.get(ID).ShowConstraints();
     }
 
+    // new added to connect between controllers functions - manu will check if its good or yell at me :(
+    public Worker GetWorkerByID(String ID) {
+        return GeneralController.GetWorkerByID(ID);
+    }
+
+    // im not sure this one should be here
+    public boolean isExistWorker(String ID){return GeneralController.isExistWorker(ID);}
+
 }

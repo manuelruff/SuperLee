@@ -411,7 +411,7 @@ public class HRManagerUI {
             // get the new name from the manager
             Scanner myObj_newSuper = new Scanner(System.in);  // Create a Scanner object
             input_newSuper = myObj_newSuper.nextLine();  // Read user input
-            if (managerController.CheckSuperName(input_newSuper)) {
+            if (managerController.CheckBranchExist(input_newSuper)) {
                 System.out.println("this super is already exists");
             }
             else {

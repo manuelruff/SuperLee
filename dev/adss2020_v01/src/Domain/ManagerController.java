@@ -380,4 +380,10 @@ public class ManagerController {
         Super curr = GeneralController.Superim.get(Name);
         curr.RemoveWorker(ID);
     }
+
+    // new added to connect between controllers functions - manu will check if its good or yell at me :(
+    public boolean IsWorksInSuper(String ID, String SuperName){return GeneralController.IsWorksInSuper(ID,SuperName);}
+
+    public boolean isExistWorker(String ID){return GeneralController.isExistWorker(ID);}
+    public boolean CheckBranchExist(String branchName){return GeneralController.CheckSuperName(branchName);}
 }

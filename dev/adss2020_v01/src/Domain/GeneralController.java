@@ -106,11 +106,11 @@ public class GeneralController {
     }
 
     //returns worker by id
-    public Worker GetWorkerByID(String ID) {
+    public static Worker GetWorkerByID(String ID) {
         return Workers.get(ID);
     }
     //check by id if worker works in specific super
-    public boolean IsWorksInSuper(String ID, String SuperName) {
+    public static boolean IsWorksInSuper(String ID, String SuperName) {
         return Superim.get(SuperName).GetWorkersIDS().contains(ID);
     }
 
