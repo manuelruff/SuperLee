@@ -29,4 +29,8 @@ public class CashRegister {
             System.out.println("sorry we didnt found anything with the date you asked for");
         }
     }
+
+    public List<Cancellations> getAllCancellations(){
+        return this.Log;
+    }
 }
