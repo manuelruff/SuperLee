@@ -44,26 +44,28 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+ID+"" );
-            id=rs.getString("ID");
-            name=rs.getString("name");
-            bank=rs.getString("bank");
-            startdate=rs.getString("startdate");
-            contract=rs.getString("contract");
-            password=rs.getString("password");
-            bonus=rs.getString("bonus");
-            wage=rs.getString("wage");
-            //we dont need this one it will update when we add the shifts
-            //shiftworked=rs.getString("shiftworked");
-            shiftworked="0";
-            Worker worker=new Worker(id,name,Integer.parseInt(bank),contract,Double.parseDouble(wage),password,LocalDate.parse(startdate),Double.parseDouble(bonus),Integer.parseInt(shiftworked));
-            //add the worker to the map
-            WorkerMap.put(id,worker);
-            //add the roles to the worker
-            ReadJobs(ID);
-            //add the shifts days he has to the worker
-            ReadWorkingDays(ID);
-            //add the shifts cant work he has to the worker
-            ReadConstraints(ID);
+            if(rs.getFetchSize()>0) {
+                id = rs.getString("ID");
+                name = rs.getString("name");
+                bank = rs.getString("bank");
+                startdate = rs.getString("startdate");
+                contract = rs.getString("contract");
+                password = rs.getString("password");
+                bonus = rs.getString("bonus");
+                wage = rs.getString("wage");
+                //we dont need this one it will update when we add the shifts
+                //shiftworked=rs.getString("shiftworked");
+                shiftworked = "0";
+                Worker worker = new Worker(id, name, Integer.parseInt(bank), contract, Double.parseDouble(wage), password, LocalDate.parse(startdate), Double.parseDouble(bonus), Integer.parseInt(shiftworked));
+                //add the worker to the map
+                WorkerMap.put(id, worker);
+                //add the roles to the worker
+                ReadJobs(ID);
+                //add the shifts days he has to the worker
+                ReadWorkingDays(ID);
+                //add the shifts cant work he has to the worker
+                ReadConstraints(ID);
+            }
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
@@ -157,16 +159,29 @@ public class WorkerMapper {
                 id=worker.getID();
                 name=worker.getName();
                 bank=String.valueOf(worker.getBank());
-                //check what this gives
                 startdate=worker.getStartDate().toString();
                 contract=worker.getContract();
                 password=worker.getPassword();
                 bonus=String.valueOf(worker.getBonus());
                 wage=String.valueOf(worker.getWage());
                 shiftworked=String.valueOf(worker.getShiftWorked());
-                stmt.executeUpdate("INSERT OR UPDATE INTO Worker " +
-                        "VALUES("+id+","+name+","+bank+","+startdate+","+contract+","+password+"," +
-                        ""+bonus+","+wage+","+shiftworked+") ");
+                java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+id+"" );
+                //if it doesnt exists we will insert it
+                if(rs==null){
+                    stmt.executeUpdate("INSERT INTO Worker " +
+                            "VALUES("+id+","+name+","+Integer.parseInt(bank)+"" +
+                            ","+startdate+","+contract+","+password+"," +
+                            ""+Double.parseDouble(bonus)+"," +
+                            ""+Double.parseDouble(wage)+","+Integer.parseInt(shiftworked)+") ");
+                }
+                //if its in we update it
+                else{
+                    stmt.executeUpdate("UPDATE Worker SET name="+name+",bank="+Integer.parseInt(bank)+",startdate="+startdate+",contract="+contract+"" +
+                            ",password="+password+",bonus="+Double.parseDouble(bonus)+"" +
+                            ",wage="+Double.parseDouble(wage)+",shiftworked="+Integer.parseInt(shiftworked)+" WHERE ID="+id+"" );
+                    //we need to update all his other stuff
+                }
+
                 //need to update constraint working days and etc...
                 WriteJobs(id);
                 WriteWorkingDays(id);
@@ -252,8 +267,8 @@ public class WorkerMapper {
     }
 
      */
-    public static void main(String[] args) {
-        ReadWorker("1");
-        ReadWorker("2");
-    }
+//    public static void main(String[] args) {
+//        ReadWorker("1");
+//        ReadWorker("2");
+//    }
 }
