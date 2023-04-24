@@ -56,9 +56,25 @@ public class CashRegisterMapper {
     }
 
     public static void WriteAllCancellation(){
-        for(CashRegister cr:CashRegisterMap.values()){
-            for (Cancellations cancellations : cr.getAllCancellations()){
-                System.out.println("blalslsad");
+        for(String name:CashRegisterMap.keySet()){
+            for (Cancellations cancellations : CashRegisterMap.get(name).getAllCancellations()){
+                Connection conn = Connect.getConnection();
+                String SuperName,StringDate, NameOfCanceler, IDOfCanceler, NameOfProduct;
+                double amount;
+                try {
+                    java.sql.Statement stmt = conn.createStatement();
+                    amount =cancellations.getAmount();
+                    NameOfCanceler = cancellations.getNameOfCanceller();
+                    IDOfCanceler = cancellations.getIDOfCanceller();
+                    NameOfProduct = cancellations.getNameOfProduct();
+                    stmt.executeUpdate("INSERT INTO Worker " +
+                            "VALUES("+id+","+name+","+bank+","+startdate+","+contract+","+password+"," +
+                            ""+bonus+","+wage+","+shiftworked+") " +
+                            "WHERE ("+id+" NOT IN (SELECT ID FROM Worker)");
+                }
+                catch (SQLException e) {
+                    System.out.println("i have a problem sorry");
+                }
             }
         }
 

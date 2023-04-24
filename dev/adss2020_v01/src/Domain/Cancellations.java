@@ -34,4 +34,22 @@ public class Cancellations {
     public int getDay(){
         return Time.getDayOfMonth();
     }
+
+    public double getAmount() {return Amount;}
+
+    public String getNameOfProduct() {
+        return NameOfProduct;
+    }
+
+    public String getIDOfCanceller() {
+        return IDOfCanceller;
+    }
+
+    public String getNameOfCanceller() {
+        return NameOfCanceller;
+    }
+
+    public LocalDateTime getTime() {
+        return Time;
+    }
 }
