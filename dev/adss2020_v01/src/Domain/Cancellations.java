@@ -49,7 +49,10 @@ public class Cancellations {
         return NameOfCanceller;
     }
 
-    public LocalDateTime getTime() {
-        return Time;
+    public String getTime() {
+        return Time.getHour()+":"+Time.getMinute();
+    }
+    public String getDate() {
+        return Time.getDayOfMonth()+"."+Time.getMonthValue()+"."+Time.getYear();
     }
 }
