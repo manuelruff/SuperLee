@@ -109,7 +109,7 @@ public class StartData {
         Workers.put("33", Usher4);
 
         //create a super
-        Super Super1 = new Super("zolWorkerszah");
+        Super Super1 = new Super("zolretzah");
         Super Super2 = new Super("yakarmeod");
 
         //add to supers
@@ -176,7 +176,7 @@ public class StartData {
         Super2.AddWorker(Usher3);
         Super2.AddWorker(Usher4);
         //add the super to the super list
-        Superim.put("zolWorkerszah", Super1);
+        Superim.put("zolretzah", Super1);
         Superim.put("yakarmeod", Super2);
     }
     public static Map<String, Worker> getWorkers() {
@@ -193,12 +193,142 @@ public class StartData {
         Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
+            //shift managers
             stmt.executeUpdate(
                     "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
-                            " VALUES (1,'manu',1,'4.2.2000','asd',123,0,100,0)");
+                            " VALUES (1,'manu',1,'4.2.2000','asd',123,0,130,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (2,'david',1,'4.2.2000','asd',123,0,130,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (3,'muhamad',1,'4.2.2000','asd',123,0,130,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (4,'omri',1,'4.2.2000','asd',123,0,130,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (5,'oded',1,'4.2.2000','asd',123,0,130,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (6,'oded2',1,'4.2.2000','asd',123,0,130,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (7,'peleg',1,'4.2.2000','asd',123,0,130,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (8,'mitzi',1,'4.2.2000','asd',123,0,130,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (9,'hatul',1,'4.2.2000','asd',123,0,130,0)");
+
+            //cashiers
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (10,'mikel',1,'4.2.2000','asd',123,0,60,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (11,'migul',1,'4.2.2000','asd',123,0,60,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (12,'migul',1,'4.2.2000','asd',123,0,60,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (13,'omri-escopar',1,'4.2.2000','asd',123,0,60,0)");
+
+            //storekeepera
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (14,'oded',1,'4.2.2000','asd',123,0,60,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (15,'gal',1,'4.2.2000','asd',123,0,60,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (16,'papi',1,'4.2.2000','asd',123,0,60,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (17,'hatul-escopar',1,'4.2.2000','asd',123,0,60,0)");
+            //General Employees
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (18,'odedi',1,'4.2.2000','asd',123,0,30,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (19,'shimun',1,'4.2.2000','asd',123,0,30,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (20,'sara',1,'4.2.2000','asd',123,0,30,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (21,'gebi',1,'4.2.2000','asd',123,0,30,0)");
+            //guars
+
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (22,'yuri',1,'4.2.2000','asd',123,0,50,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (23,'dor',1,'4.2.2000','asd',123,0,50,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (24,'shalev',1,'4.2.2000','asd',123,0,50,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (25,'harel',1,'4.2.2000','asd',123,0,50,0)");
+
+            //cleaners
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (26,'rohama',1,'4.2.2000','asd',123,0,10,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (27,'avraham',1,'4.2.2000','asd',123,0,10,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (28,'shoshana',1,'4.2.2000','asd',123,0,10,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (29,'alo',1,'4.2.2000','asd',123,0,10,0)");
+
+            //usher
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (30,'ahrak',1,'4.2.2000','asd',123,0,15,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (31,'midbar',1,'4.2.2000','asd',123,0,15,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (32,'sahara',1,'4.2.2000','asd',123,0,15,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (33,'alosantos',1,'4.2.2000','asd',123,0,15,0)");
+
+
+
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
+    public static void WriteSupers(){
+        Connection conn = Connect.getConnection();
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (30,'ahrak',1,'4.2.2000','asd',123,0,15,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (31,'midbar',1,'4.2.2000','asd',123,0,15,0)");
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (32,'sahara',1,'4.2.2000','asd',123,0,15,0)");
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
         }
     }
 }
+
