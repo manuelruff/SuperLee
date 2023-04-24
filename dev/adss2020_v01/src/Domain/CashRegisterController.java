@@ -2,7 +2,7 @@ package Domain;
 
 //this will be singlton
 public class CashRegisterController {
-    private static CashRegisterController instance;
+    private static CashRegisterController instance=new CashRegisterController();;
     private CashRegister cashRegister;
     private GeneralController generalController = GeneralController.getInstance();
 
@@ -10,9 +10,6 @@ public class CashRegisterController {
         cashRegister = new CashRegister();
     }
     public static CashRegisterController getInstance() {
-        if (instance == null) {
-            instance = new CashRegisterController();
-        }
         return instance;
     }
     //add a cash cancellations

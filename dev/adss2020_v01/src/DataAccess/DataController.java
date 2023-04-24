@@ -21,7 +21,9 @@ public class DataController {
      */
     public void saveData() {
         WorkerMapper.WriteAllWorkers();
-        
+
+        //close the connection to database when finished
+        Connect.disconnect();
     }
 
 

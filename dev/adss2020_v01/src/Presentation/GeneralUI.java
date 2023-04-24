@@ -49,7 +49,7 @@ public class GeneralUI {
                     break;
                 case 4:
                     System.out.println("have a good day");
-                    //close the connection to the database
+                    //do what we need in the database when closed
                     GeneralController.closeDB();
                     //stops the program
                     System.exit(0);

@@ -13,17 +13,13 @@ import java.util.Scanner;
 
 //this will be singlton
 public class ManagerController {
-    private static ManagerController instance;
-    private GeneralController generalController = GeneralController.getInstance();
+    private static ManagerController instance=new ManagerController();
     private static String ManagerPassword;
     private ManagerController(){
         ManagerPasswordMapper.getInstance();
         ManagerPassword= ManagerPasswordMapper.getManagerPassword();
     }
     public static ManagerController getInstance(){
-        if(instance == null){
-            instance = new ManagerController();
-        }
         return instance;
     }
 

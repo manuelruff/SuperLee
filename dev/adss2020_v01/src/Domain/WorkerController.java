@@ -8,14 +8,11 @@ import DataAccess.WorkerMapper;
  * the class WorkerController hold all the functions which an employee can do
  */
 public class WorkerController {
-    private static WorkerController instance;
-    private GeneralController generalController = GeneralController.getInstance();
+    private static WorkerController instance = new WorkerController();;
+    private GeneralController generalController;
     private WorkerController() {
     }
     public static WorkerController getInstance() {
-        if (instance == null) {
-            instance = new WorkerController();
-        }
         return instance;
     }
 

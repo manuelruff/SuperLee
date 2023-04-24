@@ -1,6 +1,7 @@
 package Domain;
 
 import DataAccess.Connect;
+import DataAccess.DataController;
 import DataAccess.StartData;
 import DataAccess.WorkerMapper;
 import junit.framework.Test;
@@ -9,7 +10,7 @@ import java.util.*;
 
 //this will be singleton
 public class GeneralController {
-    private static GeneralController instance;
+    private static GeneralController instance=new GeneralController();
     // until the DB
     //all the branches of the company
     public static Map<String, Super> Superim;
@@ -22,9 +23,6 @@ public class GeneralController {
      }
 
     public static GeneralController getInstance() {
-        if (instance == null) {
-            instance = new GeneralController();
-        }
         return instance;
     }
     //check that a given number is in a time structure (hours and minuts)
@@ -112,8 +110,12 @@ public class GeneralController {
     public static boolean CanDoJob(String ID, Jobs job) {
         return Workers.get(ID).CanDoJob(job);
     }
+
+    /**
+     * it will save the data in the database and close the connection
+     */
     public static void closeDB(){
-        Connect.CloseConnection();
+        DataController.getInstance().saveData();
     }
 
 
