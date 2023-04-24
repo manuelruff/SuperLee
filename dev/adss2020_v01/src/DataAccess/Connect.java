@@ -45,10 +45,21 @@ public class Connect {
         return conn;
     }
 
+    /**
+     * close the connection when we are done with the DB
+     */
+    public static void CloseConnection() {
+        try
+            {
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
 //    /**
 //     * @param args the command line arguments
 //     */
 //    public static void main(String[] args) {
 //        connect();
 //    }
-}

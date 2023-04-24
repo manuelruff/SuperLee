@@ -1,6 +1,8 @@
 package Presentation;
 
 
+import Domain.GeneralController;
+
 import java.util.Scanner;
 
 public class GeneralUI {
@@ -47,6 +49,8 @@ public class GeneralUI {
                     break;
                 case 4:
                     System.out.println("have a good day");
+                    //close the connection to the database
+                    GeneralController.closeDB();
                     //stops the program
                     System.exit(0);
                     break;
