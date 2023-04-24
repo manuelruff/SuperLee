@@ -1,18 +1,19 @@
 package Domain;
 
+import DataAccess.CashRegisterMapper;
+
 import java.util.*;
 
 public class CashRegister {
     private List<Cancellations> Log;
-
     public CashRegister(){
         Log=new ArrayList<>();
     }
-
     public void AddCancalation(Cancellations cancel){
         this.Log.add(cancel);
     }
     public void PrintCancellation(int year,int month,int day){
+
         //count how many logs we found with this information
         int count=0;
         //run on all the cancellations and check what fits

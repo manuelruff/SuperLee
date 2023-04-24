@@ -11,19 +11,16 @@ import java.util.Map;
 //this will be singleton
 public class WorkerMapper {
     private static WorkerMapper instance;
-
     private static Map<String,Worker> WorkerMap;
     private WorkerMapper(){
         WorkerMap=new HashMap<>();
     }
-
     public static WorkerMapper GetInstance(){
         if(instance==null){
             instance=new WorkerMapper();
         }
         return instance;
     }
-
     /**
      * @param ID id of worker
      * @return the worker asked
@@ -35,7 +32,6 @@ public class WorkerMapper {
         }
         return WorkerMap.get(ID);
     }
-
     /**
      * this functiuon read the worker from the db
      * @param ID id if worker
@@ -65,7 +61,6 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
-
     /**
      * adds the roles to the worker
      * @param ID
@@ -87,4 +82,5 @@ public class WorkerMapper {
         ReadWorker("1");
         ReadWorker("2");
     }
+
 }
