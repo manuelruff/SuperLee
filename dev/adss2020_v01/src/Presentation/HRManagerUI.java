@@ -1,5 +1,6 @@
 package Presentation;
 
+import DataAccess.WorkerMapper;
 import Domain.*;
 
 import java.util.Scanner;
@@ -237,6 +238,7 @@ public class HRManagerUI {
                     managerController.SendConstraintsToHistory();
                     break;
                 case 4:
+                    String LastID="-1";
                     int choice3 = -1;
                     while (choice3 != 9) {
                         String ID;

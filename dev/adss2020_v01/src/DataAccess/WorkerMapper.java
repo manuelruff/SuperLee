@@ -83,6 +83,79 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
+    /**
+     * @return the map of all the workers
+     */
+    public static Map<String, Worker> getWorkerMap() {
+        return WorkerMap;
+    }
+    public static void ReadAllWorkersFromSuper(String Name){
+        Connection conn = Connect.getConnection();
+        String id;
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet rs = stmt.executeQuery("select * from WorkesAt WHERE SuperName=="+Name+"" );
+            while (rs.next()){
+                id=rs.getString("ID");
+                //if i had him in database already i wont do it again
+                getWorker(id);
+            }
+        }
+        catch (SQLException e) {
+
+        }
+    }
+    //we will write all the workers to the db when done, it will write the new ones and update the old ones??
+    public static void WriteAllWorkers(){
+        for (Worker worker:WorkerMap.values()){
+            Connection conn = Connect.getConnection();
+            String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
+            try {
+                java.sql.Statement stmt = conn.createStatement();
+                id=worker.getID();
+                name=worker.getName();
+                bank=String.valueOf(worker.getBank());
+                //check what this gives
+                startdate=worker.getStartDate().toString();
+                contract=worker.getContract();
+                password=worker.getPassword();
+                bonus=String.valueOf(worker.getBonus());
+                wage=String.valueOf(worker.getWage());
+                shiftworked=String.valueOf(worker.getShiftWorked());
+                stmt.executeUpdate("INSERT INTO Worker " +
+                        "VALUES("+id+","+name+","+bank+","+startdate+","+contract+","+password+"," +
+                        ""+bonus+","+wage+","+shiftworked+") " +
+                        "WHERE ("+id+" NOT IN (SELECT ID FROM Worker)");
+            }
+            catch (SQLException e) {
+                System.out.println("i have a problem sorry");
+            }
+        }
+    }
+    public static void UpdateWorker(String ID) {
+        Worker worker=WorkerMap.get(ID);
+        Connection conn = Connect.getConnection();
+        String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            id=worker.getID();
+            name=worker.getName();
+            bank=String.valueOf(worker.getBank());
+            //check what this gives
+            startdate=worker.getStartDate().toString();
+            contract=worker.getContract();
+            password=worker.getPassword();
+            bonus=String.valueOf(worker.getBonus());
+            wage=String.valueOf(worker.getWage());
+            shiftworked=String.valueOf(worker.getShiftWorked());
+            stmt.executeUpdate("UPDATE Worker SET name="+name+",bank="+bank+",startdate="+startdate+
+                    ",contract="+contract+",password="+password+",bonus="+bonus+",wage="+wage+",shiftworked="+shiftworked+
+                    " WHERE ID="+id);
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
     public static void main(String[] args) {
         ReadWorker("1");
         ReadWorker("2");
