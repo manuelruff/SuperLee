@@ -1,5 +1,6 @@
 package DataAccess;
 
+import Domain.Days;
 import Domain.Jobs;
 import Domain.Worker;
 
@@ -47,19 +48,21 @@ public class WorkerMapper {
             name=rs.getString("name");
             bank=rs.getString("bank");
             startdate=rs.getString("startdate");
-
             contract=rs.getString("contract");
             password=rs.getString("password");
             bonus=rs.getString("bonus");
             wage=rs.getString("wage");
-            shiftworked=rs.getString("shiftworked");
+            //we dont need this one it will update when we add the shifts
+            //shiftworked=rs.getString("shiftworked");
+            shiftworked="0";
             Worker worker=new Worker(id,name,Integer.parseInt(bank),contract,Double.parseDouble(wage),password,LocalDate.parse(startdate),Double.parseDouble(bonus),Integer.parseInt(shiftworked));
             //add the worker to the map
             WorkerMap.put(id,worker);
             //add the roles to the worker
             ReadJobs(ID);
-            //add the shifts to the worker
-
+            //add the shifts days he has to the worker
+            ReadWorkingDays(ID);
+            
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
@@ -72,17 +75,31 @@ public class WorkerMapper {
      */
     private static void ReadJobs(String ID){
         Connection conn = Connect.getConnection();
-        String job;
+            String job;
+            try {
+                java.sql.Statement stmt = conn.createStatement();
+                java.sql.ResultSet rs = stmt.executeQuery("select * from WorkersJobs WHERE WorkerID=="+ID+"" );
+                job=rs.getString("Job");
+                WorkerMap.get(ID).AddJob(Jobs.valueOf(job));
+            }
+            catch (SQLException e) {
+                System.out.println("i have a problem sorry");
+        }
+    }
+    private static void ReadWorkingDays(String ID){
+        Connection conn = Connect.getConnection();
+        String day;
         try {
             java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("select * from WorkersJobs WHERE WorkerID=="+ID+"" );
-            job=rs.getString("Job");
-            WorkerMap.get(ID).AddJob(Jobs.valueOf(job));
+            java.sql.ResultSet rs = stmt.executeQuery("select * from WeeklyWorkingDays WHERE WorkerID=="+ID+"" );
+            day=rs.getString("Day");
+            WorkerMap.get(ID).AddShift(Days.valueOf(day));
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
         }
     }
+
     /**
      * @return the map of all the workers
      */

@@ -102,8 +102,11 @@ public abstract class AWorker {
 
     //update a worker that he got a shift
     public void AddShift(Days day){
-        this.ShiftWorked++;
         this.WeeklyWorkingDays.add(day);
+    }
+    //update a worker that he got a shift
+    public void AddShiftWorked(){
+        this.ShiftWorked++;
     }
     //update a worker that he removes a shift - added 31.3
     public void RemoveShift(Days day){

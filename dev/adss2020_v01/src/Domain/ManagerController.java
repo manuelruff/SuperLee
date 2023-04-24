@@ -105,6 +105,7 @@ public class ManagerController {
                 Shift CurrShift = new Shift(week.getStartDate().plusDays(day.ordinal()), time, start, end, GeneralController.Workers.get(CanWorkList.get(num - 1)));
                 //update the menager shift
                 GeneralController.Workers.get(CanWorkList.get(num - 1)).AddShift(day);
+                GeneralController.Workers.get(CanWorkList.get(num - 1)).AddShiftWorked();
                 //then we need to let him see the rest without shift manager
                 //then we send it to the curr shift
 
@@ -136,6 +137,7 @@ public class ManagerController {
                         CurrShift.AddWorker(job, GeneralController.Workers.get(CanWorkList.get(choice)));
                         //now i need to update the worker propertyly
                         GeneralController.Workers.get(CanWorkList.get(choice)).AddShift(day);
+                        GeneralController.Workers.get(CanWorkList.get(choice)).AddShiftWorked();
                         //remove from the available Workers
                         CanWorkList.remove(choice);
                         k++;
@@ -332,6 +334,7 @@ public class ManagerController {
                     GeneralController.Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.ShiftManager, GeneralController.Workers.get(ID));
                     // add the shift to the Workers shifts
                     GeneralController.Workers.get(ID).AddShift(Days.values()[days_day]);
+                    GeneralController.Workers.get(ID).AddShiftWorked();
                 }
             }
             else {
@@ -356,6 +359,7 @@ public class ManagerController {
                 GeneralController.Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(job_list.get(num-1), GeneralController.Workers.get(ID));
                 // add the shift to the Workers shifts
                 GeneralController.Workers.get(ID).AddShift(Days.values()[days_day]);
+                GeneralController.Workers.get(ID).AddShiftWorked();
             }
         }
     }
