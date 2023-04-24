@@ -54,7 +54,7 @@ public class CashRegisterMapper {
         if(!CashRegisterMap.containsKey(BranchName))
             CashRegisterMap.put(BranchName,new CashRegister());
     }
-
+/*
     public static void WriteAllCancellation(){
         for(String name:CashRegisterMap.keySet()){
             for (Cancellations cancellations : CashRegisterMap.get(name).getAllCancellations()){
@@ -81,6 +81,8 @@ public class CashRegisterMapper {
     }
 
 
+
+ */
 
 
 }

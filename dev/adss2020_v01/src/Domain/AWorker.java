@@ -30,12 +30,27 @@ public abstract class AWorker {
         this.Bank=Bank;
         this.Contract=Contract;
         this.Wage=Wage;
-
         this.Password=Password;
         //puts the date if starting the job
         this.StartDate=LocalDate.now();
         this.ShiftWorked=0;
         this.Bonus = 0;
+        //sets the Domain.Constraints to everyday until he updates it
+        this.ShiftsCantWork= new Constraints();
+        this.WeeklyWorkingDays=new ArrayList<>();
+    }
+    //builder for stuff from db
+    public AWorker(String ID,String Name,  int Bank,String Contract, double Wage , String Password, LocalDate startDate,double bonus,int shiftworked){
+        this.Name=Name;
+        this.ID=ID;
+        this.Bank=Bank;
+        this.Contract=Contract;
+        this.Wage=Wage;
+        this.Password=Password;
+        //puts the date if starting the job
+        this.StartDate=startDate;
+        this.ShiftWorked=shiftworked;
+        this.Bonus = bonus;
         //sets the Domain.Constraints to everyday until he updates it
         this.ShiftsCantWork= new Constraints();
         this.WeeklyWorkingDays=new ArrayList<>();

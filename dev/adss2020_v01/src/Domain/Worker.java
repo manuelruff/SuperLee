@@ -2,6 +2,7 @@ package Domain;
 
 import DataAccess.WorkerMapper;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class Worker extends AWorker {
         this.Roles.add(FirstJob);
     }
     //we use this when we read from the database, the job will be updated later
-    public Worker(String ID, String Name, int Bank, String Contract, double Wage, String Password) {
-        super(ID,Name, Bank, Contract, Wage, Password);
+    public Worker(String ID, String Name, int Bank, String Contract, double Wage, String Password, LocalDate startDate,double bonus,int shiftworked) {
+        super(ID,Name, Bank, Contract, Wage, Password,startDate,bonus,shiftworked);
         Roles=new ArrayList<>();
     }
     //a function to add a job to the worker

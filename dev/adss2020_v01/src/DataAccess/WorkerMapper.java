@@ -5,6 +5,7 @@ import Domain.Worker;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,15 +47,19 @@ public class WorkerMapper {
             name=rs.getString("name");
             bank=rs.getString("bank");
             startdate=rs.getString("startdate");
+
             contract=rs.getString("contract");
             password=rs.getString("password");
             bonus=rs.getString("bonus");
             wage=rs.getString("wage");
             shiftworked=rs.getString("shiftworked");
-            Worker worker=new Worker(id,name,Integer.parseInt(bank),contract,Double.parseDouble(wage),password);
+            Worker worker=new Worker(id,name,Integer.parseInt(bank),contract,Double.parseDouble(wage),password,LocalDate.parse(startdate),Double.parseDouble(bonus),Integer.parseInt(shiftworked));
+            //add the worker to the map
+            WorkerMap.put(id,worker);
             //add the roles to the worker
             ReadJobs(ID);
-            WorkerMap.put(id,worker);
+            //add the shifts to the worker
+
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
@@ -117,16 +122,16 @@ public class WorkerMapper {
                 bonus=String.valueOf(worker.getBonus());
                 wage=String.valueOf(worker.getWage());
                 shiftworked=String.valueOf(worker.getShiftWorked());
-                stmt.executeUpdate("INSERT INTO Worker " +
+                stmt.executeUpdate("INSERT OR UPDATE INTO Worker " +
                         "VALUES("+id+","+name+","+bank+","+startdate+","+contract+","+password+"," +
-                        ""+bonus+","+wage+","+shiftworked+") " +
-                        "WHERE ("+id+" NOT IN (SELECT ID FROM Worker)");
+                        ""+bonus+","+wage+","+shiftworked+") ");
             }
             catch (SQLException e) {
                 System.out.println("i have a problem sorry");
             }
         }
     }
+    /*
     public static void UpdateWorker(String ID) {
         Worker worker=WorkerMap.get(ID);
         Connection conn = Connect.getConnection();
@@ -151,6 +156,8 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
+
+     */
     public static void main(String[] args) {
         ReadWorker("1");
         ReadWorker("2");
