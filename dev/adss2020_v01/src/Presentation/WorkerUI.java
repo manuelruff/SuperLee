@@ -49,7 +49,7 @@ public class WorkerUI {
             System.out.println("4. show constraints ");
             System.out.println("5. Back");
             //ask for input
-            choice=UIGeneralFnctions.AskForNumber(1,4);
+            choice=UIGeneralFnctions.AskForNumber(1,5);
             switch (choice){
                 case 1:
                     int op1_choice=-1;
