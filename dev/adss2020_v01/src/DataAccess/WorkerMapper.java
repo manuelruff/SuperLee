@@ -6,6 +6,7 @@ import Domain.Worker;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //this will be singleton
@@ -53,9 +54,9 @@ public class WorkerMapper {
             wage=rs.getString("wage");
             shiftworked=rs.getString("shiftworked");
             Worker worker=new Worker(id,name,Integer.parseInt(bank),contract,Double.parseDouble(wage),password);
+            WorkerMap.put(id,worker);
             //add the roles to the worker
             ReadJobs(ID);
-            WorkerMap.put(id,worker);
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
@@ -78,9 +79,61 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
+    /**
+     * @return the map of all the workers
+     */
+    public static Map<String, Worker> getWorkerMap() {
+        return WorkerMap;
+    }
+    public static void ReadAllWorkersFromSuper(String Name){
+        Connection conn = Connect.getConnection();
+        String id;
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet rs = stmt.executeQuery("select * from WorkesAt WHERE SuperName=="+Name+"" );
+            while (rs.next()){
+                id=rs.getString("ID");
+                //if i had him in database already i wont do it again
+                getWorker(id);
+            }
+        }
+        catch (SQLException e) {
+
+        }
+    }
+    //we will write all the workers to the db when done, it will write the new ones and update the old ones??
+    public static void WriteAllWorkers(){
+        for (Worker worker:WorkerMap.values()){
+            Connection conn = Connect.getConnection();
+            String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
+            try {
+                java.sql.Statement stmt = conn.createStatement();
+                id=worker.getID();
+                name=worker.getName();
+                bank=String.valueOf(worker.getBank());
+                //check what this gives
+                startdate=worker.getStartDate().toString();
+                contract=worker.getContract();
+                password=worker.getPassword();
+                bonus=String.valueOf(worker.getBonus());
+                wage=String.valueOf(worker.getWage());
+                shiftworked=String.valueOf(worker.getShiftWorked());
+                stmt.executeUpdate("INSERT INTO Worker " +
+                        "VALUES("+id+","+name+","+bank+","+startdate+","+contract+","+password+"," +
+                        ""+bonus+","+wage+","+shiftworked+") " +
+                        "WHERE ("+id+" NOT IN (SELECT ID FROM Worker)");
+            }
+            catch (SQLException e) {
+                System.out.println("i have a problem sorry");
+            }
+        }
+    }
     public static void main(String[] args) {
+        GetInstance();
         ReadWorker("1");
         ReadWorker("2");
     }
+
+
 
 }

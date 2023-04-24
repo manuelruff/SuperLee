@@ -13,7 +13,6 @@ public class CashRegister {
         this.Log.add(cancel);
     }
     public void PrintCancellation(int year,int month,int day){
-
         //count how many logs we found with this information
         int count=0;
         //run on all the cancellations and check what fits

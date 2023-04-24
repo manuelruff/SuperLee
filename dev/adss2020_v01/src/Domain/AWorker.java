@@ -77,11 +77,11 @@ public abstract class AWorker {
         return ShiftsCantWork.CanWork(day, s, e);
     }
 
-    public String GetName(){
+    public String getName(){
         return this.Name;
     }
 
-    public String GetID(){
+    public String getID(){
         return this.ID;
     }
 
@@ -103,6 +103,30 @@ public abstract class AWorker {
     // used to change worker bank details
     public void SetBank(int newBank){
         this.Bank=newBank;
+    }
+
+    public int getBank() {
+        return Bank;
+    }
+
+    public String getContract() {
+        return Contract;
+    }
+
+    public LocalDate getStartDate() {
+        return StartDate;
+    }
+
+    public double getBonus() {
+        return Bonus;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public int getShiftworked() {
+        return WeeklyWorkingDays.size();
     }
     // used to add new Domain.Constraints
 
@@ -136,6 +160,6 @@ public abstract class AWorker {
     public double getWage(){return this.Wage;}
 
     public void Printme(){
-        System.out.println("Name: "+ this.GetName()+" with ID: "+this.GetID());
+        System.out.println("Name: "+ this.getName()+" with ID: "+this.getID());
     }
 }

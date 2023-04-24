@@ -56,7 +56,7 @@ public class WorkerUI {
                 case 1:
                     int op1_choice=-1;
                     while (op1_choice!=4) {
-                        System.out.println("hello " + workerController.GetWorkerByID(ID).GetName() + " please choose the detail you want to change");
+                        System.out.println("hello " + workerController.GetWorkerByID(ID).getName() + " please choose the detail you want to change");
                         System.out.println("1. change password ");
                         System.out.println("2. change name");
                         System.out.println("3. change bank account");
