@@ -7,23 +7,23 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AWorker {
-    private String Name;
-    private String  ID;
-    private int Bank;
+    protected String Name;
+    protected String  ID;
+    protected int Bank;
     //might be a txt file in the future
-    private String Contract;
-    private LocalDate StartDate;
+    protected String Contract;
+    protected LocalDate StartDate;
     //so we know how much to pay him
-    private double Wage;
-    private double Bonus;
-    private String Password;
+    protected double Wage;
+    protected double Bonus;
+    protected String Password;
     //the shifts he can work at
-    private Constraints ShiftsCantWork;
+    protected Constraints ShiftsCantWork;
 
     //saves the number of days that he worked so we can pay him
-    private int ShiftWorked;
+    protected int ShiftWorked;
     //saves the days of the week that he is already working
-    private List<Days> WeeklyWorkingDays;
+    protected List<Days> WeeklyWorkingDays;
     public AWorker(String ID,String Name,  int Bank,String Contract, double Wage , String Password){
         this.Name=Name;
         this.ID=ID;

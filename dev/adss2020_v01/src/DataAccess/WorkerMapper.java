@@ -10,17 +10,12 @@ import java.util.Map;
 
 //this will be singleton
 public class WorkerMapper {
-    private static WorkerMapper instance;
-
+    private static WorkerMapper instance=new WorkerMapper();
     private static Map<String,Worker> WorkerMap;
     private WorkerMapper(){
         WorkerMap=new HashMap<>();
     }
-
     public static WorkerMapper GetInstance(){
-        if(instance==null){
-            instance=new WorkerMapper();
-        }
         return instance;
     }
 
