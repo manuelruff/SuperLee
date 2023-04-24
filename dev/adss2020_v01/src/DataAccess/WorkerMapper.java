@@ -153,33 +153,42 @@ public class WorkerMapper {
     //we will write all the workers to the db when done, it will write the new ones and update the old ones??
     public static void WriteAllWorkers(){
         for (Worker worker:WorkerMap.values()){
-            String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
+            String id,name, startdate, contract, password;
+            int bank,shiftworked;
+            double bonus,wage;
             try {
                 java.sql.Statement stmt = conn.createStatement();
                 id=worker.getID();
                 name=worker.getName();
-                bank=String.valueOf(worker.getBank());
+                bank=Integer.parseInt(String.valueOf(worker.getBank()));
                 startdate=worker.getStartDate().toString();
                 contract=worker.getContract();
                 password=worker.getPassword();
-                bonus=String.valueOf(worker.getBonus());
-                wage=String.valueOf(worker.getWage());
-                shiftworked=String.valueOf(worker.getShiftWorked());
+                bonus=Double.parseDouble(String.valueOf(worker.getBonus()));
+                wage=Double.parseDouble(String.valueOf(worker.getWage()));
+                shiftworked=Integer.parseInt((String.valueOf(worker.getShiftWorked())));
                 java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+id+"" );
                 //if it doesnt exists we will insert it
                 if(!rs.next()){
-                    stmt.executeUpdate("INSERT INTO Worker " +
-                            "VALUES("+id+","+name+","+Integer.parseInt(bank)+"" +
+                    System.out.println("INSERT INTO Worker " +
+                            "VALUES("+id+","+name+","+bank+"" +
                             ","+startdate+","+contract+","+password+"," +
-                            ""+Double.parseDouble(bonus)+"," +
-                            ""+Double.parseDouble(wage)+","+Integer.parseInt(shiftworked)+") ");
+                            ""+bonus+"," +
+                            ""+wage+","+shiftworked+") ");
+                    stmt.executeUpdate("INSERT INTO Worker(ID, name, bank, StartDate, contract, Password, bonus, wage, ShiftWorked) " +
+                            "VALUES("+id+","+name+","+bank+"" +
+                            ","+startdate+","+contract+","+password+"," +
+                            ""+bonus+"," +
+                            ""+wage+","+shiftworked+") ");
 
                 }
                 //if its in we update it
                 else{
-                    stmt.executeUpdate("UPDATE Worker SET name="+name+",bank="+Integer.parseInt(bank)+",startdate="+startdate+",contract="+contract+"" +
-                            ",password="+password+",bonus="+Double.parseDouble(bonus)+"" +
-                            ",wage="+Double.parseDouble(wage)+",shiftworked="+Integer.parseInt(shiftworked)+" WHERE ID="+id+"" );
+                    stmt.executeUpdate("INSERT OR UPDATE INTO Worker(ID, name, bank, StartDate, contract, Password, bonus, wage, ShiftWorked) " +
+                            "VALUES("+id+","+name+","+bank+"" +
+                            ","+startdate+","+contract+","+password+"," +
+                            ""+bonus+"," +
+                            ""+wage+","+shiftworked+") " );
                     //we need to update all his other stuff
                 }
 
@@ -189,7 +198,7 @@ public class WorkerMapper {
                 WriteConstraints(id);
             }
             catch (SQLException e) {
-                System.out.println("i have a problem sorry");
+                System.out.println("i have a problem in writing the worker sorry");
             }
         }
     }
@@ -202,11 +211,11 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Jobs job : WorkerMap.get(ID).getRoles()) {
-                stmt.executeQuery("INSERT OR IGNORE INTO WorkersJobs " +"VALUES("+ ID+" ,"+job+")");
+                stmt.executeQuery("INSERT OR IGNORE INTO WorkersJobs(WORKERID, JOB) " +"VALUES("+ ID+" ,"+job+")");
             }
         }
         catch (SQLException e) {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem int writing the worker job sorry");
         }
     }
     /**
@@ -217,11 +226,11 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Days day : WorkerMap.get(ID).getWeeklyWorkingDays()) {
-                stmt.executeQuery("INSERT OR IGNORE INTO WeeklyWorkingDays " +"VALUES("+ ID+" ,"+day+")");
+                stmt.executeQuery("INSERT OR IGNORE INTO WeeklyWorkingDays(WORKERID, DAY) " +"VALUES("+ ID+" ,"+day+")");
             }
         }
         catch (SQLException e) {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem in writing the workers days sorry");
         }
     }
     /**
@@ -233,41 +242,15 @@ public class WorkerMapper {
             java.sql.Statement stmt = conn.createStatement();
             for(Days day: WorkerMap.get(ID).getShiftsCantWork().keySet()){
                 for (CantWork cantwork : WorkerMap.get(ID).getShiftsCantWork().get(day)) {
-                    stmt.executeQuery("INSERT OR IGNORE INTO CantWork " +"VALUES("+ ID+" ,"+cantwork.getStart()+","+cantwork.getEnd()+","+day+","+cantwork.getReason()+")");
+                    stmt.executeQuery("INSERT OR IGNORE INTO CantWork(WORKERID, Start, END, DAY,Reason) " +"VALUES("+ ID+" ,"+cantwork.getStart()+","+cantwork.getEnd()+","+day+","+cantwork.getReason()+")");
                 }
             }
         }
         catch (SQLException e) {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem iun writing constraints sorry");
         }
     }
 
-    /*
-    public static void UpdateWorker(String ID) {
-        Worker worker=WorkerMap.get(ID);
-        String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
-        try {
-            java.sql.Statement stmt = conn.createStatement();
-            id=worker.getID();
-            name=worker.getName();
-            bank=String.valueOf(worker.getBank());
-            //check what this gives
-            startdate=worker.getStartDate().toString();
-            contract=worker.getContract();
-            password=worker.getPassword();
-            bonus=String.valueOf(worker.getBonus());
-            wage=String.valueOf(worker.getWage());
-            shiftworked=String.valueOf(worker.getShiftWorked());
-            stmt.executeUpdate("UPDATE Worker SET name="+name+",bank="+bank+",startdate="+startdate+
-                    ",contract="+contract+",password="+password+",bonus="+bonus+",wage="+wage+",shiftworked="+shiftworked+
-                    " WHERE ID="+id);
-        }
-        catch (SQLException e) {
-            System.out.println("i have a problem sorry");
-        }
-    }
-
-     */
 //    public static void main(String[] args) {
 //        ReadWorker("1");
 //        ReadWorker("2");
