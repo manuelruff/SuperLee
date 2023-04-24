@@ -9,15 +9,20 @@ import java.util.List;
 import java.util.Map;
 
 //a class to fill the database for the first time
-
+//this is a singleton
 public class StartData {
+    private static StartData instance=new StartData();
     private static Map<String, Worker> Workers;
     private static Map<String, Super> Superim;
 
-    public StartData(){
+    private StartData(){
         Workers=new HashMap<>();
         Superim=new HashMap<>();
         CreateData();
+    }
+
+    public static StartData getInstance(){
+        return instance;
     }
     public static void CreateData(){
         //creating shift managers:
