@@ -58,12 +58,10 @@ public class GeneralController {
             }
         }
     }
-
     // checks if branch is exist
     public static boolean CheckSuperName(String Name) {
         return Superim.get(Name) != null;
     }
-
     //get day job and a list of Workers and checks if the worker can do the work in the shift and these conditions
     public static List<String> GetAvailableEmployee(Days day, Jobs job, ShiftTime time, List<String> WorkersID, String SuperName) {
         List<String> ret = new ArrayList<>();
@@ -91,19 +89,16 @@ public class GeneralController {
         }
         return ret;
     }
-
     // reset the number of shifts to all Workers - im not sure if this one should be here
     public static void ResetWorkDaysWorkers() {
         for (String ID : Workers.keySet()) {
             Workers.get(ID).ResetShiftsAmount();
         }
     }
-
     // check if worker is exists by id
     public static boolean isExistWorker(String ID) {
         return Workers.get(ID) != null;
     }
-
     //returns worker by id
     public static Worker GetWorkerByID(String ID) {
         return Workers.get(ID);
@@ -112,12 +107,10 @@ public class GeneralController {
     public static boolean IsWorksInSuper(String ID, String SuperName) {
         return Superim.get(SuperName).GetWorkersIDS().contains(ID);
     }
-
     //check if a worker can to a job\role - im not sure if it should be here or in worker controller
     public static boolean CanDoJob(String ID, Jobs job) {
         return Workers.get(ID).CanDoJob(job);
     }
-
     public static void closeDB(){
         Connect.CloseConnection();
     }

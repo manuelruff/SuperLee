@@ -64,10 +64,10 @@ public class WorkerTest {
     @Test
     public void getID() {
         Worker tester = new Worker("manu" , "1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
-        assertEquals("1",tester.GetID());
+        assertEquals("1",tester.getID());
         Worker tester2 = new Worker("manu" , "25", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
-        assertEquals("25",tester2.GetID());
-        assertNotEquals("1",tester2.GetID());
+        assertEquals("25",tester2.getID());
+        assertNotEquals("1",tester2.getID());
     }
     @Test
     public void addShift() {
@@ -91,14 +91,14 @@ public class WorkerTest {
     @Test
     public void getName() {
         Worker tester = new Worker("manu" , " 1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
-        assertEquals("manu",tester.GetName());
+        assertEquals("manu",tester.getName());
     }
     @Test
     public void setName() {
         Worker tester = new Worker("manu" , " 1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
-        assertEquals("manu",tester.GetName());
+        assertEquals("manu",tester.getName());
         tester.SetName("ba");
-        assertEquals("ba",tester.GetName());
+        assertEquals("ba",tester.getName());
     }
     @Test
     public void getShiftWorked() {

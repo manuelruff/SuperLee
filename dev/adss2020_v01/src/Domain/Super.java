@@ -49,7 +49,7 @@ public class Super {
         }
     }
     //a function that adds a worker to the Workers list
-    public void AddWorker(Worker worker){WorkerList.put(worker.GetID(),worker);
+    public void AddWorker(Worker worker){WorkerList.put(worker.getID(),worker);
     }
 
     public boolean RemoveWorker(String ID){
@@ -60,7 +60,7 @@ public class Super {
         return false;
     }
 
-    public String GetName(){
+    public String getName(){
         return this.Name;
     }
 

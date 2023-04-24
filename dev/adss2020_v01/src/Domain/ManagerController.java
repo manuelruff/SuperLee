@@ -49,7 +49,7 @@ public class ManagerController {
      * @param new_super - the name of the new branch
      */
     public static void addSuper(Super new_super) {
-        GeneralController.Superim.put(new_super.GetName(), new_super);
+        GeneralController.Superim.put(new_super.getName(), new_super);
     }
 
     /**
@@ -80,14 +80,14 @@ public class ManagerController {
                 //first we need to choose the manager to start the shift
                 System.out.println("first choose the shift manager: ");
                 //ill get the list of available managers
-                CanWorkList = GeneralController.GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkersIDS(), curr.GetName());
+                CanWorkList = GeneralController.GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkersIDS(), curr.getName());
                 if (CanWorkList.size() == 0) {
                     System.out.println("it looks like you are out of managers or you dont have enough, go assing some new ones so you can make the shifts.");
                     return;
                 }
                 //prints the list of Workers available - name and id
                 for (int j = 0; j < CanWorkList.size(); j++) {
-                    System.out.println(j + 1 + ". " + GeneralController.Workers.get(CanWorkList.get(j)).GetName() + " with ID: " + CanWorkList.get(j));
+                    System.out.println(j + 1 + ". " + GeneralController.Workers.get(CanWorkList.get(j)).getName() + " with ID: " + CanWorkList.get(j));
                 }
                 System.out.println("if you dont want this shift to happen enter 0.");
                 int num =GeneralController.AskForNumber(0,CanWorkList.size());
@@ -117,7 +117,7 @@ public class ManagerController {
                         continue;
                     }
                     //we will get the available Workers
-                    CanWorkList = GeneralController.GetAvailableEmployee(day, job, time, curr.GetWorkersIDS(), curr.GetName());
+                    CanWorkList = GeneralController.GetAvailableEmployee(day, job, time, curr.GetWorkersIDS(), curr.getName());
                     System.out.print(" how many Workers as " + job + " you want? ");
                     num =GeneralController.AskForNumber(0,CanWorkList.size());
 
@@ -126,7 +126,7 @@ public class ManagerController {
                     while (k < num) {
                         System.out.println("the Workers that can be in this shift are: ");
                         for (int j = 0; j < CanWorkList.size(); j++) {
-                            System.out.println((j + 1) + ". " + GeneralController.Workers.get(CanWorkList.get(j)).GetName() + " with ID: " + CanWorkList.get(j));
+                            System.out.println((j + 1) + ". " + GeneralController.Workers.get(CanWorkList.get(j)).getName() + " with ID: " + CanWorkList.get(j));
                         }
                         int choice = GeneralController.AskForNumber(1,CanWorkList.size());
                         //if i got here i have a good index for a worker
@@ -217,8 +217,8 @@ public class ManagerController {
         for (Map.Entry<String, Super> entry : GeneralController.Superim.entrySet()) {
             if (entry.getKey().equals(branchName)) {
                 GeneralController.Superim.get(entry.getKey()).AddWorker(newEmployee);
-                GeneralController.Workers.put(newEmployee.GetID(), newEmployee);
-                System.out.println(newEmployee.GetID() + " added successfully to: " + branchName);
+                GeneralController.Workers.put(newEmployee.getID(), newEmployee);
+                System.out.println(newEmployee.getID() + " added successfully to: " + branchName);
             }
         }
     }
@@ -229,7 +229,7 @@ public class ManagerController {
         for (Map.Entry<String, Super> entry : GeneralController.Superim.entrySet()) {
             // remove if from every branch he works at
             if (GeneralController.Superim.get(entry.getKey()).RemoveWorker(ID)) {
-                System.out.println("worker removed successfully from " + GeneralController.Superim.get(entry.getKey()).GetName());
+                System.out.println("worker removed successfully from " + GeneralController.Superim.get(entry.getKey()).getName());
             }
         }
         // remove it from the map of all Workers
@@ -261,12 +261,12 @@ public class ManagerController {
     // add bonus to worker by given ID
     public static String addBonusToWorker(String ID, double bonus) {
         GeneralController.Workers.get(ID).addBonus(bonus);
-        return GeneralController.Workers.get(ID).GetName();
+        return GeneralController.Workers.get(ID).getName();
     }
 
     public static String removeBonusToWorker(String ID, double bonus) {
         GeneralController.Workers.get(ID).removeBonus(bonus);
-        return GeneralController.Workers.get(ID).GetName();
+        return GeneralController.Workers.get(ID).getName();
     }
 
     public static boolean HasWeekly(String Name) {

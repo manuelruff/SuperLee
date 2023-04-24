@@ -29,7 +29,7 @@ public class ReshetInfo {
 //        return Superim.get(Name) != null;
 //    }
 //    public void addSuper(Super new_super) {
-//        Superim.put(new_super.GetName(), new_super);
+//        Superim.put(new_super.getName(), new_super);
 //    }
     //creates weeklysheeft for a branch
 //    public void CreateWeekly(String Name) {
@@ -56,14 +56,14 @@ public class ReshetInfo {
 //                //first we need to choose the manager to start the shift
 //                System.out.println("first choose the shift manager: ");
 //                //ill get the list of available managers
-//                CanWorkList = GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkersIDS(), curr.GetName());
+//                CanWorkList = GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkersIDS(), curr.getName());
 //                if (CanWorkList.size() == 0) {
 //                    System.out.println("it looks like you are out of managers or you dont have enough, go assing some new ones so you can make the shifts.");
 //                    return;
 //                }
 //                //prints the list of Workers available - name and id
 //                for (int j = 0; j < CanWorkList.size(); j++) {
-//                    System.out.println(j + 1 + ". " + Workers.get(CanWorkList.get(j)).GetName() + " with ID: " + CanWorkList.get(j));
+//                    System.out.println(j + 1 + ". " + Workers.get(CanWorkList.get(j)).getName() + " with ID: " + CanWorkList.get(j));
 //                }
 //                System.out.println("if you dont want this shift to happen enter 0.");
 //                int num =AskForNumber(0,CanWorkList.size());
@@ -93,7 +93,7 @@ public class ReshetInfo {
 //                        continue;
 //                    }
 //                    //we will get the available Workers
-//                    CanWorkList = GetAvailableEmployee(day, job, time, curr.GetWorkersIDS(), curr.GetName());
+//                    CanWorkList = GetAvailableEmployee(day, job, time, curr.GetWorkersIDS(), curr.getName());
 //                    System.out.print(" how many Workers as " + job + " you want? ");
 //                    num =AskForNumber(0,CanWorkList.size());
 //
@@ -102,7 +102,7 @@ public class ReshetInfo {
 //                    while (k < num) {
 //                        System.out.println("the Workers that can be in this shift are: ");
 //                        for (int j = 0; j < CanWorkList.size(); j++) {
-//                            System.out.println((j + 1) + ". " + Workers.get(CanWorkList.get(j)).GetName() + " with ID: " + CanWorkList.get(j));
+//                            System.out.println((j + 1) + ". " + Workers.get(CanWorkList.get(j)).getName() + " with ID: " + CanWorkList.get(j));
 //                        }
 //                        int choice = AskForNumber(1,CanWorkList.size());
 //                        //if i got here i have a good index for a worker
@@ -332,7 +332,7 @@ public class ReshetInfo {
 //    //add a cash cancellations
 //    public void AddCancellations(String Name, String item, double amount, String ID) {
 //        //create the cancallation
-//        Cancellations cancel = new Cancellations(amount, item, ID, Workers.get(ID).GetName());
+//        Cancellations cancel = new Cancellations(amount, item, ID, Workers.get(ID).getName());
 //        //add the cancellation to the super
 //        Superim.get(Name).get_cash_register().AddCancalation(cancel);
 //    }
@@ -347,8 +347,8 @@ public class ReshetInfo {
 //        for (Map.Entry<String, Super> entry : Superim.entrySet()) {
 //            if (entry.getKey().equals(branchName)) {
 //                Superim.get(entry.getKey()).AddWorker(newEmployee);
-//                Workers.put(newEmployee.GetID(), newEmployee);
-//                System.out.println(newEmployee.GetID() + " added successfully to: " + branchName);
+//                Workers.put(newEmployee.getID(), newEmployee);
+//                System.out.println(newEmployee.getID() + " added successfully to: " + branchName);
 //            }
 //        }
 //    }
@@ -367,7 +367,7 @@ public class ReshetInfo {
 //        for (Map.Entry<String, Super> entry : Superim.entrySet()) {
 //            // remove if from every branch he works at
 //            if (Superim.get(entry.getKey()).RemoveWorker(ID)) {
-//                System.out.println("worker removed successfully from " + Superim.get(entry.getKey()).GetName());
+//                System.out.println("worker removed successfully from " + Superim.get(entry.getKey()).getName());
 //            }
 //        }
 //        // remove it from the map of all Workers
@@ -402,7 +402,7 @@ public class ReshetInfo {
 //    // add bonus to worker by given ID
 //    public String addBonusToWorker(String ID, double bonus) {
 //        Workers.get(ID).addBonus(bonus);
-//        return Workers.get(ID).GetName();
+//        return Workers.get(ID).getName();
 //    }
 //    public void addNewInfo(String ID, String reason, String info) {
 //        Workers.get(ID).addInfo(reason, info);
@@ -412,7 +412,7 @@ public class ReshetInfo {
 //    }
 //    public String  removeBonusToWorker(String ID, double bonus) {
 //        Workers.get(ID).removeBonus(bonus);
-//        return Workers.get(ID).GetName();
+//        return Workers.get(ID).getName();
 //    }
     // reset the number of shifts to all Workers
 //    public void ResetWorkDaysWorkers() {

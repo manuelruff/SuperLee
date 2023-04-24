@@ -47,7 +47,7 @@ public class Shift {
         boolean changed=false;
         for(Jobs job:WorkerList.keySet()){
             for (Worker worker:WorkerList.get(job)){
-                if(worker.GetID().equals(ID)){
+                if(worker.getID().equals(ID)){
                     WorkerList.get(job).remove(worker);
                     //if empty after deletion we remove the list and value
                     jobremove=job;
@@ -73,7 +73,7 @@ public class Shift {
     public boolean IsWorkerAtShift(String ID){
         for(Jobs job:WorkerList.keySet()){
             for (Worker worker:WorkerList.get(job)){
-                if(worker.GetID().equals(ID)){
+                if(worker.getID().equals(ID)){
                     return true;
                 }
             }

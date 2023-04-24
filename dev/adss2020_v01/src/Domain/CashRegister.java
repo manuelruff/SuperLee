@@ -6,11 +6,9 @@ import java.util.*;
 
 public class CashRegister {
     private List<Cancellations> Log;
-
     public CashRegister(){
         Log=new ArrayList<>();
     }
-
     public void AddCancalation(Cancellations cancel){
         this.Log.add(cancel);
     }

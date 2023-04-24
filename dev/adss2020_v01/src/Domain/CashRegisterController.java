@@ -18,7 +18,7 @@ public class CashRegisterController {
     //add a cash cancellations
     public static void AddCancellations(String Name, String item, double amount, String ID) {
         //create the cancallation
-        Cancellations cancel = new Cancellations(amount, item, ID, GeneralController.Workers.get(ID).GetName());
+        Cancellations cancel = new Cancellations(amount, item, ID, GeneralController.Workers.get(ID).getName());
         //add the cancellation to the super
         GeneralController.Superim.get(Name).get_cash_register().AddCancalation(cancel);
     }

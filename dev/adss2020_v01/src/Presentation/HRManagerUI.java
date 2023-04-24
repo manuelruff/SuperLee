@@ -225,7 +225,7 @@ public class HRManagerUI {
                 case 2:
                     Super new_super = CreateNewSuper();
                     managerController.addSuper(new_super);
-                    System.out.println(new_super.GetName() +" added successfully");
+                    System.out.println(new_super.getName() +" added successfully");
                     break;
                 case 3:
                     //check if he created the weekly for everyone

@@ -30,7 +30,7 @@ public class SuperTest {
     @Test
     public void getName() {
         Super Super1 = new Super("zolretzah");
-        assertEquals("zolretzah",Super1.GetName());
+        assertEquals("zolretzah",Super1.getName());
 
     }
     @Test
