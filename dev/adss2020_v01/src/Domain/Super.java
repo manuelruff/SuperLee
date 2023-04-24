@@ -53,7 +53,7 @@ public class Super {
     }
 
     public boolean RemoveWorker(String ID){
-        if(WorkerList.get(ID)!=null){
+        if(WorkerList.containsKey(ID)){
             WorkerList.remove(ID);
             return true;
         }

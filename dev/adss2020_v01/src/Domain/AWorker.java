@@ -151,6 +151,11 @@ public abstract class AWorker {
         this.ShiftsCantWork.PrintMe();
     }
 
+   //returns the map of constraints for this worker
+    public Map<Days, List<CantWork>> getShiftsCantWork() {
+        return ShiftsCantWork.getCantWork();
+    }
+
     public void setWage(double wage){this.Wage = wage;}
 
     public void addBonus(double bonus){this.Bonus+=bonus;}
@@ -175,6 +180,10 @@ public abstract class AWorker {
     }
 
     public double getWage(){return this.Wage;}
+
+    public List<Days> getWeeklyWorkingDays() {
+        return WeeklyWorkingDays;
+    }
 
     public void Printme(){
         System.out.println("Name: "+ this.getName()+" with ID: "+this.getID());

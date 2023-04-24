@@ -13,12 +13,12 @@ public class ShiftTest {
 
     @Test
     public void addWorker() {
-        Worker manager = new Worker("manu" , "1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker manager = new Worker( "1","manu" , 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Shift tester=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         assertFalse(tester.IsWorkerAtShift("2"));
         assertFalse(tester.IsWorkerAtShift("3"));
-        Worker worker1 = new Worker("lala" , "2", 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
-        Worker worker2 = new Worker("lali" , "3", 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
+        Worker worker1 = new Worker( "2","lala" , 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
+        Worker worker2 = new Worker("3","lali" ,  318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
 
         tester.AddWorker(Jobs.Cashier,worker1);
         tester.AddWorker(Jobs.Cashier,worker2);
@@ -29,12 +29,12 @@ public class ShiftTest {
 
     @Test
     public void removeWorker() {
-        Worker manager = new Worker("manu" , "1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker manager = new Worker("1","manu" ,  318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Shift tester=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         assertFalse(tester.IsWorkerAtShift("2"));
         assertFalse(tester.IsWorkerAtShift("3"));
-        Worker worker1 = new Worker("lala" , "2", 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
-        Worker worker2 = new Worker("lali" , "3", 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
+        Worker worker1 = new Worker( "2","lala" , 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
+        Worker worker2 = new Worker("3","lali" ,  318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
         tester.AddWorker(Jobs.Cashier,worker1);
         tester.AddWorker(Jobs.Cashier,worker2);
         tester.RemoveWorker("2");
@@ -46,12 +46,12 @@ public class ShiftTest {
 
     @Test
     public void isWorkerAtShift() {
-        Worker manager = new Worker("manu" , "1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker manager = new Worker("1","manu" ,  318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Shift tester=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         assertFalse(tester.IsWorkerAtShift("2"));
         assertFalse(tester.IsWorkerAtShift("3"));
-        Worker worker1 = new Worker("lala" , "2", 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
-        Worker worker2 = new Worker("lali" , "3", 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
+        Worker worker1 = new Worker( "2","lala" , 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
+        Worker worker2 = new Worker("3","lali" ,  318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
         tester.AddWorker(Jobs.Cashier,worker1);
         tester.AddWorker(Jobs.Cashier,worker2);
         assertTrue(tester.IsWorkerAtShift("1"));
@@ -66,7 +66,7 @@ public class ShiftTest {
 
     @Test
     public void isEmptyShift() {
-        Worker manager = new Worker("manu" , "1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker manager = new Worker("1","manu" ,  318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Shift tester=new Shift(LocalDate.now(), ShiftTime.Morning,10,16);
         assertTrue(tester.IsEmptyShift());
         tester=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);

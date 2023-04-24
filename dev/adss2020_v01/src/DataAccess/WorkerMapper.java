@@ -1,5 +1,6 @@
 package DataAccess;
 
+import Domain.CantWork;
 import Domain.Days;
 import Domain.Jobs;
 import Domain.Worker;
@@ -20,7 +21,6 @@ public class WorkerMapper {
     public static WorkerMapper GetInstance(){
         return instance;
     }
-
     /**
      * @param ID id of worker
      * @return the worker asked
@@ -32,7 +32,6 @@ public class WorkerMapper {
         }
         return WorkerMap.get(ID);
     }
-
     /**
      * this functiuon read the worker from the db
      * @param ID id if worker
@@ -69,7 +68,6 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
-
     /**
      * adds the roles to the worker
      * @param ID
@@ -87,6 +85,10 @@ public class WorkerMapper {
                 System.out.println("i have a problem sorry");
         }
     }
+    /**
+     * adds the working days to the worker
+     * @param ID
+     */
     private static void ReadWorkingDays(String ID){
         Connection conn = Connect.getConnection();
         String day;
@@ -100,6 +102,10 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
+    /**
+     * adds the constraints to the worker
+     * @param ID
+     */
     private static void ReadConstraints(String ID){
         Connection conn = Connect.getConnection();
         String start,end,reason,day;
@@ -159,12 +165,67 @@ public class WorkerMapper {
                         "VALUES("+id+","+name+","+bank+","+startdate+","+contract+","+password+"," +
                         ""+bonus+","+wage+","+shiftworked+") ");
                 //need to update constraint working days and etc...
+                WriteJobs(id);
+                WriteWorkingDays(id);
+                WriteConstraints(id);
             }
             catch (SQLException e) {
                 System.out.println("i have a problem sorry");
             }
         }
     }
+
+    /**
+     * update the roles to the worker in the db
+     * @param ID
+     */
+    private static void WriteJobs(String ID){
+        Connection conn = Connect.getConnection();
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            for (Jobs job : WorkerMap.get(ID).getRoles()) {
+                stmt.executeQuery("INSERT OR UPDATE INTO WorkersJobs " +"VALUES("+ ID+" ,"+job+")");
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
+    /**
+     * update the working days to the worker in the db
+     * @param ID
+     */
+    private static void WriteWorkingDays(String ID){
+        Connection conn = Connect.getConnection();
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            for (Days day : WorkerMap.get(ID).getWeeklyWorkingDays()) {
+                stmt.executeQuery("INSERT OR UPDATE INTO WeeklyWorkingDays " +"VALUES("+ ID+" ,"+day+")");
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
+    /**
+     * update the constraints to the worker in the db
+     * @param ID
+     */
+    private static void WriteConstraints(String ID){
+        Connection conn = Connect.getConnection();
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            for(Days day: WorkerMap.get(ID).getShiftsCantWork().keySet()){
+                for (CantWork cantwork : WorkerMap.get(ID).getShiftsCantWork().get(day)) {
+                    stmt.executeQuery("INSERT OR UPDATE INTO CantWork " +"VALUES("+ ID+" ,"+cantwork.getStart()+","+cantwork.getEnd()+","+day+","+cantwork.getStart()+")");
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
+
     /*
     public static void UpdateWorker(String ID) {
         Worker worker=WorkerMap.get(ID);

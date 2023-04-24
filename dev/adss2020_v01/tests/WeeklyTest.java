@@ -13,7 +13,7 @@ public class WeeklyTest {
     public void addShift() {
         Weekly week=new Weekly();
         assertNotNull(week);
-        Worker manager = new Worker("manu" , "1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker manager = new Worker( "1","manu" , 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         week.AddShift(shift);
         Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
@@ -29,7 +29,7 @@ public class WeeklyTest {
     }
     @Test
     public void getShift() {
-        Worker manager = new Worker("manu" , " 1", 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Worker manager = new Worker( "1","manu" , 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Weekly week=new Weekly();
         Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         week.AddShift(shift);
@@ -43,8 +43,8 @@ public class WeeklyTest {
         assertNotNull(week.GetShift(1));
         assertNotNull(week.GetShift(2));
         assertNotNull(week.GetShift(3));
-        Worker worker1 = new Worker("lala" , "2", 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
-        Worker worker2 = new Worker("lali" , "3", 318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
+        Worker worker1 = new Worker("2","lala" ,  318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
+        Worker worker2 = new Worker("3","lali" ,  318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
         shift.AddWorker(Jobs.Cashier,worker1);
         shift.AddWorker(Jobs.Cashier,worker2);
         assertTrue(week.GetShift(0).IsWorkerAtShift("1"));

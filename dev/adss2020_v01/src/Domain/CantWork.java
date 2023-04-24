@@ -16,6 +16,11 @@ public class CantWork {
     public double getEnd(){
         return end;
     }
+
+    public String getReason() {
+        return reason;
+    }
+
     public void printMe(){
         String print="start: "+start+ " end: "+end;
         if(reason!=""){

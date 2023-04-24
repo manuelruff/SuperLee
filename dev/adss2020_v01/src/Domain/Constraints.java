@@ -36,7 +36,11 @@ public class Constraints {
         }
     }
 
-    public boolean RemoveCantWork(Days day,double s,double e){
+    public Map<Days, List<CantWork>> getCantWork() {
+        return cantWork;
+    }
+
+    public boolean RemoveCantWork(Days day, double s, double e){
         List<CantWork> curr=cantWork.get(day);
         int i=0;
         //a flag that will tell if we need to delete something
