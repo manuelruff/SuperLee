@@ -45,7 +45,7 @@ public class WorkerMapper {
             bonus=rs.getString("bonus");
             wage=rs.getString("wage");
             shiftworked=rs.getString("shiftworked");
-            Worker worker=new Worker(id,name,Integer.parseInt(bank),contract,Integer.parseInt(wage),,password);
+            Worker worker=new Worker(id,name,Integer.parseInt(bank),contract,Integer.parseInt(wage),password);
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
