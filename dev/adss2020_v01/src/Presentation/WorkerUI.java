@@ -1,7 +1,6 @@
 package Presentation;
 
 import Domain.GeneralController;
-import Domain.ReshetInfo;
 import Domain.WorkerController;
 
 import java.util.Scanner;

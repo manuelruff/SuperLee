@@ -1,14 +1,11 @@
 package Presentation;
 
-import Domain.ReshetInfo;
 
 import java.util.Scanner;
 
 public class GeneralUI {
     // all the info will come form there
     //the creation will create the beginning data
-    private static ReshetInfo info=ReshetInfo.getInstance();
-
     /**
      * entering screen, the user will choose his role or if he want to add cancellation to cash
      */

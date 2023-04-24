@@ -15,11 +15,9 @@ public class GeneralController {
     public static Map<String, Worker> Workers;
 
     private GeneralController() {
-        Superim = new HashMap<>();
-        Workers = new HashMap<>();
-        //create supers and Workers and insert them to where i need
-        StartData.GetWorkers(Workers,Superim);
-    }
+        Superim = StartData.getSuperim();
+        Workers = StartData.getWorkers();
+     }
 
     public static GeneralController getInstance() {
         if (instance == null) {

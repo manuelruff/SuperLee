@@ -1,6 +1,8 @@
+/*
 package Domain;
 import DataAccess.StartData;
 import java.util.*;
+
 
 public class ReshetInfo {
     //all the branches of the company
@@ -456,4 +458,3 @@ public class ReshetInfo {
 //            }
 //        }
 //    }
-}

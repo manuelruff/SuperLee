@@ -1,12 +1,25 @@
 package DataAccess;
-import Domain.Jobs;
-import Domain.Super;
-import Domain.Worker;
+import Domain.*;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+//a class to fill the database for the first time
+
 public class StartData {
-    
-    public static void GetWorkers( Map<String, Worker> Workers,Map<String, Super> Superim){
+    private static Map<String, Worker> Workers;
+    private static Map<String, Super> Superim;
+
+    public StartData(){
+        Workers=new HashMap<>();
+        Superim=new HashMap<>();
+        CreateData();
+    }
+    public static void CreateData(){
         //creating shift managers:
         Worker ShiftManager1 = new Worker("manu", "1", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
         Worker ShiftManager2 = new Worker("david", "2", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
@@ -165,5 +178,28 @@ public class StartData {
         //add the super to the super list
         Superim.put("zolWorkerszah", Super1);
         Superim.put("yakarmeod", Super2);
+    }
+    public static Map<String, Worker> getWorkers() {
+        return Workers;
+    }
+    public static Map<String, Super> getSuperim() {
+        return Superim;
+    }
+    public static void main(String[] args) {
+        WriteWorkers();
+    }
+
+    //write the workers to the database
+    public static void WriteWorkers() {
+        Connection conn = Connect.getConnection();
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate(
+                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
+                            " VALUES (1,'manu',1,'4.2.2000','asd',123,0,100,0)");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
     }
 }

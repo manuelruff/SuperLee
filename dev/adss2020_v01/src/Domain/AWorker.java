@@ -16,7 +16,6 @@ public abstract class AWorker {
     //so we know how much to pay him
     private double Wage;
     private double Bonus;
-    private Map<String ,String > info;
     private String Password;
     //the shifts he can work at
     private Constraints ShiftsCantWork;
@@ -35,7 +34,6 @@ public abstract class AWorker {
         this.Password=Password;
         //puts the date if starting the job
         this.StartDate=LocalDate.now();
-        this.info = new HashMap<>();
         this.ShiftWorked=0;
         this.Bonus = 0;
         //sets the Domain.Constraints to everyday until he updates it
@@ -136,10 +134,6 @@ public abstract class AWorker {
     }
 
     public double getWage(){return this.Wage;}
-
-    public void addInfo(String reason, String info){this.info.put(reason,info);}
-
-    public void removeInfo(String reason){this.info.remove(reason);}
 
     public void Printme(){
         System.out.println("Name: "+ this.GetName()+" with ID: "+this.GetID());

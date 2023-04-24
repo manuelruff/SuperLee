@@ -2,7 +2,6 @@ package Presentation;
 
 import Domain.CashRegisterController;
 import Domain.Jobs;
-import Domain.ReshetInfo;
 
 import java.util.Scanner;
 
