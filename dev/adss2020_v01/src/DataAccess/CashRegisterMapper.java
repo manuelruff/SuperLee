@@ -26,13 +26,13 @@ public class CashRegisterMapper {
 
     public static void ReadCancellations(String BranchName,int year,int month,int day){
         Connection conn = Connect.getConnection();
-        String StringTime = day+"."+month+"."+year;
-        if(AlreadyLoaded.get(BranchName).contains(StringTime)) {
+        String StringDate = day+"."+month+"."+year;
+        if(AlreadyLoaded.get(BranchName).contains(StringDate)) {
             double amount;
             String NameOfCanceler, IDOfCanceler, NameOfProduct;
             try {
                 java.sql.Statement stmt = conn.createStatement();
-                java.sql.ResultSet rs = stmt.executeQuery("select * from Cancellations WHERE Time==" + StringTime + " AND SuperName== " + BranchName + "");
+                java.sql.ResultSet rs = stmt.executeQuery("select * from Cancellations WHERE Date==" + StringDate + " AND SuperName== " + BranchName + "");
                 while(rs.next()){
                     NameOfCanceler = rs.getString("NameOfCanceler");
                     IDOfCanceler = rs.getString("IDOfCanceler");
@@ -41,7 +41,7 @@ public class CashRegisterMapper {
                     Cancellations cancel = new Cancellations(amount, NameOfProduct, IDOfCanceler, NameOfCanceler);
                     CashRegisterMap.get(BranchName).AddCancalation(cancel);
                 }
-                AlreadyLoaded.put(BranchName,StringTime);
+                AlreadyLoaded.put(BranchName,StringDate);
             }
             catch (SQLException e) {
                 System.out.println("i have a problem sorry");
@@ -54,12 +54,12 @@ public class CashRegisterMapper {
         if(!CashRegisterMap.containsKey(BranchName))
             CashRegisterMap.put(BranchName,new CashRegister());
     }
-/*
-    public static void WriteAllCancellation(){
+
+    public static void WriteAllCancellations(){
         for(String name:CashRegisterMap.keySet()){
             for (Cancellations cancellations : CashRegisterMap.get(name).getAllCancellations()){
                 Connection conn = Connect.getConnection();
-                String SuperName,StringDate, NameOfCanceler, IDOfCanceler, NameOfProduct;
+                String StringDate, StringTime ,NameOfCanceler, IDOfCanceler, NameOfProduct;
                 double amount;
                 try {
                     java.sql.Statement stmt = conn.createStatement();
@@ -67,10 +67,10 @@ public class CashRegisterMapper {
                     NameOfCanceler = cancellations.getNameOfCanceller();
                     IDOfCanceler = cancellations.getIDOfCanceller();
                     NameOfProduct = cancellations.getNameOfProduct();
-                    stmt.executeUpdate("INSERT INTO Worker " +
-                            "VALUES("+id+","+name+","+bank+","+startdate+","+contract+","+password+"," +
-                            ""+bonus+","+wage+","+shiftworked+") " +
-                            "WHERE ("+id+" NOT IN (SELECT ID FROM Worker)");
+                    StringDate = cancellations.getDate();
+                    StringTime = cancellations.getTime();
+                    stmt.executeUpdate("INSERT INTO Cancellations " +
+                            "VALUES("+name+","+StringTime+","+StringDate+","+NameOfCanceler+","+IDOfCanceler+","+NameOfProduct);
                 }
                 catch (SQLException e) {
                     System.out.println("i have a problem sorry");
@@ -79,10 +79,5 @@ public class CashRegisterMapper {
         }
 
     }
-
-
-
- */
-
 
 }
