@@ -8,7 +8,7 @@ import java.util.*;
 //this will be singleton
 public class GeneralController {
     private static GeneralController instance;
-    // untl the DB
+    // until the DB
     //all the branches of the company
     public static Map<String, Super> Superim;
     //all the Workers in the company

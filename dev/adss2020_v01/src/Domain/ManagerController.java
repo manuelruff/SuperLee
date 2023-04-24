@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class ManagerController {
     private static ManagerController instance;
     private GeneralController generalController = GeneralController.getInstance();
-    private String ManagerPassword;
+    private static String ManagerPassword;
     private ManagerController(){
         ManagerPasswordMapper.getInstance();
         ManagerPassword= ManagerPasswordMapper.getManagerPassword();
@@ -31,7 +31,7 @@ public class ManagerController {
      * @param password input password
      * @return true if password is correct
      */
-   public boolean checkPassword(String password){
+   public static boolean checkPassword(String password){
         return password.equals(ManagerPassword);
    }
 
@@ -39,7 +39,7 @@ public class ManagerController {
      * change the password in the database and the instance
      * @param password new password
      */
-    public void setManagerPassword(String password){
+    public static void setManagerPassword(String password){
         ManagerPassword=password;
         ManagerPasswordMapper.setManagerPassword(password);
     }
@@ -48,7 +48,7 @@ public class ManagerController {
      * the function allows the HR manager to add new branch of markert
      * @param new_super - the name of the new branch
      */
-    public void addSuper(Super new_super) {
+    public static void addSuper(Super new_super) {
         GeneralController.Superim.put(new_super.GetName(), new_super);
     }
 
@@ -56,7 +56,7 @@ public class ManagerController {
      * the function allows the HR manager to create new weekly
      * @param Name - the name of the branch he wants to create a new weekly
      */
-    public void CreateWeekly(String Name) {
+    public static void CreateWeekly(String Name) {
         //we get the object of the super we wanna add a weekly to
         Super curr = GeneralController.Superim.get(Name);
         List<String> CanWorkList;
@@ -160,7 +160,7 @@ public class ManagerController {
      * @param e_s - the start hour at evening
      * @param e_e - the end hour at mevening
      */
-    public void UpdateSuperTimes(String Name, Days day, double m_s, double m_e, double e_s, double e_e) {
+    public static void UpdateSuperTimes(String Name, Days day, double m_s, double m_e, double e_s, double e_e) {
         Super curr = GeneralController.Superim.get(Name);
         curr.setStart_morning(day, m_s);
         curr.setEnd_morning(day, m_e);
@@ -171,7 +171,7 @@ public class ManagerController {
     /**
      * the function pay the salaries to the workers
      */
-    public void Payment() {
+    public static void Payment() {
         for (Worker worker : GeneralController.Workers.values()) {
             worker.CalculateSalary();
             worker.resetBonus();
@@ -182,7 +182,7 @@ public class ManagerController {
     /**
      * the function send the constraints of all the workers to history
      */
-    public void SendConstraintsToHistory() {
+    public static void SendConstraintsToHistory() {
         //send all the weekly to history
         for (Super sup : GeneralController.Superim.values()) {
             sup.SendConstraintsToHistory();
@@ -197,7 +197,7 @@ public class ManagerController {
      * the function checks if all the branches have weekly
      * @return true if indeed
      */
-    public boolean CheckAllHaveWeekly() {
+    public static boolean CheckAllHaveWeekly() {
         for (Super sup : GeneralController.Superim.values()) {
             if (!sup.HasWeekly()) {
                 return false;
@@ -211,7 +211,7 @@ public class ManagerController {
      * @param newEmployee - Worker object
      * @param branchName - the branch we want to add the worker to
      */
-    public void AddNewWorker(Worker newEmployee, String branchName) {
+    public static void AddNewWorker(Worker newEmployee, String branchName) {
         // create the worker using all the data the manger entered
         //Domain.Worker new_worker = new Domain.Worker(ID, name, bank, contract, wage, job, password);
         for (Map.Entry<String, Super> entry : GeneralController.Superim.entrySet()) {
@@ -224,7 +224,7 @@ public class ManagerController {
     }
 
     //removes a worker from the company
-    public void RemoveWorkerAllBranches(String ID) {
+    public static void RemoveWorkerAllBranches(String ID) {
         // check if the branch name is existed in the superim list
         for (Map.Entry<String, Super> entry : GeneralController.Superim.entrySet()) {
             // remove if from every branch he works at
@@ -236,20 +236,20 @@ public class ManagerController {
         GeneralController.Workers.remove(ID);
     }
     //add a job for a worker (role) by id
-    public void AddJobToWorker(String ID, int job_index) {
+    public static void AddJobToWorker(String ID, int job_index) {
         GeneralController.Workers.get(ID).AddJob(Jobs.values()[job_index - 1]);
     }
     //changes the wage of a worker by id
-    public void ChangeWage(String ID, int wage) {
+    public static void ChangeWage(String ID, int wage) {
         GeneralController.Workers.get(ID).setWage(wage);
     }
     //changes the contract of a worker by id
-    public void ChangeContract(String ID, String input_Contract) {
+    public static void ChangeContract(String ID, String input_Contract) {
         GeneralController.Workers.get(ID).setContract(input_Contract);
     }
 
     //add worker by id to branch
-    public boolean AddWorkerToBranch(String ID, String branchName) {
+    public static boolean AddWorkerToBranch(String ID, String branchName) {
         if (GeneralController.Superim.get(branchName).GetWorkersIDS().contains(ID)) {
             return false;
         }
@@ -259,21 +259,21 @@ public class ManagerController {
     }
 
     // add bonus to worker by given ID
-    public String addBonusToWorker(String ID, double bonus) {
+    public static String addBonusToWorker(String ID, double bonus) {
         GeneralController.Workers.get(ID).addBonus(bonus);
         return GeneralController.Workers.get(ID).GetName();
     }
 
-    public String  removeBonusToWorker(String ID, double bonus) {
+    public static String removeBonusToWorker(String ID, double bonus) {
         GeneralController.Workers.get(ID).removeBonus(bonus);
         return GeneralController.Workers.get(ID).GetName();
     }
 
-    public boolean HasWeekly(String Name) {
+    public static boolean HasWeekly(String Name) {
         return GeneralController.Superim.get(Name).HasWeekly();
     }
     //prints the shifts of one day for a branch (morning and evening)
-    public void PrintDay(String Name, int day) {
+    public static void PrintDay(String Name, int day) {
         //we get the object of the super
         Super curr = GeneralController.Superim.get(Name);
         Weekly week = curr.GetWeekShifts();
@@ -285,7 +285,7 @@ public class ManagerController {
         }
     }
     // remove worker from a shift of a branch
-    public boolean RemoveFromDay(String ID, String branch, int day) {
+    public static boolean RemoveFromDay(String ID, String branch, int day) {
         if (!IsWorkAtDay(branch, ID, day)) {
             return false;
         }
@@ -303,7 +303,7 @@ public class ManagerController {
     }
 
     // add worker to a shift int a branch
-    public void AddToDay(String ID, String branch, int shift_op, int day) {
+    public static void AddToDay(String ID, String branch, int shift_op, int day) {
         double s = 0;
         double e = 0;
         //savres it to use in day
@@ -360,7 +360,7 @@ public class ManagerController {
         }
     }
     //prints current weekly shifts of a branch
-    public boolean PrintWeekly(String Name) {
+    public static boolean PrintWeekly(String Name) {
         //we get the object of the weekly
         Weekly week = GeneralController.Superim.get(Name).GetWeekShifts();
         if (week == null) {
@@ -371,19 +371,19 @@ public class ManagerController {
         }
     }
     //print a shift from history of a branch by its date if exists
-    public void PrintWeeklyFromHist(String Name, int year, int month, int day) {
+    public static void PrintWeeklyFromHist(String Name, int year, int month, int day) {
         GeneralController.Superim.get(Name).PrintWeekFromHistByDate(year, month, day);
     }
 
     //remove a worker from a branch by id
-    public void RemoveWorker(String ID, String Name) {
+    public static void RemoveWorker(String ID, String Name) {
         Super curr = GeneralController.Superim.get(Name);
         curr.RemoveWorker(ID);
     }
 
     // new added to connect between controllers functions - manu will check if its good or yell at me :(
-    public boolean IsWorksInSuper(String ID, String SuperName){return GeneralController.IsWorksInSuper(ID,SuperName);}
+    public static boolean IsWorksInSuper(String ID, String SuperName){return GeneralController.IsWorksInSuper(ID,SuperName);}
 
-    public boolean isExistWorker(String ID){return GeneralController.isExistWorker(ID);}
-    public boolean CheckBranchExist(String branchName){return GeneralController.CheckSuperName(branchName);}
+    public static boolean isExistWorker(String ID){return GeneralController.isExistWorker(ID);}
+    public static boolean CheckBranchExist(String branchName){return GeneralController.CheckSuperName(branchName);}
 }

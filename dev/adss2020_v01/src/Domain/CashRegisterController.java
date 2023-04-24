@@ -16,14 +16,14 @@ public class CashRegisterController {
         return instance;
     }
     //add a cash cancellations
-    public void AddCancellations(String Name, String item, double amount, String ID) {
+    public static void AddCancellations(String Name, String item, double amount, String ID) {
         //create the cancallation
         Cancellations cancel = new Cancellations(amount, item, ID, GeneralController.Workers.get(ID).GetName());
         //add the cancellation to the super
         GeneralController.Superim.get(Name).get_cash_register().AddCancalation(cancel);
     }
     //print Domain.Cancellations of a specific date in a branch
-    public void PrintCancellation(String Name, int year, int month, int day) {
+    public static void PrintCancellation(String Name, int year, int month, int day) {
         GeneralController.Superim.get(Name).get_cash_register().PrintCancellation(year, month, day);
     }
 
@@ -32,6 +32,6 @@ public class CashRegisterController {
      * @param ID - the Id of the worker
      * @return true/false
      */
-    public boolean CheckWorkerCanCancel(String ID){return GeneralController.CanDoJob(ID,Jobs.ShiftManager);}
+    public static boolean CheckWorkerCanCancel(String ID){return GeneralController.CanDoJob(ID,Jobs.ShiftManager);}
 
 }

@@ -1,5 +1,6 @@
 package Presentation;
 
+import Domain.GeneralController;
 import Domain.ReshetInfo;
 import Domain.WorkerController;
 
@@ -114,7 +115,7 @@ public class WorkerUI {
                                 double Constraints_num_start=UIGeneralFnctions.AskForDoubleNumber();
                                 System.out.println("please enter the end of the time that you cant work at (it needs to look like: 10.00 for 10): ");
                                 double Constraints_num_end=UIGeneralFnctions.AskForDoubleNumber();
-                                if (!workerController.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
+                                if (!UIGeneralFnctions.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
                                     System.out.println("not valid, please try again");
                                     break;
                                 }
@@ -157,7 +158,7 @@ public class WorkerUI {
                                 System.out.println("please enter the end of the time that you cant work at (it needs to look like: 22.00 for 22pm): ");
                                 double Constraints_num_end=UIGeneralFnctions.AskForDoubleNumber();
                                 // check if the Domain.Constraints number is valid
-                                if (!workerController.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
+                                if (!UIGeneralFnctions.CheckTimeValidate(Constraints_num_start, Constraints_num_end)){
                                     System.out.println("not valid, please try again");
                                     break;
                                 }

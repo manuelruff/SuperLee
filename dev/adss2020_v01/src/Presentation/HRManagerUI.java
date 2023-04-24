@@ -196,7 +196,7 @@ public class HRManagerUI {
                                         double Constraints_num_morning_end = Double.parseDouble(input_Constraints_2);
                                         double Constraints_num_evening_start = Double.parseDouble(input_Constraints_3);
                                         double Constraints_num_evening_end = Double.parseDouble(input_Constraints_4);
-                                        if(!managerController.CheckTimeValidate(Constraints_num_morning_start, Constraints_num_morning_end) || !info.CheckTimeValidate(Constraints_num_evening_start, Constraints_num_evening_end)){
+                                        if(!UIGeneralFnctions.CheckTimeValidate(Constraints_num_morning_start, Constraints_num_morning_end) || !UIGeneralFnctions.CheckTimeValidate(Constraints_num_evening_start, Constraints_num_evening_end)){
                                             System.out.println("invalid time input - hours should be between 10.00-24.59 (note that seconds is .0-.59!");
                                         }
                                         else {
