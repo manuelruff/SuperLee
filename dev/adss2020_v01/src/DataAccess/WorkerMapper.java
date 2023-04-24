@@ -6,7 +6,6 @@ import Domain.Worker;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 //this will be singleton
@@ -128,12 +127,34 @@ public class WorkerMapper {
             }
         }
     }
+    public static void UpdateWorker(String ID) {
+        Worker worker=WorkerMap.get(ID);
+        Connection conn = Connect.getConnection();
+        String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            id=worker.getID();
+            name=worker.getName();
+            bank=String.valueOf(worker.getBank());
+            //check what this gives
+            startdate=worker.getStartDate().toString();
+            contract=worker.getContract();
+            password=worker.getPassword();
+            bonus=String.valueOf(worker.getBonus());
+            wage=String.valueOf(worker.getWage());
+            shiftworked=String.valueOf(worker.getShiftWorked());
+            stmt.executeUpdate("UPDATE Worker SET name="+name+",bank="+bank+",startdate="+startdate+
+                    ",contract="+contract+",password="+password+",bonus="+bonus+",wage="+wage+",shiftworked="+shiftworked+
+                    " WHERE ID="+id);
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
     public static void main(String[] args) {
         GetInstance();
         ReadWorker("1");
         ReadWorker("2");
     }
-
-
 
 }

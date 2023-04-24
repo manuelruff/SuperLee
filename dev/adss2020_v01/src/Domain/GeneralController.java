@@ -2,6 +2,7 @@ package Domain;
 
 import DataAccess.Connect;
 import DataAccess.StartData;
+import DataAccess.WorkerMapper;
 import junit.framework.Test;
 
 import java.util.*;
@@ -111,8 +112,11 @@ public class GeneralController {
     public static boolean CanDoJob(String ID, Jobs job) {
         return Workers.get(ID).CanDoJob(job);
     }
+
     public static void closeDB(){
         Connect.CloseConnection();
     }
+
+
 }
 
