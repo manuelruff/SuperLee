@@ -56,7 +56,11 @@ public class CashRegisterMapper {
     }
 
     public static void WriteAllCancellation(){
-        for(CashRegister cr:)
+        for(CashRegister cr:CashRegisterMap.values()){
+            for (Cancellations cancellations : cr.getAllCancellations()){
+                System.out.println("blalslsad");
+            }
+        }
 
     }
 
