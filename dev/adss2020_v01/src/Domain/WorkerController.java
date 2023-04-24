@@ -55,7 +55,9 @@ public class WorkerController {
     }
 
     // im not sure this one should be here
-    public static boolean isExistWorker(String ID){return GeneralController.isExistWorker(ID);}
+    public static boolean isExistWorker(String ID){
+        return GeneralController.isExistWorker(ID);
+    }
 
 //    public static void UpdateWorker(String ID){
 //        WorkerMapper.UpdateWorker(ID);

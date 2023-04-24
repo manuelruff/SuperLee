@@ -15,8 +15,10 @@ import java.util.Map;
 public class WorkerMapper {
     private static WorkerMapper instance=new WorkerMapper();
     private static Map<String,Worker> WorkerMap;
+    private static Connection conn;
     private WorkerMapper(){
         WorkerMap=new HashMap<>();
+        conn = Connect.getConnection();
     }
     public static WorkerMapper GetInstance(){
         return instance;
@@ -38,7 +40,6 @@ public class WorkerMapper {
      *
      */
     private static void ReadWorker(String ID){
-        Connection conn = Connect.getConnection();
         String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
         try {
             java.sql.Statement stmt = conn.createStatement();
@@ -73,13 +74,14 @@ public class WorkerMapper {
      * @param ID
      */
     private static void ReadJobs(String ID){
-        Connection conn = Connect.getConnection();
             String job;
             try {
                 java.sql.Statement stmt = conn.createStatement();
                 java.sql.ResultSet rs = stmt.executeQuery("select * from WorkersJobs WHERE WorkerID=="+ID+"" );
-                job=rs.getString("Job");
-                WorkerMap.get(ID).AddJob(Jobs.valueOf(job));
+                while (rs.next()){
+                    job=rs.getString("Job");
+                    WorkerMap.get(ID).AddJob(Jobs.valueOf(job));
+                }
             }
             catch (SQLException e) {
                 System.out.println("i have a problem sorry");
@@ -90,13 +92,14 @@ public class WorkerMapper {
      * @param ID
      */
     private static void ReadWorkingDays(String ID){
-        Connection conn = Connect.getConnection();
         String day;
         try {
             java.sql.Statement stmt = conn.createStatement();
             java.sql.ResultSet rs = stmt.executeQuery("select * from WeeklyWorkingDays WHERE WorkerID=="+ID+"" );
-            day=rs.getString("Day");
-            WorkerMap.get(ID).AddShift(Days.valueOf(day));
+            while (rs.next()){
+                day=rs.getString("Day");
+                WorkerMap.get(ID).AddShift(Days.valueOf(day));
+            }
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
@@ -107,16 +110,18 @@ public class WorkerMapper {
      * @param ID
      */
     private static void ReadConstraints(String ID){
-        Connection conn = Connect.getConnection();
+
         String start,end,reason,day;
         try {
             java.sql.Statement stmt = conn.createStatement();
             java.sql.ResultSet rs = stmt.executeQuery("select * from CantWork WHERE WorkerID=="+ID+"" );
-            start=rs.getString("Start");
-            end=rs.getString("End");
-            reason=rs.getString("Reason");
-            day=rs.getString("Day");
-            WorkerMap.get(ID).AddCantWork(Days.valueOf(day),Double.parseDouble(start),Double.parseDouble(end),reason);
+            while (rs.next()){
+                start=rs.getString("Start");
+                end=rs.getString("End");
+                reason=rs.getString("Reason");
+                day=rs.getString("Day");
+                WorkerMap.get(ID).AddCantWork(Days.valueOf(day),Double.parseDouble(start),Double.parseDouble(end),reason);
+            }
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
@@ -129,7 +134,6 @@ public class WorkerMapper {
         return WorkerMap;
     }
     public static void ReadAllWorkersFromSuper(String Name){
-        Connection conn = Connect.getConnection();
         String id;
         try {
             java.sql.Statement stmt = conn.createStatement();
@@ -147,7 +151,6 @@ public class WorkerMapper {
     //we will write all the workers to the db when done, it will write the new ones and update the old ones??
     public static void WriteAllWorkers(){
         for (Worker worker:WorkerMap.values()){
-            Connection conn = Connect.getConnection();
             String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
             try {
                 java.sql.Statement stmt = conn.createStatement();
@@ -180,7 +183,6 @@ public class WorkerMapper {
      * @param ID
      */
     private static void WriteJobs(String ID){
-        Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Jobs job : WorkerMap.get(ID).getRoles()) {
@@ -196,7 +198,6 @@ public class WorkerMapper {
      * @param ID
      */
     private static void WriteWorkingDays(String ID){
-        Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Days day : WorkerMap.get(ID).getWeeklyWorkingDays()) {
@@ -212,7 +213,6 @@ public class WorkerMapper {
      * @param ID
      */
     private static void WriteConstraints(String ID){
-        Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
             for(Days day: WorkerMap.get(ID).getShiftsCantWork().keySet()){
@@ -229,7 +229,6 @@ public class WorkerMapper {
     /*
     public static void UpdateWorker(String ID) {
         Worker worker=WorkerMap.get(ID);
-        Connection conn = Connect.getConnection();
         String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
         try {
             java.sql.Statement stmt = conn.createStatement();

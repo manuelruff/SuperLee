@@ -19,7 +19,8 @@ public class GeneralController {
 
     private GeneralController() {
         Superim = StartData.getSuperim();
-        Workers = StartData.getWorkers();
+//        Workers = StartData.getWorkers();
+        Workers=WorkerMapper.getWorkerMap();
      }
 
     public static GeneralController getInstance() {
@@ -96,6 +97,8 @@ public class GeneralController {
     }
     // check if worker is exists by id
     public static boolean isExistWorker(String ID) {
+        //we tell the database to load that id if exists before we check him
+        WorkerMapper.getWorker(ID);
         return Workers.get(ID) != null;
     }
     //returns worker by id

@@ -7,10 +7,7 @@ import Domain.WorkerController;
 import java.util.Scanner;
 
 public class WorkerUI {
-
-//    private static ReshetInfo info=ReshetInfo.getInstance();
-    private static WorkerController workerController = WorkerController.getInstance();
-
+    private static WorkerController workerController;
     /**
      * worker needs to log in and it will be checked here
      */
@@ -25,7 +22,7 @@ public class WorkerUI {
             System.out.println("Password: ");
             String passwordInput = myObj.nextLine();  // Read user input
             // check if the worker enter valid inputs
-            if(!workerController.isExistWorker(ID) || !workerController.IsTruePassword(ID,passwordInput)){
+            if(!WorkerController.isExistWorker(ID) || !WorkerController.IsTruePassword(ID,passwordInput)){
                 System.out.println("invalid input - try again!");
             }
             // if the inputs were valid - call to WorkerOption menu
