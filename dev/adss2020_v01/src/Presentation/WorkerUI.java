@@ -31,8 +31,6 @@ public class WorkerUI {
             // if the inputs were valid - call to WorkerOption menu
             else {
                 WorkerOption(ID);
-                //tell the mapper to update the changed made on worker in the db
-                WorkerMapper.UpdateWorker(ID);
                 flag = false;
                 break;
             }
