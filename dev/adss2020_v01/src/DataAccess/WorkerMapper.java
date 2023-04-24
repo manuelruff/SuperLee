@@ -62,7 +62,8 @@ public class WorkerMapper {
             ReadJobs(ID);
             //add the shifts days he has to the worker
             ReadWorkingDays(ID);
-            
+            //add the shifts cant work he has to the worker
+            ReadConstraints(ID);
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
@@ -99,7 +100,22 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
-
+    private static void ReadConstraints(String ID){
+        Connection conn = Connect.getConnection();
+        String start,end,reason,day;
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet rs = stmt.executeQuery("select * from CantWork WHERE WorkerID=="+ID+"" );
+            start=rs.getString("Start");
+            end=rs.getString("End");
+            reason=rs.getString("Reason");
+            day=rs.getString("Day");
+            WorkerMap.get(ID).AddCantWork(Days.valueOf(day),Double.parseDouble(start),Double.parseDouble(end),reason);
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
     /**
      * @return the map of all the workers
      */
@@ -142,6 +158,7 @@ public class WorkerMapper {
                 stmt.executeUpdate("INSERT OR UPDATE INTO Worker " +
                         "VALUES("+id+","+name+","+bank+","+startdate+","+contract+","+password+"," +
                         ""+bonus+","+wage+","+shiftworked+") ");
+                //need to update constraint working days and etc...
             }
             catch (SQLException e) {
                 System.out.println("i have a problem sorry");

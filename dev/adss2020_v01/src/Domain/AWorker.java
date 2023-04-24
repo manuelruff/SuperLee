@@ -19,7 +19,6 @@ public abstract class AWorker {
     protected String Password;
     //the shifts he can work at
     protected Constraints ShiftsCantWork;
-
     //saves the number of days that he worked so we can pay him
     protected int ShiftWorked;
     //saves the days of the week that he is already working
