@@ -51,18 +51,16 @@ public class WorkerUI {
             System.out.println("4. show constraints ");
             System.out.println("5. Back");
             //ask for input
-            choice=UIGeneralFnctions.AskForNumber(1,5);
+            choice=UIGeneralFnctions.AskForNumber(1,4);
             switch (choice){
                 case 1:
                     int op1_choice=-1;
-                    while (op1_choice!=6) {
+                    while (op1_choice!=4) {
                         System.out.println("hello " + workerController.GetWorkerByID(ID).GetName() + " please choose the detail you want to change");
                         System.out.println("1. change password ");
                         System.out.println("2. change name");
                         System.out.println("3. change bank account");
-                        System.out.println("4. add new personal information");
-                        System.out.println("5. remove personal information");
-                        System.out.println("6. Back");
+                        System.out.println("4. Back");
                         op1_choice = UIGeneralFnctions.AskForNumber(1,6);
                         switch (op1_choice){
                             case 1:
@@ -73,7 +71,7 @@ public class WorkerUI {
                                 // change it to function in reshet info
                                 workerController.ChangeWorkerPassword(ID,input_changepass); // change the password
                                 //after we did what we want we stop
-                                op1_choice=6;
+                                op1_choice=4;
                                 break;
                             case 2:
                                 System.out.println("please enter new name:");
@@ -82,36 +80,18 @@ public class WorkerUI {
                                 String input_changename = myObj_changename.nextLine();  // Read user input
                                 workerController.ChangeWorkerName(ID,input_changename);// change name
                                 //after we did what we want we stop
-                                op1_choice=6;
+                                op1_choice=4;
                                 break;
                             case 3:
                                 System.out.println("please enter new bank details:");
                                 int newBank = UIGeneralFnctions.AskForIntNumber();
                                 workerController.ChangeWorkerBank(ID,newBank );
                                 //after we did what we want we stop
-                                op1_choice=6;
+                                op1_choice=4;
                                 break;
                             case 4:
-                                System.out.println("please enter the reason about your information:");
-                                Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-                                String reason = myObj.nextLine();  // Read user input
-                                System.out.println("please enter more details about the new information:");
-                                String information = myObj.nextLine();  // Read user input
-                                workerController.addNewInfo(ID,reason,information);
-                                //after we did what we want we stop
-                                op1_choice=6;
-                                break;
-                            case 5:
-                                System.out.println("please enter the reason about your information:");
-                                myObj = new Scanner(System.in);  // Create a Scanner object
-                                String remove_reason = myObj.nextLine();  // Read user input
-                                workerController.removeInfo(ID,remove_reason);
-                                //after we did what we want we stop
-                                op1_choice=6;
-                                break;
-                            case 6:
                                 //stop the loop and go back to previous window
-                                op1_choice=6;
+                                op1_choice=4;
                                 break;
                             default:
                                 System.out.println("please enter a valid option");
