@@ -44,7 +44,7 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+ID+"" );
-            if(rs.getFetchSize()>0) {
+            if(rs.next()) {
                 id = rs.getString("ID");
                 name = rs.getString("name");
                 bank = rs.getString("bank");
@@ -167,7 +167,7 @@ public class WorkerMapper {
                 shiftworked=String.valueOf(worker.getShiftWorked());
                 java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+id+"" );
                 //if it doesnt exists we will insert it
-                if(rs==null){
+                if(rs.next()){
                     stmt.executeUpdate("INSERT INTO Worker " +
                             "VALUES("+id+","+name+","+Integer.parseInt(bank)+"" +
                             ","+startdate+","+contract+","+password+"," +
@@ -201,7 +201,7 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Jobs job : WorkerMap.get(ID).getRoles()) {
-                stmt.executeQuery("INSERT OR UPDATE INTO WorkersJobs " +"VALUES("+ ID+" ,"+job+")");
+                stmt.executeQuery("INSERT OR IGNORE INTO WorkersJobs " +"VALUES("+ ID+" ,"+job+")");
             }
         }
         catch (SQLException e) {
@@ -216,7 +216,7 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Days day : WorkerMap.get(ID).getWeeklyWorkingDays()) {
-                stmt.executeQuery("INSERT OR UPDATE INTO WeeklyWorkingDays " +"VALUES("+ ID+" ,"+day+")");
+                stmt.executeQuery("INSERT OR IGNORE INTO WeeklyWorkingDays " +"VALUES("+ ID+" ,"+day+")");
             }
         }
         catch (SQLException e) {
@@ -232,7 +232,7 @@ public class WorkerMapper {
             java.sql.Statement stmt = conn.createStatement();
             for(Days day: WorkerMap.get(ID).getShiftsCantWork().keySet()){
                 for (CantWork cantwork : WorkerMap.get(ID).getShiftsCantWork().get(day)) {
-                    stmt.executeQuery("INSERT OR UPDATE INTO CantWork " +"VALUES("+ ID+" ,"+cantwork.getStart()+","+cantwork.getEnd()+","+day+","+cantwork.getStart()+")");
+                    stmt.executeQuery("INSERT OR IGNORE INTO CantWork " +"VALUES("+ ID+" ,"+cantwork.getStart()+","+cantwork.getEnd()+","+day+","+cantwork.getStart()+")");
                 }
             }
         }
