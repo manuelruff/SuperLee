@@ -1,5 +1,6 @@
 package DataAccess;
 
+import Domain.Jobs;
 import Domain.Worker;
 
 import java.sql.Connection;
@@ -23,6 +24,10 @@ public class WorkerMapper {
         return instance;
     }
 
+    /**
+     * @param ID id of worker
+     * @return the worker asked
+     */
     public static Worker getWorker(String ID){
         //if i dont have this worker in the data ill go read it from DB
         if (WorkerMap.get(ID)==null){
@@ -30,7 +35,13 @@ public class WorkerMapper {
         }
         return WorkerMap.get(ID);
     }
-    public static void ReadWorker(String ID){
+
+    /**
+     * this functiuon read the worker from the db
+     * @param ID id if worker
+     *
+     */
+    private static void ReadWorker(String ID){
         Connection conn = Connect.getConnection();
         String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
         try {
@@ -45,14 +56,35 @@ public class WorkerMapper {
             bonus=rs.getString("bonus");
             wage=rs.getString("wage");
             shiftworked=rs.getString("shiftworked");
-            Worker worker=new Worker(id,name,Integer.parseInt(bank),contract,Integer.parseInt(wage),password);
+            Worker worker=new Worker(id,name,Integer.parseInt(bank),contract,Double.parseDouble(wage),password);
+            //add the roles to the worker
+            ReadJobs(ID);
+            WorkerMap.put(id,worker);
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
         }
     }
 
+    /**
+     * adds the roles to the worker
+     * @param ID
+     */
+    private static void ReadJobs(String ID){
+        Connection conn = Connect.getConnection();
+        String job;
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet rs = stmt.executeQuery("select * from WorkersJobs WHERE WorkerID=="+ID+"" );
+            job=rs.getString("Job");
+            WorkerMap.get(ID).AddJob(Jobs.valueOf(job));
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
     public static void main(String[] args) {
         ReadWorker("1");
+        ReadWorker("2");
     }
 }
