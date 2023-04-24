@@ -24,7 +24,7 @@ public abstract class AWorker {
     private int ShiftWorked;
     //saves the days of the week that he is already working
     private List<Days> WeeklyWorkingDays;
-    public AWorker(String ID,String Name,  int Bank,String Contract, int Wage , String Password){
+    public AWorker(String ID,String Name,  int Bank,String Contract, double Wage , String Password){
         this.Name=Name;
         this.ID=ID;
         this.Bank=Bank;
