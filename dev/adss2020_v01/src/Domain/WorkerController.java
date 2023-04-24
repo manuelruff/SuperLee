@@ -61,6 +61,6 @@ public class WorkerController {
     public static boolean isExistWorker(String ID){return GeneralController.isExistWorker(ID);}
 
     public static void UpdateWorker(String ID){
-        WorkerMapper.GetInstance().UpdateWorker(ID);
+        WorkerMapper.UpdateWorker(ID);
     }
 }

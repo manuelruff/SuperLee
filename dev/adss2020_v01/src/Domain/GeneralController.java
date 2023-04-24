@@ -112,7 +112,6 @@ public class GeneralController {
     public static boolean CanDoJob(String ID, Jobs job) {
         return Workers.get(ID).CanDoJob(job);
     }
-
     public static void closeDB(){
         Connect.CloseConnection();
     }
