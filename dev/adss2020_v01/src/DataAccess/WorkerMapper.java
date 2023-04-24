@@ -170,16 +170,8 @@ public class WorkerMapper {
                 java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+id+"" );
                 //if it doesnt exists we will insert it
                 if(!rs.next()){
-                    System.out.println("INSERT INTO Worker " +
-                            "VALUES("+id+","+name+","+bank+"" +
-                            ","+startdate+","+contract+","+password+"," +
-                            ""+bonus+"," +
-                            ""+wage+","+shiftworked+") ");
                     stmt.executeUpdate("INSERT INTO Worker(ID, name, bank, StartDate, contract, Password, bonus, wage, ShiftWorked) " +
-                            "VALUES("+id+","+name+","+bank+"" +
-                            ","+startdate+","+contract+","+password+"," +
-                            ""+bonus+"," +
-                            ""+wage+","+shiftworked+") ");
+                            "VALUES (" + id + ", '" + name + "', " + bank + ", '" + startdate + "', '" + contract + "', '" + password + "', " + bonus + ", " + wage + ", " + shiftworked + ")");
 
                 }
                 //if its in we update it
@@ -211,7 +203,8 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Jobs job : WorkerMap.get(ID).getRoles()) {
-                stmt.executeQuery("INSERT OR IGNORE INTO WorkersJobs(WORKERID, JOB) " +"VALUES("+ ID+" ,"+job+")");
+                stmt.executeUpdate("INSERT OR IGNORE INTO WorkersJobs (WORKERID, JOB) " +
+                        "VALUES (" + ID + ", '" + job + "')");
             }
         }
         catch (SQLException e) {
@@ -226,7 +219,8 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Days day : WorkerMap.get(ID).getWeeklyWorkingDays()) {
-                stmt.executeQuery("INSERT OR IGNORE INTO WeeklyWorkingDays(WORKERID, DAY) " +"VALUES("+ ID+" ,"+day+")");
+                stmt.executeUpdate("INSERT OR IGNORE INTO WeeklyWorkingDays (WORKERID, DAY) " +
+                        "VALUES (" + ID + ", '" + day + "')");
             }
         }
         catch (SQLException e) {
@@ -242,7 +236,8 @@ public class WorkerMapper {
             java.sql.Statement stmt = conn.createStatement();
             for(Days day: WorkerMap.get(ID).getShiftsCantWork().keySet()){
                 for (CantWork cantwork : WorkerMap.get(ID).getShiftsCantWork().get(day)) {
-                    stmt.executeQuery("INSERT OR IGNORE INTO CantWork(WORKERID, Start, END, DAY,Reason) " +"VALUES("+ ID+" ,"+cantwork.getStart()+","+cantwork.getEnd()+","+day+","+cantwork.getReason()+")");
+                    stmt.executeUpdate("INSERT OR IGNORE INTO CantWork (WORKERID, Start, END, DAY, Reason) " +
+                            "VALUES (" + ID + ", '" + cantwork.getStart() + "', '" + cantwork.getEnd() + "', '" + day + "', '" + cantwork.getReason() + "')");
                 }
             }
         }
