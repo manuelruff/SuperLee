@@ -11,16 +11,19 @@ import java.util.Map;
 //this will be singleton
 public class WorkerMapper {
     private static WorkerMapper instance;
+
     private static Map<String,Worker> WorkerMap;
     private WorkerMapper(){
         WorkerMap=new HashMap<>();
     }
+
     public static WorkerMapper GetInstance(){
         if(instance==null){
             instance=new WorkerMapper();
         }
         return instance;
     }
+
     /**
      * @param ID id of worker
      * @return the worker asked
@@ -32,6 +35,7 @@ public class WorkerMapper {
         }
         return WorkerMap.get(ID);
     }
+
     /**
      * this functiuon read the worker from the db
      * @param ID id if worker
@@ -53,14 +57,15 @@ public class WorkerMapper {
             wage=rs.getString("wage");
             shiftworked=rs.getString("shiftworked");
             Worker worker=new Worker(id,name,Integer.parseInt(bank),contract,Double.parseDouble(wage),password);
-            WorkerMap.put(id,worker);
             //add the roles to the worker
             ReadJobs(ID);
+            WorkerMap.put(id,worker);
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
         }
     }
+
     /**
      * adds the roles to the worker
      * @param ID
@@ -152,9 +157,7 @@ public class WorkerMapper {
         }
     }
     public static void main(String[] args) {
-        GetInstance();
         ReadWorker("1");
         ReadWorker("2");
     }
-
 }

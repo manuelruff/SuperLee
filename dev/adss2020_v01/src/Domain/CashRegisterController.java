@@ -24,7 +24,7 @@ public class CashRegisterController {
     }
     //print Domain.Cancellations of a specific date in a branch
     public static void PrintCancellation(String Name, int year, int month, int day) {
-        GeneralController.Superim.get(Name).get_cash_register().PrintCancellation(year, month, day);
+        GeneralController.Superim.get(Name).get_cash_register().PrintCancellation(Name,year, month, day);
     }
 
     /**
