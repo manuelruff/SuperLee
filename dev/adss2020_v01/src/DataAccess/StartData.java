@@ -188,7 +188,6 @@ public class StartData {
     public static void main(String[] args) {
         WriteWorkers();
     }
-
     //write the workers to the database
     public static void WriteWorkers() {
         Connection conn = Connect.getConnection();
