@@ -187,6 +187,9 @@ public class StartData {
     }
     public static void main(String[] args) {
         WriteWorkers();
+        WriteSupers();
+        WriteWokersToSupers();
+        WriteWokersToJobs();
     }
     //write the workers to the database
     public static void WriteWorkers() {
@@ -305,26 +308,113 @@ public class StartData {
                     "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
                             " VALUES (33,'alosantos',1,'4.2.2000','asd',123,0,15,0)");
 
-
-
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
         }
     }
+    //write the supers to the database
     public static void WriteSupers(){
         Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
-            stmt.executeUpdate(
-                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
-                            " VALUES (30,'ahrak',1,'4.2.2000','asd',123,0,15,0)");
-            stmt.executeUpdate(
-                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
-                            " VALUES (31,'midbar',1,'4.2.2000','asd',123,0,15,0)");
-            stmt.executeUpdate(
-                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
-                            " VALUES (32,'sahara',1,'4.2.2000','asd',123,0,15,0)");
+            stmt.executeUpdate("INSERT INTO Super(name, StartMorning, EndMorning, StartEvening, EndEvening) " +
+                    "VALUES('zolretzah',7,14,14,22)");
+            stmt.executeUpdate("INSERT INTO Super(name, StartMorning, EndMorning, StartEvening, EndEvening) " +
+                    "VALUES('yakarmeod',7,14,14,22)");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
+    //connect the workers and supers in thhe database
+    public static void WriteWokersToSupers(){
+        for (int i=1;i<=33;i++){
+            Connection conn = Connect.getConnection();
+            try {
+                java.sql.Statement stmt = conn.createStatement();
+                stmt.executeUpdate("INSERT INTO WorkesAt(WorkerId, SuperName) " +
+                        "VALUES("+i+",'yakarmeod')");
+                stmt.executeUpdate("INSERT INTO WorkesAt(WorkerId, SuperName) " +
+                        "VALUES("+i+",'zolretzah')");
+            }
+            catch (SQLException e) {
+                System.out.println("i have a problem sorry");
+            }
+        }
+    }
+    //connect the workers and jobs in thhe database
+    public static void WriteWokersToJobs(){
+        Connection conn = Connect.getConnection();
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(1,'ShiftManager')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(2,'ShiftManager')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(3,'ShiftManager')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(4,'ShiftManager')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(5,'ShiftManager')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(6,'ShiftManager')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(7,'ShiftManager')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(8,'ShiftManager')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(9,'ShiftManager')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(10,'Cashier')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(11,'Cashier')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(12,'Cashier')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(13,'Cashier')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(14,'StoreKeeper')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(15,'StoreKeeper')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(16,'StoreKeeper')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(17,'StoreKeeper')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(18,'GeneralEmp')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(19,'GeneralEmp')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(20,'GeneralEmp')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(21,'GeneralEmp')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(22,'Guard')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(23,'Guard')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(24,'Guard')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(25,'Guard')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(26,'Cleaner')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(27,'Cleaner')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(28,'Cleaner')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(29,'Cleaner')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(30,'Usher')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(31,'Usher')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(32,'Usher')");
+            stmt.executeUpdate("INSERT INTO WorkersJobs(WorkerID, Job) " +
+                    "VALUES(33,'Usher')");
+
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
