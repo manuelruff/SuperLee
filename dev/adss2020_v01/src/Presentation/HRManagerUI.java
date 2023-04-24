@@ -400,7 +400,7 @@ public class HRManagerUI {
         role_choice = UIGeneralFnctions.AskForNumber(1,7);
         // create a generic password for the new worker
         String generic_Password = "123";
-        return new Worker(input_newName,input_newID,bankNum,input_newContract,wage, Jobs.values()[role_choice-1],generic_Password);
+        return new Worker(input_newID,input_newName,bankNum,input_newContract,wage, Jobs.values()[role_choice-1],generic_Password);
     }
 
     public static Super CreateNewSuper(){

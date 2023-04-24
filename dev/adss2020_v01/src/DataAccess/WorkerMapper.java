@@ -167,12 +167,13 @@ public class WorkerMapper {
                 shiftworked=String.valueOf(worker.getShiftWorked());
                 java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+id+"" );
                 //if it doesnt exists we will insert it
-                if(rs.next()){
+                if(!rs.next()){
                     stmt.executeUpdate("INSERT INTO Worker " +
                             "VALUES("+id+","+name+","+Integer.parseInt(bank)+"" +
                             ","+startdate+","+contract+","+password+"," +
                             ""+Double.parseDouble(bonus)+"," +
                             ""+Double.parseDouble(wage)+","+Integer.parseInt(shiftworked)+") ");
+
                 }
                 //if its in we update it
                 else{
@@ -232,7 +233,7 @@ public class WorkerMapper {
             java.sql.Statement stmt = conn.createStatement();
             for(Days day: WorkerMap.get(ID).getShiftsCantWork().keySet()){
                 for (CantWork cantwork : WorkerMap.get(ID).getShiftsCantWork().get(day)) {
-                    stmt.executeQuery("INSERT OR IGNORE INTO CantWork " +"VALUES("+ ID+" ,"+cantwork.getStart()+","+cantwork.getEnd()+","+day+","+cantwork.getStart()+")");
+                    stmt.executeQuery("INSERT OR IGNORE INTO CantWork " +"VALUES("+ ID+" ,"+cantwork.getStart()+","+cantwork.getEnd()+","+day+","+cantwork.getReason()+")");
                 }
             }
         }
