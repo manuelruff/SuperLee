@@ -78,9 +78,9 @@ public class CashRegisterMapper {
                     NameOfProduct = cancellations.getNameOfProduct();
                     StringDate = cancellations.getDate();
                     StringTime = cancellations.getTime();
-                    stmt.executeUpdate("INSERT OR IGNORE INTO Cancellations (SuperName, Time, Date ,Amount, NameOfCanceler, IDOfCanceler, NameOfProduct) VALUES (" + name + ", '" + StringTime
-                            + "', '" + StringDate + "', '"+ amount +"', '" + NameOfCanceler + "', '" + IDOfCanceler +  "', '" +NameOfProduct +"')");
-
+                    //stmt.executeUpdate("INSERT OR IGNORE INTO Cancellations (SuperName, Time, Date ,Amount, NameOfCanceler, IDOfCanceler, NameOfProduct) VALUES (" + name + ", '" + StringTime
+                    //        + "', '" + StringDate + "', '"+ amount +"', '" + NameOfCanceler + "', '" + IDOfCanceler +  "', '" +NameOfProduct +"')");
+                    stmt.executeUpdate("INSERT OR IGNORE INTO Cancellations (SuperName, Time, Date, Amount, NameOfCanceler, IDOfCanceler, NameOfProduct) VALUES ('" + name + "', '" + StringTime + "', '" + StringDate + "', "+ amount +", '" + NameOfCanceler + "', '" + IDOfCanceler +  "', '" +NameOfProduct +"')");
                 }
                 catch (SQLException e) {
                     System.out.println("i have a problem sorry");
