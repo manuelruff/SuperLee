@@ -30,15 +30,17 @@ public class CashRegisterMapper {
     public static void ReadCancellations(String BranchName,int year,int month,int day){
         Connection conn = Connect.getConnection();
         String StringDate = day+"."+month+"."+year;
-        if(AlreadyLoaded.isEmpty()|| AlreadyLoaded.containsKey(BranchName)){
+        if(AlreadyLoaded.containsKey(BranchName)){
             return;
         }
-        else if (AlreadyLoaded.get(BranchName).contains(StringDate)) {
+        else {
             double amount;
             String NameOfCanceler, IDOfCanceler, NameOfProduct;
             try {
                 java.sql.Statement stmt = conn.createStatement();
-                java.sql.ResultSet rs = stmt.executeQuery("select * from Cancellations WHERE Date==" + StringDate + " AND SuperName== " + BranchName + "");
+                //java.sql.ResultSet rs = stmt.executeQuery("select * from Cancellations WHERE Date==" + StringDate + " AND SuperName== " + BranchName + "");
+                java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Cancellations WHERE Date='" + StringDate + "' AND SuperName='" + BranchName + "'");
+
                 while(rs.next()){
                     NameOfCanceler = rs.getString("NameOfCanceler");
                     IDOfCanceler = rs.getString("IDOfCanceler");
@@ -60,7 +62,6 @@ public class CashRegisterMapper {
         if(!CashRegisterMap.containsKey(BranchName)){
 //            CashRegisterMap.put(BranchName,new CashRegister());
             CashRegisterMap.put(BranchName, CashRegisterController.getCashRegister(BranchName));
-
         }
     }
 
@@ -78,8 +79,6 @@ public class CashRegisterMapper {
                     NameOfProduct = cancellations.getNameOfProduct();
                     StringDate = cancellations.getDate();
                     StringTime = cancellations.getTime();
-                    //stmt.executeUpdate("INSERT OR IGNORE INTO Cancellations (SuperName, Time, Date ,Amount, NameOfCanceler, IDOfCanceler, NameOfProduct) VALUES (" + name + ", '" + StringTime
-                    //        + "', '" + StringDate + "', '"+ amount +"', '" + NameOfCanceler + "', '" + IDOfCanceler +  "', '" +NameOfProduct +"')");
                     stmt.executeUpdate("INSERT OR IGNORE INTO Cancellations (SuperName, Time, Date, Amount, NameOfCanceler, IDOfCanceler, NameOfProduct) VALUES ('" + name + "', '" + StringTime + "', '" + StringDate + "', "+ amount +", '" + NameOfCanceler + "', '" + IDOfCanceler +  "', '" +NameOfProduct +"')");
                 }
                 catch (SQLException e) {
