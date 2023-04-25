@@ -8,11 +8,9 @@ public class DataController {
     private static DataController instance=new DataController();;
     private DataController() {
     }
-
     public static DataController getInstance() {
         return instance;
     }
-
     /**
      * @param Name a branch name
      * this function will tell the mapper of workers to get all the workers of a super
@@ -33,7 +31,6 @@ public class DataController {
     public static Worker getWorker(String ID){
         return WorkerMapper.getWorker(ID);
     }
-
     public static void DeleteConstraint(String ID){
         WorkerMapper.DeleteConstraints(ID);
     }
@@ -52,7 +49,6 @@ public class DataController {
      */
     public static void saveData() {
         WorkerMapper.WriteAllWorkers();
-
         //close the connection to database when finished
         Connect.disconnect();
     }

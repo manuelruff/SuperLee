@@ -122,10 +122,20 @@ public class StartData {
         Super1.AddWorker(ShiftManager2);
         Super1.AddWorker(ShiftManager3);
         Super1.AddWorker(ShiftManager4);
+        Super1.AddWorker(ShiftManager5);
+        Super1.AddWorker(ShiftManager6);
+        Super1.AddWorker(ShiftManager7);
+        Super1.AddWorker(ShiftManager8);
+        Super1.AddWorker(ShiftManager9);
         Super2.AddWorker(ShiftManager1);
         Super2.AddWorker(ShiftManager2);
         Super2.AddWorker(ShiftManager3);
         Super2.AddWorker(ShiftManager4);
+        Super2.AddWorker(ShiftManager5);
+        Super2.AddWorker(ShiftManager6);
+        Super2.AddWorker(ShiftManager7);
+        Super2.AddWorker(ShiftManager8);
+        Super2.AddWorker(ShiftManager9);
 
         Super1.AddWorker(Cashier1);
         Super1.AddWorker(Cashier2);
@@ -339,9 +349,9 @@ public class StartData {
             Connection conn = Connect.getConnection();
             try {
                 java.sql.Statement stmt = conn.createStatement();
-                stmt.executeUpdate("INSERT INTO WorkesAt(WorkerId, SuperName) " +
+                stmt.executeUpdate("INSERT INTO WorksAt(WorkerId, SuperName) " +
                         "VALUES("+i+",'yakarmeod')");
-                stmt.executeUpdate("INSERT INTO WorkesAt(WorkerId, SuperName) " +
+                stmt.executeUpdate("INSERT INTO WorksAt(WorkerId, SuperName) " +
                         "VALUES("+i+",'zolretzah')");
             }
             catch (SQLException e) {

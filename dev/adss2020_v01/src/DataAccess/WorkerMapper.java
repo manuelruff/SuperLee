@@ -144,15 +144,15 @@ public class WorkerMapper {
         String id;
         try {
             java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("select * from WorkesAt WHERE SuperName=="+Name+"" );
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM WorksAt WHERE SuperName='" + Name + "'");
             while (rs.next()){
-                id=rs.getString("ID");
+                id=rs.getString("WorkerID");
                 //if i had him in database already i wont do it again
                 getWorker(id);
             }
         }
         catch (SQLException e) {
-
+            System.out.println("i have a problem sorry");
         }
     }
     public static void ReadAllWorkers(){
@@ -171,7 +171,6 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
-
     //we will write all the workers to the db when done, it will write the new ones and update the old ones??
     public static void WriteAllWorkers(){
         for (Worker worker:WorkerMap.values()){
@@ -238,8 +237,7 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Days day : WorkerMap.get(ID).getWeeklyWorkingDays()) {
-                stmt.executeUpdate("INSERT INTO WeeklyWorkingDays (WORKERID, DAY) VALUES (" + ID + ", '" + day + "')" +
-                        " ON DUPLICATE KEY UPDATE DAY = '" + day + "'");
+                stmt.executeUpdate("INSERT OR IGNORE INTO WeeklyWorkingDays (WORKERID, DAY) VALUES (" + ID + ", '" + day + "')");
             }
         }
         catch (SQLException e) {
@@ -255,11 +253,8 @@ public class WorkerMapper {
             java.sql.Statement stmt = conn.createStatement();
             for(Days day: WorkerMap.get(ID).getShiftsCantWork().keySet()){
                 for (CantWork cantwork : WorkerMap.get(ID).getShiftsCantWork().get(day)) {
-                    stmt.executeUpdate("INSERT INTO CantWork (WORKERID, Start, END, DAY, Reason) VALUES (" + ID + ", '" + cantwork.getStart()
-                            + "', '" + cantwork.getEnd() + "', '" + day + "', '" + cantwork.getReason() + "') " +
-                            "ON DUPLICATE KEY UPDATE Start = '" + cantwork.getStart() + "', END = '" + cantwork.getEnd() +
-                            "', Reason = '" + cantwork.getReason() + "'");
-
+                    stmt.executeUpdate("INSERT OR IGNORE INTO CantWork (WORKERID, Start, END, DAY, Reason) VALUES (" + ID + ", '" + cantwork.getStart()
+                            + "', '" + cantwork.getEnd() + "', '" + day + "', '" + cantwork.getReason() + "')");
                 }
             }
         }
@@ -267,7 +262,6 @@ public class WorkerMapper {
             System.out.println("i have a problem iun writing constraints sorry");
         }
     }
-
     /**
      * we will delete his constraints and it will be updated with the new ones in the db after the program closees
      * @param ID id of worker
@@ -294,6 +288,8 @@ public class WorkerMapper {
             System.out.println("i have a problem iun writing constraints sorry");
         }
     }
+
+
 
 
 //    public static void main(String[] args) {
