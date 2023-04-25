@@ -206,7 +206,6 @@ public class StartData {
         WriteWokersToSupers();
         WriteWokersToJobs();
     }
-
     //write the workers to the database
     public static void WriteWorkers() {
         Connection conn = Connect.getConnection();
