@@ -176,11 +176,9 @@ public class WorkerMapper {
                 }
                 //if its in we update it
                 else{
-                    stmt.executeUpdate("INSERT OR UPDATE INTO Worker(ID, name, bank, StartDate, contract, Password, bonus, wage, ShiftWorked) " +
-                            "VALUES("+id+","+name+","+bank+"" +
-                            ","+startdate+","+contract+","+password+"," +
-                            ""+bonus+"," +
-                            ""+wage+","+shiftworked+") " );
+                    stmt.executeUpdate("UPDATE Worker SET name='" + name + "', bank='" + bank + "', StartDate='" + startdate +
+                            "', contract='" + contract + "', Password='" + password + "', bonus=" + bonus + ", wage=" + wage +
+                            ", ShiftWorked=" + shiftworked + " WHERE ID=" + id);
                     //we need to update all his other stuff
                 }
 
@@ -203,8 +201,7 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Jobs job : WorkerMap.get(ID).getRoles()) {
-                stmt.executeUpdate("INSERT OR IGNORE INTO WorkersJobs (WORKERID, JOB) " +
-                        "VALUES (" + ID + ", '" + job + "')");
+                stmt.executeUpdate("INSERT OR IGNORE INTO WorkersJobs (WORKERID, JOB) VALUES (" + ID + ", '" + job.toString() + "')");
             }
         }
         catch (SQLException e) {
@@ -219,8 +216,8 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Days day : WorkerMap.get(ID).getWeeklyWorkingDays()) {
-                stmt.executeUpdate("INSERT OR IGNORE INTO WeeklyWorkingDays (WORKERID, DAY) " +
-                        "VALUES (" + ID + ", '" + day + "')");
+                stmt.executeUpdate("INSERT INTO WeeklyWorkingDays (WORKERID, DAY) VALUES (" + ID + ", '" + day + "')" +
+                        " ON DUPLICATE KEY UPDATE DAY = '" + day + "'");
             }
         }
         catch (SQLException e) {
@@ -236,8 +233,11 @@ public class WorkerMapper {
             java.sql.Statement stmt = conn.createStatement();
             for(Days day: WorkerMap.get(ID).getShiftsCantWork().keySet()){
                 for (CantWork cantwork : WorkerMap.get(ID).getShiftsCantWork().get(day)) {
-                    stmt.executeUpdate("INSERT OR IGNORE INTO CantWork (WORKERID, Start, END, DAY, Reason) " +
-                            "VALUES (" + ID + ", '" + cantwork.getStart() + "', '" + cantwork.getEnd() + "', '" + day + "', '" + cantwork.getReason() + "')");
+                    stmt.executeUpdate("INSERT INTO CantWork (WORKERID, Start, END, DAY, Reason) VALUES (" + ID + ", '" + cantwork.getStart()
+                            + "', '" + cantwork.getEnd() + "', '" + day + "', '" + cantwork.getReason() + "') " +
+                            "ON DUPLICATE KEY UPDATE Start = '" + cantwork.getStart() + "', END = '" + cantwork.getEnd() +
+                            "', Reason = '" + cantwork.getReason() + "'");
+
                 }
             }
         }
@@ -245,6 +245,8 @@ public class WorkerMapper {
             System.out.println("i have a problem iun writing constraints sorry");
         }
     }
+
+
 
 //    public static void main(String[] args) {
 //        ReadWorker("1");

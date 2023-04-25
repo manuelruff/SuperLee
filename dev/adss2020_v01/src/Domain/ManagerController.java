@@ -1,5 +1,6 @@
 package Domain;
 
+import DataAccess.DataController;
 import DataAccess.ManagerPasswordMapper;
 
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class ManagerController {
      * @param Name - the name of the branch he wants to create a new weekly
      */
     public static void CreateWeekly(String Name) {
+        //we first need to load all the workers for this super from the db
+        DataController.loadAllWorkersFromSuper(Name);
         //we get the object of the super we wanna add a weekly to
         Super curr = GeneralController.Superim.get(Name);
         List<String> CanWorkList;

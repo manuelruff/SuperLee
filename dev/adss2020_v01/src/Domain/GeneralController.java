@@ -98,7 +98,7 @@ public class GeneralController {
     // check if worker is exists by id
     public static boolean isExistWorker(String ID) {
         //we tell the database to load that id if exists before we check him
-        WorkerMapper.getWorker(ID);
+        DataController.getWorker(ID);
         return Workers.get(ID) != null;
     }
     //returns worker by id
@@ -118,7 +118,7 @@ public class GeneralController {
      * it will save the data in the database and close the connection
      */
     public static void closeDB(){
-        DataController.getInstance().saveData();
+        DataController.saveData();
     }
 
 
