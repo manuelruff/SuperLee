@@ -2,6 +2,7 @@ package Domain;
 
 //this will be singletone
 
+import DataAccess.DataController;
 import DataAccess.WorkerMapper;
 
 /**
@@ -30,6 +31,8 @@ public class WorkerController {
 
     // remove Constraintss for worker by id
     public static boolean RemoveConstraints(String ID, int day, double s_hour, double e_hour) {
+        //we will tell the db to delete his constraints so it will be re written later
+        DataController.DeleteConstraint(ID);
         return GeneralController.Workers.get(ID).RemoveCantWork(Days.values()[day - 1], s_hour, e_hour);
     }
     //changes a worker password

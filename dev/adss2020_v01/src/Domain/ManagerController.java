@@ -291,9 +291,13 @@ public class ManagerController {
     public static boolean RemoveFromDay(String ID, String branch, int day) {
         //we first need to load all the workers for this super from the db
         DataController.loadAllWorkersFromSuper(branch);
+        //we check if the worker is working in this day
         if (!IsWorkAtDay(branch, ID, day)) {
             return false;
         }
+        //if he works in this day
+        // we will delete this workers working days so it will be re written in the db later with the updates
+        DataController.DeleteWorkingDays(ID);
         int shiftnum = day * 2;
         //when were here we have a good number for employee so we remove him
         GeneralController.Superim.get(branch).GetWeekShifts().GetShift(shiftnum).RemoveWorker(ID);

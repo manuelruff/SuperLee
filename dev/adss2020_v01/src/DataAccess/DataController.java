@@ -26,7 +26,6 @@ public class DataController {
     public static void loadAllWorkersFrom(){
         WorkerMapper.ReadAllWorkers();
     }
-
     /**
      * @param ID id of worker
      * @return the worker asked if he is in the db
@@ -35,8 +34,12 @@ public class DataController {
         return WorkerMapper.getWorker(ID);
     }
 
-
-
+    public static void DeleteConstraint(String ID){
+        WorkerMapper.DeleteConstraints(ID);
+    }
+    public static void DeleteWorkingDays(String ID){
+        WorkerMapper.DeleteWorkingDays(ID);
+    }
 
 
 

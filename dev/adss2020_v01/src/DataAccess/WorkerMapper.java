@@ -268,6 +268,32 @@ public class WorkerMapper {
         }
     }
 
+    /**
+     * we will delete his constraints and it will be updated with the new ones in the db after the program closees
+     * @param ID id of worker
+     */
+    public static void DeleteConstraints(String ID){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM CantWork WHERE WorkerID="+ID+"");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem iun writing constraints sorry");
+        }
+    }
+    /**
+     * we will delete his working days and it will be updated with the new ones in the db after the program closees
+     * @param ID id of worker
+     */
+    public static void DeleteWorkingDays(String ID){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM WeeklyWorkingDays WHERE WorkerID="+ID+"");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem iun writing constraints sorry");
+        }
+    }
 
 
 //    public static void main(String[] args) {
