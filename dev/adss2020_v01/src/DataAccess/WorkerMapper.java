@@ -135,6 +135,11 @@ public class WorkerMapper {
     public static Map<String, Worker> getWorkerMap() {
         return WorkerMap;
     }
+
+    /**
+     * @param Name name of branch
+     *it will read all the workers from that branch
+     */
     public static void ReadAllWorkersFromSuper(String Name){
         String id;
         try {
@@ -150,6 +155,23 @@ public class WorkerMapper {
 
         }
     }
+    public static void ReadAllWorkers(){
+        String id;
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet rs = stmt.executeQuery("select * from Worker" );
+            //ill get each worker
+            while (rs.next()){
+                id=rs.getString("ID");
+                //if i had him in database already i wont do it again
+                getWorker(id);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
+
     //we will write all the workers to the db when done, it will write the new ones and update the old ones??
     public static void WriteAllWorkers(){
         for (Worker worker:WorkerMap.values()){

@@ -173,6 +173,8 @@ public class ManagerController {
      * the function pay the salaries to the workers
      */
     public static void Payment() {
+        //we need to load all the workers from db to do that
+
         for (Worker worker : GeneralController.Workers.values()) {
             worker.CalculateSalary();
             worker.resetBonus();
@@ -287,6 +289,8 @@ public class ManagerController {
     }
     // remove worker from a shift of a branch
     public static boolean RemoveFromDay(String ID, String branch, int day) {
+        //we first need to load all the workers for this super from the db
+        DataController.loadAllWorkersFromSuper(branch);
         if (!IsWorkAtDay(branch, ID, day)) {
             return false;
         }
@@ -305,6 +309,8 @@ public class ManagerController {
 
     // add worker to a shift int a branch
     public static void AddToDay(String ID, String branch, int shift_op, int day) {
+        //we first need to load all the workers for this super from the db
+        DataController.loadAllWorkersFromSuper(branch);
         double s = 0;
         double e = 0;
         //savres it to use in day
@@ -385,7 +391,10 @@ public class ManagerController {
     }
 
     // new added to connect between controllers functions - manu will check if its good or yell at me :(
-    public static boolean IsWorksInSuper(String ID, String SuperName){return GeneralController.IsWorksInSuper(ID,SuperName);}
+    public static boolean IsWorksInSuper(String ID, String SuperName){
+        //we first need to load all the workers for this super from the db
+        DataController.loadAllWorkersFromSuper(SuperName);
+        return GeneralController.IsWorksInSuper(ID,SuperName);}
 
     public static boolean isExistWorker(String ID){return GeneralController.isExistWorker(ID);}
     public static boolean CheckBranchExist(String branchName){return GeneralController.CheckSuperName(branchName);}

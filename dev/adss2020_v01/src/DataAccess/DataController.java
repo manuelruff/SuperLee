@@ -13,14 +13,35 @@ public class DataController {
         return instance;
     }
 
-
+    /**
+     * @param Name a branch name
+     * this function will tell the mapper of workers to get all the workers of a super
+     */
     public static void loadAllWorkersFromSuper(String Name){
         WorkerMapper.ReadAllWorkersFromSuper(Name);
     }
+    /**
+     * this function will tell the mapper of workers to get all the workers
+     */
+    public static void loadAllWorkersFrom(){
+        WorkerMapper.ReadAllWorkers();
+    }
 
+    /**
+     * @param ID id of worker
+     * @return the worker asked if he is in the db
+     */
     public static Worker getWorker(String ID){
         return WorkerMapper.getWorker(ID);
     }
+
+
+
+
+
+
+
+
 
     /**
      * we will save all the changes when we go out of the system

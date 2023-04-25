@@ -1,5 +1,6 @@
 package Presentation;
 
+import DataAccess.DataController;
 import DataAccess.WorkerMapper;
 import Domain.*;
 
@@ -327,6 +328,8 @@ public class HRManagerUI {
                             "2. No");
                     int payment_choice = UIGeneralFnctions.AskForNumber(1,2);
                     if(payment_choice == 1){
+                        //we first need to get all the workers from the database to pay them
+                        DataController.loadAllWorkersFrom();
                         managerController.Payment();
                         System.out.println("Payment done!");
                     }
