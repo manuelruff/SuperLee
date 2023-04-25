@@ -1,5 +1,7 @@
 package Domain;
 
+import DataAccess.CashRegisterMapper;
+
 //this will be singlton
 public class CashRegisterController {
     private static CashRegisterController instance=new CashRegisterController();;
@@ -30,5 +32,8 @@ public class CashRegisterController {
      * @return true/false
      */
     public static boolean CheckWorkerCanCancel(String ID){return GeneralController.CanDoJob(ID,Jobs.ShiftManager);}
+
+    // added 25/4
+    public static CashRegister getCashRegister(String branchName){return GeneralController.getCashRegister(branchName);}
 
 }

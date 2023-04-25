@@ -49,6 +49,7 @@ public class DataController {
      */
     public static void saveData() {
         WorkerMapper.WriteAllWorkers();
+        CashRegisterMapper.WriteAllCancellations();
         //close the connection to database when finished
         Connect.disconnect();
     }

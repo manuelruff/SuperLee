@@ -114,6 +114,8 @@ public class GeneralController {
         return Workers.get(ID).CanDoJob(job);
     }
 
+    // get the cash register of branch
+    public static CashRegister getCashRegister(String branchName){return Superim.get(branchName).get_cash_register();}
     /**
      * it will save the data in the database and close the connection
      */

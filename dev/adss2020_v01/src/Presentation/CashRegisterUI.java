@@ -61,7 +61,7 @@ public class CashRegisterUI {
                         }
                     }
                     //if we get here we have numbers for the date, well send it and see what we get back
-                    cashRegisterController.PrintCancellation(Name,Year,Month,Day);
+                    CashRegisterController.PrintCancellation(Name,Year,Month,Day);
                     //after we did what we want we stop
                     choice=4;
                     break;
@@ -69,7 +69,7 @@ public class CashRegisterUI {
                     String ID = UIGeneralFnctions.AskForWorkerID();
                     boolean isShiftManager = false;
                     while(!isShiftManager){
-                        if(!cashRegisterController.CheckWorkerCanCancel(ID)){
+                        if(!CashRegisterController.CheckWorkerCanCancel(ID)){
                             System.out.println("access denied - this action is for Domain.Shift Manager only!");
                             continue;
                         }
@@ -81,7 +81,7 @@ public class CashRegisterUI {
                     String item = myObj.nextLine();  // Read user input
                     System.out.println("please enter the amount of the item which you want to cancel: ");
                     double amount = UIGeneralFnctions.AskForDoubleNumber();
-                    cashRegisterController.AddCancellations(Name,item,amount,ID);
+                    CashRegisterController.AddCancellations(Name,item,amount,ID);
                     //after we did what we want we stop
                     choice=4;
                     break;

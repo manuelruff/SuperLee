@@ -1,6 +1,7 @@
 package DataAccess;
 import Domain.Cancellations;
 import Domain.CashRegister;
+import Domain.CashRegisterController;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,13 +10,15 @@ import java.util.Map;
 
 public class CashRegisterMapper {
     //<String,CashRegister>
-    private static CashRegisterMapper instance;
+    private static CashRegisterMapper instance = new CashRegisterMapper();
     private static Map<String, CashRegister> CashRegisterMap;
     private static Map<String,String>AlreadyLoaded;
+    private static Connection conn;
 
     private CashRegisterMapper(){
         CashRegisterMap = new HashMap<>();
         AlreadyLoaded = new HashMap<>();
+        conn = Connect.getConnection();
     }
 
     public static CashRegisterMapper GetInstance(){
@@ -27,7 +30,10 @@ public class CashRegisterMapper {
     public static void ReadCancellations(String BranchName,int year,int month,int day){
         Connection conn = Connect.getConnection();
         String StringDate = day+"."+month+"."+year;
-        if(AlreadyLoaded.get(BranchName).contains(StringDate)) {
+        if(AlreadyLoaded.isEmpty()|| AlreadyLoaded.containsKey(BranchName)){
+            return;
+        }
+        else if (AlreadyLoaded.get(BranchName).contains(StringDate)) {
             double amount;
             String NameOfCanceler, IDOfCanceler, NameOfProduct;
             try {
@@ -51,8 +57,11 @@ public class CashRegisterMapper {
 
     // create new Cash register to the branch if it's not exist already
     public static void LoadBranchCashRegister(String BranchName){
-        if(!CashRegisterMap.containsKey(BranchName))
-            CashRegisterMap.put(BranchName,new CashRegister());
+        if(!CashRegisterMap.containsKey(BranchName)){
+//            CashRegisterMap.put(BranchName,new CashRegister());
+            CashRegisterMap.put(BranchName, CashRegisterController.getCashRegister(BranchName));
+
+        }
     }
 
     public static void WriteAllCancellations(){
@@ -63,14 +72,15 @@ public class CashRegisterMapper {
                 double amount;
                 try {
                     java.sql.Statement stmt = conn.createStatement();
-                    amount =cancellations.getAmount();
+                    amount =Double.parseDouble(String.valueOf(cancellations.getAmount()));
                     NameOfCanceler = cancellations.getNameOfCanceller();
                     IDOfCanceler = cancellations.getIDOfCanceller();
                     NameOfProduct = cancellations.getNameOfProduct();
                     StringDate = cancellations.getDate();
                     StringTime = cancellations.getTime();
-                    stmt.executeUpdate("INSERT INTO Cancellations " +
-                            "VALUES("+name+","+StringTime+","+StringDate+","+NameOfCanceler+","+IDOfCanceler+","+NameOfProduct);
+                    stmt.executeUpdate("INSERT OR IGNORE INTO Cancellations (SuperName, Time, Date ,Amount, NameOfCanceler, IDOfCanceler, NameOfProduct) VALUES (" + name + ", '" + StringTime
+                            + "', '" + StringDate + "', '"+ amount +"', '" + NameOfCanceler + "', '" + IDOfCanceler +  "', '" +NameOfProduct +"')");
+
                 }
                 catch (SQLException e) {
                     System.out.println("i have a problem sorry");
