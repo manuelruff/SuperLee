@@ -115,16 +115,21 @@ public class GeneralController {
     // get the cash register of branch
     public static CashRegister getCashRegister(String branchName){return Superim.get(branchName).get_cash_register();}
 
-    // check if super is exist by its name
-    // check if worker is exists by id
+    // check if super exist by its name
     public static boolean isExistSuper(String name) {
         //we tell the database to load that id if exists before we check him
         DataController.getSuper(name);
         return Superim.get(name) != null;
     }
-    //returns worker by id
+    //returns super by name
     public static Super GetSuperByName(String name) {
         return Superim.get(name);
+    }
+
+    public static void AddNewSuper(Super new_super){
+        Superim.put(new_super.getName(), new_super);
+        // check with manu if go to super mapper here its fine
+        SuperMapper.WriteSuper(new_super.getName());
     }
 
     /**

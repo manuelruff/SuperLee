@@ -1,4 +1,5 @@
 package DataAccess;
+import Domain.Days;
 import Domain.ManagerController;
 import Domain.Super;
 import Domain.Worker;
@@ -53,7 +54,6 @@ public class SuperMapper {
         }
     }
 
-
     public static void WriteAllSupers(){
         for(Super branch:SuperMap.values()){
             String name;
@@ -70,5 +70,6 @@ public class SuperMapper {
 
     //im not sure about this one
     public static void WriteSuper(String branch){SuperMap.put(branch, ManagerController.getBranchByName(branch));}
+
 
 }

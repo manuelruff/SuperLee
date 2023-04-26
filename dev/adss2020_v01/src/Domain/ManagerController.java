@@ -47,9 +47,7 @@ public class ManagerController {
      * @param new_super - the name of the new branch
      */
     public static void addSuper(Super new_super) {
-        GeneralController.Superim.put(new_super.getName(), new_super);
-        // im pretty sure this is fine here
-        SuperMapper.WriteSuper(new_super.getName());
+        GeneralController.AddNewSuper(new_super);
     }
 
     /**
@@ -96,6 +94,7 @@ public class ManagerController {
                 //if he dont want anyone in the shift we create an empty shift
                 if (num==0){
                     Shift CurrShift = new Shift(week.getStartDate().plusDays(day.ordinal()), time, start, end);
+
                     week.AddShift(CurrShift);
                     //we go to evening shift
                     time = ShiftTime.Evening;
@@ -103,7 +102,7 @@ public class ManagerController {
                     continue;
                 }
                 //when we get here we have a good choice for the shift manager
-                //cWorkerse the shift and now we need to add to it
+                //Workers the shift and now we need to add to it
                 Shift CurrShift = new Shift(week.getStartDate().plusDays(day.ordinal()), time, start, end, GeneralController.Workers.get(CanWorkList.get(num - 1)));
                 //update the menager shift
                 GeneralController.Workers.get(CanWorkList.get(num - 1)).AddShift(day);
@@ -111,11 +110,11 @@ public class ManagerController {
                 //then we need to let him see the rest without shift manager
                 //then we send it to the curr shift
 
-                //start the list from the beginnning we dont need the menager list
+                //start the list from the beginning we don't need the manager list
                 CanWorkList.clear();
 
                 for (Jobs job : Jobs.values()) {
-                    //we dont need to choose shift manager again or more then one
+                    //we dont need to choose shift manager again or more than one
                     if (job == Jobs.ShiftManager) {
                         continue;
                     }
