@@ -2,6 +2,7 @@ package Domain;
 
 import DataAccess.DataController;
 import DataAccess.ManagerPasswordMapper;
+import DataAccess.SuperMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,8 @@ public class ManagerController {
      */
     public static void addSuper(Super new_super) {
         GeneralController.Superim.put(new_super.getName(), new_super);
+        // im pretty sure this is fine here
+        SuperMapper.WriteSuper(new_super.getName());
     }
 
     /**
@@ -226,6 +229,7 @@ public class ManagerController {
         }
     }
 
+
     //removes a worker from the company
     public static void RemoveWorkerAllBranches(String ID) {
         // check if the branch name is existed in the superim list
@@ -401,5 +405,6 @@ public class ManagerController {
         return GeneralController.IsWorksInSuper(ID,SuperName);}
 
     public static boolean isExistWorker(String ID){return GeneralController.isExistWorker(ID);}
-    public static boolean CheckBranchExist(String branchName){return GeneralController.CheckSuperName(branchName);}
+    public static boolean CheckBranchExist(String branchName){return GeneralController.isExistSuper(branchName);}
+    public static Super getBranchByName(String branchName){return GeneralController.GetSuperByName(branchName);}
 }

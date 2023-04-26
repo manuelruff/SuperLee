@@ -1,5 +1,6 @@
 package DataAccess;
 
+import Domain.Super;
 import Domain.Worker;
 import junit.framework.Test;
 
@@ -38,8 +39,8 @@ public class DataController {
         WorkerMapper.DeleteWorkingDays(ID);
     }
 
-
-
+    //added 26.4
+    public static Super getSuper(String name){return SuperMapper.getsuper(name);}
 
 
 
@@ -50,6 +51,7 @@ public class DataController {
     public static void saveData() {
         WorkerMapper.WriteAllWorkers();
         CashRegisterMapper.WriteAllCancellations();
+        SuperMapper.WriteAllSupers();
         //close the connection to database when finished
         Connect.disconnect();
     }

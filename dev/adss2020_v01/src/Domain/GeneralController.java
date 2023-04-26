@@ -1,9 +1,6 @@
 package Domain;
 
-import DataAccess.Connect;
-import DataAccess.DataController;
-import DataAccess.StartData;
-import DataAccess.WorkerMapper;
+import DataAccess.*;
 import junit.framework.Test;
 
 import java.util.*;
@@ -116,6 +113,19 @@ public class GeneralController {
 
     // get the cash register of branch
     public static CashRegister getCashRegister(String branchName){return Superim.get(branchName).get_cash_register();}
+
+    // check if super is exist by its name
+    // check if worker is exists by id
+    public static boolean isExistSuper(String name) {
+        //we tell the database to load that id if exists before we check him
+        DataController.getSuper(name);
+        return Superim.get(name) != null;
+    }
+    //returns worker by id
+    public static Super GetSuperByName(String name) {
+        return Superim.get(name);
+    }
+
     /**
      * it will save the data in the database and close the connection
      */

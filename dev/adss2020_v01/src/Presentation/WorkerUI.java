@@ -54,7 +54,7 @@ public class WorkerUI {
                 case 1:
                     int op1_choice=-1;
                     while (op1_choice!=4) {
-                        System.out.println("hello " + workerController.GetWorkerByID(ID).getName() + " please choose the detail you want to change");
+                        System.out.println("hello " + WorkerController.GetWorkerByID(ID).getName() + " please choose the detail you want to change");
                         System.out.println("1. change password ");
                         System.out.println("2. change name");
                         System.out.println("3. change bank account");
@@ -67,7 +67,7 @@ public class WorkerUI {
                                 Scanner myObj_changepass = new Scanner(System.in);  // Create a Scanner object
                                 String input_changepass = myObj_changepass.nextLine();  // Read user input
                                 // change it to function in reshet info
-                                workerController.ChangeWorkerPassword(ID,input_changepass); // change the password
+                                WorkerController.ChangeWorkerPassword(ID,input_changepass); // change the password
                                 //after we did what we want we stop
                                 op1_choice=4;
                                 break;
@@ -76,14 +76,14 @@ public class WorkerUI {
                                 // get the new password from the worker
                                 Scanner myObj_changename = new Scanner(System.in);  // Create a Scanner object
                                 String input_changename = myObj_changename.nextLine();  // Read user input
-                                workerController.ChangeWorkerName(ID,input_changename);// change name
+                                WorkerController.ChangeWorkerName(ID,input_changename);// change name
                                 //after we did what we want we stop
                                 op1_choice=4;
                                 break;
                             case 3:
                                 System.out.println("please enter new bank details:");
                                 int newBank = UIGeneralFnctions.AskForIntNumber();
-                                workerController.ChangeWorkerBank(ID,newBank );
+                                WorkerController.ChangeWorkerBank(ID,newBank );
                                 //after we did what we want we stop
                                 op1_choice=4;
                                 break;
@@ -120,7 +120,7 @@ public class WorkerUI {
                                 System.out.println("please enter reason:");
                                 String reason=myConstraints.nextLine();  // Read user input
                                 // if the Domain.Constraints is valid - add the Domain.Constraints at the day the user gave
-                                if(workerController.AddConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end,reason)){
+                                if(WorkerController.AddConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end,reason)){
                                     System.out.println("your constraint added");
                                 }
                                 else{
@@ -160,7 +160,7 @@ public class WorkerUI {
                                     break;
                                 }
                                 // if the Domain.Constraints is valid - remove the Domain.Constraints at the day the user gave if exists
-                                if(workerController.RemoveConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end)){
+                                if(WorkerController.RemoveConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end)){
                                     System.out.println("the constraint removed");
                                 }
                                 else{
@@ -180,7 +180,7 @@ public class WorkerUI {
                     }
                     break;
                 case 4:
-                    workerController.ShowConstraints(ID);
+                    WorkerController.ShowConstraints(ID);
                     //after we did what we want we stop
                     break;
                 case 5:

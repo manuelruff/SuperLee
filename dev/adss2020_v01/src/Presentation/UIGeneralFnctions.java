@@ -43,7 +43,7 @@ public class UIGeneralFnctions {
             //in the beginning there will be a few options, he is supposed to know them
             Scanner myObj_BranchName = new Scanner(System.in);  // Create a Scanner object
             BranchName = myObj_BranchName.nextLine();
-            BranchCheck= GeneralController.CheckSuperName(BranchName);
+            BranchCheck= GeneralController.isExistSuper(BranchName);
             if (!BranchCheck){
                 System.out.println("this branch doesn't exists, try again!");
                 continue;

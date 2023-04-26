@@ -38,7 +38,6 @@ public class CashRegisterMapper {
             String NameOfCanceler, IDOfCanceler, NameOfProduct;
             try {
                 java.sql.Statement stmt = conn.createStatement();
-                //java.sql.ResultSet rs = stmt.executeQuery("select * from Cancellations WHERE Date==" + StringDate + " AND SuperName== " + BranchName + "");
                 java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Cancellations WHERE Date='" + StringDate + "' AND SuperName='" + BranchName + "'");
 
                 while(rs.next()){
