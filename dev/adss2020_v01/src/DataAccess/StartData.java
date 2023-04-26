@@ -333,10 +333,10 @@ public class StartData {
         Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO Super(name, StartMorning, EndMorning, StartEvening, EndEvening) " +
-                    "VALUES('zolretzah',7,14,14,22)");
-            stmt.executeUpdate("INSERT INTO Super(name, StartMorning, EndMorning, StartEvening, EndEvening) " +
-                    "VALUES('yakarmeod',7,14,14,22)");
+            stmt.executeUpdate("INSERT INTO Super(name) " +
+                    "VALUES('zolretzah')");
+            stmt.executeUpdate("INSERT INTO Super(name) " +
+                    "VALUES('yakarmeod')");
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
@@ -435,5 +435,6 @@ public class StartData {
             System.out.println("i have a problem sorry");
         }
     }
+
 }
 

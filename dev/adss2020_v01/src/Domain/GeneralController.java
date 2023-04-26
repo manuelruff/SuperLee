@@ -15,8 +15,9 @@ public class GeneralController {
     public static Map<String, Worker> Workers;
 
     private GeneralController() {
-        Superim = StartData.getSuperim();
+//        Superim = StartData.getSuperim();
 //        Workers = StartData.getWorkers();
+        Superim = SuperMapper.getSuperMap();
         Workers=WorkerMapper.getWorkerMap();
      }
 
