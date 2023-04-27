@@ -21,6 +21,11 @@ public class Weekly {
             day=StartDate.getDayOfWeek();
         }
     }
+    //builder for the database
+    public Weekly(String date){
+        StartDate=LocalDate.parse(date);
+    }
+
     //add a shift to the list
     public void AddShift(Shift sh){
         this.ShiftList.add(sh);
