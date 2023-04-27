@@ -43,4 +43,8 @@ public class Weekly {
     public LocalDate getStartDate() {
         return StartDate;
     }
+
+    public List<Shift> getShiftList() {
+        return ShiftList;
+    }
 }

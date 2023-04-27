@@ -17,7 +17,7 @@ import java.util.Map;
 //this will be singleton
 public class WeeklyMapper {
     private static WeeklyMapper instance = new WeeklyMapper();
-    //<Branchname,list of weekly>
+    //<Branchname,map of weekly <startdate,weekly>>
     private static Map<String, Map<String ,Weekly>> WeeklyMap;
     private static Connection conn;
 
@@ -76,7 +76,7 @@ public class WeeklyMapper {
                 Shift curr=new Shift(LocalDate.parse(date), ShiftTime.valueOf(shift_time),Double.parseDouble(start),Double.parseDouble(end));
                 WeeklyMap.get(Branch).get(StartDate).AddShift(curr);
                 //read workers
-                
+
             }
         }
         catch (SQLException e) {
@@ -98,8 +98,6 @@ public class WeeklyMapper {
                     stmt.executeUpdate("INSERT OR IGNORE INTO Weekly (StartDate, SuperName) VALUES ('" + StartDate + "','" + SuperName + "')");
                     //write the shifts
                     WriteShifts(Branch,StartDate);
-                    //write workers
-
                     }
                 }
             }
@@ -112,5 +110,26 @@ public class WeeklyMapper {
 
 
     private static void WriteShifts(String Branch,String StartDate){
+        Weekly curr=WeeklyMap.get(Branch).get(StartDate);
+        String date,start,end,shift_time;
+        try {
+            for (Shift shift : curr.getShiftList()) {
+                date=shift.getDate().toString();
+                shift_time=shift.getShift_time().toString();
+                start=String.valueOf(shift.getStart());
+                end=String.valueOf(shift.getEnd());
+                java.sql.Statement stmt = conn.createStatement();
+                stmt.executeUpdate("INSERT INTO Shift (StartDate, SuperName, ShiftDate, Start, End, ShiftTime) " +
+                        "VALUES ('" + StartDate + "','" + Branch + "','"+ date +  "','"+start
+                        + "','"+end + "','"+ shift_time + "') " +
+                        "ON DUPLICATE KEY UPDATE StartDate='" + StartDate + "', SuperName='"
+                        + Branch + "', ShiftDate='" + date + "', Start='" + start + "'," +
+                        " End='" + end + "', ShiftTime='" + shift_time + "'");
+                //write workers for the shift
+            }
+        }
+        catch (SQLException e){
+            System.out.println("i have a problem in writing the write shifts sorry");
+        }
     }
 }

@@ -91,6 +91,22 @@ public class Shift {
         return false;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public ShiftTime getShift_time() {
+        return shift_time;
+    }
+
+    public double getStart() {
+        return start;
+    }
+
+    public double getEnd() {
+        return end;
+    }
+
     public void PrintMe(){
         //if its an empty shift we just print that its empty
         if(this.IsEmptyShift()){
@@ -107,7 +123,6 @@ public class Shift {
                     }
                 }
             }
-
         }
     }
 }
