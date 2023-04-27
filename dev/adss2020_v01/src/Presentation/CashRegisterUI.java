@@ -2,6 +2,7 @@ package Presentation;
 
 import DataAccess.CashRegisterMapper;
 import Domain.CashRegisterController;
+import Domain.GeneralController;
 import Domain.Jobs;
 
 import java.util.Scanner;
@@ -72,6 +73,14 @@ public class CashRegisterUI {
                             continue;
                         }
                         isShiftManager = true;
+                    }
+                    System.out.println("please enter your password: ");
+                    myObj = new Scanner(System.in);  // Create a Scanner object
+                    String password = myObj.nextLine();  // Read user input
+                    if(!GeneralController.CheckWorkerPassword(ID,password)){
+                        System.out.println("password is incorrect");
+                        choice = 4;
+                        break;
                     }
                     // if he's a shift manager
                     System.out.println("please enter the name of the item which you want to cancel: ");

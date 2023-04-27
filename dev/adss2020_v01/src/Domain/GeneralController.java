@@ -131,6 +131,10 @@ public class GeneralController {
         // check with manu if go to super mapper here its fine
     }
 
+    public static boolean CheckWorkerPassword(String ID, String password){
+        return WorkerController.IsTruePassword(ID, password);
+    }
+
     /**
      * it will save the data in the database and close the connection
      */

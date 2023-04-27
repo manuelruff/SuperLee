@@ -323,9 +323,9 @@ public class HRManagerUI {
                     System.out.println("password has changed");
                     break;
                 case 6:
-                    System.out.println("are you sure that you want to pay salaries?" +
-                            "1. Yes" +
-                            "2. No");
+                    System.out.println("are you sure that you want to pay salaries? " +
+                            "1.Yes" +
+                            " 2.No");
                     int payment_choice = UIGeneralFnctions.AskForNumber(1,2);
                     if(payment_choice == 1){
                         //we first need to get all the workers from the database to pay them
