@@ -1,9 +1,6 @@
 package DataAccess;
 
-import Domain.Shift;
-import Domain.ShiftTime;
-import Domain.Weekly;
-import Domain.Worker;
+import Domain.*;
 import junit.framework.Test;
 
 import java.nio.file.WatchKey;
@@ -77,7 +74,7 @@ public class WeeklyMapper {
                 Shift curr=new Shift(LocalDate.parse(date), ShiftTime.valueOf(shift_time),Double.parseDouble(start),Double.parseDouble(end));
                 WeeklyMap.get(Branch).get(StartDate).AddShift(curr);
                 //read workers
-
+                ReadWorkersFromShifts(Branch,curr);
             }
         }
         catch (SQLException e) {
@@ -85,20 +82,24 @@ public class WeeklyMapper {
         }
     }
 
-    private static void ReadWorkersFromShifts(Shift curr, String BranchName,String ShiftDate,String ShiftTime){
-        List<String> allWorkers = new ArrayList<>();
-        String WorkerID;
+    private static void ReadWorkersFromShifts(String BranchName,Shift curr){
+        //List<String> allWorkers = new ArrayList<>();
+        String ShiftTime = curr.getShift_time().toString();
+        String ShiftDate = curr.getDate().toString();
+        String WorkerID,role;
         try{
             java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("SELECT WorkerID FROM WorksAtShift WHERE ShiftTime = + ShiftTime + ShiftDate='" + ShiftDate + "' AND SuperName='" + BranchName + "'");
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT WorkerID FROM WorksAtShift WHERE ShiftTime = '" + ShiftTime + "' AND ShiftDate='" + ShiftDate + "' AND SuperName='" + BranchName + "'");
+            // java.sql.ResultSet rs = stmt.executeQuery("SELECT WorkerID FROM WorksAtShift WHERE ShiftTime = + ShiftTime AND ShiftDate='" + ShiftDate + "' AND SuperName='" + BranchName + "'");
             while(rs.next()) {
                 WorkerID = rs.getString("WorkerID");
+                role = rs.getString("Role");
                 // add the worker to the workers list
-                allWorkers.add(WorkerID);
+                curr.AddWorker(Jobs.valueOf(role),WorkerMapper.getWorker(WorkerID));
             }
         }
         catch (SQLException e) {
-            System.out.println("i have a problem in reading shifts");
+            System.out.println("i have a problem in reading wrokers from shifts");
         }
     }
 
@@ -144,10 +145,43 @@ public class WeeklyMapper {
                         + Branch + "', ShiftDate='" + date + "', Start='" + start + "'," +
                         " End='" + end + "', ShiftTime='" + shift_time + "'");
                 //write workers for the shift
+                WriteWorkersToShifts(Branch,shift,StartDate);
+
             }
         }
         catch (SQLException e){
             System.out.println("i have a problem in writing the write shifts sorry");
         }
     }
+
+    private static void WriteWorkersToShifts(String BranchName,Shift curr,String StartDate){
+        Map<Jobs, List<Worker>> workers = curr.getWorkerList();
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            for(Jobs job: workers.keySet()){
+                for(Worker worker : workers.get(job))
+                {
+                    stmt.executeUpdate("INSERT OR IGNORE INTO WorksAtShift(WorkerID, SuperName, StartDate, ShiftDate, ShiftTime, Role) VALUES (" + worker.getID() + ", '" + BranchName
+                            + "', '" + StartDate + "', '" + curr.getDate().toString() + "', '" + curr.getShift_time().toString() + "', '" + job.toString() + "')");
+
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in writing workers to shift sorry");
+        }
+    }
+
+    public static void DeleteWorkerFromShift(String ID,Shift curr){
+        String ShiftDate = curr.getDate().toString();
+
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM WorksAtShift WHERE WorkerID='" + ID + "' AND ShiftDate='" + ShiftDate + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem iun deleting workers from shift sorry");
+        }
+    }
+
 }

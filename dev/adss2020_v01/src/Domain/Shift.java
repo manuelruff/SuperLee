@@ -91,6 +91,10 @@ public class Shift {
         return false;
     }
 
+    public Map<Jobs, List<Worker>> getWorkerList() {
+        return WorkerList;
+    }
+
     public LocalDate getDate() {
         return date;
     }

@@ -1,5 +1,6 @@
 package DataAccess;
 
+import Domain.Shift;
 import Domain.Super;
 import Domain.Worker;
 import junit.framework.Test;
@@ -35,9 +36,12 @@ public class DataController {
     public static void DeleteConstraint(String ID){
         WorkerMapper.DeleteConstraints(ID);
     }
-    public static void DeleteWorkingDays(String ID){
+    public static void DeleteWorkingDays(String ID, Shift shift){
+        WeeklyMapper.DeleteWorkerFromShift(ID,shift);
         WorkerMapper.DeleteWorkingDays(ID);
     }
+
+
 
     //added 26.4
     public static Super getSuper(String name){
