@@ -37,18 +37,23 @@ public class WeeklyMapper {
     public static Weekly getWeekly(String Branch,String StartDate) {
         //if we
         if (WeeklyMap.get(Branch)==null || WeeklyMap.get(Branch).containsKey(StartDate)) {
-            ReadWeekly(Branch,StartDate);
+            if (!ReadWeekly(Branch, StartDate)){
+                return null;
+            }
         }
         return WeeklyMap.get(Branch).get(WeeklyMap.get(Branch).get(StartDate));
     }
-    private static void ReadWeekly(String Branch,String StartDate) {
+    private static boolean ReadWeekly(String Branch,String StartDate) {
         try {
             java.sql.Statement stmt = conn.createStatement();
             //java.sql.ResultSet rs = stmt.executeQuery("select * from Super WHERE name=="+branchName+"" );
             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Weekly WHERE SuperName = '" + Branch + "'" + " AND StartDate = '" + StartDate + "'");
+            if(!rs.next()){
+                return false;
+            }
             while (rs.next()) {
                 Weekly weekly = new Weekly(StartDate);
-                if(WeeklyMap.containsKey(Branch)){
+                if(!WeeklyMap.containsKey(Branch)){
                     WeeklyMap.put(Branch, new HashMap<>());
                 }
                 WeeklyMap.get(Branch).put(StartDate,weekly);
@@ -58,8 +63,8 @@ public class WeeklyMapper {
         } catch (Exception e) {
             System.out.println("i have a problem in weekly");
         }
+        return true;
     }
-
     private static void ReadShifts(String Branch,String StartDate){
         String date,start,end,shift_time;
         try {
@@ -81,7 +86,6 @@ public class WeeklyMapper {
             System.out.println("i have a problem in reading shifts");
         }
     }
-
     private static void ReadWorkersFromShifts(String BranchName,Shift curr){
         //List<String> allWorkers = new ArrayList<>();
         String ShiftTime = curr.getShift_time().toString();
@@ -102,8 +106,6 @@ public class WeeklyMapper {
             System.out.println("i have a problem in reading wrokers from shifts");
         }
     }
-
-
     public static void WriteAllWeekly() {
         String SuperName,StartDate;
         try {
@@ -125,35 +127,32 @@ public class WeeklyMapper {
             System.out.println("i have a problem in writing the write weekly sorry");
         }
     }
-
-
-
     private static void WriteShifts(String Branch,String StartDate){
         Weekly curr=WeeklyMap.get(Branch).get(StartDate);
-        String date,start,end,shift_time;
+        String date,shift_time;
+        double start,end;
         try {
             for (Shift shift : curr.getShiftList()) {
                 date=shift.getDate().toString();
                 shift_time=shift.getShift_time().toString();
-                start=String.valueOf(shift.getStart());
-                end=String.valueOf(shift.getEnd());
+                start=shift.getStart();
+                end=shift.getEnd();
                 java.sql.Statement stmt = conn.createStatement();
-                stmt.executeUpdate("INSERT INTO Shift (StartDate, SuperName, ShiftDate, Start, End, ShiftTime) " +
-                        "VALUES ('" + StartDate + "','" + Branch + "','"+ date +  "','"+start
-                        + "','"+end + "','"+ shift_time + "') " +
-                        "ON DUPLICATE KEY UPDATE StartDate='" + StartDate + "', SuperName='"
-                        + Branch + "', ShiftDate='" + date + "', Start='" + start + "'," +
-                        " End='" + end + "', ShiftTime='" + shift_time + "'");
+                stmt.executeUpdate("INSERT INTO " +
+                        "Shift (StartDate, SuperName, ShiftDate, Start, End, ShiftTime) " +
+                        "VALUES ('" + StartDate + "','" + Branch + "','"+ date +  "','"+start+
+                        "','"+end + "','"+ shift_time + "') ON DUPLICATE " +
+                        "KEY UPDATE StartDate='" + StartDate + "', SuperName='"+
+                        Branch + "', ShiftDate='" + date + "', Start='" + start + "', " +
+                        "End='" + end + "', ShiftTime='" + shift_time + "'");
                 //write workers for the shift
                 WriteWorkersToShifts(Branch,shift,StartDate);
-
             }
         }
         catch (SQLException e){
             System.out.println("i have a problem in writing the write shifts sorry");
         }
     }
-
     private static void WriteWorkersToShifts(String BranchName,Shift curr,String StartDate){
         Map<Jobs, List<Worker>> workers = curr.getWorkerList();
         try {
@@ -171,7 +170,6 @@ public class WeeklyMapper {
             System.out.println("i have a problem in writing workers to shift sorry");
         }
     }
-
     public static void DeleteWorkerFromShift(String ID,Shift curr){
         String ShiftDate = curr.getDate().toString();
 
@@ -184,4 +182,12 @@ public class WeeklyMapper {
         }
     }
 
+
+    public static void InsertToMapper(String Branch,Weekly weekly){
+        if(!WeeklyMap.containsKey(Branch)){
+            WeeklyMap.put(Branch,new HashMap<>());
+        }
+        WeeklyMap.get(Branch).put(weekly.getStartDate().toString(),weekly);
+
+    }
 }
