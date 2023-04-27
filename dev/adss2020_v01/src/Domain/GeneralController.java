@@ -129,7 +129,6 @@ public class GeneralController {
     public static void AddNewSuper(Super new_super){
         Superim.put(new_super.getName(), new_super);
         // check with manu if go to super mapper here its fine
-        SuperMapper.WriteSuper(new_super.getName());
     }
 
     /**

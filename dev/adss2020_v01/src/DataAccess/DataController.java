@@ -40,7 +40,9 @@ public class DataController {
     }
 
     //added 26.4
-    public static Super getSuper(String name){return SuperMapper.getsuper(name);}
+    public static Super getSuper(String name){
+        return SuperMapper.getsuper(name);
+    }
 
 
 

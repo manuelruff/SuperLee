@@ -47,6 +47,8 @@ public class SuperMapper {
                 Super branch = new Super(name);
                 //add the worker to the map
                 SuperMap.put(name, branch);
+                //read the shifts
+
             }
         }
         catch (SQLException e) {
@@ -54,22 +56,17 @@ public class SuperMapper {
         }
     }
 
-    public static void WriteAllSupers(){
-        for(Super branch:SuperMap.values()){
+    public static void WriteAllSupers() {
+        for (Super branch : SuperMap.values()) {
             String name;
-            try{
+            try {
                 java.sql.Statement stmt = conn.createStatement();
                 name = branch.getName();
                 stmt.executeUpdate("INSERT OR IGNORE INTO Super (name) VALUES ('" + name + "')");
-            }
-            catch (SQLException e) {
+                //write the shifts
+            } catch (SQLException e) {
                 System.out.println("i have a problem in writing the super sorry");
             }
         }
     }
-
-    //im not sure about this one
-    public static void WriteSuper(String branch){SuperMap.put(branch, ManagerController.getBranchByName(branch));}
-
-
 }
