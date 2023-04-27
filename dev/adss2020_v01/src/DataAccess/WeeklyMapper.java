@@ -48,7 +48,7 @@ public class WeeklyMapper {
             java.sql.Statement stmt = conn.createStatement();
             //java.sql.ResultSet rs = stmt.executeQuery("select * from Super WHERE name=="+branchName+"" );
             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Weekly WHERE SuperName = '" + Branch + "'" + " AND StartDate = '" + StartDate + "'");
-            if(!rs.next()){
+            if(!rs.isBeforeFirst()){
                 return false;
             }
             while (rs.next()) {
@@ -72,8 +72,8 @@ public class WeeklyMapper {
             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Shift WHERE StartDate='" + StartDate + "' AND SuperName='" + Branch + "'");
             while(rs.next()) {
                 date = rs.getString("ShiftDate");
-                start = rs.getString("StartTime");
-                end = rs.getString("EndTime");
+                start = rs.getString("Start");
+                end = rs.getString("End");
                 shift_time = rs.getString("ShiftTime");
                 //add the shift to the weekly
                 Shift curr=new Shift(LocalDate.parse(date), ShiftTime.valueOf(shift_time),Double.parseDouble(start),Double.parseDouble(end));
@@ -93,8 +93,7 @@ public class WeeklyMapper {
         String WorkerID,role;
         try{
             java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("SELECT WorkerID FROM WorksAtShift WHERE ShiftTime = '" + ShiftTime + "' AND ShiftDate='" + ShiftDate + "' AND SuperName='" + BranchName + "'");
-            // java.sql.ResultSet rs = stmt.executeQuery("SELECT WorkerID FROM WorksAtShift WHERE ShiftTime = + ShiftTime AND ShiftDate='" + ShiftDate + "' AND SuperName='" + BranchName + "'");
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM WorksAtShift WHERE ShiftTime = '" + ShiftTime + "' AND ShiftDate='" + ShiftDate + "' AND SuperName='" + BranchName + "'");
             while(rs.next()) {
                 WorkerID = rs.getString("WorkerID");
                 role = rs.getString("Role");
@@ -131,6 +130,8 @@ public class WeeklyMapper {
         Weekly curr=WeeklyMap.get(Branch).get(StartDate);
         String date,shift_time;
         double start,end;
+        //first we delete all we know about the shifts and then rewrite them
+        DeleteShifts(Branch,StartDate);
         try {
             for (Shift shift : curr.getShiftList()) {
                 date=shift.getDate().toString();
@@ -138,19 +139,24 @@ public class WeeklyMapper {
                 start=shift.getStart();
                 end=shift.getEnd();
                 java.sql.Statement stmt = conn.createStatement();
-                stmt.executeUpdate("INSERT INTO " +
-                        "Shift (StartDate, SuperName, ShiftDate, Start, End, ShiftTime) " +
-                        "VALUES ('" + StartDate + "','" + Branch + "','"+ date +  "','"+start+
-                        "','"+end + "','"+ shift_time + "') ON DUPLICATE " +
-                        "KEY UPDATE StartDate='" + StartDate + "', SuperName='"+
-                        Branch + "', ShiftDate='" + date + "', Start='" + start + "', " +
-                        "End='" + end + "', ShiftTime='" + shift_time + "'");
+                stmt.executeUpdate("INSERT INTO Shift (StartDate, SuperName, ShiftDate, Start, End, ShiftTime)" +
+                        " VALUES ('" + StartDate + "','" + Branch + "','"+ date +  "','"+start+ "','"+end +
+                        "','"+ shift_time + "')");
                 //write workers for the shift
                 WriteWorkersToShifts(Branch,shift,StartDate);
             }
         }
         catch (SQLException e){
             System.out.println("i have a problem in writing the write shifts sorry");
+        }
+    }
+    private static void DeleteShifts(String Branch,String StartDate){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM Shift WHERE StartDate='" + StartDate + "' AND SuperName='" + Branch + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in deleting shifts sorry");
         }
     }
     private static void WriteWorkersToShifts(String BranchName,Shift curr,String StartDate){

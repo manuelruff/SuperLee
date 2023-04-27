@@ -23,11 +23,13 @@ public class Weekly {
     }
     //builder for the database
     public Weekly(String date){
+        ShiftList=new ArrayList<>();
         StartDate=LocalDate.parse(date);
     }
 
     //add a shift to the list
     public void AddShift(Shift sh){
+
         this.ShiftList.add(sh);
     }
     //print the weekly
