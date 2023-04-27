@@ -43,7 +43,10 @@ public class DataController {
     public static Super getSuper(String name){
         return SuperMapper.getsuper(name);
     }
-
+    public static void LoadCancellations(String BranchName,int year,int month,int day){
+        //load the cancelations
+        CashRegisterMapper.ReadCancellations( BranchName, year, month, day);
+    }
 
 
     /**

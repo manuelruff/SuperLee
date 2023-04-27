@@ -16,6 +16,19 @@ public class Cancellations {
         this.Time=LocalDateTime.now();
     }
 
+    /**
+     * get all the parameters to creat a cancellation from the DB
+     * 
+     */
+    public Cancellations(double Amount, String NameOfProduct,String IDOfCanceller, String NameOfCanceller,String year,String month,String day,String hour,String minute){
+        this.Amount=Amount;
+        this.NameOfProduct=NameOfProduct;
+        this.IDOfCanceller=IDOfCanceller;
+        this.NameOfCanceller=NameOfCanceller;
+        this.Time=LocalDateTime.of(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day),Integer.parseInt(hour),Integer.parseInt(minute));
+    }
+
+
     // the function prints the information about the cancel
     public void printMe(){
         System.out.println("time: "+ this.Time +

@@ -51,7 +51,6 @@ public class Super {
     //a function that adds a worker to the Workers list
     public void AddWorker(Worker worker){WorkerList.put(worker.getID(),worker);
     }
-
     public boolean RemoveWorker(String ID){
         if(WorkerList.containsKey(ID)){
             WorkerList.remove(ID);
@@ -59,17 +58,14 @@ public class Super {
         }
         return false;
     }
-
     public String getName(){
         return this.Name;
     }
-
     public List<String> GetWorkersIDS(){
         List<String> Workers=new ArrayList<>();
         Workers.addAll(WorkerList.keySet());
         return Workers;
     }
-
 //add a weekly to the super
     public void AddWeekly(Weekly week){
         this.WeekShifts=week;

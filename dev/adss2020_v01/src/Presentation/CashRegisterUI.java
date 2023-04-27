@@ -14,8 +14,6 @@ public class CashRegisterUI {
      */
     public static void CashWork(){
         String Name=UIGeneralFnctions.AskForBranch();
-        CashRegisterMapper.LoadBranchCashRegister(Name);
-        //maybe add an option to watch a specific days Domain.Cancellations
         int choice=-1;
         while (choice!=3){
             System.out.println("please choose an option: ");
