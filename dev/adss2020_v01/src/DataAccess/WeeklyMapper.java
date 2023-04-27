@@ -41,7 +41,7 @@ public class WeeklyMapper {
                 return null;
             }
         }
-        return WeeklyMap.get(Branch).get(WeeklyMap.get(Branch).get(StartDate));
+        return WeeklyMap.get(Branch).get(StartDate);
     }
     private static boolean ReadWeekly(String Branch,String StartDate) {
         try {
