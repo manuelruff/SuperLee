@@ -47,9 +47,11 @@ public class SuperMapper {
                 Super branch = new Super(name);
                 //add the worker to the map
                 SuperMap.put(name, branch);
-                //load his cash registers to the mapper
+                //load his cash registers to the mapper of the cash register
                 CashRegisterMapper.PutCashRegister(name,SuperMap.get(name).get_cash_register());
-                //read the shifts
+                //rad the times of shift in each day
+
+                //read the weekly
 
             }
         }
