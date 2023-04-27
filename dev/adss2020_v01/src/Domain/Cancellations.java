@@ -18,7 +18,7 @@ public class Cancellations {
 
     /**
      * get all the parameters to creat a cancellation from the DB
-     * 
+     *
      */
     public Cancellations(double Amount, String NameOfProduct,String IDOfCanceller, String NameOfCanceller,String year,String month,String day,String hour,String minute){
         this.Amount=Amount;
