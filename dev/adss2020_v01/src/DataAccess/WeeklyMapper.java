@@ -72,7 +72,7 @@ public class WeeklyMapper {
                     java.sql.Statement stmt = conn.createStatement();
                     stmt.executeUpdate("INSERT OR IGNORE INTO Weekly (StartDate, SuperName) VALUES ('" + StartDate + "','" + SuperName + "')");
                     //write the shifts
-                    
+
                     }
                 }
             }
