@@ -75,6 +75,8 @@ public class WeeklyMapper {
                 //add the shift to the weekly
                 Shift curr=new Shift(LocalDate.parse(date), ShiftTime.valueOf(shift_time),Double.parseDouble(start),Double.parseDouble(end));
                 WeeklyMap.get(Branch).get(StartDate).AddShift(curr);
+                //read workers
+                
             }
         }
         catch (SQLException e) {
@@ -95,6 +97,8 @@ public class WeeklyMapper {
                     java.sql.Statement stmt = conn.createStatement();
                     stmt.executeUpdate("INSERT OR IGNORE INTO Weekly (StartDate, SuperName) VALUES ('" + StartDate + "','" + SuperName + "')");
                     //write the shifts
+                    WriteShifts(Branch,StartDate);
+                    //write workers
 
                     }
                 }
@@ -107,27 +111,6 @@ public class WeeklyMapper {
 
 
 
-    private static void WriteShiftHours(String BranchName, Days day){
-        Super curr = SuperMap.get(BranchName);
-        double sm = curr.getStart_morning(day);
-        double em = curr.getEnd_morning(day);
-        double se = curr.getStart_evening(day);
-        double ee = curr.getEnd_evening(day);
-        try{
-            java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM WeeklyShiftsTime WHERE Day='" + day.toString() + "' AND SuperName='" + BranchName + "'");
-            //if it doesnt exists we will insert it
-            if(!rs.next()){
-                stmt.executeUpdate("INSERT INTO WeeklyShiftsTime(SuperName, Day, StartMorning, EndMorning, StartEvening, EndEvening) " +
-                        "VALUES ('" + BranchName + "', '" + day.toString() + "', '" + sm + "', '" + em + "', '" + se + "', '" + ee + "')");
-            }
-            //if its in we update it
-            else{
-                stmt.executeUpdate("UPDATE WeeklyShiftsTime SET StartMorning = '" + sm + "', EndMorning = '" + em + "', StartEvening = '" + se + "', EndEvening = '" + ee + "' WHERE SuperName = '" + BranchName + "' AND Day = '" + day.toString() + "'");
-            }
-        } catch (SQLException e) {
-            System.out.println("i have a problem with write shift hours");
-        }
-
+    private static void WriteShifts(String Branch,String StartDate){
     }
 }
