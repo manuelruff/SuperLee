@@ -1,11 +1,14 @@
 package DataAccess;
 
+import Domain.Shift;
+import Domain.ShiftTime;
 import Domain.Weekly;
 import junit.framework.Test;
 
 import java.nio.file.WatchKey;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +18,7 @@ import java.util.Map;
 public class WeeklyMapper {
     private static WeeklyMapper instance = new WeeklyMapper();
     //<Branchname,list of weekly>
-    private static Map<String, List<Weekly>> WeeklyMap;
+    private static Map<String, Map<String ,Weekly>> WeeklyMap;
     private static Connection conn;
 
     private WeeklyMapper() {
@@ -35,10 +38,10 @@ public class WeeklyMapper {
      */
     public static Weekly getWeekly(String Branch,String StartDate) {
         //if we
-        if (WeeklyMap.get(Branch)==null || WeeklyMap.get(Branch).contains(StartDate)) {
+        if (WeeklyMap.get(Branch)==null || WeeklyMap.get(Branch).containsKey(StartDate)) {
             ReadWeekly(Branch,StartDate);
         }
-        return WeeklyMap.get(Branch).get(WeeklyMap.get(Branch).indexOf(StartDate));
+        return WeeklyMap.get(Branch).get(WeeklyMap.get(Branch).get(StartDate));
     }
     private static void ReadWeekly(String Branch,String StartDate) {
         try {
@@ -48,14 +51,34 @@ public class WeeklyMapper {
             while (rs.next()) {
                 Weekly weekly = new Weekly(StartDate);
                 if(WeeklyMap.containsKey(Branch)){
-                    WeeklyMap.put(Branch, new ArrayList<>());
+                    WeeklyMap.put(Branch, new HashMap<>());
                 }
-                WeeklyMap.get(Branch).add(weekly);
+                WeeklyMap.get(Branch).put(StartDate,weekly);
                 //add the shifts to the weekly
-
+                ReadShifts(Branch,StartDate);
             }
         } catch (Exception e) {
             System.out.println("i have a problem in weekly");
+        }
+    }
+
+    private static void ReadShifts(String Branch,String StartDate){
+        String date,start,end,shift_time;
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Shift WHERE StartDate='" + StartDate + "' AND SuperName='" + Branch + "'");
+            while(rs.next()) {
+                date = rs.getString("ShiftDate");
+                start = rs.getString("StartTime");
+                end = rs.getString("EndTime");
+                shift_time = rs.getString("ShiftTime");
+                //add the shift to the weekly
+                Shift curr=new Shift(LocalDate.parse(date), ShiftTime.valueOf(shift_time),Double.parseDouble(start),Double.parseDouble(end));
+                WeeklyMap.get(Branch).get(StartDate).AddShift(curr);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in reading shifts");
         }
     }
 
@@ -64,9 +87,9 @@ public class WeeklyMapper {
         String SuperName,StartDate;
         try {
             for ( String Branch:WeeklyMap.keySet()) {
-                List<Weekly> weeklies=WeeklyMap.get(Branch);
+                Map<String ,Weekly> weeklies=WeeklyMap.get(Branch);
                 if(weeklies!=null){
-                for(Weekly weekly :weeklies) {
+                for(Weekly weekly :weeklies.values()) {
                     SuperName = Branch;
                     StartDate = weekly.getStartDate().toString();
                     java.sql.Statement stmt = conn.createStatement();
@@ -78,7 +101,33 @@ public class WeeklyMapper {
             }
         }
         catch (SQLException e) {
-            System.out.println("i have a problem in writing the super sorry");
+            System.out.println("i have a problem in writing the write weekly sorry");
         }
+    }
+
+
+
+    private static void WriteShiftHours(String BranchName, Days day){
+        Super curr = SuperMap.get(BranchName);
+        double sm = curr.getStart_morning(day);
+        double em = curr.getEnd_morning(day);
+        double se = curr.getStart_evening(day);
+        double ee = curr.getEnd_evening(day);
+        try{
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM WeeklyShiftsTime WHERE Day='" + day.toString() + "' AND SuperName='" + BranchName + "'");
+            //if it doesnt exists we will insert it
+            if(!rs.next()){
+                stmt.executeUpdate("INSERT INTO WeeklyShiftsTime(SuperName, Day, StartMorning, EndMorning, StartEvening, EndEvening) " +
+                        "VALUES ('" + BranchName + "', '" + day.toString() + "', '" + sm + "', '" + em + "', '" + se + "', '" + ee + "')");
+            }
+            //if its in we update it
+            else{
+                stmt.executeUpdate("UPDATE WeeklyShiftsTime SET StartMorning = '" + sm + "', EndMorning = '" + em + "', StartEvening = '" + se + "', EndEvening = '" + ee + "' WHERE SuperName = '" + BranchName + "' AND Day = '" + day.toString() + "'");
+            }
+        } catch (SQLException e) {
+            System.out.println("i have a problem with write shift hours");
+        }
+
     }
 }

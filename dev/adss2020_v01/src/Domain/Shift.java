@@ -94,10 +94,10 @@ public class Shift {
     public void PrintMe(){
         //if its an empty shift we just print that its empty
         if(this.IsEmptyShift()){
-            System.out.println("at "+this.date + " " + this.shift_time  +" there is no shift ");
+            System.out.println("at "+this.date + " " + this.shift_time + " at: "+this.date.getDayOfWeek() +" there is no shift ");
         }
         else {
-            System.out.println(this.date + " " + this.shift_time + "\n" +
+            System.out.println(this.date +" at: "+this.date.getDayOfWeek() + this.shift_time + "\n" +
                     "from: " + this.start + " until: " + this.end);
             for (Jobs job : this.WorkerList.keySet()) {
                 if(WorkerList.get(job).size()!=0){
