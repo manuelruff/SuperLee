@@ -40,7 +40,7 @@ public class WeeklyMapper {
         }
         return WeeklyMap.get(Branch).get(WeeklyMap.get(Branch).indexOf(StartDate));
     }
-    public static void ReadWeekly(String Branch,String StartDate) {
+    private static void ReadWeekly(String Branch,String StartDate) {
         try {
             java.sql.Statement stmt = conn.createStatement();
             //java.sql.ResultSet rs = stmt.executeQuery("select * from Super WHERE name=="+branchName+"" );

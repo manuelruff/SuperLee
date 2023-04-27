@@ -57,6 +57,8 @@ public class DataController {
         WorkerMapper.WriteAllWorkers();
         CashRegisterMapper.WriteAllCancellations();
         SuperMapper.WriteAllSupers();
+        //write all weekly to db
+        WeeklyMapper.WriteAllWeekly();
         //close the connection to database when finished
         Connect.disconnect();
     }

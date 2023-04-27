@@ -3,6 +3,7 @@ import Domain.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,8 +49,16 @@ public class SuperMapper {
                 CashRegisterMapper.PutCashRegister(name,SuperMap.get(name).get_cash_register());
                 //rad the times of shift in each day
                 ReadSuperTime(name);
+                //calculate the date of next week
+                LocalDate StartDate=LocalDate.now();
+                //we want to start at next sunday so we add one until we are there
+                DayOfWeek day=StartDate.getDayOfWeek();
+                while(day!=DayOfWeek.SUNDAY){
+                    StartDate=StartDate.plusDays(1);
+                    day=StartDate.getDayOfWeek();
+                }
                 //read the weekly
-
+                SuperMap.get(branchName).AddWeekly(WeeklyMapper.getWeekly(branchName,StartDate.toString()));
             }
         }
         catch (SQLException e) {
@@ -88,7 +97,6 @@ public class SuperMapper {
                 java.sql.Statement stmt = conn.createStatement();
                 name = branch.getName();
                 stmt.executeUpdate("INSERT OR IGNORE INTO Super (name) VALUES ('" + name + "')");
-                //write the shifts
                 // write the super hours
                 WriteSuperTime(branch.getName());
             } catch (SQLException e) {
