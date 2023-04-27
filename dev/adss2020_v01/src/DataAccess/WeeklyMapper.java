@@ -3,6 +3,7 @@ package DataAccess;
 import Domain.Shift;
 import Domain.ShiftTime;
 import Domain.Weekly;
+import Domain.Worker;
 import junit.framework.Test;
 
 import java.nio.file.WatchKey;
@@ -77,6 +78,23 @@ public class WeeklyMapper {
                 WeeklyMap.get(Branch).get(StartDate).AddShift(curr);
                 //read workers
 
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in reading shifts");
+        }
+    }
+
+    private static void ReadWorkersFromShifts(Shift curr, String BranchName,String ShiftDate,String ShiftTime){
+        List<String> allWorkers = new ArrayList<>();
+        String WorkerID;
+        try{
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT WorkerID FROM WorksAtShift WHERE ShiftTime = + ShiftTime + ShiftDate='" + ShiftDate + "' AND SuperName='" + BranchName + "'");
+            while(rs.next()) {
+                WorkerID = rs.getString("WorkerID");
+                // add the worker to the workers list
+                allWorkers.add(WorkerID);
             }
         }
         catch (SQLException e) {
