@@ -237,7 +237,7 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Days day : WorkerMap.get(ID).getWeeklyWorkingDays()) {
-                stmt.executeUpdate("INSERT OR IGNORE INTO WeeklyWorkingDays (WORKERID, DAY) VALUES (" + ID + ", '" + day + "')");
+                stmt.executeUpdate("INSERT OR IGNORE INTO WeeklyWorkingDays (WorkerID, Day) VALUES (" + ID + ", '" + day + "')");
             }
         }
         catch (SQLException e) {
@@ -253,7 +253,7 @@ public class WorkerMapper {
             java.sql.Statement stmt = conn.createStatement();
             for(Days day: WorkerMap.get(ID).getShiftsCantWork().keySet()){
                 for (CantWork cantwork : WorkerMap.get(ID).getShiftsCantWork().get(day)) {
-                    stmt.executeUpdate("INSERT OR IGNORE INTO CantWork (WORKERID, Start, END, DAY, Reason) VALUES (" + ID + ", '" + cantwork.getStart()
+                    stmt.executeUpdate("INSERT OR IGNORE INTO CantWork (WorkerID, Start, END, DAY, Reason) VALUES (" + ID + ", '" + cantwork.getStart()
                             + "', '" + cantwork.getEnd() + "', '" + day + "', '" + cantwork.getReason() + "')");
                 }
             }
