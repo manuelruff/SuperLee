@@ -129,7 +129,7 @@ public class SuperMapper {
                 double em = curr.getEnd_morning(day);
                 double se = curr.getStart_evening(day);
                 double ee = curr.getEnd_evening(day);
-                stmt.executeUpdate("INSERT OR IGNORE INTO SuperShiftsTime (SuperName, Day, StartMorning, EndMorning, StartEvening, EndEvening) VALUES ('" + BranchName + "', '" + day.toString() + "', '" + sm + "', '" + em + "', '" + se + "', '" + ee + "')");
+                stmt.executeUpdate("INSERT OR REPLACE INTO SuperShiftsTime (SuperName, Day, StartMorning, EndMorning, StartEvening, EndEvening) VALUES ('" + BranchName + "', '" + day.toString() + "', '" + sm + "', '" + em + "', '" + se + "', '" + ee + "')");
             }
         }
         catch (SQLException e) {
