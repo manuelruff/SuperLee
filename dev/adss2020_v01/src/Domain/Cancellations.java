@@ -63,9 +63,21 @@ public class Cancellations {
     }
 
     public String getTime() {
-        return Time.getHour()+":"+Time.getMinute();
+        String hour=Integer.toString(Time.getHour());
+        String minute=Integer.toString(Time.getMinute());
+        if(hour.length()==1)
+            hour="0"+hour;
+        if(minute.length()==1)
+            minute="0"+minute;
+        return hour+":"+minute;
     }
     public String getDate() {
-        return Time.getDayOfMonth()+"."+Time.getMonthValue()+"."+Time.getYear();
+        String month=Integer.toString(Time.getMonthValue());
+        String day=Integer.toString(Time.getDayOfMonth());
+        if(month.length()==1)
+            month="0"+month;
+        if(day.length()==1)
+            day="0"+day;
+        return Time.getYear()+"-"+month+"-"+day;
     }
 }

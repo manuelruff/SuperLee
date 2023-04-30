@@ -28,7 +28,14 @@ public class CashRegisterMapper {
     }
     public static void ReadCancellations(String BranchName,int year,int month,int day){
         Connection conn = Connect.getConnection();
-        String StringDate = day+"."+month+"."+year;
+        String day1=Integer.toString(day);
+        String month1=Integer.toString(month);
+        String year1=Integer.toString(year);
+        if(day1.length()==1)
+            day1="0"+day1;
+        if(month1.length()==1)
+            month1="0"+month1;
+        String StringDate = year+"-"+month1+"-"+day1;
         if(AlreadyLoaded.get(BranchName)!=null && AlreadyLoaded.get(BranchName).contains(StringDate)){
             return;
         }
