@@ -5,7 +5,7 @@ import Ship.Bussiness.shipmentManagement;
 import java.util.*;
 
 public class UI {
-    public  static Scanner scanner;
+    public static Scanner scanner;
     private shipmentManagement Smanagement;
     public UI(){
          Smanagement = new shipmentManagement();
@@ -23,8 +23,8 @@ public class UI {
         if(answer.equals("yes"))
             Smanagement.loadAll();
         String choice;
-
-        while(true) {
+        boolean firsFlag = true;
+        while(firsFlag) {
             System.out.println("Shipping Main Menu:");
             System.out.println("1 - Site Menu");
             System.out.println("2 - Truck Menu");
@@ -225,7 +225,7 @@ public class UI {
                     Smanagement.printAllDocs();
                     break;
                 case "7":
-                    scanner.close();
+                    firsFlag = false;
                     return;
                 default:
                     System.out.println("Invalid input");
