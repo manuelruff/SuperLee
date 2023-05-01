@@ -2,13 +2,11 @@ package Ship.Bussiness;
 
 public abstract class Site {
 
-    private String address;
-    private String phoneNumber;
-    private String contactName;
+    protected String address;
+    protected String phoneNumber;
+    protected String contactName;
 
-
-
-    private String name;
+    protected String name;
 
     public Site(String name,String address, String phoneNumber, String contactName) {
         this.address = address;

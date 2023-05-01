@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Super extends Site {
-    private String Name;
     //map<id, worker>
     private Map<String,Worker> WorkerList;
     //this week working sheet
@@ -30,8 +29,9 @@ public class Super extends Site {
     private Zone zone;
 
     //builder for super
-    public Super(String Name){
-        this.Name=Name;
+    public Super(String Name, String address, String phoneNumber, String contactName, Zone zone){
+        super(Name,address,phoneNumber,contactName);
+        this.zone=zone;
         WorkerList=new HashMap<>();
         WeeklyHist=new ArrayList<>();
         cash_register=new CashRegister();
@@ -42,6 +42,7 @@ public class Super extends Site {
         //sets the basic hours of each day to work from 7 to 14 and then from 14 to 23
         this.setHours();
     }
+
     public void setHours(){
         for (Days day:Days.values()){
             start_morning.put(day,7.00);
@@ -60,12 +61,6 @@ public class Super extends Site {
         }
         return false;
     }
-    public String getName(){
-        return this.Name;
-    }
-
-
-
     //from hovalot
     public Zone getZone() {
         return zone;
@@ -148,7 +143,6 @@ public class Super extends Site {
         //add new one
         this.end_evening.put(day,t);
     }
-
     public CashRegister get_cash_register(){
         return this.cash_register;
     }
