@@ -1,7 +1,6 @@
 package HR.DataAccess;
 import HR.Bussiness.Days;
 import HR.Bussiness.Super;
-import HR.Bussiness.Worker;
 import HR.Bussiness.Zone;
 import resource.Connect;
 
@@ -103,7 +102,7 @@ public class SuperMapper {
             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM WorksAt WHERE SuperName = '" + BranchName + "'");
             while (rs.next()){
                 ID = rs.getString("WorkerID");
-                SuperMap.get(BranchName).AddWorker((Worker) WorkerMapper.getWorker(ID));
+                SuperMap.get(BranchName).AddWorker(WorkerMapper.getWorker(ID));
             }
         }
         catch (SQLException e) {

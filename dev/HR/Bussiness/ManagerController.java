@@ -239,6 +239,7 @@ public class ManagerController {
         GeneralController.Drivers.put(newEmployee.getID(), newEmployee);
     }
 
+
     //removes a worker from the company
     public static void RemoveWorkerAllBranches(String ID) {
         // check if the branch name is existed in the superim list

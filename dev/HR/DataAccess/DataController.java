@@ -1,9 +1,6 @@
 package HR.DataAccess;
 
-import HR.Bussiness.AWorker;
-import HR.Bussiness.Shift;
-import HR.Bussiness.Super;
-import HR.Bussiness.Worker;
+import HR.Bussiness.*;
 import resource.Connect;
 
 //this will be singleton
@@ -31,9 +28,10 @@ public class DataController {
      * @param ID id of worker
      * @return the worker asked if he is in the db
      */
-    public static AWorker getWorker(String ID){
+    public static Worker getWorker(String ID){
         return WorkerMapper.getWorker(ID);
     }
+
     public static void DeleteConstraint(String ID){
         WorkerMapper.DeleteConstraints(ID);
     }
@@ -60,6 +58,7 @@ public class DataController {
      */
     public static void saveData() {
         WorkerMapper.WriteAllWorkers();
+        WorkerMapper.WriteAllDrivers();
         CashRegisterMapper.WriteAllCancellations();
         SuperMapper.WriteAllSupers();
         //write all weekly to db

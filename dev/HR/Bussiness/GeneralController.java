@@ -100,7 +100,8 @@ public class GeneralController {
     public static boolean isExistWorker(String ID) {
         //we tell the database to load that id if exists before we check him
         DataController.getWorker(ID);
-        return Workers.get(ID) != null;
+        //check if the worker is not a worker or a driver
+        return Workers.get(ID) != null && Drivers.get(ID) == null;
     }
     //returns worker by id
     public static Worker GetWorkerByID(String ID) {

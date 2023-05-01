@@ -255,7 +255,7 @@ public class HRManagerUI {
                         switch (choice3) {
                             case 1:
                                 CreateNewWorker();
-                                //ManagerController.AddNewWorker(CreateNewWorker(),BranchName);
+                                System.out.println("worker added to the system");
                                 break;
                             case 2:
                                 ID = UIGeneralFnctions.AskForWorkerID();
@@ -393,7 +393,7 @@ public class HRManagerUI {
         String generic_Password = "123";
         int role_choice = 0;
         System.out.println("please enter the new worker's first role: \n" +
-                "Driver-0" +
+                "Driver-0 , " +
                 "ShiftManager-1 , Cashier-2, StoreKeeper-3, GeneralEmp-4, Guard-5, Cleaner-6, Usher-7");
 
         role_choice = UIGeneralFnctions.AskForNumber(0,7);
@@ -420,7 +420,7 @@ public class HRManagerUI {
                             0 - Regular
                             1 - Cooling
                             2 - Freezer""");
-                training = scanner.nextInt();
+                training = UIGeneralFnctions.AskForNumber(0,2);
                 if(training < 0 || training > 2)
                     System.out.println("Please enter a number between 0 - 2");
             }

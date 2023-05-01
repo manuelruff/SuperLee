@@ -11,12 +11,13 @@ import java.util.Map;
 //this will be singleton
 public class WorkerMapper {
     private static WorkerMapper instance=new WorkerMapper();
-    private static Map<String, AWorker> WorkerMap;
+    private static Map<String, Worker> WorkerMap;
     private static Map<String, Driver> DriverMap;
 
     private static Connection conn;
     private WorkerMapper(){
         WorkerMap=new HashMap<>();
+        DriverMap=new HashMap<>();
         conn = Connect.getConnection();
     }
     public static WorkerMapper GetInstance(){
@@ -26,13 +27,14 @@ public class WorkerMapper {
      * @param ID id of worker
      * @return the worker asked
      */
-    public static AWorker getWorker(String ID){
+    public static Worker getWorker(String ID){
         //if i dont have this worker in the data ill go read it from DB
         if (WorkerMap.get(ID)==null){
             ReadWorker(ID);
         }
         return WorkerMap.get(ID);
     }
+
     /**
      * this functiuon read the worker from the db
      * @param ID id if worker
@@ -43,7 +45,7 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             //we will read it from the driver info table to know if its a driver
-            java.sql.ResultSet isDriver = stmt.executeQuery("select * from DriverInfo WHERE WorkerID=="+ID+"" );
+            java.sql.ResultSet isDriver = stmt.executeQuery("select * from DriverInfo WHERE DriverID=="+ID+"" );
             java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+ID+"" );
             if(rs.next()) {
                 id = rs.getString("ID");
@@ -104,7 +106,7 @@ public class WorkerMapper {
                 java.sql.ResultSet rs = stmt.executeQuery("select * from WorkersJobs WHERE WorkerID=="+ID+"" );
                 while (rs.next()){
                     job=rs.getString("Job");
-                    ((Worker)WorkerMap.get(ID)).AddJob(Jobs.valueOf(job));
+                    WorkerMap.get(ID).AddJob(Jobs.valueOf(job));
                 }
             }
             catch (SQLException e) {
@@ -154,14 +156,12 @@ public class WorkerMapper {
     /**
      * @return the map of all the workers
      */
-    public static Map<String, AWorker> getWorkerMap() {
+    public static Map<String, Worker> getWorkerMap() {
         return WorkerMap;
     }
     public static Map<String, Driver> getDriverMap() {
         return DriverMap;
     }
-
-
     /**
      * @param Name name of branch
      *it will read all the workers from that branch
@@ -199,21 +199,26 @@ public class WorkerMapper {
     }
     //write all workers from the mappers
     public static void WriteAllWorkers(){
-        for (AWorker worker:WorkerMap.values()){
-            //check driver instance
-            if(worker instanceof Driver) {
-                WriteAllAWorkers(worker);
-                WriteAllLicenceAndTraining(worker.getID());
-            }
-            else
-            {
-                WriteAllAWorkers(worker);
-                WriteJobs(worker.getID());
-            }
-
+        for (Worker worker:WorkerMap.values()){
+            WriteAllAWorkers(worker);
+            WriteJobs(worker.getID());
+            //write his working days
+            WriteWorkingDays(worker);
+            //write the cant work days
+            WriteConstraints(worker);
         }
     }
 
+    public static void WriteAllDrivers(){
+        for (Driver driver:DriverMap.values()){
+            WriteAllAWorkers(driver);
+            WriteAllLicenceAndTraining(driver.getID());
+            //write his working days
+            WriteWorkingDays(driver);
+            //write the cant work days
+            WriteConstraints(driver);
+        }
+    }
     //we will write all the workers to the db when done, it will write the new ones and update the old ones??
     public static void WriteAllAWorkers(AWorker worker){
         String id,name, startdate, contract, password;
@@ -244,19 +249,17 @@ public class WorkerMapper {
                         ", ShiftWorked=" + shiftworked + " WHERE ID=" + id);
                 //we need to update all his other stuff
             }
-            //write hes working days
-            WriteWorkingDays(id);
-            //write the cant work days
-            WriteConstraints(id);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
     //we wrrite the licence and training
     public static void WriteAllLicenceAndTraining(String ID){
         try {
             java.sql.Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT OR IGNORE INTO DriverInfo (WorkerID,Licence,Training ) VALUES (" + ID + ", '" + DriverMap.get(ID) .getLicense() + "', '" + DriverMap.get(ID).getAbility() + "')");
+            stmt.executeUpdate("INSERT OR IGNORE INTO DriverInfo (DriverID,Licence,Training ) VALUES (" + ID + ", '" + DriverMap.get(ID) .getLicense() + "', '" + DriverMap.get(ID).getAbility() + "')");
         }
         catch (SQLException e) {
             System.out.println("i have a problem int writing the worker job sorry");
@@ -270,8 +273,7 @@ public class WorkerMapper {
     private static void WriteJobs(String ID){
         try {
             java.sql.Statement stmt = conn.createStatement();
-            Worker worker=(Worker) WorkerMap.get(ID);
-            for (Jobs job : worker.getRoles()) {
+            for (Jobs job : WorkerMap.get(ID).getRoles()) {
                 stmt.executeUpdate("INSERT OR IGNORE INTO WorkersJobs (WORKERID, JOB) VALUES (" + ID + ", '" + job.toString() + "')");
             }
         }
@@ -281,13 +283,13 @@ public class WorkerMapper {
     }
     /**
      * update the working days to the worker in the db
-     * @param ID
+     * @param worker a worker or driver we work on
      */
-    private static void WriteWorkingDays(String ID){
+    private static void WriteWorkingDays(AWorker worker){
         try {
             java.sql.Statement stmt = conn.createStatement();
-            for (Days day : WorkerMap.get(ID).getWeeklyWorkingDays()) {
-                stmt.executeUpdate("INSERT OR IGNORE INTO WeeklyWorkingDays (WorkerID, Day) VALUES (" + ID + ", '" + day + "')");
+            for (Days day : worker.getWeeklyWorkingDays()) {
+                stmt.executeUpdate("INSERT OR IGNORE INTO WeeklyWorkingDays (WorkerID, Day) VALUES (" + worker.getID() + ", '" + day + "')");
             }
         }
         catch (SQLException e) {
@@ -296,14 +298,14 @@ public class WorkerMapper {
     }
     /**
      * update the constraints to the worker in the db
-     * @param ID
+     * @param worker worker or driver we work on
      */
-    private static void WriteConstraints(String ID){
+    private static void WriteConstraints(AWorker worker){
         try {
             java.sql.Statement stmt = conn.createStatement();
-            for(Days day: WorkerMap.get(ID).getShiftsCantWork().keySet()){
-                for (CantWork cantwork : WorkerMap.get(ID).getShiftsCantWork().get(day)) {
-                    stmt.executeUpdate("INSERT OR IGNORE INTO CantWork (WorkerID, Start, END, DAY, Reason) VALUES (" + ID + ", '" + cantwork.getStart()
+            for(Days day: worker.getShiftsCantWork().keySet()){
+                for (CantWork cantwork : worker.getShiftsCantWork().get(day)) {
+                    stmt.executeUpdate("INSERT OR IGNORE INTO CantWork (WorkerID, Start, END, DAY, Reason) VALUES (" + worker.getID() + ", '" + cantwork.getStart()
                             + "', '" + cantwork.getEnd() + "', '" + day + "', '" + cantwork.getReason() + "')");
                 }
             }
