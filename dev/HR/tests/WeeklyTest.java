@@ -1,4 +1,4 @@
-import HR.Domain.*;
+import HR.Bussiness.*;
 import org.junit.Test;
 
 import java.time.DayOfWeek;

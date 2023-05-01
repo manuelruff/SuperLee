@@ -1,6 +1,6 @@
 package HR.DataAccess;
 
-import HR.Domain.*;
+import HR.Bussiness.*;
 import resource.Connect;
 
 import java.sql.Connection;

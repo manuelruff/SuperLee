@@ -1,4 +1,4 @@
-package HR.Domain;
+package HR.Bussiness;
 
 import java.util.ArrayList;
 import java.util.HashMap;

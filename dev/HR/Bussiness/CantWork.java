@@ -1,4 +1,4 @@
-package HR.Domain;
+package HR.Bussiness;
 
 public class CantWork {
     private String reason;

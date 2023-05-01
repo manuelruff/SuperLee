@@ -1,6 +1,6 @@
-import HR.Domain.Days;
-import HR.Domain.Jobs;
-import HR.Domain.Worker;
+import HR.Bussiness.Days;
+import HR.Bussiness.Jobs;
+import HR.Bussiness.Worker;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

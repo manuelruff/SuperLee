@@ -1,7 +1,6 @@
 package HR.DataAccess;
-import HR.Domain.Jobs;
-import HR.Domain.Super;
-import HR.Domain.Worker;
+import HR.Bussiness.Super;
+import HR.Bussiness.Worker;
 import resource.Connect;
 
 import java.sql.Connection;

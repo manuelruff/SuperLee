@@ -1,7 +1,7 @@
 package Presentation;
 
 
-import HR.Domain.GeneralController;
+import HR.Bussiness.GeneralController;
 import HR.Presentation.CashRegisterUI;
 import HR.Presentation.HRManagerUI;
 import HR.Presentation.WorkerUI;

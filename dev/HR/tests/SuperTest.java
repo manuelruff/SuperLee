@@ -1,4 +1,4 @@
-import HR.Domain.*;
+import HR.Bussiness.*;
 import Ship.Bussiness.Zone;
 import org.junit.Test;
 

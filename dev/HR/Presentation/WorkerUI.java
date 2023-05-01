@@ -1,8 +1,6 @@
 package HR.Presentation;
 
-import HR.Domain.WorkerController;
-
-import java.util.Scanner;
+import HR.Bussiness.WorkerController;
 
 import static Presentation.GeneralUI.scanner;
 

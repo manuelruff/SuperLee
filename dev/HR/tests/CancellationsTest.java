@@ -1,4 +1,4 @@
-import HR.Domain.Cancellations;
+import HR.Bussiness.Cancellations;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
