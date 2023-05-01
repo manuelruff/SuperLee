@@ -11,7 +11,6 @@ import java.util.*;
 import static Presentation.GeneralUI.scanner;
 
 public class shipmentManagement {
-
     private final Map<String, List<Order>> vendorMap;
     private final List<Driver> drivers;
     private final List<Truck> trucks;
