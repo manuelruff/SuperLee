@@ -1,4 +1,4 @@
-package Ship;
+package Ship.Bussiness;
 
 public abstract class Site {
 

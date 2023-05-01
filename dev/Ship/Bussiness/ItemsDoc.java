@@ -1,4 +1,4 @@
-package Ship;
+package Ship.Bussiness;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class ItemsDoc {
         itemList = new ArrayList<>();
     }
     public void printItemsDoc() {
-        System.out.println("Ship.Item Document details:");
+        System.out.println("Item Document details:");
         System.out.println("Document ID: " + ID);
         System.out.println("Destination: " + siteName);
         for(Item item : itemList)

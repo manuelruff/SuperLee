@@ -1,83 +1,83 @@
 if you wish to start the system with data please enter - yes, otherwise enter other input 
-Shipping Ship.Main Menu:
-1 - Ship.Site Menu
-2 - Ship.Truck Menu
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
 3 - Drivers Menu
-4 - Ship.Order Menu
+4 - Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit
-Ship.Site Menu:
-1 - Add Ship.Site
-2 - Remove Ship.Site
+Site Menu:
+1 - Add Site
+2 - Remove Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
 Please enter site name:
-Please enter Ship.Site Address:
+Please enter Site Address:
 Please enter site phone number (10 digits - only numbers):
 Please enter contact name:
-Please enter Ship.Site type:
-1 - Ship.Vendor
-2 - Ship.Branch
-Ship.Vendor added to the system
-Ship.Site Menu:
-1 - Add Ship.Site
-2 - Remove Ship.Site
+Please enter Site type:
+1 - Vendor
+2 - Branch
+Vendor added to the system
+Site Menu:
+1 - Add Site
+2 - Remove Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
 Please enter site name:
-Please enter Ship.Site Address:
+Please enter Site Address:
 Please enter site phone number (10 digits - only numbers):
 Please enter contact name:
-Please enter Ship.Site type:
-1 - Ship.Vendor
-2 - Ship.Branch
+Please enter Site type:
+1 - Vendor
+2 - Branch
 Please enter branch zone:
 0 - North
 1 - Center
 2 - South
-Ship.Branch added to the system
-Ship.Site Menu:
-1 - Add Ship.Site
-2 - Remove Ship.Site
+Branch added to the system
+Site Menu:
+1 - Add Site
+2 - Remove Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
 ******* SITE DETAILS *******
 Number of Sites: 2
 
-Ship.Site Type: Ship.Vendor
+Site Type: Vendor
 Name: Osem
 Address: beer sheva
 Contact Name: roee
 Phone Number: 0507175128
 
-Ship.Site Type: Ship.Branch
+Site Type: Branch
 Name: branch1
 Address: haifa
 Contact Name: ron
 Phone Number: 0507175129
-Ship.Zone: North
+Zone: North
 
-Ship.Site Menu:
-1 - Add Ship.Site
-2 - Remove Ship.Site
+Site Menu:
+1 - Add Site
+2 - Remove Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
-Shipping Ship.Main Menu:
-1 - Ship.Site Menu
-2 - Ship.Truck Menu
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
 3 - Drivers Menu
-4 - Ship.Order Menu
+4 - Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit
-Ship.Truck Menu:
-1 - Add Ship.Truck
-2 - Delete Ship.Truck
+Truck Menu:
+1 - Add Truck
+2 - Delete Truck
 3 - Print All Trucks
 4 - Exit
 Please enter the truck number:
@@ -88,10 +88,10 @@ Please enter truck storage capabilities:
 0 - Regular
 1 - Cooling
 2 - Freezer
-Ship.Truck added to the system
-Ship.Truck Menu:
-1 - Add Ship.Truck
-2 - Delete Ship.Truck
+Truck added to the system
+Truck Menu:
+1 - Add Truck
+2 - Delete Truck
 3 - Print All Trucks
 4 - Exit
 Please enter the truck number:
@@ -102,37 +102,37 @@ Please enter truck storage capabilities:
 0 - Regular
 1 - Cooling
 2 - Freezer
-Ship.Truck added to the system
-Ship.Truck Menu:
-1 - Add Ship.Truck
-2 - Delete Ship.Truck
+Truck added to the system
+Truck Menu:
+1 - Add Truck
+2 - Delete Truck
 3 - Print All Trucks
 4 - Exit
 ******* Trucks details *******
 Number of truck: 2
 
-Ship.Truck number: 1234
-Ship.Truck weight: 1000
-Ship.Truck Total weight: 11000
-Ship.Truck model: opel
-Ship.Truck storage capability's: Regular
+Truck number: 1234
+Truck weight: 1000
+Truck Total weight: 11000
+Truck model: opel
+Truck storage capability's: Regular
 
-Ship.Truck number: 12345
-Ship.Truck weight: 1000
-Ship.Truck Total weight: 15000
-Ship.Truck model: opel
-Ship.Truck storage capability's: Cooling
+Truck number: 12345
+Truck weight: 1000
+Truck Total weight: 15000
+Truck model: opel
+Truck storage capability's: Cooling
 
-Ship.Truck Menu:
-1 - Add Ship.Truck
-2 - Delete Ship.Truck
+Truck Menu:
+1 - Add Truck
+2 - Delete Truck
 3 - Print All Trucks
 4 - Exit
-Shipping Ship.Main Menu:
-1 - Ship.Site Menu
-2 - Ship.Truck Menu
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
 3 - Drivers Menu
-4 - Ship.Order Menu
+4 - Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit
@@ -152,7 +152,7 @@ Please enter driver storage capabilities training:
 0 - Regular
 1 - Cooling
 2 - Freezer
-Ship.Driver added to the system
+Driver added to the system
 Drivers Menu:
 1 - Add driver
 2 - remove driver
@@ -169,7 +169,7 @@ Please enter driver storage capabilities training:
 0 - Regular
 1 - Cooling
 2 - Freezer
-Ship.Driver added to the system
+Driver added to the system
 Drivers Menu:
 1 - Add driver
 2 - remove driver
@@ -196,21 +196,21 @@ Drivers Menu:
 4 - Update driver licence
 5 - Update driver training
 6 - Exit
-Shipping Ship.Main Menu:
-1 - Ship.Site Menu
-2 - Ship.Truck Menu
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
 3 - Drivers Menu
-4 - Ship.Order Menu
+4 - Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit
-Ship.Order Menu:
+Order Menu:
 1 - Add order
 2 - Print All orders
 3 - Exit
-Please enter a Ship.Vendor as a source:
+Please enter a Vendor as a source:
 Please enter Destination site:
-Ship.Item menu:
+Item menu:
 1 - Add item
 2 - Print items added so far
 3 - Exit
@@ -220,8 +220,8 @@ Please enter storage condition for the item:
 0 - Regular
 1 - Cooling
 2 - Freezer
-Ship.Item add to order
-Ship.Item menu:
+Item add to order
+Item menu:
 1 - Add item
 2 - Print items added so far
 3 - Exit
@@ -231,57 +231,57 @@ Please enter storage condition for the item:
 0 - Regular
 1 - Cooling
 2 - Freezer
-Ship.Item add to order
-Ship.Item menu:
+Item add to order
+Item menu:
 1 - Add item
 2 - Print items added so far
 3 - Exit
-Ship.Order ID: 1
+Order ID: 1
 Destination: branch1
 Items: 
-	Ship.Item name: bamba
+	Item name: bamba
 	Quantity: 100
 	Storage Condition: Regular
 
-	Ship.Item name: bisli
+	Item name: bisli
 	Quantity: 122
 	Storage Condition: Regular
 
-Ship.Item menu:
+Item menu:
 1 - Add item
 2 - Print items added so far
 3 - Exit
-Ship.Order was added to the system
-Ship.Order Menu:
+Order was added to the system
+Order Menu:
 1 - Add order
 2 - Print All orders
 3 - Exit
 ********** Osem **********
 
-Ship.Order ID: 1
+Order ID: 1
 Destination: branch1
 Items: 
-	Ship.Item name: bamba
+	Item name: bamba
 	Quantity: 100
 	Storage Condition: Regular
 
-	Ship.Item name: bisli
+	Item name: bisli
 	Quantity: 122
 	Storage Condition: Regular
 
-Ship.Order Menu:
+Order Menu:
 1 - Add order
 2 - Print All orders
 3 - Exit
-Shipping Ship.Main Menu:
-1 - Ship.Site Menu
-2 - Ship.Truck Menu
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
 3 - Drivers Menu
-4 - Ship.Order Menu
+4 - Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit
-Ship.Shipment  Menu:
+Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
@@ -297,8 +297,8 @@ Please enter a day for the shipment:
 6 - Friday
 Please enter ID for the shipment:
 Please enter a vendor name:
-Ship.Shipment created
-Ship.Shipment  Menu:
+Shipment created
+Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
@@ -306,45 +306,45 @@ Ship.Shipment  Menu:
 5 - execute nearest shipment
 6 - Exit
 ******************** SHIPMENTS ********************
-****** Ship.Shipment details ******
-Ship.Shipment ID: 12345
+****** Shipment details ******
+Shipment ID: 12345
 shipment scheduled for this Tuesday
-Ship.Truck number: 1234
-Ship.Driver Name: roni
-Ship.Vendor: Osem
+Truck number: 1234
+Driver Name: roni
+Vendor: Osem
 There isn't any changes in this shipment as of this moment
 Destinations:
-Ship.Site Type: Ship.Branch
+Site Type: Branch
 Name: branch1
 Address: haifa
 Contact Name: ron
 Phone Number: 0507175129
-Ship.Zone: North
+Zone: North
 
-Ship.Item doc:
-Ship.Item Document details:
+Item doc:
+Item Document details:
 Document ID: 1
 Destination: branch1
-	Ship.Item name: bisli
+	Item name: bisli
 	Quantity: 122
 	Storage Condition: Regular
 
-	Ship.Item name: bamba
+	Item name: bamba
 	Quantity: 100
 	Storage Condition: Regular
 
-Ship.Shipment  Menu:
+Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
 4 - Print all available shipments
 5 - execute nearest shipment
 6 - Exit
-Shipping Ship.Main Menu:
-1 - Ship.Site Menu
-2 - Ship.Truck Menu
+Shipping Main Menu:
+1 - Site Menu
+2 - Truck Menu
 3 - Drivers Menu
-4 - Ship.Order Menu
+4 - Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit

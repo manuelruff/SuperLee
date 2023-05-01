@@ -1,4 +1,6 @@
-package Ship;
+package Ship.Presentation;
+
+import shipmentManagement;
 
 import java.util.*;
 
@@ -23,11 +25,11 @@ public class UI {
         String choice;
 
         while(true) {
-            System.out.println("Shipping Ship.Main Menu:");
-            System.out.println("1 - Ship.Site Menu");
-            System.out.println("2 - Ship.Truck Menu");
+            System.out.println("Shipping Main Menu:");
+            System.out.println("1 - Site Menu");
+            System.out.println("2 - Truck Menu");
             System.out.println("3 - Drivers Menu");
-            System.out.println("4 - Ship.Order Menu");
+            System.out.println("4 - Order Menu");
             System.out.println("5 - Shipping Menu");
             System.out.println("6 - Print all shipped item docs");
             System.out.println("7 - Exit");
@@ -37,9 +39,9 @@ public class UI {
                 case "1":
                     boolean chF=true;
                     while(chF) {
-                        System.out.println("Ship.Site Menu:");
-                        System.out.println("1 - Add Ship.Site");
-                        System.out.println("2 - Remove Ship.Site");
+                        System.out.println("Site Menu:");
+                        System.out.println("1 - Add Site");
+                        System.out.println("2 - Remove Site");
                         System.out.println("3 - Print All Sites ");
                         System.out.println("4 - Update site info");
                         System.out.println("5 - Exit");
@@ -77,9 +79,9 @@ public class UI {
                 case "2":
                     int ch2=0;
                     while(ch2 != 4) {
-                        System.out.println("Ship.Truck Menu:");
-                        System.out.println("1 - Add Ship.Truck");
-                        System.out.println("2 - Delete Ship.Truck");
+                        System.out.println("Truck Menu:");
+                        System.out.println("1 - Add Truck");
+                        System.out.println("2 - Delete Truck");
                         System.out.println("3 - Print All Trucks");
                         System.out.println("4 - Exit");
                         try{
@@ -151,7 +153,7 @@ public class UI {
                 case "4":
                     int ch4=0;
                     while(ch4 != 3) {
-                        System.out.println("Ship.Order Menu:");
+                        System.out.println("Order Menu:");
                         System.out.println("1 - Add order");
                         System.out.println("2 - Print All orders");
                         System.out.println("3 - Exit");
@@ -181,7 +183,7 @@ public class UI {
                 case "5":
                     int ch5 = 0;
                     while(ch5 != 6) {
-                        System.out.println("Ship.Shipment  Menu:");
+                        System.out.println("Shipment  Menu:");
                         System.out.println("1 - Add shipment");
                         System.out.println("2 - Delete shipment");
                         System.out.println("3 - Print All shipment");
@@ -251,7 +253,7 @@ public class UI {
             }
             check3 = Smanagement.checkID(driverID);
             if (!check3)
-                System.out.println("Ship.Driver does not exist in the system");
+                System.out.println("Driver does not exist in the system");
             else
             {
                 char driverLicence = '0';
@@ -293,7 +295,7 @@ public class UI {
             }
             check3 = Smanagement.checkID(driverID);
             if (!check3)
-                System.out.println("Ship.Driver does not exist in the system");
+                System.out.println("Driver does not exist in the system");
             else
             {
                 char driverLicence = '0';
@@ -322,7 +324,7 @@ public class UI {
     /**
      * this function gets input from the user about a new site he wants to add
      * and adds the new site to the system
-     * @param Smanagement - the Ship.shipmentManagement object which the site is added too
+     * @param Smanagement - the shipmentManagement object which the site is added too
      */
     public void addSite(shipmentManagement Smanagement)
     {
@@ -333,9 +335,9 @@ public class UI {
             siteName = scanner.nextLine();
             check = Smanagement.checkSite(siteName);
             if (check)
-                System.out.println("Ship.Site already exist please enter a new name");
+                System.out.println("Site already exist please enter a new name");
         }
-        System.out.println("Please enter Ship.Site Address:");
+        System.out.println("Please enter Site Address:");
         String siteAddress = scanner.nextLine();
         String sitePhoneNumber;
         System.out.println("Please enter site phone number (10 digits - only numbers):");
@@ -352,9 +354,9 @@ public class UI {
         {
             while (true) {
                 System.out.println("""
-                        Please enter Ship.Site type:
-                        1 - Ship.Vendor
-                        2 - Ship.Branch""");
+                        Please enter Site type:
+                        1 - Vendor
+                        2 - Branch""");
                 if (scanner.hasNextInt()) {
                     siteType = scanner.nextInt();
                     break;
@@ -366,7 +368,7 @@ public class UI {
 
             if(siteType == 1) {
                 Smanagement.addVendor(siteName, siteAddress, sitePhoneNumber, contactName);
-                System.out.println("Ship.Vendor added to the system");
+                System.out.println("Vendor added to the system");
                 check = false;
             }
             else if (siteType == 2) {
@@ -382,7 +384,7 @@ public class UI {
                         System.out.println("Please enter a number between 0 - 2");
                 }
                 Smanagement.addBranch(siteName,siteAddress,sitePhoneNumber,contactName,zone);
-                System.out.println("Ship.Branch added to the system");
+                System.out.println("Branch added to the system");
                 check = false;
             }
         }
@@ -391,7 +393,7 @@ public class UI {
     /**
      * this function gets input from the user about a site to delete
      * and delete it from the system
-     * @param Smanagement - the Ship.shipmentManagement object which the site is deleted from
+     * @param Smanagement - the shipmentManagement object which the site is deleted from
      */
     public void deleteSite(shipmentManagement Smanagement)
     {
@@ -407,14 +409,14 @@ public class UI {
                 check1 = false;
             }
             else {
-                System.out.println("Ship.Site does not exist in the system");
+                System.out.println("Site does not exist in the system");
             }
         }
     }
     /**
      * this function gets input from the user about a new truck he wants to add
      * and adds the new truck to the system
-     * @param Smanagement - the Ship.shipmentManagement object which the truck is added too
+     * @param Smanagement - the shipmentManagement object which the truck is added too
      */
 
     public void updateSite(shipmentManagement Smanagement)
@@ -425,8 +427,8 @@ public class UI {
             while (true) {
                 System.out.println("""
                         What would you like to change:
-                        1 - Ship.Site name
-                        2 - Ship.Site address
+                        1 - Site name
+                        2 - Site address
                         3 - Contact name
                         4 - Contact phone number""");
                 String str = scanner.nextLine();
@@ -447,7 +449,7 @@ public class UI {
             }
         }
         else
-            System.out.println("Ship.Site does not exist in the system");
+            System.out.println("Site does not exist in the system");
     }
     public void addTruck(shipmentManagement Smanagement)
     {
@@ -459,7 +461,7 @@ public class UI {
             truckNumber = scanner.nextLine();
             check2 = Smanagement.checkTruckNumber(truckNumber);
             if (check2)
-                System.out.println("Ship.Truck already exist in the system");
+                System.out.println("Truck already exist in the system");
         }
 
         System.out.println("Please enter the truck model:");
@@ -497,13 +499,13 @@ public class UI {
                 System.out.println("Please enter a number between 0 - 2");
         }
         Smanagement.addTruck(truckNumber,truckCarryWeight, truckWeight,truckModel,storage);
-        System.out.println("Ship.Truck added to the system");
+        System.out.println("Truck added to the system");
         scanner.nextLine();
     }
     /**
      * this function gets input from the user about a truck to delete
      * and delete the truck from the system
-     * @param Smanagement - the Ship.shipmentManagement object which the truck is deleted from
+     * @param Smanagement - the shipmentManagement object which the truck is deleted from
      */
     public void deleteTruck(shipmentManagement Smanagement)
     {
@@ -524,9 +526,9 @@ public class UI {
         }
     }
     /**
-     * this function gets input from the user about a new Ship.Driver he wants to add
+     * this function gets input from the user about a new Driver he wants to add
      * and adds the new driver to the system
-     * @param Smanagement - the Ship.shipmentManagement object which the driver is added too
+     * @param Smanagement - the shipmentManagement object which the driver is added too
      */
     public void addDriver(shipmentManagement Smanagement)
     {
@@ -544,7 +546,7 @@ public class UI {
             }
             check3 = Smanagement.checkID(driverID);
             if (check3)
-                System.out.println("Ship.Driver already exist in the system");
+                System.out.println("Driver already exist in the system");
         }
         System.out.println("Please enter driver's name:");
         String driverName = scanner.nextLine();
@@ -575,13 +577,13 @@ public class UI {
         }
         driverLicence = Character.toUpperCase(driverLicence);
         Smanagement.addDriver(driverName,driverID,driverLicence,training);
-        System.out.println("Ship.Driver added to the system");
+        System.out.println("Driver added to the system");
         scanner.nextLine();
     }
     /**
      * this function gets input from the user about a driver to delete
      * and delete the driver from the system
-     * @param Smanagement - the Ship.shipmentManagement object which the driver is deleted from
+     * @param Smanagement - the shipmentManagement object which the driver is deleted from
      */
     public void deleteDriver(shipmentManagement Smanagement)
     {
@@ -592,7 +594,7 @@ public class UI {
             driversIDToRemove = scanner.nextLine();
             check32 = Smanagement.checkID(driversIDToRemove);
             if (!check32) {
-                System.out.println("Ship.Driver does not exist in the system");
+                System.out.println("Driver does not exist in the system");
                 return;
             }
             else {
@@ -605,7 +607,7 @@ public class UI {
     /**
      * this function gets input from the user about a new order he wants to add
      * and adds the new order to the system
-     * @param Smanagement - the Ship.shipmentManagement object which the order is added too
+     * @param Smanagement - the shipmentManagement object which the order is added too
      */
     public void addOrder(shipmentManagement Smanagement)
     {
@@ -615,7 +617,7 @@ public class UI {
         int amount = 0,cho = 0;
         while (check40) {
             while (check4) {
-                System.out.println("Please enter a Ship.Vendor as a source:");
+                System.out.println("Please enter a Vendor as a source:");
                 sourceSite = scanner.nextLine();
                 if (Smanagement.checkVendor(sourceSite)) {
                     while (check41) {
@@ -625,7 +627,7 @@ public class UI {
                             Smanagement.createOrder(sourceSite, destinationSite);
                             while(cho != 3)
                             {
-                                System.out.println("Ship.Item menu:");
+                                System.out.println("Item menu:");
                                 System.out.println("1 - Add item");
                                 System.out.println("2 - Print items added so far");
                                 System.out.println("3 - Exit");
@@ -666,7 +668,7 @@ public class UI {
                                                 System.out.println("Please enter a number between 0 - 2");
                                         }
                                         Smanagement.addItemToOrder(sourceSite,itemName,amount,training);
-                                        System.out.println("Ship.Item add to order");
+                                        System.out.println("Item add to order");
                                         break;
                                     case 2:
                                         Smanagement.printLastOrder(sourceSite);
@@ -677,7 +679,7 @@ public class UI {
                                         System.out.println("Invalid details");
                                 }
                             }
-                            System.out.println("Ship.Order was added to the system");
+                            System.out.println("Order was added to the system");
                             check4 = false;
                             check41 = false;
                             check40 = false;
@@ -699,7 +701,7 @@ public class UI {
     /**
      * this function gets input from the user about a new shipment he wants to add
      * and adds the new shipment to the system
-     * @param Smanagement - the Ship.shipmentManagement object which the shipment is added too
+     * @param Smanagement - the shipmentManagement object which the shipment is added too
      */
     public void addShipment(shipmentManagement Smanagement)
     {
@@ -734,7 +736,7 @@ public class UI {
                     System.out.println("Please enter ID for the shipment:");
                     shipmentID = scanner.nextLine();
                     if(Smanagement.checkShipmentID(shipmentID))
-                        System.out.println("Ship.Shipment ID already exist in the system");
+                        System.out.println("Shipment ID already exist in the system");
                     else {
                         while(check51)
                         {
@@ -743,7 +745,7 @@ public class UI {
                             if(Smanagement.checkVendor(vendor))
                             {
                                 Smanagement.createShipment(day,shipmentID,vendor);
-                                System.out.println("Ship.Shipment created");
+                                System.out.println("Shipment created");
                                 check5 = false;
                                 check50 = false;
                                 check51 = false;
@@ -771,7 +773,7 @@ public class UI {
                 check52 = false;
             }
             else {
-                System.out.println("Ship.Shipment does not exist in the system");
+                System.out.println("Shipment does not exist in the system");
             }
         }
     }

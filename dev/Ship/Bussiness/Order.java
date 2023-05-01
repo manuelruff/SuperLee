@@ -1,4 +1,4 @@
-package Ship;
+package Ship.Bussiness;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +79,7 @@ public class Order {
     }
 
     public void printOrder() {
-        System.out.println("Ship.Order ID: " + ID);
+        System.out.println("Order ID: " + ID);
         System.out.println("Destination: " + destination);
         if (itemList.isEmpty())
             System.out.println("No items currently in the order");
