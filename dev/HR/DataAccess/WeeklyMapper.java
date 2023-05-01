@@ -1,6 +1,7 @@
 package HR.DataAccess;
 
 import HR.Domain.*;
+import resource.Connect;
 
 import java.sql.Connection;
 import java.sql.SQLException;

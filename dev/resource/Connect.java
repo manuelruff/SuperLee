@@ -1,4 +1,4 @@
-package HR.DataAccess;
+package resource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +17,7 @@ public class Connect {
     public static void connect() {
         try {
             // db parameters
-           String url = "jdbc:sqlite:dev/adss2020_v01/resource/HRDB/HRDB";
+           String url = "jdbc:sqlite:dev/resource/HRDB";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
 //            System.out.println("Connection to SQLite has been established.");
@@ -56,10 +56,11 @@ public class Connect {
             System.out.println(e.getMessage());
         }
     }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        connect();
+    }
 }
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String[] args) {
-//        connect();
-//    }

@@ -1,6 +1,7 @@
 package HR.DataAccess;
 import HR.Domain.Cancellations;
 import HR.Domain.CashRegister;
+import resource.Connect;
 
 import java.sql.Connection;
 import java.sql.SQLException;

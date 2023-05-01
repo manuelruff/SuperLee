@@ -1,5 +1,3 @@
-package Ship.Bussiness;
-
 import HR.Presentation.GeneralUI;
 
 public class Main {

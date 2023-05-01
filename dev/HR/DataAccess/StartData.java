@@ -2,6 +2,7 @@ package HR.DataAccess;
 import HR.Domain.Jobs;
 import HR.Domain.Super;
 import HR.Domain.Worker;
+import resource.Connect;
 
 import java.sql.Connection;
 import java.sql.SQLException;

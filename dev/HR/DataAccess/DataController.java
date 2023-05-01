@@ -3,6 +3,7 @@ package HR.DataAccess;
 import HR.Domain.Shift;
 import HR.Domain.Super;
 import HR.Domain.Worker;
+import resource.Connect;
 
 //this will be singleton
 public class DataController {

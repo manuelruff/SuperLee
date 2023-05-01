@@ -1,6 +1,7 @@
 package HR.DataAccess;
 import HR.Domain.Days;
 import HR.Domain.Super;
+import resource.Connect;
 
 import java.sql.Connection;
 import java.sql.SQLException;

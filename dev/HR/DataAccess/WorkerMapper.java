@@ -4,6 +4,7 @@ import HR.Domain.CantWork;
 import HR.Domain.Days;
 import HR.Domain.Jobs;
 import HR.Domain.Worker;
+import resource.Connect;
 
 import java.sql.Connection;
 import java.sql.SQLException;
