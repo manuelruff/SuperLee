@@ -386,7 +386,6 @@ public class UI {
                 check = false;
             }
         }
-        scanner.nextLine();
     }
     /**
      * this function gets input from the user about a site to delete

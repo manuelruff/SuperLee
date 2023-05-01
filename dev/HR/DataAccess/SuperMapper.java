@@ -1,6 +1,7 @@
 package HR.DataAccess;
 import HR.Domain.Days;
 import HR.Domain.Super;
+import Ship.Bussiness.Zone;
 import resource.Connect;
 
 import java.sql.Connection;
@@ -36,14 +37,18 @@ public class SuperMapper {
      *
      */
     private static void ReadSuper(String branchName){
-        String name;
+        String name,address,phoneNumber,contactName,zone;
         try {
             java.sql.Statement stmt = conn.createStatement();
             //java.sql.ResultSet rs = stmt.executeQuery("select * from Super WHERE name=="+branchName+"" );
             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Super WHERE name = '" + branchName + "'");
             if(rs.next()) {
                 name = rs.getString("name");
-                Super branch = new Super(name);
+                address = rs.getString("Address");
+                phoneNumber= rs.getString("PhoneNumber");
+                contactName= rs.getString("ContactName");
+                zone= rs.getString("Zone");
+                Super branch = new Super(name,address,phoneNumber,contactName, Zone.valueOf(zone));
                 //add the worker to the map
                 SuperMap.put(name, branch);
                 //load his cash registers to the mapper of the cash register
@@ -106,11 +111,15 @@ public class SuperMapper {
     }
     public static void WriteAllSupers() {
         for (Super branch : SuperMap.values()) {
-            String name;
+            String name,address,phoneNumber,contactName,zone;
             try {
                 java.sql.Statement stmt = conn.createStatement();
                 name = branch.getName();
-                stmt.executeUpdate("INSERT OR IGNORE INTO Super (name) VALUES ('" + name + "')");
+                address=branch.getAddress();
+                phoneNumber=branch.getPhoneNumber();
+                contactName=branch.getContactName();
+                zone=branch.getZone().toString();
+                stmt.executeUpdate("INSERT OR IGNORE INTO Super (name, Address, PhoneNumber, ContactName, Zone) VALUES ('" + name + "', '" + address + "', '" + phoneNumber + "', '" + contactName + "', '" + zone + "')");
                 //write weekly
                 if(branch.GetWeekShifts()!= null) {
                     WeeklyMapper.InsertToMapper(branch.getName(), branch.GetWeekShifts());

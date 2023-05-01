@@ -2,6 +2,7 @@ package HR.Domain;
 
 import HR.DataAccess.DataController;
 import HR.DataAccess.ManagerPasswordMapper;
+import Ship.Bussiness.Zone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +42,14 @@ public class ManagerController {
         ManagerPasswordMapper.setManagerPassword(password);
     }
 
+
     /**
-     * the function allows the HR manager to add new branch of markert
-     * @param new_super - the name of the new branch
+    * the function allows the HR manager to add new branch of markert
      */
-    public static void addSuper(Super new_super) {
-        GeneralController.AddNewSuper(new_super);
+    public static void addSuper(String siteName,String siteAddress,String sitePhoneNumber,
+                                String contactName,int zoneSuper) {
+        Super add=new Super(siteName,siteAddress,sitePhoneNumber,contactName, Zone.values()[zoneSuper]);
+        GeneralController.AddNewSuper(add);
     }
 
     /**

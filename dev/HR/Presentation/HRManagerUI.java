@@ -2,6 +2,7 @@ package HR.Presentation;
 
 import HR.DataAccess.DataController;
 import HR.Domain.*;
+import Presentation.GeneralUI;
 
 import java.util.Scanner;
 
@@ -220,9 +221,8 @@ public class HRManagerUI {
                     }
                     break;
                 case 2:
-                    Super new_super = CreateNewSuper();
-                    ManagerController.addSuper(new_super);
-                    System.out.println(new_super.getName() +" added successfully");
+                    CreateNewSuper();
+                    System.out.println("Branch added to the system");
                     break;
                 case 3:
                     //check if he created the weekly for everyone
@@ -394,22 +394,35 @@ public class HRManagerUI {
         return new Worker(input_newID,input_newName,bankNum,input_newContract,wage, Jobs.values()[role_choice-1],generic_Password);
     }
 
-    public static Super CreateNewSuper(){
-        boolean new_super_flag = false;
-        String input_newSuper = "";
-        // as long as the id is not new - keep asking the manager to add one
-        while(!new_super_flag){
-            System.out.println("please enter the name of the new super");
-            // get the new name from the manager
-            input_newSuper = scanner.nextLine();  // Read user input
-            if (ManagerController.CheckBranchExist(input_newSuper)) {
-                System.out.println("this super is already exists");
-            }
-            else {
-                new_super_flag = true;
-            }
+    public static void CreateNewSuper(){
+        boolean check = true;
+        String siteName = null;
+        while(check) {
+            System.out.println("Please enter site name:");
+            siteName = scanner.nextLine();
+            check = ManagerController.CheckBranchExist(siteName);
+            if (check)
+                System.out.println("Site already exist please enter a new name");
         }
-        return new Super(input_newSuper);
+        System.out.println("Please enter Site Address:");
+        String siteAddress = scanner.nextLine();
+        String sitePhoneNumber;
+        System.out.println("Please enter site phone number (10 digits - only numbers):");
+        sitePhoneNumber = scanner.nextLine();
+        while(sitePhoneNumber.length() != 10 || !sitePhoneNumber.matches("[0-9]+")) {
+            System.out.println("Please enter site phone number (10 digits - only numbers):");
+            sitePhoneNumber = scanner.nextLine();
+        }
+        System.out.println("Please enter contact name:");
+        String contactName = scanner.nextLine();
+        System.out.println("""
+                Please enter branch zone:
+                0 - North
+                1 - Center
+                2 - South""");
+        int zone = GeneralController.AskForNumber(0,2);
+        ManagerController.addSuper(siteName,siteAddress,sitePhoneNumber,contactName,zone);
+
     }
 
 }

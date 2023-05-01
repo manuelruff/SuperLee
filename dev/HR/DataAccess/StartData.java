@@ -19,182 +19,182 @@ public class StartData {
     private StartData(){
         Workers=new HashMap<>();
         Superim=new HashMap<>();
-        CreateData();
+//        CreateData();
     }
 
     public static StartData getInstance(){
         return instance;
     }
-    public static void CreateData(){
-        //creating shift managers:
-        Worker ShiftManager1 = new Worker("1","manu" , 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager2 = new Worker("2","david",  318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager3 = new Worker("3","muhamad",  318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager4 = new Worker( "4","omri", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager5 = new Worker( "5", "oded",318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager6 = new Worker( "6","oded2", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager7 = new Worker( "7","peleg", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager8 = new Worker("8","mitzi",  318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        Worker ShiftManager9 = new Worker( "9","hatul", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
-        //puts them in the worker list
-        Workers.put("1", ShiftManager1);
-        Workers.put("2", ShiftManager2);
-        Workers.put("3", ShiftManager3);
-        Workers.put("4", ShiftManager4);
-        Workers.put("5", ShiftManager5);
-        Workers.put("6", ShiftManager6);
-        Workers.put("7", ShiftManager7);
-        Workers.put("8", ShiftManager8);
-        Workers.put("9", ShiftManager9);
-
-        //create cashiers
-        Worker Cashier1 = new Worker( "10","mikel", 318, "ata ahla gever", 60, Jobs.Cashier, "123");
-        Worker Cashier2 = new Worker( "11","migul", 318, "ata ahla gever", 60, Jobs.Cashier, "123");
-        Worker Cashier3 = new Worker( "12","huan", 318, "ata ahla gever", 60, Jobs.Cashier, "123");
-        Worker Cashier4 = new Worker( "13","omri-escopar",318, "ata ahla gever", 60, Jobs.Cashier, "123");
-        //puts them in the worker list
-        Workers.put("10", Cashier1);
-        Workers.put("11", Cashier2);
-        Workers.put("12", Cashier3);
-        Workers.put("13", Cashier4);
-
-        //create StoreKeeper
-        Worker StoreKeeper1 = new Worker( "14","oded", 318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
-        Worker StoreKeeper2 = new Worker("15","gal",  318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
-        Worker StoreKeeper3 = new Worker("16","papi",  318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
-        Worker StoreKeeper4 = new Worker( "17","hatul", 318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
-        //puts them in the worker list
-        Workers.put("14", StoreKeeper1);
-        Workers.put("15", StoreKeeper2);
-        Workers.put("16", StoreKeeper3);
-        Workers.put("17", StoreKeeper4);
-
-
-        //create GeneralEmployee
-        Worker GeneralEmp1 = new Worker( "18","odedi", 318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
-        Worker GeneralEmp2 = new Worker( "19","shimun", 318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
-        Worker GeneralEmp3 = new Worker( "20","sara", 318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
-        Worker GeneralEmp4 = new Worker("21","gebi",  318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
-        //puts them in the worker list
-        Workers.put("18", GeneralEmp1);
-        Workers.put("19", GeneralEmp2);
-        Workers.put("20", GeneralEmp3);
-        Workers.put("21", GeneralEmp4);
-
-        //create guards
-        Worker Guard1 = new Worker("22", "yuri", 318, "ata ahla gever", 50, Jobs.Guard, "123");
-        Worker Guard2 = new Worker("23","dor",  318, "ata ahla gever", 50, Jobs.Guard, "123");
-        Worker Guard3 = new Worker("24","shalev",  318, "ata ahla gever", 50, Jobs.Guard, "123");
-        Worker Guard4 = new Worker("25","harel",  318, "ata ahla gever", 50, Jobs.Guard, "123");
-        //puts them in the worker list
-        Workers.put("22", Guard1);
-        Workers.put("23", Guard2);
-        Workers.put("24", Guard3);
-        Workers.put("25", Guard4);
-
-        //create cleaner
-        Worker Cleaner1 = new Worker( "26","rohama", 318, "ata ahla gever", 10, Jobs.Cleaner, "123");
-        Worker Cleaner2 = new Worker( "27","avraham", 318, "ata ahla gever", 10, Jobs.Cleaner, "123");
-        Worker Cleaner3 = new Worker( "28","shoshana", 318, "ata ahla gever", 10, Jobs.Cleaner, "123");
-        Worker Cleaner4 = new Worker("29","alo",  318, "ata ahla gever", 10, Jobs.Cleaner, "123");
-        //puts them in the worker list
-        Workers.put("26", Cleaner1);
-        Workers.put("27", Cleaner2);
-        Workers.put("28", Cleaner3);
-        Workers.put("29", Cleaner4);
-
-        //create usher
-        Worker Usher1 = new Worker( "30","ahrak", 318, "ata ahla gever", 15, Jobs.Usher, "123");
-        Worker Usher2 = new Worker( "31", "midbar",318, "ata ahla gever", 15, Jobs.Usher, "123");
-        Worker Usher3 = new Worker( "32", "sahara",318, "ata ahla gever", 15, Jobs.Usher, "123");
-        Worker Usher4 = new Worker( "33","alosantos", 318, "ata ahla gever", 15, Jobs.Usher, "123");
-        //puts them in the worker list
-        Workers.put("30", Usher1);
-        Workers.put("31", Usher2);
-        Workers.put("32", Usher3);
-        Workers.put("33", Usher4);
-
-        //create a super
-        Super Super1 = new Super("zolretzah");
-        Super Super2 = new Super("yakarmeod");
-
-        //add to supers
-        Super1.AddWorker(ShiftManager1);
-        Super1.AddWorker(ShiftManager2);
-        Super1.AddWorker(ShiftManager3);
-        Super1.AddWorker(ShiftManager4);
-        Super1.AddWorker(ShiftManager5);
-        Super1.AddWorker(ShiftManager6);
-        Super1.AddWorker(ShiftManager7);
-        Super1.AddWorker(ShiftManager8);
-        Super1.AddWorker(ShiftManager9);
-        Super2.AddWorker(ShiftManager1);
-        Super2.AddWorker(ShiftManager2);
-        Super2.AddWorker(ShiftManager3);
-        Super2.AddWorker(ShiftManager4);
-        Super2.AddWorker(ShiftManager5);
-        Super2.AddWorker(ShiftManager6);
-        Super2.AddWorker(ShiftManager7);
-        Super2.AddWorker(ShiftManager8);
-        Super2.AddWorker(ShiftManager9);
-
-        Super1.AddWorker(Cashier1);
-        Super1.AddWorker(Cashier2);
-        Super1.AddWorker(Cashier3);
-        Super1.AddWorker(Cashier4);
-        Super2.AddWorker(Cashier1);
-        Super2.AddWorker(Cashier2);
-        Super2.AddWorker(Cashier3);
-        Super2.AddWorker(Cashier4);
-
-        Super1.AddWorker(StoreKeeper1);
-        Super1.AddWorker(StoreKeeper2);
-        Super1.AddWorker(StoreKeeper3);
-        Super1.AddWorker(StoreKeeper4);
-        Super2.AddWorker(StoreKeeper1);
-        Super2.AddWorker(StoreKeeper2);
-        Super2.AddWorker(StoreKeeper3);
-        Super2.AddWorker(StoreKeeper4);
-
-        Super1.AddWorker(GeneralEmp1);
-        Super1.AddWorker(GeneralEmp2);
-        Super1.AddWorker(GeneralEmp3);
-        Super1.AddWorker(GeneralEmp4);
-        Super2.AddWorker(GeneralEmp1);
-        Super2.AddWorker(GeneralEmp2);
-        Super2.AddWorker(GeneralEmp3);
-        Super2.AddWorker(GeneralEmp4);
-
-        Super1.AddWorker(Guard1);
-        Super1.AddWorker(Guard2);
-        Super1.AddWorker(Guard3);
-        Super1.AddWorker(Guard4);
-        Super2.AddWorker(Guard1);
-        Super2.AddWorker(Guard2);
-        Super2.AddWorker(Guard3);
-        Super2.AddWorker(Guard4);
-
-        Super1.AddWorker(Cleaner1);
-        Super1.AddWorker(Cleaner2);
-        Super1.AddWorker(Cleaner3);
-        Super1.AddWorker(Cleaner4);
-        Super2.AddWorker(Cleaner1);
-        Super2.AddWorker(Cleaner2);
-        Super2.AddWorker(Cleaner3);
-        Super2.AddWorker(Cleaner4);
-
-        Super1.AddWorker(Usher1);
-        Super1.AddWorker(Usher2);
-        Super1.AddWorker(Usher3);
-        Super1.AddWorker(Usher4);
-        Super2.AddWorker(Usher1);
-        Super2.AddWorker(Usher2);
-        Super2.AddWorker(Usher3);
-        Super2.AddWorker(Usher4);
-        //add the super to the super list
-        Superim.put("zolretzah", Super1);
-        Superim.put("yakarmeod", Super2);
-    }
+//    public static void CreateData(){
+//        //creating shift managers:
+//        Worker ShiftManager1 = new Worker("1","manu" , 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
+//        Worker ShiftManager2 = new Worker("2","david",  318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
+//        Worker ShiftManager3 = new Worker("3","muhamad",  318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
+//        Worker ShiftManager4 = new Worker( "4","omri", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
+//        Worker ShiftManager5 = new Worker( "5", "oded",318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
+//        Worker ShiftManager6 = new Worker( "6","oded2", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
+//        Worker ShiftManager7 = new Worker( "7","peleg", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
+//        Worker ShiftManager8 = new Worker("8","mitzi",  318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
+//        Worker ShiftManager9 = new Worker( "9","hatul", 318, "ata ahla gever", 130, Jobs.ShiftManager, "123");
+//        //puts them in the worker list
+//        Workers.put("1", ShiftManager1);
+//        Workers.put("2", ShiftManager2);
+//        Workers.put("3", ShiftManager3);
+//        Workers.put("4", ShiftManager4);
+//        Workers.put("5", ShiftManager5);
+//        Workers.put("6", ShiftManager6);
+//        Workers.put("7", ShiftManager7);
+//        Workers.put("8", ShiftManager8);
+//        Workers.put("9", ShiftManager9);
+//
+//        //create cashiers
+//        Worker Cashier1 = new Worker( "10","mikel", 318, "ata ahla gever", 60, Jobs.Cashier, "123");
+//        Worker Cashier2 = new Worker( "11","migul", 318, "ata ahla gever", 60, Jobs.Cashier, "123");
+//        Worker Cashier3 = new Worker( "12","huan", 318, "ata ahla gever", 60, Jobs.Cashier, "123");
+//        Worker Cashier4 = new Worker( "13","omri-escopar",318, "ata ahla gever", 60, Jobs.Cashier, "123");
+//        //puts them in the worker list
+//        Workers.put("10", Cashier1);
+//        Workers.put("11", Cashier2);
+//        Workers.put("12", Cashier3);
+//        Workers.put("13", Cashier4);
+//
+//        //create StoreKeeper
+//        Worker StoreKeeper1 = new Worker( "14","oded", 318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
+//        Worker StoreKeeper2 = new Worker("15","gal",  318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
+//        Worker StoreKeeper3 = new Worker("16","papi",  318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
+//        Worker StoreKeeper4 = new Worker( "17","hatul", 318, "ata ahla gever", 60, Jobs.StoreKeeper, "123");
+//        //puts them in the worker list
+//        Workers.put("14", StoreKeeper1);
+//        Workers.put("15", StoreKeeper2);
+//        Workers.put("16", StoreKeeper3);
+//        Workers.put("17", StoreKeeper4);
+//
+//
+//        //create GeneralEmployee
+//        Worker GeneralEmp1 = new Worker( "18","odedi", 318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
+//        Worker GeneralEmp2 = new Worker( "19","shimun", 318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
+//        Worker GeneralEmp3 = new Worker( "20","sara", 318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
+//        Worker GeneralEmp4 = new Worker("21","gebi",  318, "ata ahla gever", 30, Jobs.GeneralEmp, "123");
+//        //puts them in the worker list
+//        Workers.put("18", GeneralEmp1);
+//        Workers.put("19", GeneralEmp2);
+//        Workers.put("20", GeneralEmp3);
+//        Workers.put("21", GeneralEmp4);
+//
+//        //create guards
+//        Worker Guard1 = new Worker("22", "yuri", 318, "ata ahla gever", 50, Jobs.Guard, "123");
+//        Worker Guard2 = new Worker("23","dor",  318, "ata ahla gever", 50, Jobs.Guard, "123");
+//        Worker Guard3 = new Worker("24","shalev",  318, "ata ahla gever", 50, Jobs.Guard, "123");
+//        Worker Guard4 = new Worker("25","harel",  318, "ata ahla gever", 50, Jobs.Guard, "123");
+//        //puts them in the worker list
+//        Workers.put("22", Guard1);
+//        Workers.put("23", Guard2);
+//        Workers.put("24", Guard3);
+//        Workers.put("25", Guard4);
+//
+//        //create cleaner
+//        Worker Cleaner1 = new Worker( "26","rohama", 318, "ata ahla gever", 10, Jobs.Cleaner, "123");
+//        Worker Cleaner2 = new Worker( "27","avraham", 318, "ata ahla gever", 10, Jobs.Cleaner, "123");
+//        Worker Cleaner3 = new Worker( "28","shoshana", 318, "ata ahla gever", 10, Jobs.Cleaner, "123");
+//        Worker Cleaner4 = new Worker("29","alo",  318, "ata ahla gever", 10, Jobs.Cleaner, "123");
+//        //puts them in the worker list
+//        Workers.put("26", Cleaner1);
+//        Workers.put("27", Cleaner2);
+//        Workers.put("28", Cleaner3);
+//        Workers.put("29", Cleaner4);
+//
+//        //create usher
+//        Worker Usher1 = new Worker( "30","ahrak", 318, "ata ahla gever", 15, Jobs.Usher, "123");
+//        Worker Usher2 = new Worker( "31", "midbar",318, "ata ahla gever", 15, Jobs.Usher, "123");
+//        Worker Usher3 = new Worker( "32", "sahara",318, "ata ahla gever", 15, Jobs.Usher, "123");
+//        Worker Usher4 = new Worker( "33","alosantos", 318, "ata ahla gever", 15, Jobs.Usher, "123");
+//        //puts them in the worker list
+//        Workers.put("30", Usher1);
+//        Workers.put("31", Usher2);
+//        Workers.put("32", Usher3);
+//        Workers.put("33", Usher4);
+//
+//        //create a super
+//        Super Super1 = new Super("zolretzah");
+//        Super Super2 = new Super("yakarmeod");
+//
+//        //add to supers
+//        Super1.AddWorker(ShiftManager1);
+//        Super1.AddWorker(ShiftManager2);
+//        Super1.AddWorker(ShiftManager3);
+//        Super1.AddWorker(ShiftManager4);
+//        Super1.AddWorker(ShiftManager5);
+//        Super1.AddWorker(ShiftManager6);
+//        Super1.AddWorker(ShiftManager7);
+//        Super1.AddWorker(ShiftManager8);
+//        Super1.AddWorker(ShiftManager9);
+//        Super2.AddWorker(ShiftManager1);
+//        Super2.AddWorker(ShiftManager2);
+//        Super2.AddWorker(ShiftManager3);
+//        Super2.AddWorker(ShiftManager4);
+//        Super2.AddWorker(ShiftManager5);
+//        Super2.AddWorker(ShiftManager6);
+//        Super2.AddWorker(ShiftManager7);
+//        Super2.AddWorker(ShiftManager8);
+//        Super2.AddWorker(ShiftManager9);
+//
+//        Super1.AddWorker(Cashier1);
+//        Super1.AddWorker(Cashier2);
+//        Super1.AddWorker(Cashier3);
+//        Super1.AddWorker(Cashier4);
+//        Super2.AddWorker(Cashier1);
+//        Super2.AddWorker(Cashier2);
+//        Super2.AddWorker(Cashier3);
+//        Super2.AddWorker(Cashier4);
+//
+//        Super1.AddWorker(StoreKeeper1);
+//        Super1.AddWorker(StoreKeeper2);
+//        Super1.AddWorker(StoreKeeper3);
+//        Super1.AddWorker(StoreKeeper4);
+//        Super2.AddWorker(StoreKeeper1);
+//        Super2.AddWorker(StoreKeeper2);
+//        Super2.AddWorker(StoreKeeper3);
+//        Super2.AddWorker(StoreKeeper4);
+//
+//        Super1.AddWorker(GeneralEmp1);
+//        Super1.AddWorker(GeneralEmp2);
+//        Super1.AddWorker(GeneralEmp3);
+//        Super1.AddWorker(GeneralEmp4);
+//        Super2.AddWorker(GeneralEmp1);
+//        Super2.AddWorker(GeneralEmp2);
+//        Super2.AddWorker(GeneralEmp3);
+//        Super2.AddWorker(GeneralEmp4);
+//
+//        Super1.AddWorker(Guard1);
+//        Super1.AddWorker(Guard2);
+//        Super1.AddWorker(Guard3);
+//        Super1.AddWorker(Guard4);
+//        Super2.AddWorker(Guard1);
+//        Super2.AddWorker(Guard2);
+//        Super2.AddWorker(Guard3);
+//        Super2.AddWorker(Guard4);
+//
+//        Super1.AddWorker(Cleaner1);
+//        Super1.AddWorker(Cleaner2);
+//        Super1.AddWorker(Cleaner3);
+//        Super1.AddWorker(Cleaner4);
+//        Super2.AddWorker(Cleaner1);
+//        Super2.AddWorker(Cleaner2);
+//        Super2.AddWorker(Cleaner3);
+//        Super2.AddWorker(Cleaner4);
+//
+//        Super1.AddWorker(Usher1);
+//        Super1.AddWorker(Usher2);
+//        Super1.AddWorker(Usher3);
+//        Super1.AddWorker(Usher4);
+//        Super2.AddWorker(Usher1);
+//        Super2.AddWorker(Usher2);
+//        Super2.AddWorker(Usher3);
+//        Super2.AddWorker(Usher4);
+//        //add the super to the super list
+//        Superim.put("zolretzah", Super1);
+//        Superim.put("yakarmeod", Super2);
+//    }
     public static Map<String, Worker> getWorkers() {
         return Workers;
     }
