@@ -5,6 +5,8 @@ import HR.Domain.GeneralController;
 
 import java.util.Scanner;
 
+import static Presentation.GeneralUI.scanner;
+
 public class CashRegisterUI {
 //    private static ReshetInfo info= ReshetInfo.getInstance();
     private static CashRegisterController cashRegisterController = CashRegisterController.getInstance();
@@ -19,8 +21,7 @@ public class CashRegisterUI {
             System.out.println("1. watch cancellations history of a day");
             System.out.println("2. add a cancellations log");
             System.out.println("3. Back");
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-            String input = myObj.nextLine();  // Read user input
+            String input = scanner.nextLine();  // Read user input
             //try to change the input to a string
             try{
                 choice=Integer.parseInt(input);
@@ -38,12 +39,11 @@ public class CashRegisterUI {
                     while(check){
                         //we need to get the date he want to watch
                         System.out.println("please enter year: ");
-                        myObj = new Scanner(System.in);  // Create a Scanner object
-                        String year = myObj.nextLine();  // Read user input
+                        String year = scanner.nextLine();  // Read user input
                         System.out.println("please enter month: ");
-                        String month = myObj.nextLine();  // Read user input
+                        String month = scanner.nextLine();  // Read user input
                         System.out.println("please enter day: ");
-                        String day = myObj.nextLine();  // Read user input
+                        String day = scanner.nextLine();  // Read user input
                         //try to change the input to a string
                         try{
                             Year=Integer.parseInt(year);
@@ -73,8 +73,7 @@ public class CashRegisterUI {
                         isShiftManager = true;
                     }
                     System.out.println("please enter your password: ");
-                    myObj = new Scanner(System.in);  // Create a Scanner object
-                    String password = myObj.nextLine();  // Read user input
+                    String password = scanner.nextLine();  // Read user input
                     if(!GeneralController.CheckWorkerPassword(ID,password)){
                         System.out.println("password is incorrect");
                         choice = 4;
@@ -82,8 +81,8 @@ public class CashRegisterUI {
                     }
                     // if he's a shift manager
                     System.out.println("please enter the name of the item which you want to cancel: ");
-                    myObj = new Scanner(System.in);  // Create a Scanner object
-                    String item = myObj.nextLine();  // Read user input
+                      // Create a Scanner object
+                    String item = scanner.nextLine();  // Read user input
                     System.out.println("please enter the amount of the item which you want to cancel: ");
                     double amount = UIGeneralFnctions.AskForDoubleNumber();
                     CashRegisterController.AddCancellations(Name,item,amount,ID);

@@ -4,6 +4,8 @@ import HR.Domain.GeneralController;
 
 import java.util.Scanner;
 
+import static Presentation.GeneralUI.scanner;
+
 public class UIGeneralFnctions {
     //private static ReshetInfo info=ReshetInfo.getInstance();
     private static GeneralController generalController = GeneralController.getInstance();
@@ -19,8 +21,7 @@ public class UIGeneralFnctions {
         while(!IdCheck){
             System.out.println("please enter the worker's ID: ");
             // get the new id from the manager
-            Scanner myObj_newID = new Scanner(System.in);  // Create a Scanner object
-            ID = myObj_newID.nextLine();
+            ID = scanner.nextLine();
             if(!GeneralController.isExistWorker(ID)){
                 System.out.println("this worker is not working at our markets! try again");
                 continue;
@@ -41,8 +42,7 @@ public class UIGeneralFnctions {
         while (!BranchCheck){
             System.out.println("please enter the branch you want to work on: ");
             //in the beginning there will be a few options, he is supposed to know them
-            Scanner myObj_BranchName = new Scanner(System.in);  // Create a Scanner object
-            BranchName = myObj_BranchName.nextLine();
+            BranchName = scanner.nextLine();
             BranchCheck= GeneralController.isExistSuper(BranchName);
             if (!BranchCheck){
                 System.out.println("this branch doesn't exists, try again!");
@@ -64,8 +64,7 @@ public class UIGeneralFnctions {
     public static int AskForNumber(int s,int e){
         int num=0;
         while(true){
-            Scanner myObj_input = new Scanner(System.in);  // Create a Scanner object
-            String input= myObj_input.nextLine();
+            String input= scanner.nextLine();
             try {
                 num = Integer.parseInt(input);
                 if (num<=e && num>=s){
@@ -92,8 +91,7 @@ public class UIGeneralFnctions {
         boolean flag = true;
         int num=-999;
         while (flag){
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-            String input = myObj.nextLine();  // Read user input
+            String input = scanner.nextLine();  // Read user input
             //try to change the input to a string
             try{
                 num=Integer.parseInt(input);
@@ -118,8 +116,7 @@ public class UIGeneralFnctions {
         boolean flag = true;
         double num=-999;
         while (flag){
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-            String input = myObj.nextLine();  // Read user input
+            String input = scanner.nextLine();  // Read user input
             //try to change the input to a string
             try{
                 num=Double.parseDouble(input);

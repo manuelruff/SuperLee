@@ -6,6 +6,8 @@ import HR.DataAccess.WorkerMapper;
 
 import java.util.*;
 
+import static Presentation.GeneralUI.scanner;
+
 //this will be singleton
 public class GeneralController {
     private static GeneralController instance=new GeneralController();
@@ -41,8 +43,7 @@ public class GeneralController {
     public static int AskForNumber(int s, int e) {
         int num = 0;
         while (true) {
-            Scanner myObj_input = new Scanner(System.in);  // Create a Scanner object
-            String input = myObj_input.nextLine();
+            String input = scanner.nextLine();
             try {
                 num = Integer.parseInt(input);
                 if (num <= e && num >= s) {

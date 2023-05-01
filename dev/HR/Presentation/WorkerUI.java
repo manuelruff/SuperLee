@@ -4,6 +4,8 @@ import HR.Domain.WorkerController;
 
 import java.util.Scanner;
 
+import static Presentation.GeneralUI.scanner;
+
 public class WorkerUI {
     private static WorkerController workerController;
     /**
@@ -14,11 +16,10 @@ public class WorkerUI {
         System.out.println("please log in: ");
         while (flag){
             // got from the use the ID and the password
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
             System.out.println("ID: ");
-            String ID = myObj.nextLine();  // Read user input
+            String ID = scanner.nextLine();  // Read user input
             System.out.println("Password: ");
-            String passwordInput = myObj.nextLine();  // Read user input
+            String passwordInput = scanner.nextLine();  // Read user input
             // check if the worker enter valid inputs
             if(!WorkerController.isExistWorker(ID) || !WorkerController.IsTruePassword(ID,passwordInput)){
                 System.out.println("invalid input - try again!");
@@ -62,8 +63,7 @@ public class WorkerUI {
                             case 1:
                                 System.out.println("please enter new password:");
                                 // get the new password from the worker
-                                Scanner myObj_changepass = new Scanner(System.in);  // Create a Scanner object
-                                String input_changepass = myObj_changepass.nextLine();  // Read user input
+                                String input_changepass = scanner.nextLine();  // Read user input
                                 // change it to function in reshet info
                                 WorkerController.ChangeWorkerPassword(ID,input_changepass); // change the password
                                 //after we did what we want we stop
@@ -72,8 +72,7 @@ public class WorkerUI {
                             case 2:
                                 System.out.println("please enter new name:");
                                 // get the new password from the worker
-                                Scanner myObj_changename = new Scanner(System.in);  // Create a Scanner object
-                                String input_changename = myObj_changename.nextLine();  // Read user input
+                                String input_changename = scanner.nextLine();  // Read user input
                                 WorkerController.ChangeWorkerName(ID,input_changename);// change name
                                 //after we did what we want we stop
                                 op1_choice=4;
@@ -114,9 +113,8 @@ public class WorkerUI {
                                     System.out.println("not valid, please try again");
                                     break;
                                 }
-                                Scanner myConstraints=new Scanner(System.in);// create scanner
                                 System.out.println("please enter reason:");
-                                String reason=myConstraints.nextLine();  // Read user input
+                                String reason=scanner.nextLine();  // Read user input
                                 // if the Domain.Constraints is valid - add the Domain.Constraints at the day the user gave
                                 if(WorkerController.AddConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end,reason)){
                                     System.out.println("your constraint added");

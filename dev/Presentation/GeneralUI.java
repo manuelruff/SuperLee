@@ -17,7 +17,7 @@ public class GeneralUI {
      */
     //we will call this function from the main and all the user interface will be from here
     public static void StartMe(){
-        scanner = new Scanner(System.in);
+        scanner =new Scanner(System.in);
         //start the ui here
         int choice=-1;
         while (choice!=5){
@@ -27,8 +27,7 @@ public class GeneralUI {
             System.out.println("3. Ship Manager");
             System.out.println("4. Cancellations");
             System.out.println("5. Exit");
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-            String input = myObj.nextLine();  // Read user input
+            String input = scanner.nextLine();  // Read user input
             //try to change the input to a string
             try{
                 choice=Integer.parseInt(input);
@@ -61,6 +60,8 @@ public class GeneralUI {
                     System.out.println("have a good day");
                     //do what we need in the database when closed
                     GeneralController.closeDB();
+                    //close the scanner
+                    scanner.close();
                     //stops the program
                     System.exit(0);
                     break;

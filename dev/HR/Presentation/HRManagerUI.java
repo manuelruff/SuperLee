@@ -5,6 +5,8 @@ import HR.Domain.*;
 
 import java.util.Scanner;
 
+import static Presentation.GeneralUI.scanner;
+
 public class HRManagerUI {
     //private static ReshetInfo info=ReshetInfo.getInstance();
     private static ManagerController managerController = ManagerController.getInstance();
@@ -16,9 +18,8 @@ public class HRManagerUI {
         int choice=-1;
         System.out.println("please log in: ");
         while (choice!=3){
-            Scanner myObj = new Scanner(System.in);  // Create a Scanner object
             System.out.println("Password: ");
-            String input = myObj.nextLine();  // Read user input
+            String input = scanner.nextLine();  // Read user input
             if(!ManagerController.checkPassword(input)){
                 System.out.println("Wrong password please try again");
             }
@@ -134,12 +135,11 @@ public class HRManagerUI {
                                     //we need to get the date he want to watch
                                     System.out.println("we need the date of the sunday of that week");
                                     System.out.println("please enter year: ");
-                                    Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-                                    String year = myObj.nextLine();  // Read user input
+                                                            String year = scanner.nextLine();  // Read user input
                                     System.out.println("please enter month: ");
-                                    String month = myObj.nextLine();  // Read user input
+                                    String month = scanner.nextLine();  // Read user input
                                     System.out.println("please enter day: ");
-                                    String day = myObj.nextLine();  // Read user input
+                                    String day = scanner.nextLine();  // Read user input
                                     //try to change the input to a string
                                     try{
                                         Year=Integer.parseInt(year);
@@ -180,17 +180,13 @@ public class HRManagerUI {
                                     //change shift hours
                                     //he will change both morning and evening so they wont overlap
                                     System.out.println("please enter time to start morning shift (it needs to look like: 10.00 for 10am): ");
-                                    Scanner time_input = new Scanner(System.in);  // Create a Scanner object
-                                    String input_Constraints = time_input.nextLine();  // Read user input
+                                    String input_Constraints = scanner.nextLine();  // Read user input
                                     System.out.println("please enter time to end morning shift (it needs to look like: 22.00 for 22pm): ");
-                                    time_input = new Scanner(System.in);  // Create a Scanner object
-                                    String input_Constraints_2 = time_input.nextLine();  // Read user input
+                                    String input_Constraints_2 = scanner.nextLine();  // Read user input
                                     System.out.println("please enter time to start evening shift (it needs to look like: 22.00 for 22pm): ");
-                                    time_input = new Scanner(System.in);  // Create a Scanner object
-                                    String input_Constraints_3 = time_input.nextLine();  // Read user input
+                                    String input_Constraints_3 = scanner.nextLine();  // Read user input
                                     System.out.println("please enter time to end evening shift (it needs to look like: 22.00 for 22pm): ");
-                                    time_input = new Scanner(System.in);  // Create a Scanner object
-                                    String input_Constraints_4 = time_input.nextLine();  // Read user input
+                                    String input_Constraints_4 = scanner.nextLine();  // Read user input
                                     try {
                                         // check if the Domain.Constraints number is valid
                                         double Constraints_num_morning_start = Double.parseDouble(input_Constraints);
@@ -288,8 +284,7 @@ public class HRManagerUI {
                             case 6:
                                 ID = UIGeneralFnctions.AskForWorkerID();
                                 System.out.println("please enter the contract: ");
-                                Scanner myObj_Contract = new Scanner(System.in);  // Create a Scanner object
-                                String input_Contract = myObj_Contract.nextLine();  // Read user input
+                                String input_Contract = scanner.nextLine();  // Read user input
                                 ManagerController.ChangeContract(ID,input_Contract);
                                 break;
                             case 7:
@@ -315,8 +310,7 @@ public class HRManagerUI {
                     break;
                 case 5:
                     System.out.println("enter new password: ");
-                    Scanner scanner1 = new Scanner(System.in);  // Create a Scanner object
-                    String pass1 = scanner1.nextLine();  // Read user input
+                    String pass1 = scanner.nextLine();  // Read user input
                     ManagerController.setManagerPassword(pass1);
                     //after we did what we want we stop
                     System.out.println("password has changed");
@@ -350,8 +344,7 @@ public class HRManagerUI {
         while(!new_id_flag){
             System.out.println("please enter the new worker's ID");
             // get the new id from the manager
-            Scanner myObj_newID = new Scanner(System.in);  // Create a Scanner object
-            input_newID = myObj_newID.nextLine();  // Read user input
+            input_newID = scanner.nextLine();  // Read user input
             if (managerController.isExistWorker(input_newID)) {
                 System.out.println("this worker is already working at our markets");
             }
@@ -361,14 +354,12 @@ public class HRManagerUI {
         }
         // if the worker doesn't exist - get the other info from the manager
         System.out.println("please enter the new worker's name");
-        Scanner myObj_newName = new Scanner(System.in);  // Create a Scanner object
-        String input_newName = myObj_newName.nextLine();  // Read user input
+        String input_newName = scanner.nextLine();  // Read user input
         boolean bank_flag = false;
         int bankNum = 0;
         while (!bank_flag) {
             System.out.println("please enter the new worker's bank number");
-            Scanner myObj_newBank = new Scanner(System.in);  // Create a Scanner object
-            String input_newBank = myObj_newBank.nextLine();  // Read user input
+            String input_newBank = scanner.nextLine();  // Read user input
             try {
                 bankNum = Integer.parseInt(input_newBank);
                 bank_flag = true;
@@ -379,14 +370,12 @@ public class HRManagerUI {
             }
         }
         System.out.println("please enter the new worker's contract");
-        Scanner myObj_newContract = new Scanner(System.in);  // Create a Scanner object
-        String input_newContract = myObj_newContract.nextLine();  // Read user input
+        String input_newContract = scanner.nextLine();  // Read user input
         boolean wage_flag = false;
         int wage = 0;
         while (!wage_flag) {
             System.out.println("please enter the new worker's wage");
-            Scanner myObj_newWage = new Scanner(System.in);  // Create a Scanner object
-            String input_newWage = myObj_newWage.nextLine();  // Read user input
+            String input_newWage = scanner.nextLine();  // Read user input
             try {
                 wage = Integer.parseInt(input_newWage);
                 wage_flag = true;
@@ -412,8 +401,7 @@ public class HRManagerUI {
         while(!new_super_flag){
             System.out.println("please enter the name of the new super");
             // get the new name from the manager
-            Scanner myObj_newSuper = new Scanner(System.in);  // Create a Scanner object
-            input_newSuper = myObj_newSuper.nextLine();  // Read user input
+            input_newSuper = scanner.nextLine();  // Read user input
             if (ManagerController.CheckBranchExist(input_newSuper)) {
                 System.out.println("this super is already exists");
             }
