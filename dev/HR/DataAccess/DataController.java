@@ -1,5 +1,6 @@
 package HR.DataAccess;
 
+import HR.Bussiness.AWorker;
 import HR.Bussiness.Shift;
 import HR.Bussiness.Super;
 import HR.Bussiness.Worker;
@@ -30,7 +31,7 @@ public class DataController {
      * @param ID id of worker
      * @return the worker asked if he is in the db
      */
-    public static Worker getWorker(String ID){
+    public static AWorker getWorker(String ID){
         return WorkerMapper.getWorker(ID);
     }
     public static void DeleteConstraint(String ID){

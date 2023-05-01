@@ -16,12 +16,13 @@ public class GeneralController {
     public static Map<String, Super> Superim;
     //all the Workers in the company
     public static Map<String, Worker> Workers;
-
+    public static Map<String, Driver> Drivers;
     private GeneralController() {
 //        Superim = StartData.getSuperim();
 //        Workers = StartData.getWorkers();
         Superim = SuperMapper.getSuperMap();
         Workers= WorkerMapper.getWorkerMap();
+        Drivers=WorkerMapper.getDriverMap();
      }
 
     public static GeneralController getInstance() {

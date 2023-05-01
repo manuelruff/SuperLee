@@ -11,7 +11,7 @@ import java.util.Map;
 //this will be singleton
 public class WorkerMapper {
     private static WorkerMapper instance=new WorkerMapper();
-    private static Map<String, Worker> WorkerMap;
+    private static Map<String, AWorker> WorkerMap;
     private static Map<String, Driver> DriverMap;
 
     private static Connection conn;
@@ -26,7 +26,7 @@ public class WorkerMapper {
      * @param ID id of worker
      * @return the worker asked
      */
-    public static Worker getWorker(String ID){
+    public static AWorker getWorker(String ID){
         //if i dont have this worker in the data ill go read it from DB
         if (WorkerMap.get(ID)==null){
             ReadWorker(ID);
@@ -42,6 +42,8 @@ public class WorkerMapper {
         String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
         try {
             java.sql.Statement stmt = conn.createStatement();
+            //we will read it from the driver info table to know if its a driver
+            java.sql.ResultSet isDriver = stmt.executeQuery("select * from DriverInfo WHERE WorkerID=="+ID+"" );
             java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+ID+"" );
             if(rs.next()) {
                 id = rs.getString("ID");
@@ -55,19 +57,36 @@ public class WorkerMapper {
                 //we dont need this one it will update when we add the shifts
                 //shiftworked=rs.getString("shiftworked");
                 shiftworked = "0";
-                Worker worker = new Worker(id, name, Integer.parseInt(bank), contract, Double.parseDouble(wage), password, LocalDate.parse(startdate), Double.parseDouble(bonus), Integer.parseInt(shiftworked));
-
                 //check if its driver or worker
-
-
-                //add the worker to the map
-                WorkerMap.put(id, worker);
-                //add the roles to the worker
-                ReadJobs(ID);
-                //add the shifts days he has to the worker
-                ReadWorkingDays(ID);
-                //add the shifts cant work he has to the worker
-                ReadConstraints(ID);
+                if(isDriver.next()){
+                    char licence=isDriver.getString("licence").charAt(0);
+                    String training=isDriver.getString("training");
+                    Driver driver=new Driver(id, name, Integer.parseInt(bank),
+                            contract, Double.parseDouble(wage), password,
+                            LocalDate.parse(startdate), Double.parseDouble(bonus),
+                            Integer.parseInt(shiftworked),licence,Training.valueOf(training));
+                    //add the driver to the map
+                    DriverMap.put(id, driver);
+                    //add the shifts days he has to the driver
+                    ReadWorkingDays(ID);
+                    //add the shifts cant work he has to the driver
+                    ReadConstraints(ID);
+                }
+                //if worker we do it for worker
+                else {
+                    Worker worker = new Worker(id, name, Integer.parseInt(bank),
+                            contract, Double.parseDouble(wage), password,
+                            LocalDate.parse(startdate), Double.parseDouble(bonus),
+                            Integer.parseInt(shiftworked));
+                    //add the worker to the map
+                    WorkerMap.put(id, worker);
+                    //add the roles to the worker
+                    ReadJobs(ID);
+                    //add the shifts days he has to the worker
+                    ReadWorkingDays(ID);
+                    //add the shifts cant work he has to the worker
+                    ReadConstraints(ID);
+                }
             }
         }
         catch (SQLException e) {
@@ -85,7 +104,7 @@ public class WorkerMapper {
                 java.sql.ResultSet rs = stmt.executeQuery("select * from WorkersJobs WHERE WorkerID=="+ID+"" );
                 while (rs.next()){
                     job=rs.getString("Job");
-                    WorkerMap.get(ID).AddJob(Jobs.valueOf(job));
+                    ((Worker)WorkerMap.get(ID)).AddJob(Jobs.valueOf(job));
                 }
             }
             catch (SQLException e) {
@@ -135,9 +154,13 @@ public class WorkerMapper {
     /**
      * @return the map of all the workers
      */
-    public static Map<String, Worker> getWorkerMap() {
+    public static Map<String, AWorker> getWorkerMap() {
         return WorkerMap;
     }
+    public static Map<String, Driver> getDriverMap() {
+        return DriverMap;
+    }
+
 
     /**
      * @param Name name of branch
@@ -174,46 +197,69 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
-    //we will write all the workers to the db when done, it will write the new ones and update the old ones??
+    //write all workers from the mappers
     public static void WriteAllWorkers(){
-        for (Worker worker:WorkerMap.values()){
-            String id,name, startdate, contract, password;
-            int bank,shiftworked;
-            double bonus,wage;
-            try {
-                java.sql.Statement stmt = conn.createStatement();
-                id=worker.getID();
-                name=worker.getName();
-                bank=Integer.parseInt(String.valueOf(worker.getBank()));
-                startdate=worker.getStartDate().toString();
-                contract=worker.getContract();
-                password=worker.getPassword();
-                bonus=Double.parseDouble(String.valueOf(worker.getBonus()));
-                wage=Double.parseDouble(String.valueOf(worker.getWage()));
-                shiftworked=Integer.parseInt((String.valueOf(worker.getShiftWorked())));
-                java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+id+"" );
-                //if it doesnt exists we will insert it
-                if(!rs.next()){
-                    stmt.executeUpdate("INSERT INTO Worker(ID, name, bank, StartDate, contract, Password, bonus, wage, ShiftWorked) " +
-                            "VALUES (" + id + ", '" + name + "', " + bank + ", '" + startdate + "', '" + contract + "', '" + password + "', " + bonus + ", " + wage + ", " + shiftworked + ")");
-
-                }
-                //if its in we update it
-                else{
-                    stmt.executeUpdate("UPDATE Worker SET name='" + name + "', bank='" + bank + "', StartDate='" + startdate +
-                            "', contract='" + contract + "', Password='" + password + "', bonus=" + bonus + ", wage=" + wage +
-                            ", ShiftWorked=" + shiftworked + " WHERE ID=" + id);
-                    //we need to update all his other stuff
-                }
-
-                //need to update constraint working days and etc...
-                WriteJobs(id);
-                WriteWorkingDays(id);
-                WriteConstraints(id);
+        for (AWorker worker:WorkerMap.values()){
+            //check driver instance
+            if(worker instanceof Driver) {
+                WriteAllAWorkers(worker);
+                WriteAllLicenceAndTraining(worker.getID());
             }
-            catch (SQLException e) {
-                System.out.println("i have a problem in writing the worker sorry");
+            else
+            {
+                WriteAllAWorkers(worker);
+                WriteJobs(worker.getID());
             }
+
+        }
+    }
+
+    //we will write all the workers to the db when done, it will write the new ones and update the old ones??
+    public static void WriteAllAWorkers(AWorker worker){
+        String id,name, startdate, contract, password;
+        int bank,shiftworked;
+        double bonus,wage;
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            id=worker.getID();
+            name=worker.getName();
+            bank=Integer.parseInt(String.valueOf(worker.getBank()));
+            startdate=worker.getStartDate().toString();
+            contract=worker.getContract();
+            password=worker.getPassword();
+            bonus=Double.parseDouble(String.valueOf(worker.getBonus()));
+            wage=Double.parseDouble(String.valueOf(worker.getWage()));
+            shiftworked=Integer.parseInt((String.valueOf(worker.getShiftWorked())));
+            java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+id+"" );
+            //if it doesnt exists we will insert it
+            if(!rs.next()){
+                stmt.executeUpdate("INSERT INTO Worker(ID, name, bank, StartDate, contract, Password, bonus, wage, ShiftWorked) " +
+                        "VALUES (" + id + ", '" + name + "', " + bank + ", '" + startdate + "', '" + contract + "', '" + password + "', " + bonus + ", " + wage + ", " + shiftworked + ")");
+
+            }
+            //if its in we update it
+            else{
+                stmt.executeUpdate("UPDATE Worker SET name='" + name + "', bank='" + bank + "', StartDate='" + startdate +
+                        "', contract='" + contract + "', Password='" + password + "', bonus=" + bonus + ", wage=" + wage +
+                        ", ShiftWorked=" + shiftworked + " WHERE ID=" + id);
+                //we need to update all his other stuff
+            }
+            //write hes working days
+            WriteWorkingDays(id);
+            //write the cant work days
+            WriteConstraints(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //we wrrite the licence and training
+    public static void WriteAllLicenceAndTraining(String ID){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("INSERT OR IGNORE INTO DriverInfo (WorkerID,Licence,Training ) VALUES (" + ID + ", '" + DriverMap.get(ID) .getLicense() + "', '" + DriverMap.get(ID).getAbility() + "')");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem int writing the worker job sorry");
         }
     }
 
@@ -224,7 +270,8 @@ public class WorkerMapper {
     private static void WriteJobs(String ID){
         try {
             java.sql.Statement stmt = conn.createStatement();
-            for (Jobs job : WorkerMap.get(ID).getRoles()) {
+            Worker worker=(Worker) WorkerMap.get(ID);
+            for (Jobs job : worker.getRoles()) {
                 stmt.executeUpdate("INSERT OR IGNORE INTO WorkersJobs (WORKERID, JOB) VALUES (" + ID + ", '" + job.toString() + "')");
             }
         }

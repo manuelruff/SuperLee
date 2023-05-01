@@ -213,21 +213,31 @@ public class ManagerController {
 
     /**
      * the function add new employee to branch
-     * @param newEmployee - Worker object
      * @param branchName - the branch we want to add the worker to
      */
-    public static void AddNewWorker(Worker newEmployee, String branchName) {
+    public static void AddNewWorker(String ID, String Name, int Bank,
+                                    String Contract, double Wage, Jobs FirstJob, String Password,
+                                    String branchName) {
         // create the worker using all the data the manger entered
+        Worker newEmployee = new Worker(ID, Name, Bank, Contract, Wage, FirstJob, Password);
         //Domain.Worker new_worker = new Domain.Worker(ID, name, bank, contract, wage, job, password);
         for (Map.Entry<String, Super> entry : GeneralController.Superim.entrySet()) {
             if (entry.getKey().equals(branchName)) {
                 GeneralController.Superim.get(entry.getKey()).AddWorker(newEmployee);
-                GeneralController.Workers.put(newEmployee.getID(), newEmployee);
                 System.out.println(newEmployee.getID() + " added successfully to: " + branchName);
             }
         }
+        GeneralController.Workers.put(newEmployee.getID(), newEmployee);
     }
-
+    //todo check of its working
+    public static void AddNewWorker(String ID,String Name,  int Bank,String Contract,
+                                    double Wage , String Password,
+                                    char license, Training ability) {
+        // create the worker using all the data the manger entered
+        Driver newEmployee = new Driver(ID , Name, Bank, Contract, Wage, Password, license, ability);
+        //Domain.Worker new_worker = new Domain.Worker(ID, name, bank, contract, wage, job, password);
+        GeneralController.Drivers.put(newEmployee.getID(), newEmployee);
+    }
 
     //removes a worker from the company
     public static void RemoveWorkerAllBranches(String ID) {
