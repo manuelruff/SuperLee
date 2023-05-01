@@ -1,6 +1,5 @@
 package HR.Presentation;
 
-import  HR.Domain.*;
 import HR.Domain.GeneralController;
 
 import java.util.Scanner;

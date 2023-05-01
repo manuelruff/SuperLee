@@ -1,5 +1,4 @@
 package HR.DataAccess;
-import  HR.Domain.*;
 import HR.Domain.Jobs;
 import HR.Domain.Super;
 import HR.Domain.Worker;
