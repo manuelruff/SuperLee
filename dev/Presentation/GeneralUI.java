@@ -1,10 +1,11 @@
 package Presentation;
 
 
-import HR.Bussiness.GeneralController;
-import HR.Presentation.CashRegisterUI;
-import HR.Presentation.HRManagerUI;
-import HR.Presentation.WorkerUI;
+import Bussiness.HRBussiness.GeneralController;
+import Presentation.HRPresentation.CashRegisterUI;
+import Presentation.HRPresentation.HRManagerUI;
+import Presentation.HRPresentation.WorkerUI;
+import Presentation.ShipPresentation.UI;
 
 import java.util.Scanner;
 
@@ -48,7 +49,7 @@ public class GeneralUI {
                     choice=5;
                     break;
                 case 3:
-                    Ship.Presentation.UI ui = new Ship.Presentation.UI();
+                    UI ui = new UI();
                     ui.shippingMenu();
                     break;
                 case 4:
