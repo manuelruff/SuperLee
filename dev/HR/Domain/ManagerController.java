@@ -59,7 +59,6 @@ public class ManagerController {
         //we get the object of the super we wanna add a weekly to
         Super curr = GeneralController.Superim.get(Name);
         List<String> CanWorkList;
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         //create the weekly
         Weekly week = new Weekly();
         for (Days day : Days.values()) {
@@ -405,5 +404,4 @@ public class ManagerController {
 
     public static boolean isExistWorker(String ID){return GeneralController.isExistWorker(ID);}
     public static boolean CheckBranchExist(String branchName){return GeneralController.isExistSuper(branchName);}
-    public static Super getBranchByName(String branchName){return GeneralController.GetSuperByName(branchName);}
 }
