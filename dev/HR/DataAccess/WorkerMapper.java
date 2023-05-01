@@ -1,9 +1,9 @@
 package HR.DataAccess;
-
 import HR.Domain.CantWork;
 import HR.Domain.Days;
 import HR.Domain.Jobs;
 import HR.Domain.Worker;
+import Ship.Bussiness.Driver;
 import resource.Connect;
 
 import java.sql.Connection;
@@ -16,6 +16,8 @@ import java.util.Map;
 public class WorkerMapper {
     private static WorkerMapper instance=new WorkerMapper();
     private static Map<String,Worker> WorkerMap;
+    private static Map<String, Driver> DriverMap;
+
     private static Connection conn;
     private WorkerMapper(){
         WorkerMap=new HashMap<>();
@@ -58,6 +60,10 @@ public class WorkerMapper {
                 //shiftworked=rs.getString("shiftworked");
                 shiftworked = "0";
                 Worker worker = new Worker(id, name, Integer.parseInt(bank), contract, Double.parseDouble(wage), password, LocalDate.parse(startdate), Double.parseDouble(bonus), Integer.parseInt(shiftworked));
+
+                //check if its driver or worker
+
+
                 //add the worker to the map
                 WorkerMap.put(id, worker);
                 //add the roles to the worker
