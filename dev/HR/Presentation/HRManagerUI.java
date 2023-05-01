@@ -348,13 +348,27 @@ public class HRManagerUI {
             if (managerController.isExistWorker(input_newID)) {
                 System.out.println("this worker is already working at our markets");
             }
+            else if(input_newID==""){
+                System.out.println("please enter a valid ID");
+            }
             else {
                 new_id_flag = true;
             }
         }
-        // if the worker doesn't exist - get the other info from the manager
-        System.out.println("please enter the new worker's name");
-        String input_newName = scanner.nextLine();  // Read user input
+        boolean new_name_flag = false;
+        String input_newName="";
+        while(!new_name_flag){
+            // if the worker doesn't exist - get the other info from the manager
+            System.out.println("please enter the new worker's name");
+            // get the new name from the manager
+            input_newName = scanner.nextLine();  // Read user input
+            if (input_newName=="") {
+                System.out.println("please enter a valid name");
+            }
+            else {
+                new_name_flag = true;
+            }
+        }
         boolean bank_flag = false;
         int bankNum = 0;
         while (!bank_flag) {
