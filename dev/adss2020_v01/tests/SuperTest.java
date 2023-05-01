@@ -1,4 +1,5 @@
 import Domain.*;
+import HR.Domain.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

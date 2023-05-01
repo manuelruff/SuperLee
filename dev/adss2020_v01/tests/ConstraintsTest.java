@@ -1,5 +1,5 @@
-import Domain.Constraints;
-import Domain.Days;
+import HR.Domain.Constraints;
+import HR.Domain.Days;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
