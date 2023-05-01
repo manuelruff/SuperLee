@@ -1,2 +1,2 @@
-package HR.Domain;
+package HR.Bussiness;
 public enum ShiftTime {Morning,Evening}

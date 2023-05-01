@@ -1,8 +1,6 @@
 package HR.Presentation;
 
-import HR.Domain.GeneralController;
-
-import java.util.Scanner;
+import HR.Bussiness.GeneralController;
 
 import static Presentation.GeneralUI.scanner;
 

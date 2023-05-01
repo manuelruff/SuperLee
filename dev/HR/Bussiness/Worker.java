@@ -1,4 +1,4 @@
-package HR.Domain;
+package HR.Bussiness;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

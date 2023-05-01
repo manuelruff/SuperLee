@@ -1,6 +1,6 @@
 package HR.DataAccess;
-import HR.Domain.Cancellations;
-import HR.Domain.CashRegister;
+import HR.Bussiness.Cancellations;
+import HR.Bussiness.CashRegister;
 import resource.Connect;
 
 import java.sql.Connection;

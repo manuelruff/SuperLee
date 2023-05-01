@@ -1,6 +1,6 @@
 package HR.DataAccess;
-import HR.Domain.Days;
-import HR.Domain.Super;
+import HR.Bussiness.Days;
+import HR.Bussiness.Super;
 import Ship.Bussiness.Zone;
 import resource.Connect;
 

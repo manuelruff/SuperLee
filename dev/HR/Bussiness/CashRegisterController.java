@@ -1,4 +1,4 @@
-package HR.Domain;
+package HR.Bussiness;
 
 //this will be singlton
 public class CashRegisterController {

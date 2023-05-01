@@ -1,7 +1,7 @@
-import HR.Domain.Jobs;
-import HR.Domain.Shift;
-import HR.Domain.ShiftTime;
-import HR.Domain.Worker;
+import HR.Bussiness.Jobs;
+import HR.Bussiness.Shift;
+import HR.Bussiness.ShiftTime;
+import HR.Bussiness.Worker;
 import org.junit.Test;
 
 import java.time.LocalDate;

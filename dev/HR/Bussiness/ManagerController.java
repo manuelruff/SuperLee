@@ -1,4 +1,4 @@
-package HR.Domain;
+package HR.Bussiness;
 
 import HR.DataAccess.DataController;
 import HR.DataAccess.ManagerPasswordMapper;
@@ -7,7 +7,6 @@ import Ship.Bussiness.Zone;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * the class ManagerController hold all the functions which HR manager can do

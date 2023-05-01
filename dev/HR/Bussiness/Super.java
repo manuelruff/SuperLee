@@ -1,4 +1,4 @@
-package HR.Domain;
+package HR.Bussiness;
 import Ship.Bussiness.Site;
 import Ship.Bussiness.Zone;
 

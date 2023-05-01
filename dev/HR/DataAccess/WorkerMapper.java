@@ -1,9 +1,5 @@
 package HR.DataAccess;
-import HR.Domain.CantWork;
-import HR.Domain.Days;
-import HR.Domain.Jobs;
-import HR.Domain.Worker;
-import Ship.Bussiness.Driver;
+import HR.Bussiness.*;
 import resource.Connect;
 
 import java.sql.Connection;

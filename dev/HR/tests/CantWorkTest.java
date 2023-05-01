@@ -1,4 +1,4 @@
-import HR.Domain.CantWork;
+import HR.Bussiness.CantWork;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

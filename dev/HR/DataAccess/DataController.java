@@ -1,8 +1,8 @@
 package HR.DataAccess;
 
-import HR.Domain.Shift;
-import HR.Domain.Super;
-import HR.Domain.Worker;
+import HR.Bussiness.Shift;
+import HR.Bussiness.Super;
+import HR.Bussiness.Worker;
 import resource.Connect;
 
 //this will be singleton
