@@ -47,8 +47,7 @@ public class GeneralUI {
                     //after we did what we want we stop
                     break;
                 case 3:
-                    UI ui = new UI();
-                    ui.shippingMenu();
+                    UI.shippingMenu();
                     break;
                 case 4:
                     //whatever a cash register should do

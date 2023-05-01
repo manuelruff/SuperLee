@@ -7,13 +7,13 @@ import static Presentation.GeneralUI.scanner;
 import static Presentation.HRPresentation.UIGeneralFnctions.AskForIntNumber;
 
 public class UI {
-    private shipmentManagement Smanagement;
+    private static shipmentManagement Smanagement;
     public UI(){
          Smanagement = shipmentManagement.getInstance();
          shippingMenu();
     }
 
-    public void shippingMenu()
+    public static void shippingMenu()
     {
         String choice;
         boolean firstFlag = true;
@@ -219,7 +219,7 @@ public class UI {
                     break;
                 case "7":
                     firstFlag = false;
-                    break;
+                    return;
                 default:
                     System.out.println("Invalid input");
                     break;
@@ -229,7 +229,7 @@ public class UI {
 
     /********************************************** HELPER FUNCTIONS **********************************************/
 
-    public void updateDriverLicence(shipmentManagement Smanagement)
+    public static void updateDriverLicence(shipmentManagement Smanagement)
     {
         boolean check3 = true, check31 =true;
         String driverID=null;
@@ -271,7 +271,7 @@ public class UI {
         }
     }
 
-    public void updateDriverTraining(shipmentManagement Smanagement)
+    public static void updateDriverTraining(shipmentManagement Smanagement)
     {
         boolean check3 = true, check31 =true;
         String driverID=null;
@@ -319,7 +319,7 @@ public class UI {
      * and adds the new site to the system
      * @param Smanagement - the shipmentManagement object which the site is added too
      */
-    public void addSite(shipmentManagement Smanagement)
+    public static void addSite(shipmentManagement Smanagement)
     {
         boolean check = true;
         String siteName = null;
@@ -387,7 +387,7 @@ public class UI {
      * and delete it from the system
      * @param Smanagement - the shipmentManagement object which the site is deleted from
      */
-    public void deleteSite(shipmentManagement Smanagement)
+    public static void deleteSite(shipmentManagement Smanagement)
     {
         boolean check1 = true;
         String siteToDelete;
@@ -411,7 +411,7 @@ public class UI {
      * @param Smanagement - the shipmentManagement object which the truck is added too
      */
 
-    public void updateSite(shipmentManagement Smanagement)
+    public static void updateSite(shipmentManagement Smanagement)
     {
         System.out.println("Please enter the name of the site you would like to update:");
         String siteName = scanner.nextLine();
@@ -443,7 +443,7 @@ public class UI {
         else
             System.out.println("Site does not exist in the system");
     }
-    public void addTruck(shipmentManagement Smanagement)
+    public static void addTruck(shipmentManagement Smanagement)
     {
         boolean check2 = true;
         String truckNumber = null;
@@ -499,7 +499,7 @@ public class UI {
      * and delete the truck from the system
      * @param Smanagement - the shipmentManagement object which the truck is deleted from
      */
-    public void deleteTruck(shipmentManagement Smanagement)
+    public static void deleteTruck(shipmentManagement Smanagement)
     {
         boolean check2 = true;
         String truckNumber;
@@ -522,7 +522,7 @@ public class UI {
      * and adds the new driver to the system
      * @param Smanagement - the shipmentManagement object which the driver is added too
      */
-    public void addDriver(shipmentManagement Smanagement)
+    public static void addDriver(shipmentManagement Smanagement)
     {
         boolean check3 = true, check31 =true;
         String driverID=null;
@@ -596,7 +596,7 @@ public class UI {
      * and delete the driver from the system
      * @param Smanagement - the shipmentManagement object which the driver is deleted from
      */
-    public void deleteDriver(shipmentManagement Smanagement)
+    public static void deleteDriver(shipmentManagement Smanagement)
     {
         boolean check32 = true;
         String driversIDToRemove;
@@ -620,7 +620,7 @@ public class UI {
      * and adds the new order to the system
      * @param Smanagement - the shipmentManagement object which the order is added too
      */
-    public void addOrder(shipmentManagement Smanagement)
+    public static void addOrder(shipmentManagement Smanagement)
     {
         boolean check4 =true,check41=true,check40=true, check401;
         String sourceSite;
@@ -714,7 +714,7 @@ public class UI {
      * and adds the new shipment to the system
      * @param Smanagement - the shipmentManagement object which the shipment is added too
      */
-    public void addShipment(shipmentManagement Smanagement)
+    public static void addShipment(shipmentManagement Smanagement)
     {
         boolean check5 = true,check50 = true, check51 = true;
         int day;
@@ -771,7 +771,7 @@ public class UI {
             }
         }
     }
-    public void deleteShipment(shipmentManagement Smanagement)
+    public static void deleteShipment(shipmentManagement Smanagement)
     {
         boolean check52=true;
         while (check52)
