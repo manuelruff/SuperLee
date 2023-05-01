@@ -1,4 +1,5 @@
-import HR.Bussiness.Cancellations;
+package HR.Bussiness;
+
 import org.junit.Test;
 
 import java.time.LocalDateTime;
