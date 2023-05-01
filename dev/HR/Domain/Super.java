@@ -1,4 +1,6 @@
 package HR.Domain;
+import Ship.Bussiness.Site;
+import Ship.Bussiness.Zone;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Super {
+public class Super extends Site {
     private String Name;
     //map<id, worker>
     private Map<String,Worker> WorkerList;
@@ -15,7 +17,6 @@ public class Super {
     //history of all the shifts
     private List<Weekly> WeeklyHist;
     private CashRegister cash_register;
-
 
     //times of the shifts, ill put default values that the manager can change later
     //need to change them to map <days,double>
@@ -26,6 +27,7 @@ public class Super {
     private Map<Days,Double> end_evening;
 
 
+    private Zone zone;
 
     //builder for super
     public Super(String Name){
@@ -61,6 +63,25 @@ public class Super {
     public String getName(){
         return this.Name;
     }
+
+
+
+    //from hovalot
+    public Zone getZone() {
+        return zone;
+    }
+    @Override
+    public void printSite() {
+        System.out.println("Site Type: Branch");
+        System.out.println("Name: " + getName());
+        System.out.println("Address: " + getAddress());
+        System.out.println("Contact Name: " + getContactName());
+        System.out.println("Phone Number: " + getPhoneNumber());
+        System.out.println("Zone: " + zone + "\n");
+    }
+
+
+
     public List<String> GetWorkersIDS(){
         List<String> Workers=new ArrayList<>();
         Workers.addAll(WorkerList.keySet());
