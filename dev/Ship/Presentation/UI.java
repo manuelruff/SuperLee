@@ -15,7 +15,6 @@ public class UI {
 
     public void shippingMenu()
     {
-
         System.out.println("if you wish to start the system with data please enter - yes, " +
                 "otherwise enter other input ");
         String answer = scanner.nextLine();
@@ -226,7 +225,7 @@ public class UI {
                     break;
                 case "7":
                     firsFlag = false;
-                    return;
+                    break;
                 default:
                     System.out.println("Invalid input");
                     break;
