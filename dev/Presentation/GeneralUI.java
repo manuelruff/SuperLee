@@ -40,12 +40,12 @@ public class GeneralUI {
                 case 1:
                     WorkerUI.WorkerLogIN();
                     //after we did what we want we stop
-                    choice=4;
+                    choice=5;
                     break;
                 case 2:
                     HRManagerUI.ManagerLogIN();
                     //after we did what we want we stop
-                    choice=4;
+                    choice=5;
                     break;
                 case 3:
                     Ship.Presentation.UI ui = new Ship.Presentation.UI();
@@ -54,7 +54,7 @@ public class GeneralUI {
                 case 4:
                     //whatever a cash register should do
                     CashRegisterUI.CashWork();
-                    choice=4;
+                    choice=5;
                     break;
                 case 5:
                     System.out.println("have a good day");
