@@ -14,7 +14,7 @@ public class CashRegisterUI {
      * option for the cashregistry
      */
     public static void CashWork(){
-        String Name=UIGeneralFnctions.AskForBranch();
+        String Name= UIGeneralFnctions.AskForBranch();
         int choice=-1;
         while (choice!=3){
             System.out.println("please choose an option: ");
