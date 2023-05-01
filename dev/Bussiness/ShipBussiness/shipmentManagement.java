@@ -32,7 +32,7 @@ public class shipmentManagement {
     private List<Shipment> availableShipments;
 
 
-    public shipmentManagement() {
+    private shipmentManagement() {
         vendorMap = new HashMap<>();
         drivers = new ArrayList<>();
         trucks = new ArrayList<>();

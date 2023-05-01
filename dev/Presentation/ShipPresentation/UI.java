@@ -9,7 +9,7 @@ import static Presentation.HRPresentation.UIGeneralFnctions.AskForIntNumber;
 public class UI {
     private shipmentManagement Smanagement;
     public UI(){
-         Smanagement = new shipmentManagement();
+         Smanagement = shipmentManagement.getInstance();
          shippingMenu();
     }
 
