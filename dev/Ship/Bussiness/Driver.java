@@ -1,4 +1,4 @@
-package Ship;
+package Ship.Bussiness;
 
 import java.util.ArrayList;
 import java.util.List;

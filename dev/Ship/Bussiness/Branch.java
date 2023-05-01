@@ -1,4 +1,4 @@
-package Ship;
+package Ship.Bussiness;
 
 public class Branch extends Site{
 
@@ -16,11 +16,11 @@ public class Branch extends Site{
 
     @Override
     public void printSite() {
-        System.out.println("Ship.Site Type: Ship.Branch");
+        System.out.println("Site Type: Branch");
         System.out.println("Name: " + getName());
         System.out.println("Address: " + getAddress());
         System.out.println("Contact Name: " + getContactName());
         System.out.println("Phone Number: " + getPhoneNumber());
-        System.out.println("Ship.Zone: " + zone + "\n");
+        System.out.println("Zone: " + zone + "\n");
     }
 }

@@ -1,4 +1,4 @@
-package Ship;
+package Ship.Bussiness;
 
 import java.time.LocalTime;
 
@@ -31,22 +31,22 @@ public class Shipment {
 
     public void printShipment()
     {
-        System.out.println("****** Ship.Shipment details ******");
-        System.out.println("Ship.Shipment ID: " + ID);
+        System.out.println("****** Shipment details ******");
+        System.out.println("Shipment ID: " + ID);
         if (departureTime != null) {
             System.out.println("shipment occurred on " + dayOfTheWeek.toString() + " at " + departureTime);
         }
         else{System.out.println("shipment scheduled for this " + dayOfTheWeek.toString());}
-        System.out.println("Ship.Truck number: " + truckNumber);
-        System.out.println("Ship.Driver Name: "+ driver.getName());
-        System.out.println("Ship.Vendor: "+ source.getName());
+        System.out.println("Truck number: " + truckNumber);
+        System.out.println("Driver Name: "+ driver.getName());
+        System.out.println("Vendor: "+ source.getName());
         if(shipmentStatus == Status.NoChanges)
             System.out.println("There isn't any changes in this shipment as of this moment");
         else {System.out.println("This shipment has undergone some changes: " + shipmentStatus.toString());}
         System.out.println("Destinations:");
         for(Site site : destinations)
             site.printSite();
-        System.out.println("Ship.Item doc:");
+        System.out.println("Item doc:");
         for(ItemsDoc itemsDoc : docs)
             itemsDoc.printItemsDoc();
 
