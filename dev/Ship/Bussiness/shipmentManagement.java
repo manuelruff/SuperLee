@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
+import static Presentation.GeneralUI.scanner;
+
 public class shipmentManagement {
     private final Map<String, List<Order>> vendorMap;
     private final List<Driver> drivers;
@@ -762,7 +764,7 @@ public class shipmentManagement {
         LocalTime time = null;
         while (time == null) {
             System.out.println("Enter the time (in HH:MM format): ");
-            String timeStr = UI.scanner.nextLine();
+            String timeStr = scanner.nextLine();
 
             try {
                 time = LocalTime.parse(timeStr, formatter);
@@ -778,7 +780,7 @@ public class shipmentManagement {
         while (true){
             try{
                 System.out.println("Please enter the weight of the truck with the items (in KG): ");
-                weight = Integer.parseInt(UI.scanner.nextLine());
+                weight = Integer.parseInt(scanner.nextLine());
                 break;
             }
             catch (NumberFormatException e)
@@ -791,7 +793,7 @@ public class shipmentManagement {
             if (shipment.getShipmentStatus() != Status.NoChanges) {
                 try{
                     System.out.println("Please enter the new Weight (in KG):");
-                    weight = Integer.parseInt(UI.scanner.nextLine());
+                    weight = Integer.parseInt(scanner.nextLine());
                 }
                 catch (NumberFormatException e)
                 {
@@ -802,7 +804,7 @@ public class shipmentManagement {
             while (weight > firstWeight) {
                 try {
                     System.out.println("The input was incorrect, please enter only numbers");
-                    weight = Integer.parseInt(UI.scanner.nextLine());
+                    weight = Integer.parseInt(scanner.nextLine());
                     break;
                 }
                 catch (NumberFormatException e)
@@ -819,7 +821,7 @@ public class shipmentManagement {
                     System.out.println("2. Switch to a bigger truck");
                     if (shipment.getDestinations().size() != 1)
                         System.out.println("3. remove the last site from this shipment");
-                    input = UI.scanner.nextLine();
+                    input = scanner.nextLine();
                     switch (input) {
                         case "1" -> {
                             if (itemsToDelete(shipment)) {
@@ -895,7 +897,7 @@ public class shipmentManagement {
         }
         // choose site to delete item from.
         System.out.println("Please choose the one you want to delete the item from, enter the name of the site: ");
-        String answer = UI.scanner.nextLine();
+        String answer = scanner.nextLine();
         boolean found = false;
         while(!found) {
             for (Site site : shipment.getDestinations()){
@@ -907,7 +909,7 @@ public class shipmentManagement {
             if (found)
                 continue;
             System.out.println("This site is not exist, please enter again");
-            answer = UI.scanner.nextLine();
+            answer = scanner.nextLine();
         }
         ItemsDoc itemsD = null;
         // finds the item document that goes the site.
@@ -918,7 +920,7 @@ public class shipmentManagement {
             }
         }
         System.out.println("Please choose an item you want to delete:");
-        answer = UI.scanner.nextLine();
+        answer = scanner.nextLine();
         int amount = 0;
         while(true){
             if (itemsD != null) {
@@ -927,7 +929,7 @@ public class shipmentManagement {
                     if (Objects.equals(item.getName(), answer)){
                         try{
                             System.out.println("Please enter the amount you want to remove");
-                            amount = Integer.parseInt(UI.scanner.nextLine());
+                            amount = Integer.parseInt(scanner.nextLine());
                         }
                         catch (NumberFormatException e)
                         {
@@ -952,7 +954,7 @@ public class shipmentManagement {
                     }
                 }
                 System.out.println("This item does not exist, Please choose an item you want to delete.");
-                answer = UI.scanner.nextLine();
+                answer = scanner.nextLine();
             }
             else{
                 return false;

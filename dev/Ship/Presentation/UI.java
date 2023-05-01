@@ -1,15 +1,14 @@
 package Ship.Presentation;
 
 import Ship.Bussiness.shipmentManagement;
-
 import java.util.*;
 
+import static Presentation.GeneralUI.scanner;
+
 public class UI {
-    public static Scanner scanner;
     private shipmentManagement Smanagement;
     public UI(){
          Smanagement = new shipmentManagement();
-         scanner = new Scanner(System.in);
          shippingMenu();
     }
 
@@ -22,8 +21,8 @@ public class UI {
         if(answer.equals("yes"))
             Smanagement.loadAll();
         String choice;
-        boolean firsFlag = true;
-        while(firsFlag) {
+        boolean firstFlag = true;
+        while(firstFlag) {
             System.out.println("Shipping Main Menu:");
             System.out.println("1 - Site Menu");
             System.out.println("2 - Truck Menu");
@@ -224,7 +223,7 @@ public class UI {
                     Smanagement.printAllDocs();
                     break;
                 case "7":
-                    firsFlag = false;
+                    firstFlag = false;
                     break;
                 default:
                     System.out.println("Invalid input");

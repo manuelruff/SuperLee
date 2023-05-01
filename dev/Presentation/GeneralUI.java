@@ -9,6 +9,7 @@ import HR.Presentation.WorkerUI;
 import java.util.Scanner;
 
 public class GeneralUI {
+    public static Scanner scanner;
     // all the info will come form there
     //the creation will create the beginning data
     /**
@@ -16,6 +17,7 @@ public class GeneralUI {
      */
     //we will call this function from the main and all the user interface will be from here
     public static void StartMe(){
+        scanner = new Scanner(System.in);
         //start the ui here
         int choice=-1;
         while (choice!=5){
