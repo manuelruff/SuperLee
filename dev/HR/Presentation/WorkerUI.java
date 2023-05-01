@@ -1,6 +1,9 @@
 package HR.Presentation;
 
-import HR.Bussiness.WorkerController;
+import HR.Domain.GeneralController;
+import HR.Domain.WorkerController;
+
+import java.util.Scanner;
 
 import static Presentation.GeneralUI.scanner;
 
@@ -38,15 +41,16 @@ public class WorkerUI {
     public static void WorkerOption(String ID){
         //start the worker options here - Omri's Code!
         int choice=-1;
-        while (choice!=5){
+        while (choice!=6){
             System.out.println("hello please choose your option: ");
             System.out.println("1. update personal details ");
             System.out.println("2. add new constraints ");
             System.out.println("3. remove constraints ");
             System.out.println("4. show constraints ");
-            System.out.println("5. Back");
+            System.out.println("5. show shift at branch");
+            System.out.println("6. Back");
             //ask for input
-            choice=UIGeneralFnctions.AskForNumber(1,5);
+            choice=UIGeneralFnctions.AskForNumber(1,6);
             switch (choice){
                 case 1:
                     int op1_choice=-1;
@@ -56,7 +60,7 @@ public class WorkerUI {
                         System.out.println("2. change name");
                         System.out.println("3. change bank account");
                         System.out.println("4. Back");
-                        op1_choice = UIGeneralFnctions.AskForNumber(1,6);
+                        op1_choice = UIGeneralFnctions.AskForNumber(1,4);
                         switch (op1_choice){
                             case 1:
                                 System.out.println("please enter new password:");
@@ -178,6 +182,12 @@ public class WorkerUI {
                     //after we did what we want we stop
                     break;
                 case 5:
+                    // prints the shifts of asked branch
+                    String BranchName = UIGeneralFnctions.AskForBranch();
+                    WorkerController.ShowShiftFromBranch(BranchName);
+                    //after we did what we want we stop
+                    break;
+                case 6:
                     System.out.println("have a good day");
                     break;
                 default:

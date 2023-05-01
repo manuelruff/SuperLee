@@ -61,7 +61,7 @@ public class WorkerController {
         return GeneralController.isExistWorker(ID);
     }
 
-//    public static void UpdateWorker(String ID){
-//        WorkerMapper.UpdateWorker(ID);
-//    }
+    public static void ShowShiftFromBranch(String BranchName){
+        GeneralController.Superim.get(BranchName).GetWeekShifts().PrintMe();
+    }
 }
