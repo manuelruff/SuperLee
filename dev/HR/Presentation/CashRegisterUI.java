@@ -6,7 +6,6 @@ import HR.Bussiness.GeneralController;
 import static Presentation.GeneralUI.scanner;
 
 public class CashRegisterUI {
-//    private static ReshetInfo info= ReshetInfo.getInstance();
     private static CashRegisterController cashRegisterController = CashRegisterController.getInstance();
     /**
      * option for the cashregistry

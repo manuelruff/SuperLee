@@ -1,7 +1,7 @@
 package HR.Presentation;
 
-import HR.Domain.GeneralController;
-import HR.Domain.WorkerController;
+import HR.Bussiness.GeneralController;
+import HR.Bussiness.WorkerController;
 
 import java.util.Scanner;
 
