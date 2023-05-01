@@ -1,7 +1,10 @@
-package HR.Presentation;
+package Presentation;
 
 
 import HR.Domain.GeneralController;
+import HR.Presentation.CashRegisterUI;
+import HR.Presentation.HRManagerUI;
+import HR.Presentation.WorkerUI;
 
 import java.util.Scanner;
 
@@ -15,12 +18,13 @@ public class GeneralUI {
     public static void StartMe(){
         //start the ui here
         int choice=-1;
-        while (choice!=3){
+        while (choice!=5){
             System.out.println("please choose an option: ");
             System.out.println("1. Worker");
-            System.out.println("2. Manager");
-            System.out.println("3. Cancellations");
-            System.out.println("4. Exit");
+            System.out.println("2. HR Manager");
+            System.out.println("3. Ship Manager");
+            System.out.println("4. Cancellations");
+            System.out.println("5. Exit");
             Scanner myObj = new Scanner(System.in);  // Create a Scanner object
             String input = myObj.nextLine();  // Read user input
             //try to change the input to a string
@@ -43,11 +47,15 @@ public class GeneralUI {
                     choice=4;
                     break;
                 case 3:
+                    Ship.Presentation.UI ui = new Ship.Presentation.UI();
+                    ui.shippingMenu();
+                    break;
+                case 4:
                     //whatever a cash register should do
                     CashRegisterUI.CashWork();
                     choice=4;
                     break;
-                case 4:
+                case 5:
                     System.out.println("have a good day");
                     //do what we need in the database when closed
                     GeneralController.closeDB();
