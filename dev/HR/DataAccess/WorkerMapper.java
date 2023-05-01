@@ -17,6 +17,7 @@ public class WorkerMapper {
     private static Connection conn;
     private WorkerMapper(){
         WorkerMap=new HashMap<>();
+        DriverMap=new HashMap<>();
         conn = Connect.getConnection();
     }
     public static WorkerMapper GetInstance(){
@@ -139,6 +140,9 @@ public class WorkerMapper {
         return WorkerMap;
     }
 
+    public static Map<String, Driver> getDriverMap() {
+        return DriverMap;
+    }
     /**
      * @param Name name of branch
      *it will read all the workers from that branch
