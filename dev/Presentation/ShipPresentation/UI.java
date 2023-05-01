@@ -15,12 +15,6 @@ public class UI {
 
     public void shippingMenu()
     {
-        System.out.println("if you wish to start the system with data please enter - yes, " +
-                "otherwise enter other input ");
-        String answer = scanner.nextLine();
-        answer = answer.toLowerCase(Locale.ROOT);
-        if(answer.equals("yes"))
-            Smanagement.loadAll();
         String choice;
         boolean firstFlag = true;
         while(firstFlag) {
