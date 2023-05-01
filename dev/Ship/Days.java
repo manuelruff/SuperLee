@@ -1,3 +1,5 @@
+package Ship;
+
 public enum Days {
     Sunday,
     Monday,

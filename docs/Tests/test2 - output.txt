@@ -1,449 +1,449 @@
 if you wish to start the system with data please enter - yes, otherwise enter other input 
-Shipping Main Menu:
-1 - Site Menu
-2 - Truck Menu
+Shipping Ship.Main Menu:
+1 - Ship.Site Menu
+2 - Ship.Truck Menu
 3 - Drivers Menu
-4 - Order Menu
+4 - Ship.Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit
-Site Menu:
-1 - Add Site
-2 - Remove Site
+Ship.Site Menu:
+1 - Add Ship.Site
+2 - Remove Ship.Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
 ******* SITE DETAILS *******
 Number of Sites: 11
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Osem
 Address: beer sheva
 Contact Name: luffy
 Phone Number: 0547388475
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Tnuva
 Address: TLV
 Contact Name: sanji
 Phone Number: 0547388476
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Zogloveg
 Address: TLV
 Contact Name: zorro
 Phone Number: 0547388477
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Strauss
 Address: kiryat gat
 Contact Name: chopper
 Phone Number: 0547388478
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Elit
 Address: haifa
 Contact Name: brook
 Phone Number: 0547388479
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch1
 Address: beer sheva
 Contact Name: jinbi
 Phone Number: 0542318475
-Zone: south
+Ship.Zone: south
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch2
 Address: kiryat gat
 Contact Name: robin
 Phone Number: 0542318476
-Zone: south
+Ship.Zone: south
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch3
 Address: TLV
 Contact Name: garp
 Phone Number: 0542318477
-Zone: Center
+Ship.Zone: Center
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch4
 Address: givataim
 Contact Name: shanks
 Phone Number: 0542318478
-Zone: Center
+Ship.Zone: Center
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch5
 Address: katzrin
 Contact Name: kaido
 Phone Number: 0542318479
-Zone: North
+Ship.Zone: North
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch6
 Address: haifa
 Contact Name: oden
 Phone Number: 0542318470
-Zone: North
+Ship.Zone: North
 
-Site Menu:
-1 - Add Site
-2 - Remove Site
+Ship.Site Menu:
+1 - Add Ship.Site
+2 - Remove Ship.Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
 Please enter site name you want to remove:
-Site does not exist in the system
+Ship.Site does not exist in the system
 Please enter site name you want to remove:
-Site does not exist in the system
+Ship.Site does not exist in the system
 Please enter site name you want to remove:
 site deleted
-Site Menu:
-1 - Add Site
-2 - Remove Site
+Ship.Site Menu:
+1 - Add Ship.Site
+2 - Remove Ship.Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
 ******* SITE DETAILS *******
 Number of Sites: 10
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Osem
 Address: beer sheva
 Contact Name: luffy
 Phone Number: 0547388475
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Tnuva
 Address: TLV
 Contact Name: sanji
 Phone Number: 0547388476
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Zogloveg
 Address: TLV
 Contact Name: zorro
 Phone Number: 0547388477
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Strauss
 Address: kiryat gat
 Contact Name: chopper
 Phone Number: 0547388478
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Elit
 Address: haifa
 Contact Name: brook
 Phone Number: 0547388479
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch1
 Address: beer sheva
 Contact Name: jinbi
 Phone Number: 0542318475
-Zone: south
+Ship.Zone: south
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch2
 Address: kiryat gat
 Contact Name: robin
 Phone Number: 0542318476
-Zone: south
+Ship.Zone: south
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch3
 Address: TLV
 Contact Name: garp
 Phone Number: 0542318477
-Zone: Center
+Ship.Zone: Center
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch5
 Address: katzrin
 Contact Name: kaido
 Phone Number: 0542318479
-Zone: North
+Ship.Zone: North
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch6
 Address: haifa
 Contact Name: oden
 Phone Number: 0542318470
-Zone: North
+Ship.Zone: North
 
-Site Menu:
-1 - Add Site
-2 - Remove Site
+Ship.Site Menu:
+1 - Add Ship.Site
+2 - Remove Ship.Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
 Please enter the name of the site you would like to update:
-Site does not exist in the system
-Site Menu:
-1 - Add Site
-2 - Remove Site
+Ship.Site does not exist in the system
+Ship.Site Menu:
+1 - Add Ship.Site
+2 - Remove Ship.Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
 Please enter the name of the site you would like to update:
 What would you like to change:
-1 - Site name
-2 - Site address
+1 - Ship.Site name
+2 - Ship.Site address
 3 - Contact name
 4 - Contact phone number
 Enter the new details
-Site Menu:
-1 - Add Site
-2 - Remove Site
+Ship.Site Menu:
+1 - Add Ship.Site
+2 - Remove Ship.Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
 ******* SITE DETAILS *******
 Number of Sites: 10
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Osem
 Address: beer sheva
 Contact Name: luffy
 Phone Number: 0547388475
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Tnuva
 Address: TLV
 Contact Name: sanji
 Phone Number: 0547388476
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Zogloveg
 Address: TLV
 Contact Name: zorro
 Phone Number: 0547388477
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Strauss
 Address: kiryat gat
 Contact Name: chopper
 Phone Number: 0547388478
 
-Site Type: Vendor
+Ship.Site Type: Ship.Vendor
 Name: Elit
 Address: haifa
 Contact Name: brook
 Phone Number: 0547388479
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch1
 Address: beer sheva
 Contact Name: jinbi
 Phone Number: 0542318475
-Zone: south
+Ship.Zone: south
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch2
 Address: kiryat gat
 Contact Name: robin
 Phone Number: 0542318476
-Zone: south
+Ship.Zone: south
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch3
 Address: TLV
 Contact Name: alibaba
 Phone Number: 0542318477
-Zone: Center
+Ship.Zone: Center
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch5
 Address: katzrin
 Contact Name: kaido
 Phone Number: 0542318479
-Zone: North
+Ship.Zone: North
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch6
 Address: haifa
 Contact Name: oden
 Phone Number: 0542318470
-Zone: North
+Ship.Zone: North
 
-Site Menu:
-1 - Add Site
-2 - Remove Site
+Ship.Site Menu:
+1 - Add Ship.Site
+2 - Remove Ship.Site
 3 - Print All Sites 
 4 - Update site info
 5 - Exit
-Shipping Main Menu:
-1 - Site Menu
-2 - Truck Menu
+Shipping Ship.Main Menu:
+1 - Ship.Site Menu
+2 - Ship.Truck Menu
 3 - Drivers Menu
-4 - Order Menu
+4 - Ship.Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit
-Truck Menu:
-1 - Add Truck
-2 - Delete Truck
+Ship.Truck Menu:
+1 - Add Ship.Truck
+2 - Delete Ship.Truck
 3 - Print All Trucks
 4 - Exit
 ******* Trucks details *******
 Number of truck: 11
 
-Truck number: 0000
-Truck weight: 2000
-Truck Total weight: 6000
-Truck model: mercedes
-Truck storage capability's: Regular
+Ship.Truck number: 0000
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 6000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Regular
 
-Truck number: 0001
-Truck weight: 2000
-Truck Total weight: 13000
-Truck model: mercedes
-Truck storage capability's: Cooling
+Ship.Truck number: 0001
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 13000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Cooling
 
-Truck number: 0002
-Truck weight: 2000
-Truck Total weight: 12000
-Truck model: mercedes
-Truck storage capability's: Freezer
+Ship.Truck number: 0002
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 12000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Freezer
 
-Truck number: 0003
-Truck weight: 2000
-Truck Total weight: 10000
-Truck model: mercedes
-Truck storage capability's: Regular
+Ship.Truck number: 0003
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 10000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Regular
 
-Truck number: 0004
-Truck weight: 1000
-Truck Total weight: 8000
-Truck model: mercedes
-Truck storage capability's: Cooling
+Ship.Truck number: 0004
+Ship.Truck weight: 1000
+Ship.Truck Total weight: 8000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Cooling
 
-Truck number: 0005
-Truck weight: 1000
-Truck Total weight: 9000
-Truck model: mercedes
-Truck storage capability's: Freezer
+Ship.Truck number: 0005
+Ship.Truck weight: 1000
+Ship.Truck Total weight: 9000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Freezer
 
-Truck number: 0006
-Truck weight: 2000
-Truck Total weight: 16000
-Truck model: mercedes
-Truck storage capability's: Regular
+Ship.Truck number: 0006
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 16000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Regular
 
-Truck number: 0007
-Truck weight: 1000
-Truck Total weight: 7000
-Truck model: mercedes
-Truck storage capability's: Cooling
+Ship.Truck number: 0007
+Ship.Truck weight: 1000
+Ship.Truck Total weight: 7000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Cooling
 
-Truck number: 0008
-Truck weight: 1000
-Truck Total weight: 8000
-Truck model: mercedes
-Truck storage capability's: Freezer
+Ship.Truck number: 0008
+Ship.Truck weight: 1000
+Ship.Truck Total weight: 8000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Freezer
 
-Truck number: 0009
-Truck weight: 2000
-Truck Total weight: 11000
-Truck model: mercedes
-Truck storage capability's: Regular
+Ship.Truck number: 0009
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 11000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Regular
 
-Truck number: 0010
-Truck weight: 2000
-Truck Total weight: 12000
-Truck model: mercedes
-Truck storage capability's: Cooling
+Ship.Truck number: 0010
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 12000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Cooling
 
-Truck Menu:
-1 - Add Truck
-2 - Delete Truck
+Ship.Truck Menu:
+1 - Add Ship.Truck
+2 - Delete Ship.Truck
 3 - Print All Trucks
 4 - Exit
 Please enter the truck number:
 truck number does not exist in the system
 Please enter the truck number:
 truck has been removed from the system
-Truck Menu:
-1 - Add Truck
-2 - Delete Truck
+Ship.Truck Menu:
+1 - Add Ship.Truck
+2 - Delete Ship.Truck
 3 - Print All Trucks
 4 - Exit
 ******* Trucks details *******
 Number of truck: 10
 
-Truck number: 0000
-Truck weight: 2000
-Truck Total weight: 6000
-Truck model: mercedes
-Truck storage capability's: Regular
+Ship.Truck number: 0000
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 6000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Regular
 
-Truck number: 0001
-Truck weight: 2000
-Truck Total weight: 13000
-Truck model: mercedes
-Truck storage capability's: Cooling
+Ship.Truck number: 0001
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 13000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Cooling
 
-Truck number: 0002
-Truck weight: 2000
-Truck Total weight: 12000
-Truck model: mercedes
-Truck storage capability's: Freezer
+Ship.Truck number: 0002
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 12000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Freezer
 
-Truck number: 0003
-Truck weight: 2000
-Truck Total weight: 10000
-Truck model: mercedes
-Truck storage capability's: Regular
+Ship.Truck number: 0003
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 10000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Regular
 
-Truck number: 0004
-Truck weight: 1000
-Truck Total weight: 8000
-Truck model: mercedes
-Truck storage capability's: Cooling
+Ship.Truck number: 0004
+Ship.Truck weight: 1000
+Ship.Truck Total weight: 8000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Cooling
 
-Truck number: 0005
-Truck weight: 1000
-Truck Total weight: 9000
-Truck model: mercedes
-Truck storage capability's: Freezer
+Ship.Truck number: 0005
+Ship.Truck weight: 1000
+Ship.Truck Total weight: 9000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Freezer
 
-Truck number: 0006
-Truck weight: 2000
-Truck Total weight: 16000
-Truck model: mercedes
-Truck storage capability's: Regular
+Ship.Truck number: 0006
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 16000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Regular
 
-Truck number: 0008
-Truck weight: 1000
-Truck Total weight: 8000
-Truck model: mercedes
-Truck storage capability's: Freezer
+Ship.Truck number: 0008
+Ship.Truck weight: 1000
+Ship.Truck Total weight: 8000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Freezer
 
-Truck number: 0009
-Truck weight: 2000
-Truck Total weight: 11000
-Truck model: mercedes
-Truck storage capability's: Regular
+Ship.Truck number: 0009
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 11000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Regular
 
-Truck number: 0010
-Truck weight: 2000
-Truck Total weight: 12000
-Truck model: mercedes
-Truck storage capability's: Cooling
+Ship.Truck number: 0010
+Ship.Truck weight: 2000
+Ship.Truck Total weight: 12000
+Ship.Truck model: mercedes
+Ship.Truck storage capability's: Cooling
 
-Truck Menu:
-1 - Add Truck
-2 - Delete Truck
+Ship.Truck Menu:
+1 - Add Ship.Truck
+2 - Delete Ship.Truck
 3 - Print All Trucks
 4 - Exit
-Shipping Main Menu:
-1 - Site Menu
-2 - Truck Menu
+Shipping Ship.Main Menu:
+1 - Ship.Site Menu
+2 - Ship.Truck Menu
 3 - Drivers Menu
-4 - Order Menu
+4 - Ship.Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit
@@ -530,7 +530,7 @@ Please enter driver storage capabilities training:
 0 - Regular
 1 - Cooling
 2 - Freezer
-Driver added to the system
+Ship.Driver added to the system
 Drivers Menu:
 1 - Add driver
 2 - remove driver
@@ -612,7 +612,7 @@ Drivers Menu:
 5 - Update driver training
 6 - Exit
 Please enter drivers ID:
-Driver does not exist in the system
+Ship.Driver does not exist in the system
 Drivers Menu:
 1 - Add driver
 2 - remove driver
@@ -696,15 +696,15 @@ Drivers Menu:
 4 - Update driver licence
 5 - Update driver training
 6 - Exit
-Shipping Main Menu:
-1 - Site Menu
-2 - Truck Menu
+Shipping Ship.Main Menu:
+1 - Ship.Site Menu
+2 - Ship.Truck Menu
 3 - Drivers Menu
-4 - Order Menu
+4 - Ship.Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit
-Shipment  Menu:
+Ship.Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
@@ -712,7 +712,7 @@ Shipment  Menu:
 5 - execute nearest shipment
 6 - Exit
 There isn't any shipments!
-Shipment  Menu:
+Ship.Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
@@ -720,7 +720,7 @@ Shipment  Menu:
 5 - execute nearest shipment
 6 - Exit
 There isn't any shipments!
-Shipment  Menu:
+Ship.Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
@@ -736,8 +736,8 @@ Please enter a day for the shipment:
 6 - Friday
 Please enter ID for the shipment:
 Please enter a vendor name:
-Shipment created
-Shipment  Menu:
+Ship.Shipment created
+Ship.Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
@@ -745,56 +745,56 @@ Shipment  Menu:
 5 - execute nearest shipment
 6 - Exit
 ******************** SHIPMENTS ********************
-****** Shipment details ******
-Shipment ID: 12345
+****** Ship.Shipment details ******
+Ship.Shipment ID: 12345
 shipment scheduled for this Tuesday
-Truck number: 0000
-Driver Name: Ron
-Vendor: Osem
+Ship.Truck number: 0000
+Ship.Driver Name: Ron
+Ship.Vendor: Osem
 There isn't any changes in this shipment as of this moment
 Destinations:
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch1
 Address: beer sheva
 Contact Name: jinbi
 Phone Number: 0542318475
-Zone: south
+Ship.Zone: south
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch2
 Address: kiryat gat
 Contact Name: robin
 Phone Number: 0542318476
-Zone: south
+Ship.Zone: south
 
-Item doc:
-Item Document details:
+Ship.Item doc:
+Ship.Item Document details:
 Document ID: 1
 Destination: branch1
-	Item name: spaghetti
+	Ship.Item name: spaghetti
 	Quantity: 20
 	Storage Condition: Regular
 
-	Item name: mayo
+	Ship.Item name: mayo
 	Quantity: 10
 	Storage Condition: Regular
 
-	Item name: ketchup
+	Ship.Item name: ketchup
 	Quantity: 20
 	Storage Condition: Regular
 
-Item Document details:
+Ship.Item Document details:
 Document ID: 2
 Destination: branch2
-	Item name: peti ber
+	Ship.Item name: peti ber
 	Quantity: 10
 	Storage Condition: Regular
 
-	Item name: pene
+	Ship.Item name: pene
 	Quantity: 10
 	Storage Condition: Regular
 
-Shipment  Menu:
+Ship.Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
@@ -802,61 +802,61 @@ Shipment  Menu:
 5 - execute nearest shipment
 6 - Exit
 Please enter shipment ID to delete
-Shipment does not exist in the system
+Ship.Shipment does not exist in the system
 Please enter shipment ID to delete
-Shipment does not exist in the system
+Ship.Shipment does not exist in the system
 Please enter shipment ID to delete
-****** Shipment details ******
-Shipment ID: 12345
+****** Ship.Shipment details ******
+Ship.Shipment ID: 12345
 shipment scheduled for this Tuesday
-Truck number: 0000
-Driver Name: Ron
-Vendor: Osem
+Ship.Truck number: 0000
+Ship.Driver Name: Ron
+Ship.Vendor: Osem
 There isn't any changes in this shipment as of this moment
 Destinations:
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch1
 Address: beer sheva
 Contact Name: jinbi
 Phone Number: 0542318475
-Zone: south
+Ship.Zone: south
 
-Site Type: Branch
+Ship.Site Type: Ship.Branch
 Name: branch2
 Address: kiryat gat
 Contact Name: robin
 Phone Number: 0542318476
-Zone: south
+Ship.Zone: south
 
-Item doc:
-Item Document details:
+Ship.Item doc:
+Ship.Item Document details:
 Document ID: 1
 Destination: branch1
-	Item name: spaghetti
+	Ship.Item name: spaghetti
 	Quantity: 20
 	Storage Condition: Regular
 
-	Item name: mayo
+	Ship.Item name: mayo
 	Quantity: 10
 	Storage Condition: Regular
 
-	Item name: ketchup
+	Ship.Item name: ketchup
 	Quantity: 20
 	Storage Condition: Regular
 
-Item Document details:
+Ship.Item Document details:
 Document ID: 2
 Destination: branch2
-	Item name: peti ber
+	Ship.Item name: peti ber
 	Quantity: 10
 	Storage Condition: Regular
 
-	Item name: pene
+	Ship.Item name: pene
 	Quantity: 10
 	Storage Condition: Regular
 
 This shipment has been deleted!
-Shipment  Menu:
+Ship.Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
@@ -864,7 +864,7 @@ Shipment  Menu:
 5 - execute nearest shipment
 6 - Exit
 There isn't any shipments!
-Shipment  Menu:
+Ship.Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
@@ -872,7 +872,7 @@ Shipment  Menu:
 5 - execute nearest shipment
 6 - Exit
 There isn't any shipments!
-Shipment  Menu:
+Ship.Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
@@ -880,18 +880,18 @@ Shipment  Menu:
 5 - execute nearest shipment
 6 - Exit
 There is no available shipment!
-Shipment  Menu:
+Ship.Shipment  Menu:
 1 - Add shipment
 2 - Delete shipment
 3 - Print All shipment
 4 - Print all available shipments
 5 - execute nearest shipment
 6 - Exit
-Shipping Main Menu:
-1 - Site Menu
-2 - Truck Menu
+Shipping Ship.Main Menu:
+1 - Ship.Site Menu
+2 - Ship.Truck Menu
 3 - Drivers Menu
-4 - Order Menu
+4 - Ship.Order Menu
 5 - Shipping Menu
 6 - Print all shipped item docs
 7 - Exit

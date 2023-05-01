@@ -19,7 +19,7 @@ public class Super {
 
     //times of the shifts, ill put default values that the manager can change later
     //need to change them to map <days,double>
-    //private Map<Domain.Days,Double> start_morning;
+    //private Map<Domain.Ship.Days,Double> start_morning;
     private Map<Days,Double> start_morning;
     private Map<Days,Double> end_morning;
     private Map<Days,Double> start_evening;

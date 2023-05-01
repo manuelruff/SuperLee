@@ -1,3 +1,5 @@
+package Ship;
+
 public abstract class Site {
 
     private String address;

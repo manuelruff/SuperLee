@@ -1,3 +1,5 @@
+package Ship;
+
 public class Item {
     private String name;
     private int quantity;
@@ -10,7 +12,7 @@ public class Item {
     }
     public void printItem()
     {
-        System.out.println("\tItem name: " + name);
+        System.out.println("\tShip.Item name: " + name);
         System.out.println("\tQuantity: "+ quantity);
         System.out.println("\tStorage Condition: " + storageCondition.name() + "\n");
     }

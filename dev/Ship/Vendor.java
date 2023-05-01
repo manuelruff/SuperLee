@@ -1,3 +1,5 @@
+package Ship;
+
 public class Vendor extends Site{
 
 
@@ -6,7 +8,7 @@ public class Vendor extends Site{
     }
     @Override
     public void printSite() {
-        System.out.println("Site Type: Vendor");
+        System.out.println("Ship.Site Type: Ship.Vendor");
         System.out.println("Name: " + getName());
         System.out.println("Address: " + getAddress());
         System.out.println("Contact Name: " + getContactName());

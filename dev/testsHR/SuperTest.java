@@ -1,4 +1,5 @@
 import HR.Domain.*;
+import Ship.Days;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -44,59 +45,59 @@ public class SuperTest {
     @Test
     public void getEnd_evening() {
         Super Super1 = new Super("zolretzah");
-        assertEquals(23,Super1.getEnd_evening(Days.Sunday),0);
-        assertEquals(23,Super1.getEnd_evening(Days.Saturday),0);
-        assertEquals(23,Super1.getEnd_evening(Days.Wednesday),0);
+        assertEquals(23,Super1.getEnd_evening(Ship.Days.Sunday),0);
+        assertEquals(23,Super1.getEnd_evening(Ship.Days.Saturday),0);
+        assertEquals(23,Super1.getEnd_evening(Ship.Days.Wednesday),0);
     }
     @Test
     public void setEnd_evening() {
         Super Super1 = new Super("zolretzah");
         assertEquals(23,Super1.getEnd_evening(Days.Sunday),0);
-        Super1.setEnd_evening(Days.Sunday,10.00);
-        assertEquals(10,Super1.getEnd_evening(Days.Sunday),0);
+        Super1.setEnd_evening(Ship.Days.Sunday,10.00);
+        assertEquals(10,Super1.getEnd_evening(Ship.Days.Sunday),0);
     }
 
     @Test
     public void getEnd_morning() {
         Super Super1 = new Super("zolretzah");
-        assertEquals(14,Super1.getEnd_morning(Days.Sunday),0);
-        assertEquals(14,Super1.getEnd_morning(Days.Saturday),0);
-        assertEquals(14,Super1.getEnd_morning(Days.Wednesday),0);
+        assertEquals(14,Super1.getEnd_morning(Ship.Days.Sunday),0);
+        assertEquals(14,Super1.getEnd_morning(Ship.Days.Saturday),0);
+        assertEquals(14,Super1.getEnd_morning(Ship.Days.Wednesday),0);
     }
     @Test
     public void setEnd_morning() {
         Super Super1 = new Super("zolretzah");
-        assertEquals(14,Super1.getEnd_morning(Days.Sunday),0);
-        Super1.setEnd_morning(Days.Sunday,10.00);
-        assertEquals(10,Super1.getEnd_morning(Days.Sunday),0);
+        assertEquals(14,Super1.getEnd_morning(Ship.Days.Sunday),0);
+        Super1.setEnd_morning(Ship.Days.Sunday,10.00);
+        assertEquals(10,Super1.getEnd_morning(Ship.Days.Sunday),0);
     }
     @Test
     public void getStart_evening() {
         Super Super1 = new Super("zolretzah");
-        assertEquals(14,Super1.getStart_evening(Days.Sunday),0);
-        assertEquals(14,Super1.getStart_evening(Days.Saturday),0);
-        assertEquals(14,Super1.getStart_evening(Days.Wednesday),0);
+        assertEquals(14,Super1.getStart_evening(Ship.Days.Sunday),0);
+        assertEquals(14,Super1.getStart_evening(Ship.Days.Saturday),0);
+        assertEquals(14,Super1.getStart_evening(Ship.Days.Wednesday),0);
     }
     @Test
     public void setStart_evening() {
         Super Super1 = new Super("zolretzah");
-        assertEquals(14,Super1.getStart_evening(Days.Sunday),0);
-        Super1.setStart_evening(Days.Sunday,10.00);
-        assertEquals(10,Super1.getStart_evening(Days.Sunday),0);
+        assertEquals(14,Super1.getStart_evening(Ship.Days.Sunday),0);
+        Super1.setStart_evening(Ship.Days.Sunday,10.00);
+        assertEquals(10,Super1.getStart_evening(Ship.Days.Sunday),0);
     }
     @Test
     public void getStart_morning() {
         Super Super1 = new Super("zolretzah");
-        assertEquals(7,Super1.getStart_morning(Days.Sunday),0);
-        assertEquals(7,Super1.getStart_morning(Days.Saturday),0);
-        assertEquals(7,Super1.getStart_morning(Days.Wednesday),0);
+        assertEquals(7,Super1.getStart_morning(Ship.Days.Sunday),0);
+        assertEquals(7,Super1.getStart_morning(Ship.Days.Saturday),0);
+        assertEquals(7,Super1.getStart_morning(Ship.Days.Wednesday),0);
     }
     @Test
     public void setStart_morning() {
         Super Super1 = new Super("zolretzah");
-        assertEquals(7,Super1.getStart_morning(Days.Sunday),0);
-        Super1.setStart_morning(Days.Sunday,10.00);
-        assertEquals(10,Super1.getStart_morning(Days.Sunday),0);
+        assertEquals(7,Super1.getStart_morning(Ship.Days.Sunday),0);
+        Super1.setStart_morning(Ship.Days.Sunday,10.00);
+        assertEquals(10,Super1.getStart_morning(Ship.Days.Sunday),0);
     }
 
 }

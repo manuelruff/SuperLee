@@ -1,3 +1,5 @@
+package Ship;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -65,7 +67,7 @@ public class shipmentManagement {
     /**
      * This function update the ability of a specific driver.
      * @param ID String, driver ID
-     * @param training int, will indicate the Training Enum.
+     * @param training int, will indicate the Ship.Training Enum.
      */
     public void updateDriverTraining(String ID, int training) {
         for (Driver driver : drivers) {
@@ -154,10 +156,10 @@ public class shipmentManagement {
     /**
      * This function search for a new driver in case of truck exchange, if the old driver is suitable for the new
      * truck, there is no changes.
-     * @param oldDriver Driver, old driver of the shipment.
-     * @param truck Truck, the new truck that was assigned to the shipment.
-     * @param day Days enum, the day of the week.
-     * @return Driver. (old Driver\new Driver).
+     * @param oldDriver Ship.Driver, old driver of the shipment.
+     * @param truck Ship.Truck, the new truck that was assigned to the shipment.
+     * @param day Ship.Days enum, the day of the week.
+     * @return Ship.Driver. (old Ship.Driver\new Ship.Driver).
      */
     private Driver changeDriver(Driver oldDriver, Truck truck,Days day)
     {
@@ -193,7 +195,7 @@ public class shipmentManagement {
 
 
 
-    /****************************** Truck related Methods ******************************/
+    /****************************** Ship.Truck related Methods ******************************/
 
 
     /**
@@ -340,7 +342,7 @@ public class shipmentManagement {
                             shipment.setTruckNumber(truck.getTruckNumber());
                             truck.addNewDay(shipment.getDayOfTheWeek());
                             currentTruck.removeDay(shipment.getDayOfTheWeek());
-                            System.out.println("Truck Changed");
+                            System.out.println("Ship.Truck Changed");
                             return;
                         }
                     }
@@ -417,7 +419,7 @@ public class shipmentManagement {
      * @param address     string, address of the vendor.
      * @param phoneNumber string, phone number of the contact person.
      * @param contactName string, name of the contact person.
-     * @param zone        enum Zone, zone area.
+     * @param zone        enum Ship.Zone, zone area.
      */
     public void addBranch(String name, String address, String phoneNumber, String contactName, int zone) {
         Branch branch;
@@ -515,7 +517,7 @@ public class shipmentManagement {
     }
 
 
-    /************************************* Order Related Methods *************************************/
+    /************************************* Ship.Order Related Methods *************************************/
 
     /**
      * Creates a new order and adding it to the system.
@@ -568,7 +570,7 @@ public class shipmentManagement {
 
 
 
-    /************************************* Shipment related methods *************************************/
+    /************************************* Ship.Shipment related methods *************************************/
 
 
     /**
@@ -624,7 +626,7 @@ public class shipmentManagement {
 
     /**
      * This function get a shipment and add it to the shipment array sorted by date.
-     * @param shipment Shipment, the shipment to add.
+     * @param shipment Ship.Shipment, the shipment to add.
      */
     private void addShipmentSorted(Shipment shipment){
         if (availableShipments.isEmpty()){
@@ -658,7 +660,7 @@ public class shipmentManagement {
      *
      * @param dayOfWeek int representing the date.
      * @param ID        string, the ID of the shipment.
-     * @param source    string, Vendor.
+     * @param source    string, Ship.Vendor.
      * @return True/false if the shipment was created.
      */
     public boolean createShipment(int dayOfWeek, String ID, String source) {
@@ -855,7 +857,7 @@ public class shipmentManagement {
     /**
      * This function deletes a specific shipment from the system, the orders that were in this shipment returns to the
      * map.
-     * @param ID String, Shipment ID.
+     * @param ID String, Ship.Shipment ID.
      */
     public void deleteShipment(String ID){
         Shipment shipmentToDelete = null;
