@@ -1,4 +1,4 @@
-import HR.Bussiness.GeneralController;
+import HR.Bussiness.ManagerController;
 import HR.Presentation.CashRegisterUI;
 import HR.Presentation.HRManagerUI;
 import HR.Presentation.UIGeneralFnctions;
@@ -55,7 +55,7 @@ public class GeneralUI {
                 case 5:
                     System.out.println("have a good day");
                     //do what we need in the database when closed
-                    GeneralController.closeDB();
+                    ManagerController.closeDB();
                     //close the scanner
                     scanner.close();
                     //stops the program

@@ -461,7 +461,7 @@ public class HRManagerUI {
                 0 - North
                 1 - Center
                 2 - South""");
-        int zone = GeneralController.AskForNumber(0,2);
+        int zone = UIGeneralFnctions.AskForNumber(0,2);
         ManagerController.addSuper(siteName,siteAddress,sitePhoneNumber,contactName,zone);
 
     }
