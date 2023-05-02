@@ -1,9 +1,5 @@
 package Shipment.Bussiness;
 
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 
 
@@ -11,6 +7,7 @@ import java.util.*;
 public class shipmentManagement {
     private static Scanner scanner=new Scanner(System.in);
 
+    private static Truck staticsTruck;
     private final Map<String, List<Order>> vendorMap;
     private final List<Driver> drivers;
     private final List<Truck> trucks;
@@ -36,6 +33,7 @@ public class shipmentManagement {
         }
         return instance;
     }
+
 
     /****************************** Drivers related Methods ******************************/
 
@@ -331,11 +329,11 @@ public class shipmentManagement {
 
     /**
      * This function searching for a new truck for the shipment.
-     * @param shipment shipment that needs the new truck.
      */
-    private void changeTruck(Shipment shipment) {
+    public void changeTruck() {
+        Shipment shipment = shipments.get(0);
         Truck currentTruck = getTruck(shipment.getTruckNumber());
-        Driver currentDriver = shipment.getDriver();;
+        Driver currentDriver = shipment.getDriver();
         for(Truck truck : trucks)
         {
             if(currentTruck.getTotalWeight() < truck.getTotalWeight())
@@ -508,11 +506,16 @@ public class shipmentManagement {
 
     /**
      * This function removes the last site from the shipment, and creates an order of the item that were deleted.
-     * @param shipment object shipment.
      */
-    private void removeLastSiteFromShipment(Shipment shipment) {
+
+    //todo change this shit.
+    public boolean removeLastSiteFromShipment() {
+        Shipment shipment = availableShipments.get(0);
         String source = shipment.getSource().getName();
         Order order;
+        if (shipment.getDestinations().size() == 1) {
+            return false;
+        }
         Site siteToRemove = shipment.getDestinations().get(shipment.getDestinations().size() - 1);
         for (ItemsDoc doc : shipment.getDocs()) {
             if (Objects.equals(doc.getSiteName(), siteToRemove.getName())){
@@ -523,9 +526,10 @@ public class shipmentManagement {
                 }
                 shipment.getDocs().remove(doc);
                 System.out.println("The site: " + siteToRemove.getName() + " was removed from the shipment");
-                return;
+                return true;
             }
         }
+        return false;
     }
 
 
@@ -761,112 +765,115 @@ public class shipmentManagement {
         }
     }
 
-    /**
-     * This function executes the shipment with the closest date.
-     */
-    public void executeShipment() {
-        if (availableShipments.isEmpty()) {
-            System.out.println("There is no available shipment!");
-            return;
-        }
-        Shipment shipment = availableShipments.get(0);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime time = null;
-        while (time == null) {
-            System.out.println("Enter the time (in HH:MM format): ");
-            String timeStr = scanner.nextLine();
-
-            try {
-                time = LocalTime.parse(timeStr, formatter);
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid time format. Please enter time in HH:MM format.");
-            }
-        }
-        shipment.setDepartureTime(time);
-        System.out.println("U have arrived at ur destination: ");
-        shipment.getSource().printSite();
-        Truck currTruck = searchTruckByID(shipment.getTruckNumber());
-        int weight;
-        while (true){
-            try{
-                System.out.println("Please enter the weight of the truck with the items (in KG): ");
-                weight = Integer.parseInt(scanner.nextLine());
-                break;
-            }
-            catch (NumberFormatException e)
-            {
-                System.out.println("Please enter an Integer");
-            }
-        }
-        int firstWeight = weight;
-        while (true) {
-            if (shipment.getShipmentStatus() != Status.NoChanges) {
-                try{
-                    System.out.println("Please enter the new Weight (in KG):");
-                    weight = Integer.parseInt(scanner.nextLine());
-                }
-                catch (NumberFormatException e)
-                {
-                    System.out.println("Please enter an Integer");
-                }
-
-            }
-            while (weight > firstWeight) {
-                try {
-                    System.out.println("The input was incorrect, please enter only numbers");
-                    weight = Integer.parseInt(scanner.nextLine());
-                    break;
-                }
-                catch (NumberFormatException e)
-                {
-                    System.out.println("Please enter an Integer");
-                }
-            }
-            if (weight > currTruck.getTotalWeight() - currTruck.getTruckWeight()) {
-                String input = "0";
-                while (!input.equals("1") && !input.equals("2") && !input.equals("3")) {
-                    System.out.println("The truck exceeded the max carry weight, in order to proceed with the shipment\n" +
-                            "please choose one of the options: ");
-                    System.out.println("1. Take out some of the items");
-                    System.out.println("2. Switch to a bigger truck");
-                    if (shipment.getDestinations().size() != 1)
-                        System.out.println("3. remove the last site from this shipment");
-                    input = scanner.nextLine();
-                    switch (input) {
-                        case "1" -> {
-                            if (itemsToDelete(shipment)) {
-                                System.out.println("There is no items left in the shipment, so the shipment is canceled");
-                                shipment.setShipmentStatus(Status.Canceled);
-                                return;
-                            }
-                            shipment.setShipmentStatus(Status.ItemsChange);
-                        }
-                        case "2" -> {
-                            changeTruck(shipment);
-                            if (!Objects.equals(currTruck.getTruckNumber(), shipment.getTruckNumber()))
-                                shipment.setShipmentStatus(Status.TruckExchange);
-                            else {
-                                System.out.println("There isn't a bigger truck available at the moment");
-                            }
-                            currTruck = searchTruckByID(shipment.getTruckNumber());
-                        }
-                        case "3" -> {
-                            removeLastSiteFromShipment(shipment);
-                            shipment.setShipmentStatus(Status.SiteChange);
-                        }
-                    }
-                }
-
-            }
-            else{
-                break;
-            }
-        }
-        shipments.add(shipment);
-        availableShipments.remove(shipment);
-        System.out.println("The items were delivered to the branches!");
-        shipment.printShipment();
-    }
+//    /**
+//     * This function executes the shipment with the closest date.
+//     */
+//    public void executeShipment() {
+//        if (availableShipments.isEmpty()) {
+//            System.out.println("There is no available shipment!");
+//            return;
+//        }
+//        //asking for shipment from DAO.
+//        Shipment shipment = availableShipments.get(0);
+//
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+//        LocalTime time = null;
+//        while (time == null) {
+//            System.out.println("Enter the time (in HH:MM format): ");
+//            String timeStr = scanner.nextLine();
+//
+//            try {
+//                time = LocalTime.parse(timeStr, formatter);
+//            } catch (DateTimeParseException e) {
+//                System.out.println("Invalid time format. Please enter time in HH:MM format.");
+//            }
+//        }
+//        shipment.setDepartureTime(time);
+//        System.out.println("you have arrived at your destination: ");
+//        shipment.getSource().printSite();
+//        Truck currTruck = searchTruckByID(shipment.getTruckNumber());
+//        int weight;
+//        while (true){
+//            try{
+//                System.out.println("Please enter the weight of the truck with the items (in KG): ");
+//                weight = Integer.parseInt(scanner.nextLine());
+//                break;
+//            }
+//            catch (NumberFormatException e)
+//            {
+//                System.out.println("Please enter an Integer");
+//            }
+//        }
+//        int firstWeight = weight;
+//        while (true) {
+//            if (shipment.getShipmentStatus() != Status.NoChanges) {
+//                try{
+//                    System.out.println("Please enter the new Weight (in KG):");
+//                    weight = Integer.parseInt(scanner.nextLine());
+//                }
+//                catch (NumberFormatException e)
+//                {
+//                    System.out.println("Please enter an Integer");
+//                }
+//
+//            }
+//            while (weight > firstWeight) {
+//                try {
+//                    System.out.println("The input was incorrect, please enter only numbers");
+//                    weight = Integer.parseInt(scanner.nextLine());
+//                    break;
+//                }
+//                catch (NumberFormatException e)
+//                {
+//                    System.out.println("Please enter an Integer");
+//                }
+//            }
+//            if (weight > currTruck.getTotalWeight() - currTruck.getTruckWeight()) {
+//                String input = "0";
+//                while (!input.equals("1") && !input.equals("2") && !input.equals("3")) {
+//                    System.out.println("The truck exceeded the max carry weight, in order to proceed with the shipment\n" +
+//                            "please choose one of the options: ");
+//                    System.out.println("1. Take out some of the items");
+//                    System.out.println("2. Switch to a bigger truck");
+//                    if (shipment.getDestinations().size() != 1)
+//                        System.out.println("3. remove the last site from this shipment");
+//                    input = scanner.nextLine();
+//                    switch (input) {
+//                        case "1" -> {
+//                            if (itemsToDelete(shipment)) {
+//                                System.out.println("There is no items left in the shipment, so the shipment is canceled");
+//                                shipment.setShipmentStatus(Status.Canceled);
+//                                return;
+//                            }
+//                            shipment.setShipmentStatus(Status.ItemsChange);
+//                        }
+//                        case "2" -> {
+//                            changeTruck(shipment);
+//                            if (!Objects.equals(currTruck.getTruckNumber(), shipment.getTruckNumber()))
+//                                shipment.setShipmentStatus(Status.TruckExchange);
+//                            else {
+//                                System.out.println("There isn't a bigger truck available at the moment");
+//                            }
+//                            currTruck = searchTruckByID(shipment.getTruckNumber());
+//                        }
+//                        case "3" -> {
+//                            removeLastSiteFromShipment(shipment);
+//                            shipment.setShipmentStatus(Status.SiteChange);
+//                        }
+//                    }
+//                }
+//
+//            }
+//            else{
+//                break;
+//            }
+//        }
+//        shipments.add(shipment);
+//        availableShipments.remove(shipment);
+//        System.out.println("The items were delivered to the branches!");
+//        shipment.printShipment();
+//    }
 
     /**
      * This function deletes a specific shipment from the system, the orders that were in this shipment returns to the
@@ -896,10 +903,10 @@ public class shipmentManagement {
 
     /**
      * This function delete items from shipment in case there were
-     * @param shipment shipment to delete items from
      * @return true/false.
      */
-    private boolean itemsToDelete(Shipment shipment) {
+    public boolean itemsToDelete() {
+        Shipment shipment = availableShipments.get(0);
         System.out.println("Those are the branches of the shipments: ");
         for (Site site : shipment.getDestinations()){
             site.printSite();
@@ -971,6 +978,21 @@ public class shipmentManagement {
             }
         }
     }
+
+    /**
+     * this function checks if the truck is full, and can't carry more items.
+     * @param weight integer, curr truck weight.
+     * @return true/false.
+     */
+    public boolean checkTruckWeight(int weight){
+        if (staticsTruck == null)
+            staticsTruck = getTruck(availableShipments.get(0).getTruckNumber());
+        return weight >= staticsTruck.getTotalWeight();
+    }
+
+
+
+
     public void loadDrivers(){
 //        addDriver("Ron", "000000000", 'C', 0);
 //        addDriver("Roee", "000000001", 'D', 1);
@@ -1102,6 +1124,10 @@ public class shipmentManagement {
             loadSites();
             LoadOrder();
         }
+
+    public boolean checkAvailableShipment() {
+        return availableShipments.isEmpty();
+    }
 }
 
 
