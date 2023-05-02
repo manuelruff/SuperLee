@@ -20,7 +20,7 @@ public class ManagerPasswordMapper {
             java.sql.Statement stmt = conn.createStatement();
             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Passwords WHERE Role = 'HRManager'");
             while (rs.next()) {
-                managerPassword = rs.getString("ManagerPass");
+                managerPassword = rs.getString("Pass");
             }
         }
         catch (SQLException e) {
