@@ -182,8 +182,10 @@ public class WorkerUI {
                 case 5:
                     // prints the shifts of asked branch
                     String BranchName = UIGeneralFnctions.AskForBranch();
-                    WorkerController.ShowShiftFromBranch(BranchName);
-                    //after we did what we want we stop
+                    boolean printed=WorkerController.ShowShiftFromBranch(BranchName);
+                    if(!printed){
+                        System.out.println("there is no shifts in this branch");
+                    }
                     break;
                 case 6:
                     System.out.println("have a good day");

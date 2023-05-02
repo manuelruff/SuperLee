@@ -1,7 +1,6 @@
 package HR.Presentation;
 
 import HR.Bussiness.CashRegisterController;
-import HR.Bussiness.GeneralController;
 
 import java.util.Scanner;
 
@@ -75,7 +74,7 @@ public class CashRegisterUI {
                     }
                     System.out.println("please enter your password: ");
                     String password = scanner.nextLine();  // Read user input
-                    if(!GeneralController.CheckWorkerPassword(ID,password)){
+                    if(!CashRegisterController.CheckWorkerPassword(ID,password)){
                         System.out.println("password is incorrect");
                         choice = 4;
                         break;
