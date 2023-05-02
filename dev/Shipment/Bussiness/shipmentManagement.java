@@ -548,7 +548,7 @@ public class shipmentManagement {
                 zone = ((Branch) site).getZone();
             }
         }
-        Order order = new Order(destination, zone);
+        Order order = new Order(destination, zone, source);
         vendorMap.get(source).add(order);
     }
 
