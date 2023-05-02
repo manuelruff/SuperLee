@@ -26,7 +26,22 @@ public class TruckMapper {
         }
         return truckMap.get(ID);
     }
+    private static void readTruck(String ID)
+    {
 
+    }
+    private static void readWorkingDays(String ID)
+    {
+
+    }
+    public static void writeAllTrucks()
+    {
+
+    }
+    private  static void writeWorkingDays(String ID)
+    {
+
+    }
 
 
 
