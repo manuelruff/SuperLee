@@ -48,11 +48,12 @@ public class HRManagerUI {
             System.out.println("2. add new branch");
             System.out.println("3. send weekly shifts to history for all branches");
             System.out.println("4. update employee");
-            System.out.println("5. change password");
-            System.out.println("6. pay salaries");
-            System.out.println("7. Back ");
+            System.out.println("5. show drivers schedule");
+            System.out.println("6. change password");
+            System.out.println("7. pay salaries");
+            System.out.println("8. Back ");
             //ask for input num
-            choice=UIGeneralFnctions.AskForNumber(1,7);
+            choice=UIGeneralFnctions.AskForNumber(1,8);
             switch (choice){
                 case 1:
                     String Name=UIGeneralFnctions.AskForBranch();
@@ -410,13 +411,16 @@ public class HRManagerUI {
                     }
                     break;
                 case 5:
+                    ManagerController.PrintDriversSchedule();
+                    break;
+                case 6:
                     System.out.println("enter new password: ");
                     String pass1 = scanner.nextLine();  // Read user input
                     ManagerController.setManagerPassword(pass1);
                     //after we did what we want we stop
                     System.out.println("password has changed");
                     break;
-                case 6:
+                case 7:
                     System.out.println("are you sure that you want to pay salaries? " +
                             "1.Yes" +
                             " 2.No");
@@ -428,7 +432,7 @@ public class HRManagerUI {
                         System.out.println("Payment done!");
                     }
                     break;
-                case 7:
+                case 8:
                     System.out.println("have a good day");
                     break;
                 default:

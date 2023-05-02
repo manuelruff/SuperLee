@@ -45,7 +45,7 @@ public class WorkerUI {
             System.out.println("2. add new constraints ");
             System.out.println("3. remove constraints ");
             System.out.println("4. show constraints ");
-            System.out.println("5. show shift at branch");
+            System.out.println("5. show shifts");
             System.out.println("6. Back");
             //ask for input
             choice=UIGeneralFnctions.AskForNumber(1,6);
@@ -181,10 +181,20 @@ public class WorkerUI {
                     break;
                 case 5:
                     // prints the shifts of asked branch
-                    String BranchName = UIGeneralFnctions.AskForBranch();
-                    boolean printed=WorkerController.ShowShiftFromBranch(BranchName);
+                    // first check if the worker is driver or not cause drivers has different shifts
+                    if(!WorkerController.IsDriver(ID)){
+                        // if it's not a driver - ask for branch to show the worker shifts
+                        String BranchName = UIGeneralFnctions.AskForBranch();
+                        boolean printed=WorkerController.ShowWorkerShifts(BranchName);
+                        if(!printed){
+                            System.out.println("there is no shifts in this branch");
+                        }
+                        break;
+                    }
+                    // if it's a driver - show the driver shifts
+                    boolean printed=WorkerController.ShowDriverShifts(ID);
                     if(!printed){
-                        System.out.println("there is no shifts in this branch");
+                        System.out.println("there are no shifts for you in this week");
                     }
                     break;
                 case 6:
