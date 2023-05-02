@@ -11,6 +11,7 @@ import java.util.*;
 public class shipmentManagement {
     private static Scanner scanner=new Scanner(System.in);
 
+    private static Truck staticsTruck;
     private final Map<String, List<Order>> vendorMap;
     private final List<Driver> drivers;
     private final List<Truck> trucks;
@@ -36,6 +37,7 @@ public class shipmentManagement {
         }
         return instance;
     }
+
 
     /****************************** Drivers related Methods ******************************/
 
@@ -333,9 +335,10 @@ public class shipmentManagement {
      * This function searching for a new truck for the shipment.
      * @param shipment shipment that needs the new truck.
      */
-    private void changeTruck(Shipment shipment) {
+    public void changeTruck() {
+        Shipment shipment = shipments.get(0);
         Truck currentTruck = getTruck(shipment.getTruckNumber());
-        Driver currentDriver = shipment.getDriver();;
+        Driver currentDriver = shipment.getDriver();
         for(Truck truck : trucks)
         {
             if(currentTruck.getTotalWeight() < truck.getTotalWeight())
@@ -510,9 +513,13 @@ public class shipmentManagement {
      * This function removes the last site from the shipment, and creates an order of the item that were deleted.
      * @param shipment object shipment.
      */
-    private void removeLastSiteFromShipment(Shipment shipment) {
+    public boolean removeLastSiteFromShipment() {
+        Shipment shipment = availableShipments.get(0);
         String source = shipment.getSource().getName();
         Order order;
+        if (shipment.getDestinations().size() == 1) {
+            return false;
+        }
         Site siteToRemove = shipment.getDestinations().get(shipment.getDestinations().size() - 1);
         for (ItemsDoc doc : shipment.getDocs()) {
             if (Objects.equals(doc.getSiteName(), siteToRemove.getName())){
@@ -769,7 +776,10 @@ public class shipmentManagement {
             System.out.println("There is no available shipment!");
             return;
         }
+        //asking for shipment from DAO.
         Shipment shipment = availableShipments.get(0);
+
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime time = null;
         while (time == null) {
@@ -783,7 +793,7 @@ public class shipmentManagement {
             }
         }
         shipment.setDepartureTime(time);
-        System.out.println("U have arrived at ur destination: ");
+        System.out.println("you have arrived at your destination: ");
         shipment.getSource().printSite();
         Truck currTruck = searchTruckByID(shipment.getTruckNumber());
         int weight;
@@ -899,7 +909,8 @@ public class shipmentManagement {
      * @param shipment shipment to delete items from
      * @return true/false.
      */
-    private boolean itemsToDelete(Shipment shipment) {
+    public boolean itemsToDelete() {
+        Shipment shipment = availableShipments.get(0);
         System.out.println("Those are the branches of the shipments: ");
         for (Site site : shipment.getDestinations()){
             site.printSite();
@@ -971,6 +982,16 @@ public class shipmentManagement {
             }
         }
     }
+
+    public boolean checkTruckWeight(int weight){
+        if (staticsTruck == null)
+            staticsTruck = getTruck(availableShipments.get(0).getTruckNumber());
+        return weight >= staticsTruck.getTotalWeight();
+    }
+
+
+
+
     public void loadDrivers(){
 //        addDriver("Ron", "000000000", 'C', 0);
 //        addDriver("Roee", "000000001", 'D', 1);
@@ -1102,6 +1123,14 @@ public class shipmentManagement {
             loadSites();
             LoadOrder();
         }
+
+    public boolean checkAvailableShipment() {
+        return availableShipments.isEmpty();
+    }
+
+    public boolean checkShipmentStatus() {
+        if (availableShipments.get(0).getShipmentStatus() != Status.TruckExchange)
+    }
 }
 
 

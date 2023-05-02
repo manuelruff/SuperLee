@@ -1,7 +1,12 @@
 package Shipment.Presentation;
 
+import Shipment.Bussiness.Status;
 import Shipment.Bussiness.shipmentManagement;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static HR.Presentation.UIGeneralFnctions.AskForIntNumber;
@@ -17,8 +22,7 @@ public class UI {
     {
         scanner=sc;
         String choice;
-        boolean firstFlag = true;
-        while(firstFlag) {
+        while(true) {
             System.out.println("Shipping Main Menu:");
             System.out.println("1 - Site Menu");
             System.out.println("2 - Truck Menu");
@@ -49,18 +53,18 @@ public class UI {
                         }
                         switch (ch) {
                             case 1:
-                                addSite(Smanagement);
+                                addSite();
                                 break;
                                 //asd
 
                             case 2:
-                                deleteSite(Smanagement);
+                                deleteSite();
                                 break;
                             case 3:
                                 Smanagement.printSites();
                                 break;
                             case 4:
-                                updateSite(Smanagement);
+                                updateSite();
                                 break;
                             case 5:
                                 chF=false;
@@ -87,10 +91,10 @@ public class UI {
                         }
                         switch (ch2) {
                             case 1:
-                                addTruck(Smanagement);
+                                addTruck();
                                 break;
                             case 2:
-                                deleteTruck(Smanagement);
+                                deleteTruck();
                                 break;
                             case 3:
                                 Smanagement.printTrucks();
@@ -122,19 +126,19 @@ public class UI {
                         switch (ch3)
                         {
                             case 1 :
-                                //addDriver(Smanagement);
+                                //addDriver();
                                 break;
                             case 2:
-                                deleteDriver(Smanagement);
+                                deleteDriver();
                                 break;
                             case 3:
                                 Smanagement.printDrivers();
                                 break;
                             case 4:
-                                updateDriverLicence(Smanagement);
+                                updateDriverLicence();
                                 break;
                             case 5:
-                                updateDriverTraining(Smanagement);
+                                updateDriverTraining();
                                 break;
                             case 6:
                                 break;
@@ -160,7 +164,7 @@ public class UI {
                         }
                         switch (ch4){
                             case 1:
-                                addOrder(Smanagement);
+                                addOrder();
                                 break;
                             case 2:
                                 Smanagement.printOrders();
@@ -193,10 +197,10 @@ public class UI {
                         }
                         switch (ch5) {
                             case 1:
-                                addShipment(Smanagement);
+                                addShipment();
                                 break;
                             case 2:
-                                deleteShipment(Smanagement);
+                                deleteShipment();
                                 break;
                             case 3:
                                 Smanagement.printShipments();
@@ -219,7 +223,6 @@ public class UI {
                     Smanagement.printAllDocs();
                     break;
                 case "7":
-                    firstFlag = false;
                     return;
                 default:
                     System.out.println("Invalid input");
@@ -230,7 +233,7 @@ public class UI {
 
     /********************************************** HELPER FUNCTIONS **********************************************/
 
-    public static void updateDriverLicence(shipmentManagement Smanagement)
+    public static void updateDriverLicence()
     {
         boolean check3 = true, check31 =true;
         String driverID=null;
@@ -272,7 +275,7 @@ public class UI {
         }
     }
 
-    public static void updateDriverTraining(shipmentManagement Smanagement)
+    public static void updateDriverTraining()
     {
         boolean check3 = true, check31 =true;
         String driverID=null;
@@ -318,9 +321,8 @@ public class UI {
     /**
      * this function gets input from the user about a new site he wants to add
      * and adds the new site to the system
-     * @param Smanagement - the shipmentManagement object which the site is added too
      */
-    public static void addSite(shipmentManagement Smanagement)
+    public static void addSite()
     {
         boolean check = true;
         String siteName = null;
@@ -386,9 +388,8 @@ public class UI {
     /**
      * this function gets input from the user about a site to delete
      * and delete it from the system
-     * @param Smanagement - the shipmentManagement object which the site is deleted from
      */
-    public static void deleteSite(shipmentManagement Smanagement)
+    public static void deleteSite()
     {
         boolean check1 = true;
         String siteToDelete;
@@ -409,10 +410,9 @@ public class UI {
     /**
      * this function gets input from the user about a new truck he wants to add
      * and adds the new truck to the system
-     * @param Smanagement - the shipmentManagement object which the truck is added too
      */
 
-    public static void updateSite(shipmentManagement Smanagement)
+    public static void updateSite()
     {
         System.out.println("Please enter the name of the site you would like to update:");
         String siteName = scanner.nextLine();
@@ -444,7 +444,7 @@ public class UI {
         else
             System.out.println("Site does not exist in the system");
     }
-    public static void addTruck(shipmentManagement Smanagement)
+    public static void addTruck()
     {
         boolean check2 = true;
         String truckNumber = null;
@@ -498,9 +498,8 @@ public class UI {
     /**
      * this function gets input from the user about a truck to delete
      * and delete the truck from the system
-     * @param Smanagement - the shipmentManagement object which the truck is deleted from
      */
-    public static void deleteTruck(shipmentManagement Smanagement)
+    public static void deleteTruck()
     {
         boolean check2 = true;
         String truckNumber;
@@ -521,9 +520,8 @@ public class UI {
     /**
      * this function gets input from the user about a new Driver he wants to add
      * and adds the new driver to the system
-     * @param Smanagement - the shipmentManagement object which the driver is added too
      */
-//    public static void addDriver(shipmentManagement Smanagement)
+//    public static void addDriver()
 //    {
 //        boolean check3 = true, check31 =true;
 //        String driverID=null;
@@ -595,9 +593,8 @@ public class UI {
     /**
      * this function gets input from the user about a driver to delete
      * and delete the driver from the system
-     * @param Smanagement - the shipmentManagement object which the driver is deleted from
      */
-    public static void deleteDriver(shipmentManagement Smanagement)
+    public static void deleteDriver()
     {
         boolean check32 = true;
         String driversIDToRemove;
@@ -619,9 +616,8 @@ public class UI {
     /**
      * this function gets input from the user about a new order he wants to add
      * and adds the new order to the system
-     * @param Smanagement - the shipmentManagement object which the order is added too
      */
-    public static void addOrder(shipmentManagement Smanagement)
+    public static void addOrder()
     {
         boolean check4 =true,check41=true,check40=true, check401;
         String sourceSite;
@@ -713,9 +709,8 @@ public class UI {
     /**
      * this function gets input from the user about a new shipment he wants to add
      * and adds the new shipment to the system
-     * @param Smanagement - the shipmentManagement object which the shipment is added too
      */
-    public static void addShipment(shipmentManagement Smanagement)
+    public static void addShipment()
     {
         boolean check5 = true,check50 = true, check51 = true;
         int day;
@@ -772,7 +767,7 @@ public class UI {
             }
         }
     }
-    public static void deleteShipment(shipmentManagement Smanagement)
+    public static void deleteShipment()
     {
         boolean check52=true;
         while (check52)
@@ -789,4 +784,100 @@ public class UI {
             }
         }
     }
+
+    public static void executeShipment(){
+        if (!Smanagement.checkAvailableShipment()){
+            System.out.println("There are no available shipments");
+            return;
+        }
+        //time formatter
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime time = null;
+        while (time == null) {
+            System.out.println("Enter the time (in HH:MM format): ");
+            String timeStr = scanner.nextLine();
+
+            try {
+                time = LocalTime.parse(timeStr, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid time format. Please enter time in HH:MM format.");
+            }
+        }
+        //reading the truck weight from the user and checking if it is valid
+        int currWeight;
+        System.out.println("you have arrived at your destination: ");
+        while (true){
+            try{
+                System.out.println("Please enter the weight of the truck with the items (in KG): ");
+                currWeight = Integer.parseInt(scanner.nextLine());
+                break;
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("Please enter an actual number");
+            }
+        }
+        while (Smanagement.checkTruckWeight(currWeight)){
+            String input = "0";
+            while (!input.equals("1") && !input.equals("2") && !input.equals("3")) {
+                System.out.println("The truck exceeded the max carry weight, in order to proceed with the shipment\n" +
+                        "please choose one of the options: ");
+                System.out.println("1. Take out some of the items");
+                System.out.println("2. Switch to a bigger truck");
+                System.out.println("3. remove the last site from this shipment");
+                input = scanner.nextLine();
+                switch (input) {
+                    case "1" -> {
+                        Smanagement.itemsToDelete();
+//                            System.out.println("There is no items left in the shipment, so the shipment is canceled");
+//                            shipment.setShipmentStatus(Status.Canceled);
+//                            return;
+                        //shipment.setShipmentStatus(Status.ItemsChange);
+                    }
+                    case "2" -> {
+                        Smanagement.changeTruck();
+//                        if (!Objects.equals(currTruck.getTruckNumber(), shipment.getTruckNumber()))
+//                            shipment.setShipmentStatus(Status.TruckExchange);
+//                        else {
+//                            System.out.println("There isn't a bigger truck available at the moment");
+//                        }
+//                        currTruck = searchTruckByID(shipment.getTruckNumber());
+                    }
+                    case "3" -> {
+                        if (Smanagement.removeLastSiteFromShipment())
+                            break;
+                        System.out.println("There is only one site in the shipment");
+                        //shipment.setShipmentStatus(Status.SiteChange);
+                    }
+                }
+            }
+            while (true){
+                try{
+                    int save = currWeight;
+                    System.out.println("Please enter the weight of the truck with the items (in KG): ");
+                    currWeight = Integer.parseInt(scanner.nextLine());
+                    if (save > currWeight) {
+                        System.out.println("Please input the lower number then the last weight");
+                        currWeight = save;
+                        continue;
+                    }
+                    break;
+                }
+                catch (NumberFormatException e)
+                {
+                    System.out.println("Please enter an actual number");
+                }
+            }
+        }
+
+    }
+
 }
+
+
+
+
+
+
+
+
