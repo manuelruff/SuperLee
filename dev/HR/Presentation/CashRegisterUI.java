@@ -1,5 +1,6 @@
 package HR.Presentation;
 
+
 import HR.Bussiness.CashRegisterController;
 
 import java.util.Scanner;
@@ -58,7 +59,7 @@ public class CashRegisterUI {
                         }
                     }
                     //if we get here we have numbers for the date, well send it and see what we get back
-                    CashRegisterController.PrintCancellation(Name,Year,Month,Day);
+                    cashRegisterController.PrintCancellation(Name,Year,Month,Day);
                     //after we did what we want we stop
                     choice=4;
                     break;
@@ -66,7 +67,7 @@ public class CashRegisterUI {
                     String ID = UIGeneralFnctions.AskForWorkerID();
                     boolean isShiftManager = false;
                     while(!isShiftManager){
-                        if(!CashRegisterController.CheckWorkerCanCancel(ID)){
+                        if(!cashRegisterController.CheckWorkerCanCancel(ID)){
                             System.out.println("access denied - this action is for Domain.Shift Manager only!");
                             continue;
                         }
@@ -74,7 +75,7 @@ public class CashRegisterUI {
                     }
                     System.out.println("please enter your password: ");
                     String password = scanner.nextLine();  // Read user input
-                    if(!CashRegisterController.CheckWorkerPassword(ID,password)){
+                    if(!cashRegisterController.CheckWorkerPassword(ID,password)){
                         System.out.println("password is incorrect");
                         choice = 4;
                         break;
@@ -85,7 +86,7 @@ public class CashRegisterUI {
                     String item = scanner.nextLine();  // Read user input
                     System.out.println("please enter the amount of the item which you want to cancel: ");
                     double amount = UIGeneralFnctions.AskForDoubleNumber();
-                    CashRegisterController.AddCancellations(Name,item,amount,ID);
+                    cashRegisterController.AddCancellations(Name,item,amount,ID);
                     //after we did what we want we stop
                     choice=4;
                     break;

@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class UIGeneralFnctions {
     private static Scanner scanner;
+    private static ManagerController managerController = ManagerController.getInstance();
 
     public static void setScanner(Scanner scanner) {
         UIGeneralFnctions.scanner = scanner;
@@ -47,7 +48,7 @@ public class UIGeneralFnctions {
             System.out.println("please enter the branch you want to work on: ");
             //in the beginning there will be a few options, he is supposed to know them
             BranchName = scanner.nextLine();
-            BranchCheck= ManagerController.CheckBranchExist(BranchName);
+            BranchCheck= managerController.CheckBranchExist(BranchName);
             if (!BranchCheck){
                 System.out.println("this branch doesn't exists, try again!");
                 continue;
