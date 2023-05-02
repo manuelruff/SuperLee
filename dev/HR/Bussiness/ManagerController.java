@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Random;
 
 /**
  * the class ManagerController hold all the functions which HR manager can do
@@ -19,6 +20,8 @@ public class ManagerController{
     private static Map<String, Worker> Workers;
     private static Map<String, Driver> Drivers;
     private static String ManagerPassword;
+    //to chose workers for the shift randomly
+    private static Random rand;
     protected static Scanner scanner=new Scanner(System.in);
     private ManagerController(){
         ManagerPasswordMapper.getInstance();
@@ -26,6 +29,7 @@ public class ManagerController{
         Superim = SuperMapper.getSuperMap();
         Workers= WorkerMapper.getWorkerMap();
         Drivers=WorkerMapper.getDriverMap();
+        rand = new Random();
     }
     public static ManagerController getInstance(){
         return instance;
@@ -53,13 +57,125 @@ public class ManagerController{
         Super add=new Super(siteName,siteAddress,sitePhoneNumber,contactName, Zone.values()[zoneSuper]);
         Superim.put(add.getName(), add);
     }
+
+    //creating weekly functions
+    public static void StartWeekly(String BranchName) {
+        //load all the workers we need from the db
+        DataController.loadAllWorkersFromSuper(BranchName);
+        //creat a weekly and put him in the super
+        Weekly week = new Weekly();
+        Superim.get(BranchName).setWeekly(week);
+    }
+    public static String AddShift(String BranchName,int day_int,int shiftTime_int,int [] workersNum){
+        //we get the object of the super we wanna add a weekly to
+        Super curr = Superim.get(BranchName);
+        //get the day of the shift
+        Days day = Days.values()[day_int];
+        //get the time of the shift
+        ShiftTime time = ShiftTime.values()[shiftTime_int];
+        //get times of start and end for shift
+        double start;
+        double end;
+        if (time == ShiftTime.Morning) {
+            start = Superim.get(BranchName).getStart_morning(day);
+            end = Superim.get(BranchName).getEnd_morning(day);
+        } else {
+            start = Superim.get(BranchName).getStart_evening(day);
+            end = Superim.get(BranchName).getEnd_evening(day);
+        }
+        //list of availabale shift managers for now
+        List<String> CanWorkList= GetAvailableEmployee(day, Jobs.ShiftManager, time, curr.GetWorkersIDS(), curr.getName());
+        if (CanWorkList.size() == 0) {
+            return "it looks like you are out of managers or you dont have enough, go assing some new ones so you can make the shifts.";
+        }
+        //we will choose one of the shift managers to the shift
+        int chosen=rand.nextInt(CanWorkList.size());
+        //create the shift with the shift manager
+        Shift CurrShift = new Shift(curr.GetWeekShifts().getStartDate().plusDays(day.ordinal()), time, start, end, Workers.get(CanWorkList.get(chosen)));
+        //update the menager shift
+        Workers.get(CanWorkList.get(chosen)).AddShift(day);
+        Workers.get(CanWorkList.get(chosen)).AddShiftWorked();
+        //if we got here we can go on with choosing the rest of the workers
+        //start the list from the beginning we don't need the manager list
+        CanWorkList.clear();
+        int indx_job=0;
+        //for each job we chose the workers
+        for (Jobs job : Jobs.values()) {
+            //we dont need to choose shift manager again or more than one
+            if (job == Jobs.ShiftManager) {
+                continue;
+            }
+            //we will get the available Workers
+            CanWorkList = GetAvailableEmployee(day, job, time, curr.GetWorkersIDS(), curr.getName());
+            if(CanWorkList.size()<workersNum[indx_job]){
+                return "it looks like you are out of " + job + " or you dont have enough, go assing some new ones so you can make the shifts.";
+            }
+            //we will choose the workers
+            for (int i = 0; i < workersNum[indx_job]; i++) {
+                //get random worker
+                chosen = rand.nextInt(CanWorkList.size());
+                //add to the shift
+                CurrShift.AddWorker(job, Workers.get(CanWorkList.get(chosen)));
+                //now i need to update the worker propertyly
+                Workers.get(CanWorkList.get(chosen)).AddShift(day);
+                Workers.get(CanWorkList.get(chosen)).AddShiftWorked();
+                //remove from the available Workers
+                CanWorkList.remove(chosen);
+            }
+            //we finished adding all workers of a job type
+        }
+        //we add the shift to the weekly
+        curr.GetWeekShifts().AddShift(CurrShift);
+        return "success";
+    }
+    //give back string representing day and shift for the ui by numbers
+    public static String getDayAndShift(int day_int,int shiftTime_int){
+        //get the day of the shift
+        Days day = Days.values()[day_int];
+        //get the time of the shift
+        ShiftTime time = ShiftTime.values()[shiftTime_int];
+        return ("you are working on: " + day + " at the " + time);
+    }
+    public static void emptyShift(int day_int,int shiftTime_int,String BranchName){
+        //we get the object of the super we wanna add a weekly to
+        Super curr = Superim.get(BranchName);
+        //get the day of the shift
+        Days day = Days.values()[day_int];
+        //get the time of the shift
+        ShiftTime time = ShiftTime.values()[shiftTime_int];
+        //get times of start and end for shift
+        double start;
+        double end;
+        if (time == ShiftTime.Morning) {
+            start = Superim.get(BranchName).getStart_morning(day);
+            end = Superim.get(BranchName).getEnd_morning(day);
+        } else {
+            start = Superim.get(BranchName).getStart_evening(day);
+            end = Superim.get(BranchName).getEnd_evening(day);
+        }
+        Shift CurrShift = new Shift(curr.GetWeekShifts().getStartDate().plusDays(day.ordinal()), time, start, end);
+        curr.GetWeekShifts().AddShift(CurrShift);
+    }
+    //tells the super that the weekly got canceled
+    public static void CancelWeekly(String BranchName) {
+        //todo  update the workers in the shift that they dont have it now
+        Weekly week=Superim.get(BranchName).GetWeekShifts();
+        //for each shift we tell it to empty and update thw workers inside
+        for(Shift shift: week.getShiftList()){
+            shift.clearWorkers();
+        }
+        //we return it to null
+        Superim.get(BranchName).setWeekly(null);
+    }
     /**
      * the function allows the HR manager to create new weekly
      * @param Name - the name of the branch he wants to create a new weekly
      */
+    /*
     public static void CreateWeekly(String Name) {
         //we first need to load all the workers for this super from the db
         DataController.loadAllWorkersFromSuper(Name);
+
         //we get the object of the super we wanna add a weekly to
         Super curr = Superim.get(Name);
         List<String> CanWorkList;
@@ -69,15 +185,7 @@ public class ManagerController{
             ShiftTime time = ShiftTime.Morning;
             for (int i = 0; i < 2; i++) {
                 //get the time of the shift
-                double start;
-                double end;
-                if (time == ShiftTime.Morning) {
-                    start = Superim.get(Name).getStart_morning(day);
-                    end = Superim.get(Name).getEnd_morning(day);
-                } else {
-                    start = Superim.get(Name).getStart_evening(day);
-                    end = Superim.get(Name).getEnd_evening(day);
-                }
+
                 System.out.println("we are working on: " + day + " at the " + time + " shift");
                 //first we need to choose the manager to start the shift
                 System.out.println("first choose the shift manager: ");
@@ -153,8 +261,11 @@ public class ManagerController{
             }
         }
         //add the weekly to the super
-        curr.AddWeekly(week);
+        curr.setWeekly(week);
     }
+
+     */
+
     /**
      * the function allows the HR manager to change the shift time of specific branch
      * @param Name - the name of the branch
@@ -221,12 +332,10 @@ public class ManagerController{
         for (Map.Entry<String, Super> entry : Superim.entrySet()) {
             if (entry.getKey().equals(branchName)) {
                 Superim.get(entry.getKey()).AddWorker(newEmployee);
-                System.out.println(newEmployee.getID() + " added successfully to: " + branchName);
             }
         }
         Workers.put(newEmployee.getID(), newEmployee);
     }
-    //todo check of its working
     public static void AddNewWorker(String ID,String Name,  int Bank,String Contract,
                                     double Wage , String Password,
                                     char license, Training ability) {
@@ -240,9 +349,10 @@ public class ManagerController{
         // check if the branch name is existed in the superim list
         for (Map.Entry<String, Super> entry : Superim.entrySet()) {
             // remove if from every branch he works at
-            if (Superim.get(entry.getKey()).RemoveWorker(ID)) {
-                System.out.println("worker removed successfully from " + Superim.get(entry.getKey()).getName());
-            }
+            Superim.get(entry.getKey()).RemoveWorker(ID);
+//            if (Superim.get(entry.getKey()).RemoveWorker(ID)) {
+//                System.out.println("worker removed successfully from " + Superim.get(entry.getKey()).getName());
+//            }
         }
         // remove it from the map of all Workers
         Workers.remove(ID);
@@ -318,15 +428,17 @@ public class ManagerController{
     }
 
     // add worker to a shift int a branch
-    public static void AddToDay(String ID, String branch, int shift_op, int day) {
+    public static String AddToDay2(String branch, int shift_op, int day,int jobChoice){
         //we first need to load all the workers for this super from the db
         DataController.loadAllWorkersFromSuper(branch);
         double s = 0;
         double e = 0;
+        Jobs job = Jobs.values()[jobChoice-1];
         //savres it to use in day
         int days_day=day;
         day = day * 2;
-        if (shift_op == 1) {
+        ShiftTime st = ShiftTime.values()[shift_op-1];
+        if (st == ShiftTime.Morning) {
             s = Superim.get(branch).getStart_morning(Days.values()[days_day]);
             e = Superim.get(branch).getEnd_morning(Days.values()[days_day]);
         } else {
@@ -334,49 +446,16 @@ public class ManagerController{
             e = Superim.get(branch).getEnd_evening(Days.values()[days_day]);
             day = day + 1;
         }
-        if (!Workers.get(ID).IsFree(Days.values()[days_day], s, e)) {
-            System.out.println("this worker can't work at this shift");
-            return;
-        } else {
-            //check if the shift  is empty
-            if (Superim.get(branch).GetWeekShifts().GetShift(day).IsEmptyShift()){
-                if(!Workers.get(ID).CanDoJob(Jobs.ShiftManager)){
-                    System.out.println("this shift is empty you need to add a shift manager first");
-                }
-                else{
-                    //if we are here he added a manager to an empty shift
-                    //whem were here we have a good number for employee so we add him
-                    Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.ShiftManager, Workers.get(ID));
-                    // add the shift to the Workers shifts
-                    Workers.get(ID).AddShift(Days.values()[days_day]);
-                    Workers.get(ID).AddShiftWorked();
-                }
-            }
-            else {
-                //print what role this worker can do and he decides what he wants him to do
-                //whem were here we have a good number for employee so we add him
-
-                //add all the jobs he can do
-                List<Jobs> job_list=new ArrayList<>();
-                for(Jobs job:Jobs.values()){
-                    if(Workers.get(ID).CanDoJob(job)){
-                        job_list.add(job);
-                    }
-                }
-                //show the manager what he can do so he will choose
-                System.out.println("please choose the role you want to put him in");
-                int i=1;
-                for(Jobs job:job_list){
-                    System.out.println(i+". "+job);
-                    i++;
-                }
-                int num=AskForNumber(1,job_list.size());
-                Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(job_list.get(num-1), Workers.get(ID));
-                // add the shift to the Workers shifts
-                Workers.get(ID).AddShift(Days.values()[days_day]);
-                Workers.get(ID).AddShiftWorked();
-            }
-        }
+        // get all the available employees from the asked branch
+        List<String> availableEmployees= GetAvailableEmployee(Days.values()[days_day],job,st, Superim.get(branch).GetWorkersIDS(),branch);
+        // add a worker to the shift
+        Random rand = new Random();
+        String randomWorker = availableEmployees.get(rand.nextInt(availableEmployees.size()));
+        Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(job, Workers.get(randomWorker));
+        // add the shift to the Workers shifts
+        Workers.get(randomWorker).AddShift(Days.values()[days_day]);
+        Workers.get(randomWorker).AddShiftWorked();
+        return randomWorker;
     }
     //prints current weekly shifts of a branch
     public static boolean PrintWeekly(String Name) {
@@ -389,6 +468,7 @@ public class ManagerController{
             return true;
         }
     }
+
     //print a shift from history of a branch by its date if exists
     public static void PrintWeeklyFromHist(String Name, int year, int month, int day) {
         Superim.get(Name).PrintWeekFromHistByDate(year, month, day);
@@ -409,24 +489,7 @@ public class ManagerController{
         DataController.getSuper(branchName);
         return Superim.get(branchName) != null;
     }
-    public static int AskForNumber(int s, int e) {
-        int num = 0;
-        while (true) {
-            String input = scanner.nextLine();
-            try {
-                num = Integer.parseInt(input);
-                if (num <= e && num >= s) {
-                    return num;
-                } else {
-                    System.out.println("your input is not in range of: " + s + " - " + e);
-                }
-            }
-            //if he entered something not suitable we will repeat
-            catch (Exception e1) {
-                System.out.println("invalid input, please try again");
-            }
-        }
-    }
+
     //get day job and a list of Workers and checks if the worker can do the work in the shift and these conditions
     public static List<String> GetAvailableEmployee(Days day, Jobs job, ShiftTime time, List<String> WorkersID, String SuperName) {
         List<String> ret = new ArrayList<>();
@@ -459,6 +522,14 @@ public class ManagerController{
         for (String ID : Workers.keySet()) {
             Workers.get(ID).ResetShiftsAmount();
         }
+    }
+    // the function checks if speific shift is empty
+    public static boolean IsShiftEmpty(String branch, int shift_op ,int day) {
+        //savres it to use in day
+        day = day * 2;
+        if (shift_op == 2)
+            day = day+1;
+        return Superim.get(branch).GetWeekShifts().GetShift(day).IsEmptyShift();
     }
     /**
      * it will save the data in the database and close the connection

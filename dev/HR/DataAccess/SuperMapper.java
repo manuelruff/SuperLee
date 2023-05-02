@@ -64,7 +64,7 @@ public class SuperMapper {
                     day=StartDate.getDayOfWeek();
                 }
                 //read the weekly
-                SuperMap.get(branchName).AddWeekly(WeeklyMapper.getWeekly(branchName,StartDate.toString()));
+                SuperMap.get(branchName).setWeekly(WeeklyMapper.getWeekly(branchName,StartDate.toString()));
                 //read the workers
                 ReadWorkers(branchName);
             }

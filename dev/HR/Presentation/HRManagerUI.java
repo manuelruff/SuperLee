@@ -76,7 +76,89 @@ public class HRManagerUI {
                                     break;
                                 }
                                 //create the weekly plan
-                                ManagerController.CreateWeekly(Name);
+                                //ManagerController.CreateWeekly(Name);
+
+
+                                //create the weekly plan for the branch
+                                //saves false for now and change to true when we successfully created weekly
+                                boolean isCreatedWeekly=false;
+                                //if he coulnd make a shift and he wants to try again the whole weekly later we change this to
+                                //true and it will exit all the loops to get to the part of deleting the shift and cancel changes
+                                boolean needExit=false;
+                                //start creating the weekly
+                                ManagerController.StartWeekly(Name);
+                                //for each day
+                                for(int i=0;i<7;i++){
+                                    //for each shift
+                                    for (int j=0;j<2;j++){
+                                        System.out.println(ManagerController.getDayAndShift(i,j));
+                                        System.out.println("if you dont want to create this shift enter 0 else 1" );
+                                        int createShift=UIGeneralFnctions.AskForNumber(0,1);
+                                        if(createShift==0){
+                                            //if he dont want to create the shift we change the boolean to true and we exit the loop
+                                            //function to add to the super an empty shift
+                                            ManagerController.emptyShift(i,j,Name);
+                                            continue;
+                                        }
+                                        //saves if he cant create the shift and he want to try again
+                                        boolean isCreatedShift=false;
+                                         while(!isCreatedShift){
+                                            //check how many of each worker he wants
+                                            int [] jobs=new int[6];
+                                            //for each job we ask how much he wants
+                                            int idx_job=0;
+                                            System.out.println("how many Cashiers you want?");
+                                            jobs[idx_job]=AskForIntNumber();
+                                            idx_job++;
+                                            System.out.println("how many StoreKeepers you want?");
+                                            jobs[idx_job]=AskForIntNumber();
+                                            idx_job++;
+                                            System.out.println("how many General Employees you want?");
+                                            jobs[idx_job]=AskForIntNumber();
+                                            idx_job++;
+                                            System.out.println("how many Guards you want?");
+                                            jobs[idx_job]=AskForIntNumber();
+                                            idx_job++;
+                                            System.out.println("how many Cleaners you want?");
+                                            jobs[idx_job]=AskForIntNumber();
+                                            idx_job++;
+                                            System.out.println("how many Ushers you want?");
+                                            jobs[idx_job]=AskForIntNumber();
+                                            String error=ManagerController.AddShift(Name,i,j,jobs);
+                                            //if we get error message we print it
+                                            if(error!="success"){
+                                                System.out.println(error);
+                                                System.out.println("do you want to try this shift again or cancel the week and create later? \n" +
+                                                        "1. try again \n" +
+                                                        "2. later");
+                                                int later=UIGeneralFnctions.AskForNumber(1,2);
+                                                if(later==2){
+                                                    needExit=true;
+                                                    break;
+                                                }
+                                            }
+                                            else{
+                                                //we created the shift successfully
+                                                isCreatedShift=true;
+                                            }
+                                        }
+                                        if(needExit){
+                                            break;
+                                        }
+                                    }
+                                    if(needExit){
+                                        //we change this value so it will be deleted from memory
+                                        isCreatedWeekly=true;
+                                        break;
+                                    }
+                                }
+                                if(isCreatedWeekly){
+                                    //todo we need to add here the changes in each worker who was in that shift
+                                    ManagerController.CancelWeekly(Name);
+                                }
+                                else{
+                                    System.out.println("weekly was created successfully!");
+                                }
                                 break;
                             case 2:
                                 if(!ManagerController.HasWeekly(Name)){
@@ -110,13 +192,30 @@ public class HRManagerUI {
                                         }
                                         break;
                                     case 2:
-                                        ID = UIGeneralFnctions.AskForWorkerID();
+                                        // first ask for wanted job to add to the shift
+                                        System.out.println("please enter the job you want to add to the shift: \n" +
+                                                "1. ShiftManager \n" +
+                                                "2. Cashier \n" +
+                                                "3. StoreKeeper \n" +
+                                                "4. GeneralEmp \n" +
+                                                "5. Guard \n" +
+                                                "6. Cleaner \n" +
+                                                "7. Usher \n");
+                                        int job_choice = UIGeneralFnctions.AskForNumber(1,7);
                                         System.out.println("""
                                                 please enter the time of the shift which you want to add the worker:\s
                                                 1. morning\s
                                                 2. Evening""");
                                         int shift_op = UIGeneralFnctions.AskForNumber(1,2);
-                                        ManagerController.AddToDay(ID,Name,shift_op,day_choice-1);
+                                        // if the shift is empty and the worker we want to add isn't shift manager - it's not possible
+                                        if(ManagerController.IsShiftEmpty(Name,shift_op,day_choice-1) && job_choice !=1){
+                                            System.out.println("this shift is empty, you need to add shift manager first");
+                                            ActionChoice = 2;
+                                            break;
+                                        }
+                                        // if the shift isn't empty, or we want to add shift manager - we can add a worker
+                                        String workerID = ManagerController.AddToDay2(Name,shift_op,day_choice-1,job_choice-1);
+                                        System.out.println(workerID + " has been added to the shift");
                                         break;
                                     case 3:
                                         break;
@@ -433,6 +532,7 @@ public class HRManagerUI {
         //we ask for a branch
         String BranchName= UIGeneralFnctions.AskForBranch();
         ManagerController.AddNewWorker(input_newID,input_newName,bankNum,input_newContract,wage, Jobs.values()[role_choice-1],generic_Password,BranchName);
+        System.out.println(input_newID + " added successfully to: " + BranchName);
     }
 
     public static void CreateNewSuper(){

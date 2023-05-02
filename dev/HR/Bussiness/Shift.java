@@ -111,6 +111,16 @@ public class Shift {
         return end;
     }
 
+
+    //if the weekly is canceled in the middle we empty the shift and update each worker
+    public void clearWorkers(){
+        Days day=Days.valueOf(this.date.getDayOfWeek().toString());
+        for(Jobs job:WorkerList.keySet()){
+            for(Worker worker: WorkerList.get(job)){
+                worker.RemoveShift(day);
+            }
+        }
+    }
     public void PrintMe(){
         //if its an empty shift we just print that its empty
         if(this.IsEmptyShift()){
