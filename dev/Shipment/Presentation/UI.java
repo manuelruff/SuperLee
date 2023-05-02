@@ -209,7 +209,7 @@ public class UI {
                                 Smanagement.printAvailableShipments();
                                 break;
                             case 5:
-                                Smanagement.executeShipment();
+                                executeShipment();
                                 break;
                             case 6:
                                 break;
