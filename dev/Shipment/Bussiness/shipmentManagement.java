@@ -11,15 +11,6 @@ import java.util.*;
 public class shipmentManagement {
     private static Scanner scanner=new Scanner(System.in);
 
-    private static shipmentManagement instance = null;
-
-    public static shipmentManagement getInstance() {
-        if (instance == null) {
-            instance = new shipmentManagement();
-        }
-        return instance;
-    }
-
     private final Map<String, List<Order>> vendorMap;
     private final List<Driver> drivers;
     private final List<Truck> trucks;
@@ -29,6 +20,7 @@ public class shipmentManagement {
 
     private List<Shipment> availableShipments;
 
+    private static shipmentManagement instance = null;
 
     private shipmentManagement() {
         vendorMap = new HashMap<>();
@@ -37,6 +29,12 @@ public class shipmentManagement {
         sites = new ArrayList<>();
         shipments = new ArrayList<>();
         availableShipments = new ArrayList<>();
+    }
+    public static shipmentManagement getInstance() {
+        if (instance == null) {
+            instance = new shipmentManagement();
+        }
+        return instance;
     }
 
     /****************************** Drivers related Methods ******************************/
