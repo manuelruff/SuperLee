@@ -1,11 +1,19 @@
 package HR.Bussiness;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 public class Driver extends AWorker{
     private char license;
     private Training ability;
 
     public Driver(String ID,String Name,  int Bank,String Contract, double Wage , String Password, char license, Training ability) {
         super(ID,Name,Bank,Contract,Wage,Password);
+        this.license = license;
+        this.ability = ability;
+    }
+    public Driver(String ID, String Name, int Bank, String Contract, double Wage, String Password, LocalDate startDate, double bonus, int shiftworked, char license, Training ability) {
+        super(ID,Name, Bank, Contract, Wage, Password,startDate,bonus,shiftworked);
         this.license = license;
         this.ability = ability;
     }

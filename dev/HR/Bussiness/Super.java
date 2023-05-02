@@ -1,13 +1,11 @@
 package HR.Bussiness;
-import Shipment.Bussiness.Site;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Super extends Site {
+public class Super extends ASite {
     //map<id, worker>
     private Map<String,Worker> WorkerList;
     //this week working sheet
@@ -23,8 +21,6 @@ public class Super extends Site {
     private Map<Days,Double> end_morning;
     private Map<Days,Double> start_evening;
     private Map<Days,Double> end_evening;
-
-
     private Zone zone;
 
     //builder for super

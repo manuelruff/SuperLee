@@ -254,8 +254,8 @@ public class HRManagerUI {
                         choice3=UIGeneralFnctions.AskForNumber(1,9);
                         switch (choice3) {
                             case 1:
-                                String BranchName= UIGeneralFnctions.AskForBranch();
-                                ManagerController.AddNewWorker(CreateNewWorker(),BranchName);
+                                CreateNewWorker();
+                                System.out.println("worker added to the system");
                                 break;
                             case 2:
                                 ID = UIGeneralFnctions.AskForWorkerID();
@@ -338,8 +338,8 @@ public class HRManagerUI {
             }
         }
     }
-
-    public static Worker CreateNewWorker(){
+    //todo check of its working, change for all the ui to not know the enums so they send ints
+    public static void CreateNewWorker(){
         boolean new_id_flag = false;
         String input_newID = "";
         // as long as the id is not new - keep asking the manager to add one
@@ -347,7 +347,7 @@ public class HRManagerUI {
             System.out.println("please enter the new worker's ID");
             // get the new id from the manager
             input_newID = scanner.nextLine();  // Read user input
-            if (managerController.isExistWorker(input_newID)) {
+            if (ManagerController.isExistWorker(input_newID)) {
                 System.out.println("this worker is already working at our markets");
             }
             else if(input_newID==""){
@@ -389,13 +389,50 @@ public class HRManagerUI {
         String input_newContract = scanner.nextLine();  // Read user input
         System.out.println("please enter the new worker's wage");
         int wage = AskForIntNumber();
-        int role_choice = 0;
-        System.out.println("please enter the new worker's first role: \n" +
-                "ShiftManager-1 , Cashier-2, StoreKeeper-3, GeneralEmp-4, Guard-5, Cleaner-6, Usher-7");
-        role_choice = UIGeneralFnctions.AskForNumber(1,7);
         // create a generic password for the new worker
         String generic_Password = "123";
-        return new Worker(input_newID,input_newName,bankNum,input_newContract,wage, Jobs.values()[role_choice-1],generic_Password);
+        int role_choice = 0;
+        System.out.println("please enter the new worker's first role: \n" +
+                "Driver-0 , " +
+                "ShiftManager-1 , Cashier-2, StoreKeeper-3, GeneralEmp-4, Guard-5, Cleaner-6, Usher-7");
+
+        role_choice = UIGeneralFnctions.AskForNumber(0,7);
+        //if its a driver
+        if(role_choice==0){
+            char driverLicence = '0';
+            boolean check3 = true;
+            while(check3)
+            {
+                System.out.println("""
+                        Please enter licence type :
+                        C - for trucks under 12 ton
+                        D - for above 12 ton""");
+                driverLicence = scanner.next().charAt(0);
+                if(driverLicence == 'C' || driverLicence == 'D' || driverLicence == 'c' || driverLicence == 'd')
+                    check3 = false;
+                else
+                    System.out.println("Invalid input");
+            }
+            int training = 4;
+            while(training < 0 || training > 2) {
+                System.out.println("""
+                            Please enter driver storage capabilities training:
+                            0 - Regular
+                            1 - Cooling
+                            2 - Freezer""");
+                training = UIGeneralFnctions.AskForNumber(0,2);
+                if(training < 0 || training > 2)
+                    System.out.println("Please enter a number between 0 - 2");
+            }
+            driverLicence = Character.toUpperCase(driverLicence);
+            ManagerController.AddNewWorker(input_newID,input_newName,
+                    bankNum,input_newContract,wage,generic_Password,driverLicence,Training.values()[training]);
+            //after adding the driver we go out
+            return;
+        }
+        //we ask for a branch
+        String BranchName= UIGeneralFnctions.AskForBranch();
+        ManagerController.AddNewWorker(input_newID,input_newName,bankNum,input_newContract,wage, Jobs.values()[role_choice-1],generic_Password,BranchName);
     }
 
     public static void CreateNewSuper(){

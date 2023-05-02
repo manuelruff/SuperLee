@@ -16,12 +16,13 @@ public class GeneralController {
     public static Map<String, Super> Superim;
     //all the Workers in the company
     public static Map<String, Worker> Workers;
-
+    public static Map<String, Driver> Drivers;
     private GeneralController() {
 //        Superim = StartData.getSuperim();
 //        Workers = StartData.getWorkers();
         Superim = SuperMapper.getSuperMap();
         Workers= WorkerMapper.getWorkerMap();
+        Drivers=WorkerMapper.getDriverMap();
      }
 
     public static GeneralController getInstance() {
@@ -99,7 +100,8 @@ public class GeneralController {
     public static boolean isExistWorker(String ID) {
         //we tell the database to load that id if exists before we check him
         DataController.getWorker(ID);
-        return Workers.get(ID) != null;
+        //check if the worker is not a worker or a driver
+        return Workers.get(ID) != null && Drivers.get(ID) == null;
     }
     //returns worker by id
     public static Worker GetWorkerByID(String ID) {
