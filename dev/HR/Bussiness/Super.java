@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Super extends ASite {
+public class Super {
     //map<id, worker>
     private Map<String,Worker> WorkerList;
     //this week working sheet
@@ -22,10 +22,18 @@ public class Super extends ASite {
     private Map<Days,Double> start_evening;
     private Map<Days,Double> end_evening;
     private Zone zone;
+    protected String address;
+    protected String phoneNumber;
+    protected String contactName;
 
+    protected String name;
     //builder for super
     public Super(String Name, String address, String phoneNumber, String contactName, Zone zone){
-        super(Name,address,phoneNumber,contactName);
+
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.contactName = contactName;
+        this.name = name;
         this.zone=zone;
         WorkerList=new HashMap<>();
         WeeklyHist=new ArrayList<>();
@@ -60,17 +68,34 @@ public class Super extends ASite {
     public Zone getZone() {
         return zone;
     }
-    @Override
-    public void printSite() {
-        System.out.println("Site Type: Branch");
-        System.out.println("Name: " + getName());
-        System.out.println("Address: " + getAddress());
-        System.out.println("Contact Name: " + getContactName());
-        System.out.println("Phone Number: " + getPhoneNumber());
-        System.out.println("Zone: " + zone + "\n");
+
+    public String getAddress() {
+        return address;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setName(String name){this.name = name;}
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+    public String getName() {
+        return name;
+    }
 
     public List<String> GetWorkersIDS(){
         List<String> Workers=new ArrayList<>();
