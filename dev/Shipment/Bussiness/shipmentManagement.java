@@ -697,6 +697,8 @@ public class shipmentManagement {
         Training trainToSearchBy = firstOrder.firstItemType();
         Site vendor = getSite(source);
 
+        //todo asking for a driver.
+
         // finding driver and truck
         while (driverForShipment == null || Objects.equals(truckNumberForShipment, "")) {
             driverForShipment = searchForDriver(trainToSearchBy, dayOfWeek, driverNameList);
