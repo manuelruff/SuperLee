@@ -8,15 +8,24 @@ public class Order {
     private String destination;
     private Zone zone;
     private List<Item> itemList;
-
+    private String source;
     private String ID;
     private  static int count;
-    public Order(String destination, Zone zone) {
+    public Order(String destination, Zone zone,String source) {
         count++;
         this.ID = String.valueOf(count);
         this.destination = destination;
         this.zone = zone;
+        this.source = source;
         itemList = new ArrayList<>();
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getDestination() {
@@ -25,6 +34,10 @@ public class Order {
 
     public void addListOfItems(List<Item> items){
         itemList = items;
+    }
+
+    public List<Item> getItemList() {
+        return itemList;
     }
 
     public Zone getZone() {
@@ -89,6 +102,10 @@ public class Order {
                 item.printItem();
             }
         }
+    }
+
+    public String getID() {
+        return ID;
     }
 }
 
