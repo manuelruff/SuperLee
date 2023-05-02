@@ -469,6 +469,13 @@ public class ManagerController{
         }
     }
 
+    // prints all the drivers shifts
+    public static void PrintDriversSchedule() {
+        for(Driver driver: Drivers.values()){
+            driver.PrintForShifts();
+        }
+    }
+
     //print a shift from history of a branch by its date if exists
     public static void PrintWeeklyFromHist(String Name, int year, int month, int day) {
         Superim.get(Name).PrintWeekFromHistByDate(year, month, day);
