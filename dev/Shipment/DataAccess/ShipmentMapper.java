@@ -42,5 +42,4 @@ public class ShipmentMapper {
 
     }
 
-    private static void
  }

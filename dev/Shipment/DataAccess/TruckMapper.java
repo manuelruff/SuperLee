@@ -19,6 +19,7 @@ public class TruckMapper {
     {
         return instance;
     }
+
     public static Truck getTruck(String ID)
     {
         if(truckMap.get(ID) == null){
