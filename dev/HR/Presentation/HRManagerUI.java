@@ -214,7 +214,7 @@ public class HRManagerUI {
                                             break;
                                         }
                                         // if the shift isn't empty, or we want to add shift manager - we can add a worker
-                                        String workerID = ManagerController.AddToDay2(Name,shift_op,day_choice-1,job_choice-1);
+                                        String workerID = ManagerController.AddToDay2(Name,shift_op-1,day_choice-1,job_choice-1);
                                         System.out.println(workerID + " has been added to the shift");
                                         break;
                                     case 3:

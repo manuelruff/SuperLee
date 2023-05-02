@@ -433,11 +433,11 @@ public class ManagerController{
         DataController.loadAllWorkersFromSuper(branch);
         double s = 0;
         double e = 0;
-        Jobs job = Jobs.values()[jobChoice-1];
+        Jobs job = Jobs.values()[jobChoice];
         //savres it to use in day
         int days_day=day;
         day = day * 2;
-        ShiftTime st = ShiftTime.values()[shift_op-1];
+        ShiftTime st = ShiftTime.values()[shift_op];
         if (st == ShiftTime.Morning) {
             s = Superim.get(branch).getStart_morning(Days.values()[days_day]);
             e = Superim.get(branch).getEnd_morning(Days.values()[days_day]);
@@ -455,7 +455,7 @@ public class ManagerController{
         // add the shift to the Workers shifts
         Workers.get(randomWorker).AddShift(Days.values()[days_day]);
         Workers.get(randomWorker).AddShiftWorked();
-        return randomWorker;
+        return Workers.get(randomWorker).getName();
     }
     //prints current weekly shifts of a branch
     public static boolean PrintWeekly(String Name) {
