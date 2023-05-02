@@ -18,9 +18,9 @@ public class ManagerPasswordMapper {
         Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("select * from ManagerPassword");
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Passwords WHERE Role = 'HRManager'");
             while (rs.next()) {
-                managerPassword = rs.getString("ManagerPass");
+                managerPassword = rs.getString("Pass");
             }
         }
         catch (SQLException e) {
@@ -50,7 +50,7 @@ public class ManagerPasswordMapper {
         Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
-            stmt.executeUpdate("update ManagerPassword set ManagerPass = '"+managerPassword+"'");
+            stmt.executeUpdate("UPDATE Passwords SET Pass = '"+managerPassword+"' WHERE Role = 'HRManager'");
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
