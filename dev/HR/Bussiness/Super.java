@@ -78,7 +78,7 @@ public class Super extends ASite {
         return Workers;
     }
 //add a weekly to the super
-    public void AddWeekly(Weekly week){
+    public void setWeekly(Weekly week){
         this.WeekShifts=week;
     }
     public boolean HasWeekly(){
