@@ -5,6 +5,7 @@ package HR.Bussiness;
 import HR.DataAccess.DataController;
 import HR.DataAccess.WorkerMapper;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,11 +69,18 @@ public class WorkerController  {
         //check if the worker is not a worker or a driver
         return Workers.get(ID) != null && Drivers.get(ID) == null;
     }
-    public static boolean ShowShiftFromBranch(String BranchName){
+    public static boolean ShowWorkerShifts(String BranchName){
         return ManagerController.PrintWeekly(BranchName);
+    }
+    public static boolean ShowDriverShifts(String ID){
+        return Drivers.get(ID).PrintDaysShift();
     }
     public static boolean CanDoJob(String ID, Jobs job) {
         return Workers.get(ID).CanDoJob(job);
+    }
+    // check if worker is a driver
+    public static boolean IsDriver(String ID){
+        return Drivers.get(ID)!=null;
     }
     
     

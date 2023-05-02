@@ -61,6 +61,15 @@ public class Driver extends AWorker{
         }
     }
 
+    public boolean PrintDaysShift() {
+        if(getWeeklyWorkingDays().isEmpty())
+            return false;
+        for (Days day : WeeklyWorkingDays){
+            System.out.println(day.toString());
+            return true;
+        }
+        return false;
+    }
     public void Printme() {
         System.out.println("Name: " + Name);
         System.out.println("ID: " + ID);
@@ -69,6 +78,21 @@ public class Driver extends AWorker{
         if (WeeklyWorkingDays.isEmpty())
             System.out.println(Name + " doesn't work this week");
         else{
+            int i;
+            StringBuilder print = new StringBuilder();
+            for (i=0; i < WeeklyWorkingDays.size() - 1; i++){
+                print.append(WeeklyWorkingDays.get(i).toString()).append(" , ");
+            }
+            print.append(WeeklyWorkingDays.get(i).toString());
+            System.out.println(Name + " days of work are:");
+            System.out.println(print);
+        }
+    }
+
+    public void PrintForShifts(){
+        if (!WeeklyWorkingDays.isEmpty()) {
+            System.out.println("Name: " + Name);
+            System.out.println("ID: " + ID);
             int i;
             StringBuilder print = new StringBuilder();
             for (i=0; i < WeeklyWorkingDays.size() - 1; i++){
