@@ -45,9 +45,7 @@ public class ServiceControler {
                     //we tell the driver he works in this day
                     driver.addNewDay(day1);
                     //add the driver shift to driver shifts for each branch
-                    for(String branch:branches){
-                        managerController.addDriverShift(day1,driver,branch);
-                    }
+
                     //we save the info of the driver so we can send it back
                     driverInfo.add(driver.getID());
                     driverInfo.add(driver.getName());

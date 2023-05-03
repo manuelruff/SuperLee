@@ -24,8 +24,6 @@ public class ManagerController{
     //all the Workers in the company
     private Map<String, Worker> Workers;
     private Map<String, Driver> Drivers;
-    //todo add this to the db, read and write for it
-    private Map<String,DriverShift> DriversShifts;
     private String ManagerPassword;
     //to chose workers for the shift randomly
     private static Random rand;
@@ -451,48 +449,6 @@ public class ManagerController{
             day = day+1;
         return Superim.get(branch).GetWeekShifts().GetShift(day).IsEmptyShift();
     }
-
-    //todo fix problems here
-    public void addDriverShift(Days day, Driver driver, String branch){
-        DriverShift dr= new DriverShift(day,driver,branch);
-        this.DriversShifts.put(dr.getBranch(),dr);
-    }
-    //todo check that this works!
-    //check if we have a delivery tomorrow to a branch and no store keeper there
-    //if we return false its not good and we need to assign a stoorekeeper or cancel the shipment
-    public boolean checkTomorrowOK(String branch){
-        //ill load each super that has a delivery tomorrow
-        //the day of tomorrow
-        Days day= Days.valueOf(LocalDate.now().plusDays(1).getDayOfWeek().toString());
-        for(DriverShift dr: DriversShifts.values()){
-            //if the shift is tomorrow
-            if(dr.getDay()==day){
-                if(!checkTomorrowStoreKeeperOK(dr.getBranch(),day)){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-    //todo check that this works!
-    //check for a branch of tomorrow he has store keeper when he has a driver
-    public boolean checkTomorrowStoreKeeperOK(String branch, Days day){
-        //ill take the info of the super
-        Super curr=superMapper.getsuper(branch);
-        for(Shift shift : curr.GetWeekShifts().getShiftList()){
-            if(Days.valueOf(shift.getDate().getDayOfWeek().toString())==day){
-                if(shift.getWorkerList().get(Jobs.StoreKeeper).size()==0){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-//todo when shift manager sign in w will use this function to decide if
-// we need him to put a store keeper for tomorrow, if we do we will open him a new ui or function ther
-// that will ask if he wants to cancel the shipment or assign a store keeper to each shift
-// we need a function that will check and assign one for each shift
-// if we add one will we tell about it to the hr manager?
 
 
     /**
