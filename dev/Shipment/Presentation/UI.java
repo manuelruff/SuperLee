@@ -9,7 +9,6 @@ import java.time.format.DateTimeParseException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import static HR.Presentation.UIGeneralFnctions.AskForIntNumber;
 
 public class UI {
     private static shipmentManagement Smanagement=shipmentManagement.getInstance();

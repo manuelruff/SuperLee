@@ -12,6 +12,7 @@ public class WorkerUI {
      */
     public static void WorkerLogIN(Scanner sc){
         scanner=sc;
+        UIGeneralFnctions.setScanner(sc);
         boolean flag = true;
         System.out.println("please log in: ");
         while (flag){

@@ -35,7 +35,7 @@ public class CashRegisterMapper {
             day1="0"+day1;
         if(month1.length()==1)
             month1="0"+month1;
-        String StringDate = year+"-"+month1+"-"+day1;
+        String StringDate = year1+"-"+month1+"-"+day1;
         if(AlreadyLoaded.get(BranchName)!=null && AlreadyLoaded.get(BranchName).contains(StringDate)){
             return;
         }

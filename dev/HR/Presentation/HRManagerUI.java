@@ -1,6 +1,5 @@
 package HR.Presentation;
 import HR.Bussiness.*;
-import HR.DataAccess.DataController;
 import java.util.Scanner;
 import static HR.Presentation.UIGeneralFnctions.AskForIntNumber;
 
@@ -13,6 +12,7 @@ public class HRManagerUI {
      */
     public static void ManagerLogIN(Scanner sc){
         scanner=sc;
+        UIGeneralFnctions.setScanner(sc);
         int choice=-1;
         System.out.println("please log in: ");
         while (choice!=3){

@@ -22,6 +22,7 @@ public class Super {
     private Map<Days,Double> start_evening;
     private Map<Days,Double> end_evening;
     private Zone zone;
+
     protected String address;
     protected String phoneNumber;
     protected String contactName;

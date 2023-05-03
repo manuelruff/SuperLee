@@ -1,9 +1,7 @@
 package HR.Bussiness;
-
 import HR.DataAccess.CashRegisterMapper;
 import HR.DataAccess.SuperMapper;
 import HR.DataAccess.WorkerMapper;
-
 import java.util.Map;
 
 //this will be singlton
@@ -12,7 +10,6 @@ public class CashRegisterController  {
     private Map<String, Super> Superim;
     //all the Workers in the company
     private Map<String, Worker> Workers;
-    private WorkerController workerController;
     private CashRegisterMapper cashRegisterMapper;
     private SuperMapper superMapper;
     private WorkerMapper workerMapper;
@@ -22,7 +19,6 @@ public class CashRegisterController  {
         workerMapper=WorkerMapper.getInstance();
         Superim = superMapper.getSuperMap();
         Workers= workerMapper.getWorkerMap();
-        workerController=WorkerController.getInstance();
     }
     public static CashRegisterController getInstance() {
         if(instance==null){
@@ -31,11 +27,11 @@ public class CashRegisterController  {
         return instance;
     }
     //add a cash cancellations
-    public void AddCancellations(String Name, String item, double amount, String ID) {
+    public void AddCancellations(String BranchName, String item, double amount, String ID) {
         //create the cancallation
         Cancellations cancel = new Cancellations(amount, item, ID, Workers.get(ID).getName());
         //add the cancellation to the super
-        Superim.get(Name).get_cash_register().AddCancalation(cancel);
+        Superim.get(BranchName).get_cash_register().AddCancalation(cancel);
     }
     //print Domain.Cancellations of a specific date in a branch
     public void PrintCancellation(String Name, int year, int month, int day) {
@@ -48,8 +44,8 @@ public class CashRegisterController  {
      * @param ID - the Id of the worker
      * @return true/false
      */
-    public boolean CheckWorkerCanCancel(String ID){return workerController.CanDoJob(ID,Jobs.ShiftManager);}
+    public boolean CheckWorkerCanCancel(String ID){return Workers.get(ID).CanDoJob(Jobs.ShiftManager);}
     public boolean CheckWorkerPassword(String ID, String password){
-        return workerController.IsTruePassword(ID, password);
+        return Workers.get(ID).CheckPassword(password);
     }
 }

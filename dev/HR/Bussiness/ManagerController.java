@@ -1,8 +1,6 @@
 package HR.Bussiness;
 import HR.DataAccess.*;
 import HR.DataAccess.DataController;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +13,6 @@ import java.util.Random;
 //this will be singlton
 public class ManagerController{
     private static ManagerController instance;
-    private WorkerController workerController;
     private DataController  dataController;
     private ManagerPasswordMapper managerPasswordMapper;
     private WorkerMapper workerMapper;
@@ -37,7 +34,6 @@ public class ManagerController{
         Drivers=workerMapper.getDriverMap();
         rand = new Random();
         dataController=DataController.getInstance();
-        workerController=WorkerController.getInstance();
     }
     public static ManagerController getInstance(){
         if (instance == null) {
@@ -400,7 +396,11 @@ public class ManagerController{
         dataController.loadAllWorkersFromSuper(SuperName);
         return Superim.get(SuperName).GetWorkersIDS().contains(ID);
     }
-    public boolean isExistWorker(String ID){return workerController.isExistWorker(ID);}
+    public boolean isExistWorker(String ID){
+        //we tell the database to load that id if exists before we check him
+        dataController.getWorker(ID);
+        return Workers.get(ID) != null && Drivers.get(ID) == null;
+    }
     public boolean CheckBranchExist(String branchName){ //we tell the database to load that id if exists before we check him
         dataController.getSuper(branchName);
         return Superim.get(branchName) != null;

@@ -1,7 +1,5 @@
 package HR.Bussiness;
 
-import HR.DataAccess.DataController;
-
 import java.util.*;
 
 public class CashRegister {

@@ -1,7 +1,6 @@
 import HR.Bussiness.ManagerController;
 import HR.Presentation.CashRegisterUI;
 import HR.Presentation.HRManagerUI;
-import HR.Presentation.UIGeneralFnctions;
 import HR.Presentation.WorkerUI;
 import Shipment.Presentation.UI;
 
@@ -19,7 +18,6 @@ public class GeneralUI {
     public static void StartMe(){
         managerController=ManagerController.getInstance();
         scanner =new Scanner(System.in);
-        UIGeneralFnctions.setScanner(scanner);
         //start the ui here
         int choice=-1;
         while (choice!=5){

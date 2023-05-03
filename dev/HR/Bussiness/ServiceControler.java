@@ -1,4 +1,5 @@
 package HR.Bussiness;
+import HR.DataAccess.DataController;
 import HR.DataAccess.SuperMapper;
 import HR.DataAccess.WorkerMapper;
 import java.util.*;
@@ -13,17 +14,14 @@ public class ServiceControler {
     private Map<String, Driver> Drivers;
     private WorkerMapper workerMapper;
     private SuperMapper superMapper;
+    private DataController dataController;
 
-    private ManagerController managerController;
-    private WorkerController workerController;
     private ServiceControler() {
         workerMapper=WorkerMapper.getInstance();
         superMapper=SuperMapper.getInstance();
         Superim = superMapper.getSuperMap();
         Workers= workerMapper.getWorkerMap();
         Drivers=workerMapper.getDriverMap();
-        managerController=ManagerController.getInstance();
-        workerController=WorkerController.getInstance();
     }
     public static ServiceControler getInstance() {
         if (instance == null) {

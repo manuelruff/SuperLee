@@ -28,7 +28,12 @@ public class ShipmentService {
     	return serviceControler.getDriver(ID);
     }
     public List<String> askForSite(String branchName){
+        //todo gtSite in service controler
         return null;
+    }
+    public boolean checkASite(String branchName){
+        //todo checkASite in service controler
+        return false;
     }
     public void askRemoveDayForDriver(String ID,int day){
     }

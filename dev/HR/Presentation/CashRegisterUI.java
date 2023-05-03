@@ -15,6 +15,7 @@ public class CashRegisterUI {
      */
     public static void CashWork(Scanner sc){
         scanner=sc;
+        UIGeneralFnctions.setScanner(sc);
         String Name= UIGeneralFnctions.AskForBranch();
         int choice=-1;
         while (choice!=3){
