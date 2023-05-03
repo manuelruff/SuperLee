@@ -7,28 +7,35 @@ import java.util.Map;
 
 //this will be singlton
 public class CashRegisterController  {
-    private static CashRegisterController instance=new CashRegisterController();;
-    private CashRegister cashRegister;
-    private static Map<String, Super> Superim;
+    private static CashRegisterController instance;
+    private Map<String, Super> Superim;
     //all the Workers in the company
-    private static Map<String, Worker> Workers;
+    private Map<String, Worker> Workers;
+    private WorkerController workerController;
+    private SuperMapper superMapper;
+    private WorkerMapper workerMapper;
     private CashRegisterController() {
-        cashRegister = new CashRegister();
-        Superim = SuperMapper.getSuperMap();
-        Workers= WorkerMapper.getWorkerMap();
+        superMapper=SuperMapper.getInstance();
+        workerMapper=WorkerMapper.getInstance();
+        Superim = superMapper.getSuperMap();
+        Workers= workerMapper.getWorkerMap();
+        workerController=WorkerController.getInstance();
     }
     public static CashRegisterController getInstance() {
+        if(instance==null){
+            instance=new CashRegisterController();
+        }
         return instance;
     }
     //add a cash cancellations
-    public static void AddCancellations(String Name, String item, double amount, String ID) {
+    public void AddCancellations(String Name, String item, double amount, String ID) {
         //create the cancallation
         Cancellations cancel = new Cancellations(amount, item, ID, Workers.get(ID).getName());
         //add the cancellation to the super
         Superim.get(Name).get_cash_register().AddCancalation(cancel);
     }
     //print Domain.Cancellations of a specific date in a branch
-    public static void PrintCancellation(String Name, int year, int month, int day) {
+    public void PrintCancellation(String Name, int year, int month, int day) {
         Superim.get(Name).get_cash_register().PrintCancellation(Name,year, month, day);
     }
 
@@ -37,8 +44,8 @@ public class CashRegisterController  {
      * @param ID - the Id of the worker
      * @return true/false
      */
-    public static boolean CheckWorkerCanCancel(String ID){return WorkerController.CanDoJob(ID,Jobs.ShiftManager);}
-    public static boolean CheckWorkerPassword(String ID, String password){
-        return WorkerController.IsTruePassword(ID, password);
+    public boolean CheckWorkerCanCancel(String ID){return workerController.CanDoJob(ID,Jobs.ShiftManager);}
+    public boolean CheckWorkerPassword(String ID, String password){
+        return workerController.IsTruePassword(ID, password);
     }
 }

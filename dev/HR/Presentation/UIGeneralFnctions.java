@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class UIGeneralFnctions {
     private static Scanner scanner;
     private static ManagerController managerController = ManagerController.getInstance();
-
+    private static WorkerController workerController = WorkerController.getInstance();
     public static void setScanner(Scanner scanner) {
         UIGeneralFnctions.scanner = scanner;
     }
@@ -27,7 +27,7 @@ public class UIGeneralFnctions {
             System.out.println("please enter the worker's ID: ");
             // get the new id from the manager
             ID = scanner.nextLine();
-            if(!WorkerController.isExistWorker(ID)){
+            if(!workerController.isExistWorker(ID)){
                 System.out.println("this worker is not working at our markets! try again");
                 continue;
             }

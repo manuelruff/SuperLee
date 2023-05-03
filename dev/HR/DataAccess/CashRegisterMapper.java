@@ -11,9 +11,9 @@ import java.util.Map;
 
 public class CashRegisterMapper {
     //<String,CashRegister>
-    private static CashRegisterMapper instance = new CashRegisterMapper();
-    private static Map<String, CashRegister> CashRegisterMap;
-    private static Map<String, List<String>>AlreadyLoaded;
+    private static CashRegisterMapper instance;
+    private Map<String, CashRegister> CashRegisterMap;
+    private Map<String, List<String>>AlreadyLoaded;
     private static Connection conn;
 
     private CashRegisterMapper(){
@@ -26,7 +26,7 @@ public class CashRegisterMapper {
             instance = new CashRegisterMapper();
         return instance;
     }
-    public static void ReadCancellations(String BranchName,int year,int month,int day){
+    public void ReadCancellations(String BranchName,int year,int month,int day){
         Connection conn = Connect.getConnection();
         String day1=Integer.toString(day);
         String month1=Integer.toString(month);
@@ -67,10 +67,10 @@ public class CashRegisterMapper {
         }
     }
     // create new Cash register to the branch if it's not exist already
-    public static void PutCashRegister(String BranchName, CashRegister cash){
+    public void PutCashRegister(String BranchName, CashRegister cash){
         CashRegisterMap.put(BranchName,cash);
     }
-    public static void WriteAllCancellations(){
+    public void WriteAllCancellations(){
         for(String name:CashRegisterMap.keySet()){
             for (Cancellations cancellations : CashRegisterMap.get(name).getAllCancellations()){
                 Connection conn = Connect.getConnection();

@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class GeneralUI {
     public static Scanner scanner;
+    public static ManagerController managerController;
     // all the info will come form there
     //the creation will create the beginning data
     /**
@@ -16,6 +17,7 @@ public class GeneralUI {
      */
     //we will call this function from the main and all the user interface will be from here
     public static void StartMe(){
+        managerController=ManagerController.getInstance();
         scanner =new Scanner(System.in);
         UIGeneralFnctions.setScanner(scanner);
         //start the ui here
@@ -55,7 +57,7 @@ public class GeneralUI {
                 case 5:
                     System.out.println("have a good day");
                     //do what we need in the database when closed
-                    ManagerController.closeDB();
+                    managerController.closeDB();
                     //close the scanner
                     scanner.close();
                     //stops the program

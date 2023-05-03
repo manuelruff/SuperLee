@@ -1,54 +1,63 @@
 package HR.DataAccess;
-
 import HR.Bussiness.*;
 import resource.Connect;
 
 //this will be singleton
 public class DataController {
-    private static DataController instance=new DataController();;
+    private static DataController instance;
+    private WorkerMapper workerMapper;
+    private WeeklyMapper weeklyMapper;
+    private SuperMapper superMapper;
+    private CashRegisterMapper cashRegisterMapper;
     private DataController() {
+        cashRegisterMapper=CashRegisterMapper.getInstance();
+        superMapper=SuperMapper.getInstance();
+        workerMapper=WorkerMapper.getInstance();
+        weeklyMapper=WeeklyMapper.getInstance();
     }
     public static DataController getInstance() {
+        if (instance == null)
+            instance = new DataController();
         return instance;
     }
     /**
      * @param Name a branch name
      * this function will tell the mapper of workers to get all the workers of a super
      */
-    public static void loadAllWorkersFromSuper(String Name){
-        WorkerMapper.ReadAllWorkersFromSuper(Name);
+    public void loadAllWorkersFromSuper(String Name){
+        workerMapper.ReadAllWorkersFromSuper(Name);
     }
     /**
      * this function will tell the mapper of workers to get all the workers
      */
-    public static void loadAllWorkersFrom(){
-        WorkerMapper.ReadAllWorkers();
+    public void loadAllWorkersFrom(){
+        workerMapper.ReadAllWorkers();
     }
     /**
      * @param ID id of worker
      * @return the worker asked if he is in the db
      */
-    public static Worker getWorker(String ID){
-        return WorkerMapper.getWorker(ID);
+    public Worker getWorker(String ID){
+        return workerMapper.getWorker(ID);
     }
 
-    public static void DeleteConstraint(String ID){
-        WorkerMapper.DeleteConstraints(ID);
+    public void DeleteConstraint(String ID){
+        workerMapper.DeleteConstraints(ID);
     }
-    public static void DeleteWorkingDays(String ID, Shift shift){
-        WeeklyMapper.DeleteWorkerFromShift(ID,shift);
-        WorkerMapper.DeleteWorkingDays(ID);
+    public void DeleteWorkingDays(String ID, Shift shift){
+        weeklyMapper.DeleteWorkerFromShift(ID,shift);
+        workerMapper.DeleteWorkingDays(ID);
     }
 
 
 
     //added 26.4
-    public static Super getSuper(String name){
-        return SuperMapper.getsuper(name);
+    public Super getSuper(String name){
+        return superMapper.getsuper(name);
     }
-    public static void LoadCancellations(String BranchName,int year,int month,int day){
+    public void LoadCancellations(String BranchName,int year,int month,int day){
         //load the cancelations
-        CashRegisterMapper.ReadCancellations( BranchName, year, month, day);
+        cashRegisterMapper.ReadCancellations( BranchName, year, month, day);
     }
 
 
@@ -56,13 +65,13 @@ public class DataController {
      * we will save all the changes when we go out of the system
      *
      */
-    public static void saveData() {
-        WorkerMapper.WriteAllWorkers();
-        WorkerMapper.WriteAllDrivers();
-        CashRegisterMapper.WriteAllCancellations();
-        SuperMapper.WriteAllSupers();
+    public void saveData() {
+        workerMapper.WriteAllWorkers();
+        workerMapper.WriteAllDrivers();
+        cashRegisterMapper.WriteAllCancellations();
+        superMapper.WriteAllSupers();
         //write all weekly to db
-        WeeklyMapper.WriteAllWeekly();
+        weeklyMapper.WriteAllWeekly();
         //close the connection to database when finished
         Connect.disconnect();
     }

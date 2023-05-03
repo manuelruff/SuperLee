@@ -11,20 +11,30 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 public class SuperMapper {
-    private static SuperMapper instance = new SuperMapper();
-    private static Map<String, Super> SuperMap;
-    private static Connection conn;
+    private static SuperMapper instance;
+    private Map<String, Super> SuperMap;
+    private WorkerMapper workerMapper;
+    private Connection conn;
+    private WeeklyMapper weeklyMapper;
+    private CashRegisterMapper cashRegisterMapper;
     private SuperMapper(){
         SuperMap=new HashMap<>();
         conn = Connect.getConnection();
+        cashRegisterMapper=CashRegisterMapper.getInstance();
+        workerMapper=WorkerMapper.getInstance();
+        weeklyMapper=WeeklyMapper.getInstance();
     }
-    public static SuperMapper GetInstance(){return instance;}
-    public static Map<String,Super>getSuperMap(){return SuperMap;}
+    public static SuperMapper getInstance(){
+        if(instance==null)
+            instance=new SuperMapper();
+        return instance;
+    }
+    public Map<String,Super>getSuperMap(){return SuperMap;}
     /**
      * @param name  of branch
      * @return the branch asked
      */
-    public static Super getsuper(String name){
+    public Super getsuper(String name){
         //if i dont have this worker in the data ill go read it from DB
         if (SuperMap.get(name)==null){
             ReadSuper(name);
@@ -36,7 +46,7 @@ public class SuperMapper {
      * @param branchName name of super
      *
      */
-    private static void ReadSuper(String branchName){
+    private void ReadSuper(String branchName){
         String name,address,phoneNumber,contactName,zone;
         try {
             java.sql.Statement stmt = conn.createStatement();
@@ -52,7 +62,7 @@ public class SuperMapper {
                 //add the worker to the map
                 SuperMap.put(name, branch);
                 //load his cash registers to the mapper of the cash register
-                CashRegisterMapper.PutCashRegister(name,SuperMap.get(name).get_cash_register());
+                cashRegisterMapper.PutCashRegister(name,SuperMap.get(name).get_cash_register());
                 //rad the times of shift in each day
                 ReadSuperTime(name);
                 //calculate the date of next week
@@ -64,7 +74,7 @@ public class SuperMapper {
                     day=StartDate.getDayOfWeek();
                 }
                 //read the weekly
-                SuperMap.get(branchName).setWeekly(WeeklyMapper.getWeekly(branchName,StartDate.toString()));
+                SuperMap.get(branchName).setWeekly(weeklyMapper.getWeekly(branchName,StartDate.toString()));
                 //read the workers
                 ReadWorkers(branchName);
             }
@@ -73,7 +83,7 @@ public class SuperMapper {
             System.out.println("i have a problem sorry");
         }
     }
-    private static void ReadSuperTime(String BranchName){
+    private void ReadSuperTime(String BranchName){
         double sm,em,se,ee;
         String day;
         try {
@@ -95,21 +105,21 @@ public class SuperMapper {
             System.out.println("i have a with Read super time problem sorry");
         }
     }
-    private static void ReadWorkers(String BranchName){
+    private void ReadWorkers(String BranchName){
         String ID;
         try {
             java.sql.Statement stmt = conn.createStatement();
             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM WorksAt WHERE SuperName = '" + BranchName + "'");
             while (rs.next()){
                 ID = rs.getString("WorkerID");
-                SuperMap.get(BranchName).AddWorker(WorkerMapper.getWorker(ID));
+                SuperMap.get(BranchName).AddWorker(workerMapper.getWorker(ID));
             }
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
         }
     }
-    public static void WriteAllSupers() {
+    public void WriteAllSupers() {
         for (Super branch : SuperMap.values()) {
             String name,address,phoneNumber,contactName,zone;
             try {
@@ -122,7 +132,7 @@ public class SuperMapper {
                 stmt.executeUpdate("INSERT OR IGNORE INTO Super (name, Address, PhoneNumber, ContactName, Zone) VALUES ('" + name + "', '" + address + "', '" + phoneNumber + "', '" + contactName + "', '" + zone + "')");
                 //write weekly
                 if(branch.GetWeekShifts()!= null) {
-                    WeeklyMapper.InsertToMapper(branch.getName(), branch.GetWeekShifts());
+                    weeklyMapper.InsertToMapper(branch.getName(), branch.GetWeekShifts());
                 }
                 // write the super hours
                 WriteSuperTime(branch.getName());
@@ -133,7 +143,7 @@ public class SuperMapper {
             }
         }
     }
-    private static void WriteSuperTime(String BranchName){
+    private void WriteSuperTime(String BranchName){
         try {
             java.sql.Statement stmt = conn.createStatement();
             Super curr = SuperMap.get(BranchName);
@@ -149,7 +159,7 @@ public class SuperMapper {
             System.out.println("i have a problem in writing the super time sorry");
         }
     }
-    private  static void WriteWorkers(String BranchName){
+    private void WriteWorkers(String BranchName){
         try {
             java.sql.Statement stmt = conn.createStatement();
             Super curr = SuperMap.get(BranchName);

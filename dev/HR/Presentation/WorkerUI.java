@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class WorkerUI {
     private static Scanner scanner;
+    private static WorkerController workerController=WorkerController.getInstance();
     /**
      * worker needs to log in and it will be checked here
      */
@@ -20,7 +21,7 @@ public class WorkerUI {
             System.out.println("Password: ");
             String passwordInput = scanner.nextLine();  // Read user input
             // check if the worker enter valid inputs
-            if(!WorkerController.isExistWorker(ID) || !WorkerController.IsTruePassword(ID,passwordInput)){
+            if(!workerController.isExistWorker(ID) || !workerController.IsTruePassword(ID,passwordInput)){
                 System.out.println("invalid input - try again!");
             }
             // if the inputs were valid - call to WorkerOption menu
@@ -53,7 +54,7 @@ public class WorkerUI {
                 case 1:
                     int op1_choice=-1;
                     while (op1_choice!=4) {
-                        System.out.println("hello " + WorkerController.GetWorkerByID(ID).getName() + " please choose the detail you want to change");
+                        System.out.println("hello " + workerController.GetWorkerByID(ID).getName() + " please choose the detail you want to change");
                         System.out.println("1. change password ");
                         System.out.println("2. change name");
                         System.out.println("3. change bank account");
@@ -65,7 +66,7 @@ public class WorkerUI {
                                 // get the new password from the worker
                                 String input_changepass = scanner.nextLine();  // Read user input
                                 // change it to function in reshet info
-                                WorkerController.ChangeWorkerPassword(ID,input_changepass); // change the password
+                                workerController.ChangeWorkerPassword(ID,input_changepass); // change the password
                                 //after we did what we want we stop
                                 op1_choice=4;
                                 break;
@@ -73,14 +74,14 @@ public class WorkerUI {
                                 System.out.println("please enter new name:");
                                 // get the new password from the worker
                                 String input_changename = scanner.nextLine();  // Read user input
-                                WorkerController.ChangeWorkerName(ID,input_changename);// change name
+                                workerController.ChangeWorkerName(ID,input_changename);// change name
                                 //after we did what we want we stop
                                 op1_choice=4;
                                 break;
                             case 3:
                                 System.out.println("please enter new bank details:");
                                 int newBank = UIGeneralFnctions.AskForIntNumber();
-                                WorkerController.ChangeWorkerBank(ID,newBank );
+                                workerController.ChangeWorkerBank(ID,newBank );
                                 //after we did what we want we stop
                                 op1_choice=4;
                                 break;
@@ -116,7 +117,7 @@ public class WorkerUI {
                                 System.out.println("please enter reason:");
                                 String reason=scanner.nextLine();  // Read user input
                                 // if the Domain.Constraints is valid - add the Domain.Constraints at the day the user gave
-                                if(WorkerController.AddConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end,reason)){
+                                if(workerController.AddConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end,reason)){
                                     System.out.println("your constraint added");
                                 }
                                 else{
@@ -156,7 +157,7 @@ public class WorkerUI {
                                     break;
                                 }
                                 // if the Domain.Constraints is valid - remove the Domain.Constraints at the day the user gave if exists
-                                if(WorkerController.RemoveConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end)){
+                                if(workerController.RemoveConstraints(ID,day_choice,Constraints_num_start,Constraints_num_end)){
                                     System.out.println("the constraint removed");
                                 }
                                 else{
@@ -176,23 +177,23 @@ public class WorkerUI {
                     }
                     break;
                 case 4:
-                    WorkerController.ShowConstraints(ID);
+                    workerController.ShowConstraints(ID);
                     //after we did what we want we stop
                     break;
                 case 5:
                     // prints the shifts of asked branch
                     // first check if the worker is driver or not cause drivers has different shifts
-                    if(!WorkerController.IsDriver(ID)){
+                    if(!workerController.IsDriver(ID)){
                         // if it's not a driver - ask for branch to show the worker shifts
                         String BranchName = UIGeneralFnctions.AskForBranch();
-                        boolean printed=WorkerController.ShowWorkerShifts(BranchName);
+                        boolean printed=workerController.ShowWorkerShifts(BranchName);
                         if(!printed){
                             System.out.println("there is no shifts in this branch");
                         }
                         break;
                     }
                     // if it's a driver - show the driver shifts
-                    boolean printed=WorkerController.ShowDriverShifts(ID);
+                    boolean printed=workerController.ShowDriverShifts(ID);
                     if(!printed){
                         System.out.println("there are no shifts for you in this week");
                     }

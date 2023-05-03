@@ -11,10 +11,15 @@ public class ServiceControler {
     //all the Workers in the company
     private Map<String, Worker> Workers;
     private Map<String, Driver> Drivers;
+    private WorkerMapper workerMapper;
+    private SuperMapper superMapper;
+
     private ServiceControler() {
-        Superim = SuperMapper.getSuperMap();
-        Workers= WorkerMapper.getWorkerMap();
-        Drivers=WorkerMapper.getDriverMap();
+        workerMapper=WorkerMapper.getInstance();
+        superMapper=SuperMapper.getInstance();
+        Superim = superMapper.getSuperMap();
+        Workers= workerMapper.getWorkerMap();
+        Drivers=workerMapper.getDriverMap();
     }
     public static ServiceControler getInstance() {
         if (instance == null) {
@@ -30,7 +35,7 @@ public class ServiceControler {
         Training ability=Training.values()[training];
         Days day1=Days.values()[day];
         //ill load all the drivers that have those training and licence to the DB so we can choose a relevant one
-        WorkerMapper.ReadAllDriversByInfo(licence,ability);
+        workerMapper.ReadAllDriversByInfo(licence,ability);
         for(Driver driver:Drivers.values()){
             if(driver.getLicense()==licence&&driver.getAbility()==ability){
                 if(driver.IsFree(day1)){

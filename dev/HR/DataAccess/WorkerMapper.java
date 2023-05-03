@@ -10,24 +10,26 @@ import java.util.Map;
 
 //this will be singleton
 public class WorkerMapper {
-    private static WorkerMapper instance=new WorkerMapper();
-    private static Map<String, Worker> WorkerMap;
-    private static Map<String, Driver> DriverMap;
-
-    private static Connection conn;
+    private static WorkerMapper instance;
+    private Map<String, Worker> WorkerMap;
+    private Map<String, Driver> DriverMap;
+    private Connection conn;
     private WorkerMapper(){
         WorkerMap=new HashMap<>();
         DriverMap=new HashMap<>();
         conn = Connect.getConnection();
     }
-    public static WorkerMapper GetInstance(){
+    public static WorkerMapper getInstance(){
+        if (instance==null){
+            instance=new WorkerMapper();
+        }
         return instance;
     }
     /**
      * @param ID id of worker
      * @return the worker asked
      */
-    public static Worker getWorker(String ID){
+    public Worker getWorker(String ID){
         //if i dont have this worker in the data ill go read it from DB
         if (WorkerMap.get(ID)==null){
             ReadWorker(ID);
@@ -40,7 +42,7 @@ public class WorkerMapper {
      * @param ID id if worker
      *
      */
-    private static void ReadWorker(String ID){
+    private void ReadWorker(String ID){
         String id,name, bank, startdate, contract, password, bonus, wage, shiftworked;
         try {
             java.sql.Statement stmt = conn.createStatement();
@@ -99,7 +101,7 @@ public class WorkerMapper {
      * adds the roles to the worker
      * @param ID
      */
-    private static void ReadJobs(String ID){
+    private void ReadJobs(String ID){
             String job;
             try {
                 java.sql.Statement stmt = conn.createStatement();
@@ -117,7 +119,7 @@ public class WorkerMapper {
      * adds the working days to the worker
      * @param ID
      */
-    private static void ReadWorkingDays(String ID){
+    private void ReadWorkingDays(String ID){
         String day;
         try {
             java.sql.Statement stmt = conn.createStatement();
@@ -135,7 +137,7 @@ public class WorkerMapper {
      * adds the constraints to the worker
      * @param ID
      */
-    private static void ReadConstraints(String ID){
+    private void ReadConstraints(String ID){
 
         String start,end,reason,day;
         try {
@@ -156,17 +158,17 @@ public class WorkerMapper {
     /**
      * @return the map of all the workers
      */
-    public static Map<String, Worker> getWorkerMap() {
+    public Map<String, Worker> getWorkerMap() {
         return WorkerMap;
     }
-    public static Map<String, Driver> getDriverMap() {
+    public Map<String, Driver> getDriverMap() {
         return DriverMap;
     }
     /**
      * @param Name name of branch
      *it will read all the workers from that branch
      */
-    public static void ReadAllWorkersFromSuper(String Name){
+    public void ReadAllWorkersFromSuper(String Name){
         String id;
         try {
             java.sql.Statement stmt = conn.createStatement();
@@ -181,7 +183,7 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
-    public static void ReadAllWorkers(){
+    public void ReadAllWorkers(){
         String id;
         try {
             java.sql.Statement stmt = conn.createStatement();
@@ -198,7 +200,7 @@ public class WorkerMapper {
         }
     }
 
-    public static void ReadAllDriversByInfo(char licence,Training ability){
+    public void ReadAllDriversByInfo(char licence,Training ability){
         //todo check if workign
         String id;
         try {
@@ -216,7 +218,7 @@ public class WorkerMapper {
         }
     }
     //write all workers from the mappers
-    public static void WriteAllWorkers(){
+    public void WriteAllWorkers(){
         for (Worker worker:WorkerMap.values()){
             WriteAllAWorkers(worker);
             WriteJobs(worker.getID());
@@ -227,7 +229,7 @@ public class WorkerMapper {
         }
     }
 
-    public static void WriteAllDrivers(){
+    public void WriteAllDrivers(){
         for (Driver driver:DriverMap.values()){
             WriteAllAWorkers(driver);
             WriteAllLicenceAndTraining(driver.getID());
@@ -238,7 +240,7 @@ public class WorkerMapper {
         }
     }
     //we will write all the workers to the db when done, it will write the new ones and update the old ones??
-    public static void WriteAllAWorkers(AWorker worker){
+    public void WriteAllAWorkers(AWorker worker){
         String id,name, startdate, contract, password;
         int bank,shiftworked;
         double bonus,wage;
@@ -274,7 +276,7 @@ public class WorkerMapper {
     }
 
     //we wrrite the licence and training
-    public static void WriteAllLicenceAndTraining(String ID){
+    public void WriteAllLicenceAndTraining(String ID){
         try {
             java.sql.Statement stmt = conn.createStatement();
             stmt.executeUpdate("INSERT OR IGNORE INTO DriverInfo (DriverID,Licence,Training ) VALUES (" + ID + ", '" + DriverMap.get(ID) .getLicense() + "', '" + DriverMap.get(ID).getAbility() + "')");
@@ -288,7 +290,7 @@ public class WorkerMapper {
      * update the roles to the worker in the db
      * @param ID
      */
-    private static void WriteJobs(String ID){
+    private void WriteJobs(String ID){
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Jobs job : WorkerMap.get(ID).getRoles()) {
@@ -303,7 +305,7 @@ public class WorkerMapper {
      * update the working days to the worker in the db
      * @param worker a worker or driver we work on
      */
-    private static void WriteWorkingDays(AWorker worker){
+    private void WriteWorkingDays(AWorker worker){
         try {
             java.sql.Statement stmt = conn.createStatement();
             for (Days day : worker.getWeeklyWorkingDays()) {
@@ -318,7 +320,7 @@ public class WorkerMapper {
      * update the constraints to the worker in the db
      * @param worker worker or driver we work on
      */
-    private static void WriteConstraints(AWorker worker){
+    private void WriteConstraints(AWorker worker){
         try {
             java.sql.Statement stmt = conn.createStatement();
             for(Days day: worker.getShiftsCantWork().keySet()){
@@ -336,7 +338,7 @@ public class WorkerMapper {
      * we will delete his constraints and it will be updated with the new ones in the db after the program closees
      * @param ID id of worker
      */
-    public static void DeleteConstraints(String ID){
+    public void DeleteConstraints(String ID){
         try {
             java.sql.Statement stmt = conn.createStatement();
             stmt.executeUpdate("DELETE FROM CantWork WHERE WorkerID="+ID+"");
@@ -349,7 +351,7 @@ public class WorkerMapper {
      * we will delete his working days and it will be updated with the new ones in the db after the program closees
      * @param ID id of worker
      */
-    public static void DeleteWorkingDays(String ID){
+    public void DeleteWorkingDays(String ID){
         try {
             java.sql.Statement stmt = conn.createStatement();
             stmt.executeUpdate("DELETE FROM WeeklyWorkingDays WHERE WorkerID="+ID+"");
@@ -359,8 +361,4 @@ public class WorkerMapper {
         }
     }
 
-//    public static void main(String[] args) {
-//        ReadWorker("1");
-//        ReadWorker("2");
-//    }
 }

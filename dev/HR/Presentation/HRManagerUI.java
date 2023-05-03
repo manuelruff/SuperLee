@@ -7,6 +7,7 @@ import static HR.Presentation.UIGeneralFnctions.AskForIntNumber;
 public class HRManagerUI {
     private static Scanner scanner;
     private static ManagerController managerController = ManagerController.getInstance();
+    private static DataController dataController = DataController.getInstance();
     //saves the Manager Password - started as 1234 and he can change it
     /**
      * manager (HR manager) needs to log in and it will be checked here
@@ -406,7 +407,7 @@ public class HRManagerUI {
                     }
                     break;
                 case 5:
-                    ManagerController.PrintDriversSchedule();
+                    managerController.PrintDriversSchedule();
                     break;
                 case 6:
                     System.out.println("enter new password: ");
@@ -422,7 +423,7 @@ public class HRManagerUI {
                     int payment_choice = UIGeneralFnctions.AskForNumber(1,2);
                     if(payment_choice == 1){
                         //we first need to get all the workers from the database to pay them
-                        DataController.loadAllWorkersFrom();
+                        dataController.loadAllWorkersFrom();
                         managerController.Payment();
                         System.out.println("Payment done!");
                     }

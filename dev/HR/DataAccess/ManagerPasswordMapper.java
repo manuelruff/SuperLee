@@ -14,7 +14,6 @@ public class ManagerPasswordMapper {
      * we will take the managet password from the database
      */
     private ManagerPasswordMapper() {
-
         Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
@@ -37,7 +36,7 @@ public class ManagerPasswordMapper {
     /**
      * @return the current password
      */
-    public static String getManagerPassword() {
+    public String getManagerPassword() {
         return managerPassword;
     }
 
@@ -45,7 +44,7 @@ public class ManagerPasswordMapper {
      * @param managerPassword the new password
      *                        we will update the database
      */
-    public static void setManagerPassword(String managerPassword) {
+    public void setManagerPassword(String managerPassword) {
         ManagerPasswordMapper.managerPassword = managerPassword;
         Connection conn = Connect.getConnection();
         try {

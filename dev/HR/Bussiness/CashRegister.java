@@ -14,7 +14,7 @@ public class CashRegister {
     }
     public void PrintCancellation(String name,int year,int month,int day){
         // load the cashRegister of the specific super by it name
-        DataController.LoadCancellations(name, year, month, day);
+        DataController.getInstance().LoadCancellations(name, year, month, day);
         //count how many logs we found with this information
         int count=0;
         //run on all the cancellations and check what fits
