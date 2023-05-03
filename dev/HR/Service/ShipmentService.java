@@ -22,6 +22,11 @@ public class ShipmentService {
         //go get a suitable driver if we have one
         return serviceControler.getDriver(licence,training,day);
     }
+
+    public List<String> askForDriver(String ID){
+        //todo add the right function to the service controler
+    	return serviceControler.getDriver(ID);
+    }
     public List<String> askForSite(String branchName){
         return null;
     }

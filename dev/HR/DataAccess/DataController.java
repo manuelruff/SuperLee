@@ -55,10 +55,6 @@ public class DataController {
     public Super getSuper(String name){
         return superMapper.getsuper(name);
     }
-    public void LoadCancellations(String BranchName,int year,int month,int day){
-        //load the cancelations
-        cashRegisterMapper.ReadCancellations( BranchName, year, month, day);
-    }
 
 
     /**

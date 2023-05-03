@@ -35,12 +35,9 @@ public class ManagerController{
         Superim = superMapper.getSuperMap();
         Workers= workerMapper.getWorkerMap();
         Drivers=workerMapper.getDriverMap();
-        //todo add reading for the workers shfits
-
         rand = new Random();
         dataController=DataController.getInstance();
         workerController=WorkerController.getInstance();
-
     }
     public static ManagerController getInstance(){
         if (instance == null) {
@@ -449,7 +446,9 @@ public class ManagerController{
             day = day+1;
         return Superim.get(branch).GetWeekShifts().GetShift(day).IsEmptyShift();
     }
-
+    public void loadAllWorkersFrom(){
+        dataController.loadAllWorkersFrom();
+    }
 
     /**
      * it will save the data in the database and close the connection

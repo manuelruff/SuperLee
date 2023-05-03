@@ -36,6 +36,13 @@ public class WorkerMapper {
         }
         return WorkerMap.get(ID);
     }
+    public Driver getDriver(String ID){
+        //if i dont have this worker in the data ill go read it from DB
+        if (DriverMap.get(ID)==null){
+            ReadWorker(ID);
+        }
+        return DriverMap.get(ID);
+    }
 
     /**
      * this functiuon read the worker from the db
