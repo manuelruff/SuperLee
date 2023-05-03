@@ -15,6 +15,7 @@ public class ServiceControler {
     private SuperMapper superMapper;
 
     private ManagerController managerController;
+    private WorkerController workerController;
     private ServiceControler() {
         workerMapper=WorkerMapper.getInstance();
         superMapper=SuperMapper.getInstance();
@@ -22,6 +23,7 @@ public class ServiceControler {
         Workers= workerMapper.getWorkerMap();
         Drivers=workerMapper.getDriverMap();
         managerController=ManagerController.getInstance();
+        workerController=WorkerController.getInstance();
     }
     public static ServiceControler getInstance() {
         if (instance == null) {
@@ -29,8 +31,23 @@ public class ServiceControler {
         }
         return instance;
     }
+    //check if all the branches have a weekly if not we return false
+    public boolean checkHasWeekly(List<String> branches){
+        for(String branch:branches){
+            if(!Superim.get(branch).HasWeekly()){
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean checkStoreKeeper(List<String> branches,int day){
 
-    public List<String> getDriver(char licence, int training,int day,List<String> branches){
+        return false;
+
+    }
+
+
+    public List<String> getDriver(char licence, int training,int day){
         //create list to put in values of drivers
         List<String> driverInfo=new ArrayList<>();
         //take the parameters and turn them to enums
@@ -45,13 +62,12 @@ public class ServiceControler {
                     //we tell the driver he works in this day
                     driver.addNewDay(day1);
                     //add the driver shift to driver shifts for each branch
-
                     //we save the info of the driver so we can send it back
                     driverInfo.add(driver.getID());
                     driverInfo.add(driver.getName());
+                    driverInfo.add(String.valueOf(driver.getLicense()));
+                    driverInfo.add(driver.getAbility().toString());
                     //todo add more stuff to the driver we give back
-
-
                     //when we took all the info go out of loop
                     break;
                 }
@@ -59,7 +75,6 @@ public class ServiceControler {
         }
         //todo if i find a driver i need to assign a store keeper for that day
         //todo or make sure to tell the HR manager to do so
-
         //if i return it empty, no driver was found
         return driverInfo;
     }

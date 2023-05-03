@@ -43,6 +43,7 @@ public class Driver extends AWorker{
         return true;
     }
 
+    //check if a driver is available
     public boolean checkDay(Days cDay)
     {
         for(Days day : WeeklyWorkingDays)

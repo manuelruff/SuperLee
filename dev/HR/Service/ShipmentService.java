@@ -7,12 +7,20 @@ public class ShipmentService {
     private static ServiceControler serviceControler;
 
     public ShipmentService(){
-    	serviceControler = ServiceControler.getInstance();
+        serviceControler = ServiceControler.getInstance();
     }
 
-    public List<String> askForDriver(char licence, int training,int day){
+    public List<String> askForDriver(char licence, int training,int day,List<String> branches){
+        //check that all the branches has weekly if one doesnt have we return null
+        if(!serviceControler.checkHasWeekly(branches)){
+            return null;
+        }
+        //todo check we have employees for yeach super
+        if(!serviceControler.checkStoreKeeper(branches,day)){
 
-        return null;
+        }
+        //go get a suitable driver if we have one
+        return serviceControler.getDriver(licence,training,day);
     }
     public List<String> askForSite(String branchName){
         return null;
