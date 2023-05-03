@@ -197,6 +197,24 @@ public class WorkerMapper {
             System.out.println("i have a problem sorry");
         }
     }
+
+    public static void ReadAllDriversByInfo(char licence,Training ability){
+        //todo check if workign
+        String id;
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM DriverInfo WHERE Licence = '" + licence + "' AND Training = '" + ability.toString() + "'");
+            //ill get each worker
+            while (rs.next()){
+                id=rs.getString("DriverID");
+                //if i had him in database already i wont do it again
+                getWorker(id);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
     //write all workers from the mappers
     public static void WriteAllWorkers(){
         for (Worker worker:WorkerMap.values()){

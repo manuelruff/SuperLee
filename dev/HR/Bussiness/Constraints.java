@@ -85,6 +85,10 @@ public class Constraints {
         }
         return true;
     }
+    //can work for driver
+    public boolean CanWork(Days day){
+        return cantWork.get(day)==null;
+    }
 
     //function to print Domain.Constraints - updated 29.3
     public void PrintMe(){
