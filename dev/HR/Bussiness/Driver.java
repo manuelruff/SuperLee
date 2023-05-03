@@ -61,14 +61,6 @@ public class Driver extends AWorker{
         }
     }
 
-    public boolean IsFree(Days day){
-        if(this.WeeklyWorkingDays.size()==6 || this.WeeklyWorkingDays.contains(day)){
-            return false;
-        }
-        //return if he can work there or not
-        return ShiftsCantWork.CanWork(day);
-    }
-
     public boolean PrintDaysShift() {
         if(getWeeklyWorkingDays().isEmpty())
             return false;

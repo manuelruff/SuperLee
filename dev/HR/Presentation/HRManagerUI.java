@@ -72,10 +72,6 @@ public class HRManagerUI {
                                     System.out.println("you already created a weekly, now you can just edit it or send all the weekly to history to start again");
                                     break;
                                 }
-                                //create the weekly plan
-                                //managerController.CreateWeekly(Name);
-
-
                                 //create the weekly plan for the branch
                                 //saves false for now and change to true when we successfully created weekly
                                 boolean isCreatedWeekly=false;

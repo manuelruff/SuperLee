@@ -66,6 +66,9 @@ public class DataController {
      *
      */
     public void saveData() {
+
+        //todo add writing for the drivers shifts
+
         workerMapper.WriteAllWorkers();
         workerMapper.WriteAllDrivers();
         cashRegisterMapper.WriteAllCancellations();

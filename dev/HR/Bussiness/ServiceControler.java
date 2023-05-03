@@ -14,12 +14,14 @@ public class ServiceControler {
     private WorkerMapper workerMapper;
     private SuperMapper superMapper;
 
+    private ManagerController managerController;
     private ServiceControler() {
         workerMapper=WorkerMapper.getInstance();
         superMapper=SuperMapper.getInstance();
         Superim = superMapper.getSuperMap();
         Workers= workerMapper.getWorkerMap();
         Drivers=workerMapper.getDriverMap();
+        managerController=ManagerController.getInstance();
     }
     public static ServiceControler getInstance() {
         if (instance == null) {
@@ -28,7 +30,7 @@ public class ServiceControler {
         return instance;
     }
 
-    public List<String> getDriver(char licence, int training,int day){
+    public List<String> getDriver(char licence, int training,int day,List<String> branches){
         //create list to put in values of drivers
         List<String> driverInfo=new ArrayList<>();
         //take the parameters and turn them to enums
@@ -38,15 +40,28 @@ public class ServiceControler {
         workerMapper.ReadAllDriversByInfo(licence,ability);
         for(Driver driver:Drivers.values()){
             if(driver.getLicense()==licence&&driver.getAbility()==ability){
-                if(driver.IsFree(day1)){
+                if(driver.checkDay(day1)){
+                    //todo check if this works
+                    //we tell the driver he works in this day
+                    driver.addNewDay(day1);
+                    //add the driver shift to driver shifts for each branch
+                    for(String branch:branches){
+                        managerController.addDriverShift(day1,driver,branch);
+                    }
+                    //we save the info of the driver so we can send it back
                     driverInfo.add(driver.getID());
                     driverInfo.add(driver.getName());
                     //todo add more stuff to the driver we give back
+
+
+                    //when we took all the info go out of loop
+                    break;
                 }
             }
         }
         //todo if i find a driver i need to assign a store keeper for that day
         //todo or make sure to tell the HR manager to do so
+
         //if i return it empty, no driver was found
         return driverInfo;
     }
