@@ -10,6 +10,7 @@ public class DriverShift {
         this.driver = driver;
         this.branch = branch;
     }
+
     public Days getDay() {
         return day;
     }
