@@ -172,14 +172,14 @@ public class WorkerMapper {
         return DriverMap;
     }
     /**
-     * @param Name name of branch
+     * @param BranchName name of branch
      *it will read all the workers from that branch
      */
-    public void ReadAllWorkersFromSuper(String Name){
+    public void ReadAllWorkersFromSuper(String BranchName){
         String id;
         try {
             java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM WorksAt WHERE SuperName='" + Name + "'");
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM WorksAt WHERE SuperName='" + BranchName + "'");
             while (rs.next()){
                 id=rs.getString("WorkerID");
                 //if i had him in database already i wont do it again

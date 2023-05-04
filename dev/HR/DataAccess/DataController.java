@@ -21,11 +21,11 @@ public class DataController {
         return instance;
     }
     /**
-     * @param Name a branch name
+     * @param BranchName a branch name
      * this function will tell the mapper of workers to get all the workers of a super
      */
-    public void loadAllWorkersFromSuper(String Name){
-        workerMapper.ReadAllWorkersFromSuper(Name);
+    public void loadAllWorkersFromSuper(String BranchName){
+        workerMapper.ReadAllWorkersFromSuper(BranchName);
     }
     /**
      * this function will tell the mapper of workers to get all the workers
