@@ -15,9 +15,10 @@ public class ShipmentService {
         if(!serviceControler.checkHasWeekly(branches)){
             return null;
         }
-        //todo check we have employees for yeach super
+        //todo check we have employees for each super
+        // check if all the branches has storekeeper for the day if one doesnt have we cant have the shipment
         if(!serviceControler.checkStoreKeeper(branches,day)){
-
+            return null;
         }
         //go get a suitable driver if we have one
         return serviceControler.getDriver(licence,training,day);

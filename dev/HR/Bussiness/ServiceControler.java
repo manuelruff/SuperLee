@@ -39,9 +39,50 @@ public class ServiceControler {
         return true;
     }
     public boolean checkStoreKeeper(List<String> branches,int day){
-
+        // get all the branches that have can a store keeper
+        List<String>addedStoreKeeper=CanAddStoreKeeper(branches,day);
+        // flag to check if all the branches have a store keeper
+        boolean all = true;
+        // check for each branch if he has a store keeper
+        for(String branch:branches){
+            if(!Superim.get(branch).GetWeekShifts().GetShift(day).getWorkerList().containsKey(Jobs.StoreKeeper)&&!addedStoreKeeper.contains(branch)){
+                all = false;
+                break;
+            }
+        }
+        if(all)
+            return true;
+        // if we not succeed to add a store keeper to all branches - remove the one we added
+        for(String branch:addedStoreKeeper){
+            //todo check if the -- of the number of shifts decrease successfully
+            Superim.get(branch).GetWeekShifts().GetShift(day).getWorkerList().remove(Jobs.StoreKeeper);
+            // if it's not decrease auto - use this lines
+            String StoreKeeperID =Superim.get(branch).GetWeekShifts().GetShift(day).getWorkerList().get(Jobs.StoreKeeper).get(0).ID;
+            Workers.get(StoreKeeperID).RemoveShift(Days.values()[day]);
+        }
         return false;
+    }
 
+    // if branch doesnt have store keeper - try to add one
+    // we will return the list of all the branches we succeed to add a store keeper
+    public List<String> CanAddStoreKeeper(List<String> branches,int day){
+        List<String> added=new ArrayList<>();
+        //check for each branch if he has a store keeper
+        for(String branch:branches){
+            if(!Superim.get(branch).GetWeekShifts().GetShift(day).getWorkerList().containsKey(Jobs.StoreKeeper)){
+                List <String> workers = Superim.get(branch).GetWorkersIDS();
+                // check if there is a store keeper that can be added to the shift
+                for(String worker:workers){
+                    if(Workers.get(worker).CanDoJob(Jobs.StoreKeeper) && !Workers.get(worker).WeeklyWorkingDays.contains(Days.values()[day])){
+                        Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.StoreKeeper,Workers.get(worker));
+                        Workers.get(worker).AddShift(Days.values()[day]);
+                        Workers.get(worker).AddShiftWorked();
+                        added.add(branch);
+                    }
+                }
+            }
+        }
+        return added;
     }
 
 
