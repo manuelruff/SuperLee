@@ -87,6 +87,16 @@ public class WorkerController  {
     public boolean IsDriver(String ID){
         return Drivers.get(ID)!=null;
     }
-    
-    
+
+    public boolean IsWorksTodayAsShiftManagerOrStoreKeeper(String ID, String day,String BranchName){
+        // if the worker isnt working today
+        if(Workers.get(ID).getWeeklyWorkingDays().contains(Days.valueOf(day)))
+            return false;
+        // if the worker isnt storekeeper or shift manager
+        if(Workers.get(ID).CanDoJob(Jobs.StoreKeeper)||Workers.get(ID).CanDoJob(Jobs.ShiftManager))
+            return false;
+        Map<Jobs, List<Worker>>curr = dataController.getSuper(BranchName).GetWeekShifts().GetShift(Days.valueOf(day).ordinal()).getWorkerList();
+        // checks if the worker works in the branch today in the correct job
+        return curr.get(Jobs.StoreKeeper).contains(Workers.get(ID)) || curr.get(Jobs.ShiftManager).contains(Workers.get(ID));
+    }
 }
