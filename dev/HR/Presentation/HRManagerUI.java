@@ -62,8 +62,9 @@ public class HRManagerUI {
                         System.out.println("4. watch week from history");
                         System.out.println("5. remove worker from this super");
                         System.out.println("6. update super shift times");
-                        System.out.println("7. Exit ");
-                        choice2=UIGeneralFnctions.AskForNumber(1,7);
+                        System.out.println("7. show all shipments this week");
+                        System.out.println("8. Exit ");
+                        choice2=UIGeneralFnctions.AskForNumber(1,8);
                         switch (choice2) {
                             case 1:
                                 //check if there is not a weekly created already
@@ -305,7 +306,11 @@ public class HRManagerUI {
                                 }
                                 break;
                             case 7:
-                                choice2=7;
+                                // todo: add the call to the method from the shipment service
+                                System.out.println("need to do");
+                                break;
+                            case 8:
+                                choice2=8;
                                 break;
                             default:
                                 System.out.println("please enter a valid option");
