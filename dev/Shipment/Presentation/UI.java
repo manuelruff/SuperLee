@@ -827,10 +827,8 @@ public class UI {
                 input = scanner.nextLine();
                 switch (input) {
                     case "1" -> {
-                        Smanagement.itemsToDelete();
-//                            System.out.println("There is no items left in the shipment, so the shipment is canceled");
-//                            shipment.setShipmentStatus(Status.Canceled);
-//                            return;
+                        //todo maybe check if the shipment was cancelled
+                        itemsToDelete();
                         //shipment.setShipmentStatus(Status.ItemsChange);
                     }
                     case "2" -> {
@@ -846,7 +844,6 @@ public class UI {
                         if (Smanagement.removeLastSiteFromShipment())
                             break;
                         System.out.println("There is only one site in the shipment");
-                        //shipment.setShipmentStatus(Status.SiteChange);
                     }
                 }
             }
@@ -866,6 +863,36 @@ public class UI {
                 {
                     System.out.println("Please enter an actual number");
                 }
+            }
+        }
+    }
+    private static void itemsToDelete(){
+        int amount;
+        System.out.println("Those are the branches of the shipments: ");
+        Smanagement.printSiteOfShipment();
+        System.out.println("Please choose the one you want to delete the item from, enter the name of the site: ");
+        String answer = scanner.nextLine();
+        while(!Smanagement.checkSiteID(answer)){
+            System.out.println("This site is not exist, please enter again");
+            answer = scanner.nextLine();
+        }
+        Smanagement.printItemsDoc(answer);
+        while(true){
+            System.out.println("Please choose an item you want to delete:");
+            String itemName = scanner.nextLine();
+            while(true) {
+                try {
+                    System.out.println("Please enter the amount: ");
+                    amount = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter an actual number");
+                }
+            }
+            if (Smanagement.deleteItemFromShipment(itemName, amount,answer))
+                break;
+            else{
+                System.out.println("The item was not found");
             }
         }
 
