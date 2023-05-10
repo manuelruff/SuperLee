@@ -88,6 +88,7 @@ public class WorkerController  {
         return Drivers.get(ID)!=null;
     }
 
+    // the function checks if worker is a storekeepr or shiftmanager in speficic shift
     public boolean IsWorksTodayAsShiftManagerOrStoreKeeper(String ID, String day,String BranchName){
         // if the worker isnt working today
         if(Workers.get(ID).getWeeklyWorkingDays().contains(Days.valueOf(day)))
@@ -95,8 +96,10 @@ public class WorkerController  {
         // if the worker isnt storekeeper or shift manager
         if(Workers.get(ID).CanDoJob(Jobs.StoreKeeper)||Workers.get(ID).CanDoJob(Jobs.ShiftManager))
             return false;
-        Map<Jobs, List<Worker>>curr = dataController.getSuper(BranchName).GetWeekShifts().GetShift(Days.valueOf(day).ordinal()).getWorkerList();
+        int shiftnum = Days.valueOf(day).ordinal()*2;
+        Map<Jobs, List<Worker>>curr1 = dataController.getSuper(BranchName).GetWeekShifts().GetShift(shiftnum).getWorkerList();
+        Map<Jobs, List<Worker>>curr2 = dataController.getSuper(BranchName).GetWeekShifts().GetShift(shiftnum+1).getWorkerList();
         // checks if the worker works in the branch today in the correct job
-        return curr.get(Jobs.StoreKeeper).contains(Workers.get(ID)) || curr.get(Jobs.ShiftManager).contains(Workers.get(ID));
+        return ((curr1.get(Jobs.StoreKeeper).contains(Workers.get(ID)) || curr1.get(Jobs.ShiftManager).contains(Workers.get(ID))) && (curr2.get(Jobs.StoreKeeper).contains(Workers.get(ID)) || curr2.get(Jobs.ShiftManager).contains(Workers.get(ID))));
     }
 }

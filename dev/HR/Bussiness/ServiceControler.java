@@ -38,28 +38,39 @@ public class ServiceControler {
         }
         return true;
     }
-    public boolean checkStoreKeeper(List<String> branches,int day){
-        // get all the branches that have can a store keeper
-        List<String>addedStoreKeeper=CanAddStoreKeeper(branches,day);
-        // flag to check if all the branches have a store keeper
-        boolean all = true;
-        // check for each branch if he has a store keeper
+
+    private boolean checkAllBranchesStoreKeeper(List<String>branches,int shiftTime){
         for(String branch:branches){
-            if(!Superim.get(branch).GetWeekShifts().GetShift(day).getWorkerList().containsKey(Jobs.StoreKeeper)&&!addedStoreKeeper.contains(branch)){
-                all = false;
-                break;
+            if(!Superim.get(branch).GetWeekShifts().GetShift(shiftTime).getWorkerList().containsKey(Jobs.StoreKeeper)&&!branches.contains(branch)){
+                return false;
             }
         }
-        if(all)
-            return true;
-        // if we not succeed to add a store keeper to all branches - remove the one we added
-        for(String branch:addedStoreKeeper){
+        return true;
+    }
+    private void removeStoreKeepersIfNeed(List<String>branches,int shiftTime,int day){
+        for(String branch:branches){
             //todo check if the -- of the number of shifts decrease successfully
-            Superim.get(branch).GetWeekShifts().GetShift(day).getWorkerList().remove(Jobs.StoreKeeper);
+            Superim.get(branch).GetWeekShifts().GetShift(shiftTime).getWorkerList().remove(Jobs.StoreKeeper);
             // if it's not decrease auto - use this lines
-            String StoreKeeperID =Superim.get(branch).GetWeekShifts().GetShift(day).getWorkerList().get(Jobs.StoreKeeper).get(0).ID;
+            String StoreKeeperID =Superim.get(branch).GetWeekShifts().GetShift(shiftTime).getWorkerList().get(Jobs.StoreKeeper).get(0).ID;
             Workers.get(StoreKeeperID).RemoveShift(Days.values()[day]);
         }
+    }
+    public boolean checkStoreKeeper(List<String> branches,int day){
+        int shifttime = day*2;
+        // get all the branches that have can a store keeper
+        List<String>addedStoreKeeper1=CanAddStoreKeeper(branches,shifttime);
+        List<String>addedStoreKeeper2=CanAddStoreKeeper(branches,shifttime+1);
+        // flag to check if all the branches have a store keeper
+        boolean checkadded1 = checkAllBranchesStoreKeeper(addedStoreKeeper1,shifttime);
+        boolean checkadded2 = checkAllBranchesStoreKeeper(addedStoreKeeper2,shifttime+1);
+        // check for each branch for each shift (morning and evening) if he has a store keeper
+        if(checkadded1 && checkadded2)
+            return true;
+        // if we not succeed to add a store keeper to all branches - remove the one we added
+        //todo check if the -- of the number of shifts decrease successfully
+        removeStoreKeepersIfNeed(addedStoreKeeper1,shifttime,day);
+        removeStoreKeepersIfNeed(addedStoreKeeper2,shifttime+1,day);
         return false;
     }
 
