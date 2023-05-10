@@ -210,12 +210,13 @@ public class WorkerUI {
                     String branchName = UIGeneralFnctions.AskForBranch();
                     // first check todays shift
                     LocalDate today = LocalDate.now();
-                    DayOfWeek dayOfWeek = today.getDayOfWeek();
-                    String dayName = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
+                    String dayName = today.getDayOfWeek().toString().charAt(0)+today.getDayOfWeek().toString().substring(1).toLowerCase();
+                    //String dayName = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
+                    System.out.println(dayName);
                     // check if the worker works today in the branch
                     boolean works = workerController.IsWorksTodayAsShiftManagerOrStoreKeeper(ID,dayName,branchName);
                     if(works) {
-                        //todo add call the function from the shipment service
+                        workerController.printShipments(dayName, branchName);
                         System.out.println("need to do");
                     }
                     else{

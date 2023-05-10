@@ -2,30 +2,31 @@ package HR.Bussiness;
 import HR.DataAccess.DataController;
 import HR.DataAccess.SuperMapper;
 import HR.DataAccess.WorkerMapper;
+import Shipment.Service.HRService;
+
 import java.util.*;
 import java.util.ArrayList;
 
 //fast singleton
-public class ServiceControler {
-    private static ServiceControler instance;
+public class ServiceController {
+    private static ServiceController instance;
     private Map<String, Super> Superim;
     //all the Workers in the company
     private Map<String, Worker> Workers;
     private Map<String, Driver> Drivers;
     private WorkerMapper workerMapper;
     private SuperMapper superMapper;
-    private DataController dataController;
 
-    private ServiceControler() {
+    private ServiceController() {
         workerMapper=WorkerMapper.getInstance();
         superMapper=SuperMapper.getInstance();
         Superim = superMapper.getSuperMap();
         Workers= workerMapper.getWorkerMap();
         Drivers=workerMapper.getDriverMap();
     }
-    public static ServiceControler getInstance() {
+    public static ServiceController getInstance() {
         if (instance == null) {
-            instance = new ServiceControler();
+            instance = new ServiceController();
         }
         return instance;
     }
@@ -56,7 +57,7 @@ public class ServiceControler {
             Workers.get(StoreKeeperID).RemoveShift(Days.values()[day]);
         }
     }
-    public boolean checkStoreKeeper(List<String> branches,int day){
+    public boolean checkStoreKeeper2(List<String> branches,int day){
         int shifttime = day*2;
         // get all the branches that have can a store keeper
         List<String>addedStoreKeeper1=CanAddStoreKeeper(branches,shifttime);
@@ -81,21 +82,29 @@ public class ServiceControler {
         //check for each branch if he has a store keeper
         for(String branch:branches){
             if(!Superim.get(branch).GetWeekShifts().GetShift(day).getWorkerList().containsKey(Jobs.StoreKeeper)){
-                List <String> workers = Superim.get(branch).GetWorkersIDS();
-                // check if there is a store keeper that can be added to the shift
-                for(String worker:workers){
-                    if(Workers.get(worker).CanDoJob(Jobs.StoreKeeper) && !Workers.get(worker).WeeklyWorkingDays.contains(Days.values()[day])){
-                        Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.StoreKeeper,Workers.get(worker));
-                        Workers.get(worker).AddShift(Days.values()[day]);
-                        Workers.get(worker).AddShiftWorked();
-                        added.add(branch);
-                    }
-                }
+                return null;
+//                List <String> workers = Superim.get(branch).GetWorkersIDS();
+//                // check if there is a store keeper that can be added to the shift
+//                for(String worker:workers){
+//                    if(Workers.get(worker).CanDoJob(Jobs.StoreKeeper) && !Workers.get(worker).IsFree(Days.values()[day],Superim.get(branch).))){
+//                        Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.StoreKeeper,Workers.get(worker));
+//                        Workers.get(worker).AddShift(Days.values()[day]);
+//                        Workers.get(worker).AddShiftWorked();
+//                        added.add(branch);
+//                    }
+//                }
             }
         }
         return added;
     }
 
+    public boolean checkStoreKeeper(List<String> branches,int day) {
+        int shifttime = day * 2;
+        for (String branch : branches) {
+            return Superim.get(branch).GetWeekShifts().GetShift(shifttime).getWorkerList().containsKey(Jobs.StoreKeeper) && Superim.get(branch).GetWeekShifts().GetShift(shifttime + 1).getWorkerList().containsKey(Jobs.StoreKeeper);
+        }
+        return true;
+    }
 
     public List<String> getDriver(char licence, int training,int day){
         //create list to put in values of drivers
@@ -134,4 +143,6 @@ public class ServiceControler {
         //todo break it up
         return null;
     }
+
+
 }

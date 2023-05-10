@@ -1,6 +1,8 @@
 package HR.Bussiness;
 import HR.DataAccess.*;
 import HR.DataAccess.DataController;
+import Shipment.Service.HRService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import java.util.Random;
 public class ManagerController{
     private static ManagerController instance;
     private DataController  dataController;
+    private HRService hrService;
     private ManagerPasswordMapper managerPasswordMapper;
     private WorkerMapper workerMapper;
     private SuperMapper superMapper;
@@ -29,6 +32,7 @@ public class ManagerController{
         ManagerPassword= managerPasswordMapper.getManagerPassword();
         workerMapper=WorkerMapper.getInstance();
         superMapper=SuperMapper.getInstance();
+        hrService = HRService.getInstance();
         Superim = superMapper.getSuperMap();
         Workers= workerMapper.getWorkerMap();
         Drivers=workerMapper.getDriverMap();
@@ -446,6 +450,13 @@ public class ManagerController{
             day = day+1;
         return Superim.get(branch).GetWeekShifts().GetShift(day).IsEmptyShift();
     }
+
+
+    // the function asks all the shipments and prints them
+    public void PrintShipments(){
+        hrService.askForShipments();
+    }
+
     public void loadAllWorkersFrom(){
         dataController.loadAllWorkersFrom();
     }
