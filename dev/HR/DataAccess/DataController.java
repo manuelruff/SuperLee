@@ -1,7 +1,6 @@
 package HR.DataAccess;
 import HR.Bussiness.*;
 import resource.Connect;
-
 import java.util.Map;
 
 //this will be singleton
