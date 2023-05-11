@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 public class TruckMapper {
-    private TruckMapper instance;
+    private static TruckMapper instance;
     private Map<String, Truck> truckMap;
     private Connection connect;
     private TruckMapper()
