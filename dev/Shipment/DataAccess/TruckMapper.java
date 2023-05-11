@@ -1,9 +1,6 @@
 package Shipment.DataAccess;
-
-import HR.Bussiness.AWorker;
 import Shipment.Bussiness.*;
 import resource.Connect;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -112,7 +109,7 @@ public class TruckMapper {
     private void WriteWorkingDays(Truck truck){
         try {
             java.sql.Statement stat = connect.createStatement();
-            for (Shipment.Bussiness.Days day : truck.getInUse()) {
+            for (Days day : truck.getInUse()) {
                 stat.executeUpdate("INSERT OR IGNORE INTO TruckWorkingDays (TruckNumber, Day) VALUES (" + truck.getTruckNumber() + ", '" + day + "')");
             }
         }

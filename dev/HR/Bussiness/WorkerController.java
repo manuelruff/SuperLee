@@ -3,10 +3,7 @@ package HR.Bussiness;
 //this will be singletone
 
 import HR.DataAccess.DataController;
-import HR.DataAccess.WorkerMapper;
 import Shipment.Service.HRService;
-
-import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Map;
 
@@ -18,15 +15,13 @@ public class WorkerController  {
     private HRService hrService;
     public Map<String, Worker> Workers;
     public Map<String, Driver> Drivers;
-    private WorkerMapper workerMapper;
     private DataController dataController;
 
     private WorkerController() {
-        workerMapper=WorkerMapper.getInstance();
         dataController=DataController.getInstance();
         hrService=HRService.getInstance();
-        Workers= workerMapper.getWorkerMap();
-        Drivers=workerMapper.getDriverMap();
+        Workers= dataController.getWorkerMap();
+        Drivers=dataController.getDriverMap();
     }
     public static WorkerController getInstance() {
         if(instance == null)

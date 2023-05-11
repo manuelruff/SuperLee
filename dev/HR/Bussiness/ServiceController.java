@@ -1,10 +1,5 @@
 package HR.Bussiness;
 import HR.DataAccess.DataController;
-import HR.DataAccess.SuperMapper;
-import HR.DataAccess.WorkerMapper;
-import Shipment.Bussiness.Branch;
-import Shipment.Service.HRService;
-
 import java.util.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,17 +11,15 @@ public class ServiceController {
     //all the Workers in the company
     private Map<String, Worker> Workers;
     private Map<String, Driver> Drivers;
-    private WorkerMapper workerMapper;
-    private SuperMapper superMapper;
+    private DataController dataController;
 
     private Set<String> changes;
 
     private ServiceController() {
-        workerMapper=WorkerMapper.getInstance();
-        superMapper=SuperMapper.getInstance();
-        Superim = superMapper.getSuperMap();
-        Workers= workerMapper.getWorkerMap();
-        Drivers=workerMapper.getDriverMap();
+        dataController=DataController.getInstance();
+        Superim = dataController.getSuperMap();
+        Workers= dataController.getWorkerMap();
+        Drivers=dataController.getDriverMap();
         changes=new HashSet<>();
     }
     public static ServiceController getInstance() {
@@ -129,7 +122,7 @@ public class ServiceController {
         Training ability=Training.values()[training];
         Days day1=Days.values()[day];
         //ill load all the drivers that have those training and licence to the DB so we can choose a relevant one
-        workerMapper.ReadAllDriversByInfo(licence,ability);
+        dataController.ReadAllDriversByInfo(licence,ability);
         for(Driver driver:Drivers.values()){
             if(driver.getLicense()==licence&&driver.getAbility()==ability){
                 if(driver.checkDay(day1)){
@@ -155,7 +148,7 @@ public class ServiceController {
     }
 
     public List<String>getDriver(String ID){
-        Driver ret= workerMapper.getDriver(ID);
+        Driver ret= dataController.getDriver(ID);
         //todo break it up
         return null;
     }
