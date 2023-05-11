@@ -15,12 +15,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ShipmentMapper {
-    private static  ShipmentMapper instance = new ShipmentMapper();
-    private static ShipmentService shipmentService;
-    private static Map<String, Shipment> availableShipmentsMap;
-    private static Map<String, Shipment> shipmentsMap;
-    private static Connection conn;
-    private static VendorMapper vendorMapper;
+    private static ShipmentMapper instance = new ShipmentMapper();
+    private ShipmentService shipmentService;
+    private Map<String, Shipment> availableShipmentsMap;
+    private Map<String, Shipment> shipmentsMap;
+    private Connection conn;
+    private VendorMapper vendorMapper;
 
     private ShipmentMapper()
     {
@@ -37,7 +37,7 @@ public class ShipmentMapper {
         return instance;
     }
 
-    private static Driver GetDriver(List<String> driverDetails)
+    private Driver GetDriver(List<String> driverDetails)
     {
         String name,id,licence,ability,workingDays;
         name = driverDetails.get(0);
@@ -49,7 +49,7 @@ public class ShipmentMapper {
             driver.addNewDay(Days.valueOf(driverDetails.get(i)));
         return driver;
     }
-    private static void readItems(ItemsDoc itemsDoc)
+    private void readItems(ItemsDoc itemsDoc)
     {
         String name,storage;
         int amount;
@@ -71,7 +71,7 @@ public class ShipmentMapper {
 
         }
     }
-    private static List<ItemsDoc> getItemDocs(String shipmentID)
+    private List<ItemsDoc> getItemDocs(String shipmentID)
     {
         String name,id;
         List<ItemsDoc> itemsDocs=null;
@@ -95,7 +95,7 @@ public class ShipmentMapper {
         }
         return itemsDocs;
     }
-    private static Site getBranch(String siteName)
+    private Site getBranch(String siteName)
     {
         String address,phoneNumber,contactName;
         Zone zone;
@@ -106,7 +106,7 @@ public class ShipmentMapper {
         zone = Zone.valueOf(siteDetails.get(3));
         return new Branch(siteName,address,phoneNumber,contactName,zone);
     }
-    private static List<Site> readDestinations(String shipmentID)
+    private List<Site> readDestinations(String shipmentID)
     {
         String name;
         List<Site> destinations=null;
@@ -128,7 +128,7 @@ public class ShipmentMapper {
         return destinations;
     }
 
-    public static List<Shipment> getShipments()
+    public List<Shipment> getShipments()
     {
         String id,TruckNumber,DriverID,Source,Time,Status;
         Days day;
@@ -161,7 +161,7 @@ public class ShipmentMapper {
         }
         return shipments;
     }
-    public static List<Shipment> getAvailableShipments()
+    public List<Shipment> getAvailableShipments()
     {
         String id,TruckNumber,DriverID,Source,Time,Status;
         Days day;
@@ -196,7 +196,7 @@ public class ShipmentMapper {
         return availableShipments;
     }
 
-    public static void writeAllShipments()
+    public void writeAllShipments()
     {
         for(Shipment shipment :shipmentsMap.values())
             writeShipment(shipment);
@@ -204,7 +204,7 @@ public class ShipmentMapper {
             writeShipment(shipment);
 
     }
-    public static void writeShipment(Shipment shipment)
+    public void writeShipment(Shipment shipment)
     {
         String id,truckNumber,day,driverID,time = null,status,source;
         try{
@@ -225,7 +225,7 @@ public class ShipmentMapper {
             }
             else
             {
-                stat.executeUpdate("UPDATE Shipments SET ID='" + id + "', TruckNumber='" + truckNumber + "', DriverID=" + driverID + ", Sorce= "+source+", Time= "+time+", Status= "+source+"  WHERE ID=" + id);
+                stat.executeUpdate("UPDATE Shipments SET ID='" + id + "', TruckNumber='" + truckNumber + "', DriverID=" + driverID + ", Source= "+source+", Time= "+time+", Status= "+source+"  WHERE ID=" + id);
             }
         }
         catch (SQLException e)
@@ -235,7 +235,7 @@ public class ShipmentMapper {
         writeItemDocs(shipment);
         writeDestinations(shipment);
     }
-    private static void writeDestinations(Shipment shipment)
+    private void writeDestinations(Shipment shipment)
     {
         try
         {
@@ -251,7 +251,7 @@ public class ShipmentMapper {
             System.out.println("i have a problem sorry");
         }
     }
-    private static void writeItemDocs(Shipment shipment)
+    private void writeItemDocs(Shipment shipment)
     {
         try
         {
@@ -268,7 +268,7 @@ public class ShipmentMapper {
             System.out.println("i have a problem sorry");
         }
     }
-    private static void writeItemsForDocs(ItemsDoc itemsDoc)
+    private void writeItemsForDocs(ItemsDoc itemsDoc)
     {
         try {
             java.sql.Statement stat = conn.createStatement();
