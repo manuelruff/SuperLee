@@ -1,9 +1,10 @@
 package Shipment.DataAccess;
 
+import Shipment.Bussiness.*;
+
 // singleton
 public class DataController {
     private static DataController instance;
-
     private OrderMapper orderMapper;
     private ShipmentMapper shipmentMapper;
     private TruckMapper truckMapper;
@@ -24,5 +25,13 @@ public class DataController {
         return instance;
     }
 
-    //public void
+
+    /****************************************** Getter From Mappers ******************************************/
+    public Vendor getVendor(String name){
+        return vendorMapper.getVendor(name);
+    }
+
+    public Truck getTruck(String truckNumber){
+        return truckMapper.getTruck(truckNumber);
+    }
 }

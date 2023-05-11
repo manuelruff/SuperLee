@@ -8,7 +8,7 @@ import java.util.*;
 // singleton
 public class shipmentManagement {
 
-    private DataController  dataController;
+    private static DataController dataController;
     private static Truck staticsTruck;
     private final Map<String, List<Order>> vendorMap;
     private final List<Driver> drivers;
@@ -322,7 +322,7 @@ public class shipmentManagement {
      */
     public void printTrucks() {
         System.out.println("******* Trucks details *******");
-        System.out.println("Number of truck: " + trucks.size() + "\n");
+        System.out.println("Number of trucks: " + trucks.size() + "\n");
         for (Truck truck : trucks) {
             truck.printTruck();
 
@@ -465,7 +465,11 @@ public class shipmentManagement {
      */
 
     public boolean checkVendor(String name) {
-        return vendorMap.containsKey(name);
+        if (vendorMap.containsKey(name))
+            return true;
+        else{
+            return dataController.getVendor(name) != null;
+        }
     }
 
     /**
@@ -512,7 +516,6 @@ public class shipmentManagement {
      * This function removes the last site from the shipment, and creates an order of the item that were deleted.
      */
 
-    //todo change this shit.
     public boolean removeLastSiteFromShipment() {
         Shipment shipment = availableShipments.get(0);
         String source = shipment.getSource().getName();

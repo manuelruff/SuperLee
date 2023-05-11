@@ -26,6 +26,12 @@ public class VendorMapper {
         }
         return instance;
     }
+
+    /**
+     * This function getting a vendor from the map identity or the dataBase.
+     * @param name String, name of the vendor.
+     * @return the Vendor.
+     */
     public Vendor getVendor(String name) {
         if (!vendors.containsKey(name)){
             readVendor(name);
@@ -33,11 +39,17 @@ public class VendorMapper {
         return vendors.get(name);
     }
 
+
+    /**
+     * This function reads a vendor from the database according to the unique name it has and creating a vendor object
+     * out of it. the function access the Vendors table.
+     * @param name String, name of the Vendor to read.
+     */
     public void readVendor(String name) {
         String contactName, address, phoneNumber;
         try {
             java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Super WHERE NAME = '" + name + "'");
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Vendors WHERE NAME = '" + name + "'");
             if (rs.next()) {
                 name = rs.getString("Name");
                 phoneNumber = rs.getString("PhoneNumber");
@@ -49,10 +61,14 @@ public class VendorMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("Can't read this vendor: " + name);
 
         }
     }
+
+    /**
+     * This function writing every Vendor back to the dataBase.
+     */
     public void writeAllVendors(){
         for(Vendor vendor : vendors.values()){
             String name, address, phoneNumber, contactName;
@@ -67,7 +83,6 @@ public class VendorMapper {
                 System.out.println("can't write this Vendor");
             }
         }
-
     }
 
 }
