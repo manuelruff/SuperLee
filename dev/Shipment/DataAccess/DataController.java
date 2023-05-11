@@ -13,7 +13,7 @@ public class DataController {
     private DataController(){
         orderMapper = OrderMapper.getInstance();
         //shipmentMapper = ShipmentMapper.getInstance();
-        truckMapper = TruckMapper.getInstance();
+        //truckMapper = TruckMapper.getInstance();
         vendorMapper = VendorMapper.getInstance();
     }
 

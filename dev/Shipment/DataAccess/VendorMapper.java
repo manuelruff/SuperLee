@@ -26,7 +26,7 @@ public class VendorMapper {
         }
         return instance;
     }
-    public Vendor getVendors(String name) {
+    public Vendor getVendor(String name) {
         if (!vendors.containsKey(name)){
             readVendor(name);
         }

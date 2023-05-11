@@ -1,7 +1,9 @@
 package Shipment.DataAccess;
 
+import HR.Service.ShipmentService;
 import Shipment.Bussiness.*;
 import resource.Connect;
+
 
 import java.net.IDN;
 import java.sql.Connection;
@@ -14,15 +16,19 @@ import java.util.Objects;
 
 public class ShipmentMapper {
     private static  ShipmentMapper instance = new ShipmentMapper();
+    private static ShipmentService shipmentService;
     private static Map<String, Shipment> availableShipmentsMap;
     private static Map<String, Shipment> shipmentsMap;
     private static Connection conn;
+    private static VendorMapper vendorMapper;
 
     private ShipmentMapper()
     {
         availableShipmentsMap = new HashMap<>();
         shipmentsMap = new HashMap<>();
         conn = Connect.getConnection();
+        shipmentService = ShipmentService.getInstance();
+        vendorMapper = VendorMapper.getInstance();
     }
 
     private static ShipmentMapper getInstance(){
@@ -93,7 +99,7 @@ public class ShipmentMapper {
     {
         String address,phoneNumber,contactName;
         Zone zone;
-        List<String> siteDetails = askForSite(siteName);
+        List<String> siteDetails = shipmentService.askForSite(siteName);
         address = siteDetails.get(0);
         phoneNumber = siteDetails.get(1);
         contactName = siteDetails.get(2);
@@ -119,6 +125,7 @@ public class ShipmentMapper {
         {
             System.out.println("i have a problem sorry");
         }
+        return destinations;
     }
 
     public static List<Shipment> getShipments()
@@ -139,7 +146,7 @@ public class ShipmentMapper {
                 day = Days.valueOf(rs.getString("Day"));
                 Status = rs.getString("Status");
                 if(Status != "available") {
-                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(askForShipments(DriverID)) , day, Source,readDestinations(id),getItemDocs(id));
+                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source), readDestinations(id),getItemDocs(id));
                     //shipment.setDepartureTime(Time);//todo: set time
                     shipments.add(shipment);
                     shipmentsMap.put(id,shipment);
@@ -171,8 +178,9 @@ public class ShipmentMapper {
                 Time = rs.getString("Time");
                 day = Days.valueOf(rs.getString("Day"));
                 Status = rs.getString("Status");
+
                 if(Objects.equals(Status, "available")) {
-                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(askForShipments(DriverID)) , day, Source,readDestinations(id),getItemDocs(id));
+                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id));
                     //shipment.setDepartureTime(Time);//todo: set time
                     availableShipments.add(shipment);
                     availableShipmentsMap.put(id,shipment);
