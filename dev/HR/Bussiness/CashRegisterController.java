@@ -1,7 +1,5 @@
 package HR.Bussiness;
-import HR.DataAccess.CashRegisterMapper;
-import HR.DataAccess.SuperMapper;
-import HR.DataAccess.WorkerMapper;
+import HR.DataAccess.DataController;
 import java.util.Map;
 
 //this will be singlton
@@ -10,15 +8,11 @@ public class CashRegisterController  {
     private Map<String, Super> Superim;
     //all the Workers in the company
     private Map<String, Worker> Workers;
-    private CashRegisterMapper cashRegisterMapper;
-    private SuperMapper superMapper;
-    private WorkerMapper workerMapper;
+    private DataController dataController;
     private CashRegisterController() {
-        cashRegisterMapper=CashRegisterMapper.getInstance();
-        superMapper=SuperMapper.getInstance();
-        workerMapper=WorkerMapper.getInstance();
-        Superim = superMapper.getSuperMap();
-        Workers= workerMapper.getWorkerMap();
+        dataController=DataController.getInstance();
+        Superim = dataController.getSuperMap();
+        Workers= dataController.getWorkerMap();
     }
     public static CashRegisterController getInstance() {
         if(instance==null){
@@ -35,7 +29,7 @@ public class CashRegisterController  {
     }
     //print Domain.Cancellations of a specific date in a branch
     public void PrintCancellation(String Name, int year, int month, int day) {
-        cashRegisterMapper.ReadCancellations(Name,year,month,day);
+        dataController.ReadCancellations(Name,year,month,day);
         Superim.get(Name).get_cash_register().PrintCancellation(Name,year, month, day);
     }
 

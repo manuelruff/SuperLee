@@ -15,9 +15,6 @@ public class ManagerController{
     private DataController  dataController;
     private ServiceController serviceController;
     private HRService hrService;
-    private ManagerPasswordMapper managerPasswordMapper;
-    private WorkerMapper workerMapper;
-    private SuperMapper superMapper;
     private Map<String, Super> Superim;
     //all the Workers in the company
     private Map<String, Worker> Workers;
@@ -26,17 +23,14 @@ public class ManagerController{
     //to chose workers for the shift randomly
     private static Random rand;
     private ManagerController(){
-        managerPasswordMapper=ManagerPasswordMapper.getInstance();
-        ManagerPassword= managerPasswordMapper.getManagerPassword();
-        workerMapper=WorkerMapper.getInstance();
-        superMapper=SuperMapper.getInstance();
-        hrService = HRService.getInstance();
-        Superim = superMapper.getSuperMap();
-        Workers= workerMapper.getWorkerMap();
-        Drivers=workerMapper.getDriverMap();
-        rand = new Random();
         dataController=DataController.getInstance();
         serviceController = ServiceController.getInstance();
+        ManagerPassword= dataController.getManagerPassword();
+        hrService = HRService.getInstance();
+        Superim = dataController.getSuperMap();
+        Workers= dataController.getWorkerMap();
+        Drivers=dataController.getDriverMap();
+        rand = new Random();
     }
     public static ManagerController getInstance(){
         if (instance == null) {
@@ -57,7 +51,7 @@ public class ManagerController{
      */
     public void setManagerPassword(String password) {
         ManagerPassword = password;
-        managerPasswordMapper.setManagerPassword(password);
+        dataController.setManagerPassword(password);
     }
     /**
     * the function allows the HR manager to add new branch of markert
