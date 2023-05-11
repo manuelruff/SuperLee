@@ -2,10 +2,12 @@ package HR.Bussiness;
 import HR.DataAccess.DataController;
 import HR.DataAccess.SuperMapper;
 import HR.DataAccess.WorkerMapper;
+import Shipment.Bussiness.Branch;
 import Shipment.Service.HRService;
 
 import java.util.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 //fast singleton
 public class ServiceController {
@@ -17,12 +19,15 @@ public class ServiceController {
     private WorkerMapper workerMapper;
     private SuperMapper superMapper;
 
+    private Set<String> changes;
+
     private ServiceController() {
         workerMapper=WorkerMapper.getInstance();
         superMapper=SuperMapper.getInstance();
         Superim = superMapper.getSuperMap();
         Workers= workerMapper.getWorkerMap();
         Drivers=workerMapper.getDriverMap();
+        changes=new HashSet<>();
     }
     public static ServiceController getInstance() {
         if (instance == null) {
@@ -40,9 +45,10 @@ public class ServiceController {
         return true;
     }
 
+    // check if all branches have store keeper in shifts
     private boolean checkAllBranchesStoreKeeper(List<String>branches,int shiftTime){
         for(String branch:branches){
-            if(!Superim.get(branch).GetWeekShifts().GetShift(shiftTime).getWorkerList().containsKey(Jobs.StoreKeeper)&&!branches.contains(branch)){
+            if(!Superim.get(branch).GetWeekShifts().GetShift(shiftTime).getWorkerList().containsKey(Jobs.StoreKeeper)){
                 return false;
             }
         }
@@ -57,17 +63,22 @@ public class ServiceController {
             Workers.get(StoreKeeperID).RemoveShift(Days.values()[day]);
         }
     }
-    public boolean checkStoreKeeper2(List<String> branches,int day){
+    public boolean checkStoreKeeper(List<String> branches,int day){
         int shifttime = day*2;
-        // get all the branches that have can a store keeper
-        List<String>addedStoreKeeper1=CanAddStoreKeeper(branches,shifttime);
-        List<String>addedStoreKeeper2=CanAddStoreKeeper(branches,shifttime+1);
+        // get all the branches that have can a store keeper-
+        List<String>addedStoreKeeper1=CanAddStoreKeeper(branches,shifttime,0);
+        List<String>addedStoreKeeper2=CanAddStoreKeeper(branches,shifttime+1,1);
         // flag to check if all the branches have a store keeper
         boolean checkadded1 = checkAllBranchesStoreKeeper(addedStoreKeeper1,shifttime);
         boolean checkadded2 = checkAllBranchesStoreKeeper(addedStoreKeeper2,shifttime+1);
         // check for each branch for each shift (morning and evening) if he has a store keeper
-        if(checkadded1 && checkadded2)
+        if(checkadded1 && checkadded2) {
+            // save a meesage to the HR manager that we had to add store keeper
+            for (String b : branches) {
+                changes.add(b);
+            }
             return true;
+        }
         // if we not succeed to add a store keeper to all branches - remove the one we added
         //todo check if the -- of the number of shifts decrease successfully
         removeStoreKeepersIfNeed(addedStoreKeeper1,shifttime,day);
@@ -77,34 +88,41 @@ public class ServiceController {
 
     // if branch doesnt have store keeper - try to add one
     // we will return the list of all the branches we succeed to add a store keeper
-    public List<String> CanAddStoreKeeper(List<String> branches,int day){
+    public List<String> CanAddStoreKeeper(List<String> branches,int day,int shiftTime){
         List<String> added=new ArrayList<>();
+        Days day1=Days.values()[day];
         //check for each branch if he has a store keeper
         for(String branch:branches){
             if(!Superim.get(branch).GetWeekShifts().GetShift(day).getWorkerList().containsKey(Jobs.StoreKeeper)){
-                return null;
-//                List <String> workers = Superim.get(branch).GetWorkersIDS();
-//                // check if there is a store keeper that can be added to the shift
-//                for(String worker:workers){
-//                    if(Workers.get(worker).CanDoJob(Jobs.StoreKeeper) && !Workers.get(worker).IsFree(Days.values()[day],Superim.get(branch).))){
-//                        Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.StoreKeeper,Workers.get(worker));
-//                        Workers.get(worker).AddShift(Days.values()[day]);
-//                        Workers.get(worker).AddShiftWorked();
-//                        added.add(branch);
-//                    }
-//                }
+                List <String> workers = Superim.get(branch).GetWorkersIDS();
+                // check if there is a store keeper that can be added to the shift
+                for(String worker:workers){
+                    if(shiftTime == 0){
+                    if((Workers.get(worker).CanDoJob(Jobs.StoreKeeper) && !Workers.get(worker).IsFree(day1,Superim.get(branch).getStart_morning(day1),Superim.get(branch).getEnd_morning(day1))))
+                    {
+                        Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.StoreKeeper, Workers.get(worker));
+                        Workers.get(worker).AddShift(Days.values()[day]);
+                        Workers.get(worker).AddShiftWorked();
+                        added.add(branch);
+                        }
+                    }
+                    else{
+                        if((Workers.get(worker).CanDoJob(Jobs.StoreKeeper) && !Workers.get(worker).IsFree(day1,Superim.get(branch).getStart_evening(day1),Superim.get(branch).getEnd_evening(day1))))
+                        {
+                            Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.StoreKeeper, Workers.get(worker));
+                            Workers.get(worker).AddShift(Days.values()[day]);
+                            Workers.get(worker).AddShiftWorked();
+                            added.add(branch);
+                        }
+
+                    }
+                }
             }
         }
         return added;
     }
 
-    public boolean checkStoreKeeper(List<String> branches,int day) {
-        int shifttime = day * 2;
-        for (String branch : branches) {
-            return Superim.get(branch).GetWeekShifts().GetShift(shifttime).getWorkerList().containsKey(Jobs.StoreKeeper) && Superim.get(branch).GetWeekShifts().GetShift(shifttime + 1).getWorkerList().containsKey(Jobs.StoreKeeper);
-        }
-        return true;
-    }
+
 
     public List<String> getDriver(char licence, int training,int day){
         //create list to put in values of drivers
@@ -144,5 +162,10 @@ public class ServiceController {
         return null;
     }
 
+    // funciton to reset changes
+    public void resetChanges() {changes.clear();}
+
+    // function to get the changes
+    public Set<String> getChanges() {return changes;}
 
 }

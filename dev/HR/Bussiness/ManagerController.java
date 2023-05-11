@@ -16,6 +16,7 @@ import java.util.Random;
 public class ManagerController{
     private static ManagerController instance;
     private DataController  dataController;
+    private ServiceController serviceController;
     private HRService hrService;
     private ManagerPasswordMapper managerPasswordMapper;
     private WorkerMapper workerMapper;
@@ -38,6 +39,12 @@ public class ManagerController{
         Drivers=workerMapper.getDriverMap();
         rand = new Random();
         dataController=DataController.getInstance();
+        serviceController = ServiceController.getInstance();
+        // load all the changes from servicecontroller due to shipments
+        if(!serviceController.getChanges().isEmpty()){
+            for(String change: serviceController.getChanges())
+                System.out.println(change);
+        }
     }
     public static ManagerController getInstance(){
         if (instance == null) {
