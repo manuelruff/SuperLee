@@ -1,8 +1,8 @@
 package Shipment.DataAccess;
 
-import Shipment.Bussiness.Order;
+
 import Shipment.Bussiness.Vendor;
-import Shipment.Bussiness.Zone;
+
 import resource.Connect;
 
 import java.sql.Connection;
@@ -52,6 +52,22 @@ public class VendorMapper {
             System.out.println("i have a problem sorry");
 
         }
+    }
+    public void writeAllVendors(){
+        for(Vendor vendor : vendors.values()){
+            String name, address, phoneNumber, contactName;
+            try{
+                java.sql.Statement stmt = conn.createStatement();
+                name = vendor.getName();
+                address = vendor.getAddress();
+                phoneNumber = vendor.getPhoneNumber();
+                contactName = vendor.getContactName();
+                stmt.executeUpdate("INSERT OR IGNORE INTO Vendors (name, Address, PhoneNumber, ContactName) VALUES ('" + name + "', '" + address + "', '" + phoneNumber + "', '" + contactName + "')");
+            } catch (SQLException e) {
+                System.out.println("can't write this Vendor");
+            }
+        }
+
     }
 
 }

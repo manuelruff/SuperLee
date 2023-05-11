@@ -1,12 +1,14 @@
 package Shipment.Bussiness;
 
+import Shipment.DataAccess.DataController;
+
 import java.util.*;
 
 
 // singleton
 public class shipmentManagement {
-    private static Scanner scanner=new Scanner(System.in);
 
+    private DataController  dataController;
     private static Truck staticsTruck;
     private final Map<String, List<Order>> vendorMap;
     private final List<Driver> drivers;
@@ -26,6 +28,7 @@ public class shipmentManagement {
         sites = new ArrayList<>();
         shipments = new ArrayList<>();
         availableShipments = new ArrayList<>();
+        dataController = DataController.getInstance();
     }
     public static shipmentManagement getInstance() {
         if (instance == null) {
