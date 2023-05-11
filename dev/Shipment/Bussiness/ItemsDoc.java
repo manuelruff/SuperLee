@@ -62,4 +62,8 @@ public class ItemsDoc {
     public boolean isEmpty(){
         return itemList.isEmpty();
     }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 }

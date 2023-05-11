@@ -23,7 +23,7 @@ public class OrderMapper {
     public  static  OrderMapper getInstance(){
         return instance;
     }
-    public static  Order getOrder(String ID){
+    public static  Order getOreder(String ID){
         if (orderMap.get(ID)==null){
             readOrder(ID);
         }
@@ -93,7 +93,7 @@ public class OrderMapper {
                 if(!rs.next())
                 {
                     stat.executeUpdate("INSERT INTO Order(ID, Destination, Zone,Source) " +
-                            "VALUES ('" + id + ", '" + destination + " ','" + zone.toString() + "','" + source + "')");
+                            "VALUES (" + id + ", '" + destination + " '," + zone + "," + source + ")");
                 }
                 else {
                     stat.executeUpdate("UPDATE Order SET ID='" + id + "', Destination='" + destination + "', Zone=" + zone + ", Sorce= "+source+"  WHERE ID=" + id);
