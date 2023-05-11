@@ -122,8 +122,6 @@ public class ServiceController {
         return added;
     }
 
-
-
     public List<String> getDriver(char licence, int training,int day){
         //create list to put in values of drivers
         List<String> driverInfo=new ArrayList<>();

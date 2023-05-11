@@ -24,6 +24,15 @@ public class HRManagerUI {
             }
             else{
                 System.out.println("welcome MS BIG BOSS, what would you like to do today?");
+                //first read all the messages from the sihpment service
+                if(!managerController.ReadAllMessagesFromService().isEmpty()){
+                    System.out.println("look out! there are the changes that happened due to shipments");
+                    for(String s:managerController.ReadAllMessagesFromService()){
+                        System.out.println(s);
+                    }
+                    managerController.ResetMesseagesFromService();
+                    System.out.println("\n");
+                }
                 //we need to call the functionality for manager options
                 ManagerOptions();
                 //so we leave the while loop

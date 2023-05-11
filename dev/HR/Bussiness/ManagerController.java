@@ -3,10 +3,7 @@ import HR.DataAccess.*;
 import HR.DataAccess.DataController;
 import Shipment.Service.HRService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * the class ManagerController hold all the functions which HR manager can do
@@ -40,11 +37,6 @@ public class ManagerController{
         rand = new Random();
         dataController=DataController.getInstance();
         serviceController = ServiceController.getInstance();
-        // load all the changes from servicecontroller due to shipments
-        if(!serviceController.getChanges().isEmpty()){
-            for(String change: serviceController.getChanges())
-                System.out.println(change);
-        }
     }
     public static ManagerController getInstance(){
         if (instance == null) {
@@ -462,6 +454,14 @@ public class ManagerController{
     // the function asks all the shipments and prints them
     public void PrintShipments(){
         hrService.askForShipments();
+    }
+
+    public Set<String> ReadAllMessagesFromService(){
+        return serviceController.getChanges();
+    }
+
+    public void ResetMesseagesFromService(){
+        serviceController.resetChanges();
     }
 
     public void loadAllWorkersFrom(){
