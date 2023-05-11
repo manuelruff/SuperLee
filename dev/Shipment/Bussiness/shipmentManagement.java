@@ -344,6 +344,7 @@ public class shipmentManagement {
                             || ((truck instanceof CoolingTruck) && (currentTruck instanceof CoolingTruck))
                             || ((truck instanceof RegularTruck) && (currentTruck instanceof RegularTruck)))
                     {
+                        //check Driver to see if he can not be change
                         shipment.setDriver(changeDriver(shipment.getDriver(), truck, shipment.getDayOfTheWeek()));
                         if(shipment.getDriver() == null)
                             shipment.setDriver(currentDriver);
@@ -513,18 +514,22 @@ public class shipmentManagement {
         Shipment shipment = availableShipments.get(0);
         String source = shipment.getSource().getName();
         Order order;
-        if (shipment.getDestinations().size() == 1) {
+        int size = shipment.getDestinations().size();
+        if (size == 1) {
             return false;
         }
-        Site siteToRemove = shipment.getDestinations().get(shipment.getDestinations().size() - 1);
+        Site siteToRemove = shipment.getDestinations().get(size - 1);
         for (ItemsDoc doc : shipment.getDocs()) {
-            if (Objects.equals(doc.getSiteName(), siteToRemove.getName())){
-                createOrder(source, doc.getSiteName());
+            String docSiteName = doc.getSiteName();
+            if (Objects.equals(docSiteName, siteToRemove.getName())){
+                createOrder(source, docSiteName);
                 for (Item item : doc.getItemList()) {
                     order = vendorMap.get(source).get(vendorMap.get(source).size() - 1);
                     order.addItemToOrder(item);
                 }
                 shipment.getDocs().remove(doc);
+                shipment.removeSite(siteToRemove);
+                shipment.setShipmentStatus(Status.SiteChange);
                 System.out.println("The site: " + siteToRemove.getName() + " was removed from the shipment");
                 return true;
             }
@@ -901,81 +906,26 @@ public class shipmentManagement {
     }
 
 
+    /******************* itemsToDelete ******************/
+
     /**
-     * This function delete items from shipment in case there were
-     * @return true/false.
+     * check if the site is in the shipment
      */
-    public boolean itemsToDelete() {
-        Shipment shipment = availableShipments.get(0);
-        System.out.println("Those are the branches of the shipments: ");
-        for (Site site : shipment.getDestinations()){
+    public boolean checkSiteID(String name){
+        for(Site site : availableShipments.get(0).getDestinations()){
+            if (name.equals(site.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * this function prints the sites of the shipment that need to be changed
+     */
+    public void printSiteOfShipment(){
+        for(Site site : availableShipments.get(0).getDestinations()){
             site.printSite();
             System.out.println();
-        }
-        // choose site to delete item from.
-        System.out.println("Please choose the one you want to delete the item from, enter the name of the site: ");
-        String answer = scanner.nextLine();
-        boolean found = false;
-        while(!found) {
-            for (Site site : shipment.getDestinations()){
-                if (Objects.equals(answer, site.getName())) { // the site is in the shipment.
-                    found = true;
-                    break;
-                }
-            }
-            if (found)
-                continue;
-            System.out.println("This site is not exist, please enter again");
-            answer = scanner.nextLine();
-        }
-        ItemsDoc itemsD = null;
-        // finds the item document that goes the site.
-        for (ItemsDoc itemsDoc : shipment.getDocs()){
-            if (Objects.equals(itemsDoc.getSiteName(), answer)){
-                itemsDoc.printItemsDoc();
-                itemsD = itemsDoc;
-            }
-        }
-        System.out.println("Please choose an item you want to delete:");
-        answer = scanner.nextLine();
-        int amount = 0;
-        while(true){
-            if (itemsD != null) {
-                // finding the item and change it.
-                for(Item item : itemsD.getItemList()){
-                    if (Objects.equals(item.getName(), answer)){
-                        try{
-                            System.out.println("Please enter the amount you want to remove");
-                            amount = Integer.parseInt(scanner.nextLine());
-                        }
-                        catch (NumberFormatException e)
-                        {
-                            System.out.println("Please enter an Integer");
-                        }
-
-                        // if the input was higher, then delete the item.
-                        if (amount >= item.getQuantity()){
-                            System.out.println("the item: " + item.getName() + " was deleted");
-                            itemsD.deleteItem(item);
-                            if (itemsD.isEmpty()){ // if it was the las item of the doc.
-                                shipment.deleteItemDoc(itemsD);
-                                shipment.removeSite(getSite(itemsD.getSiteName()));
-                                return shipment.checkItemDocEmpty();  // in case it was the last doc in the shipment, then return true.
-                            }
-                        }
-                        else{
-                            item.setQuantity(item.getQuantity() - amount);
-                            System.out.println("the item: " + item.getName() + " amount was reduced to: " + item.getQuantity());
-                        }
-                        return false;
-                    }
-                }
-                System.out.println("This item does not exist, Please choose an item you want to delete.");
-                answer = scanner.nextLine();
-            }
-            else{
-                return false;
-            }
         }
     }
 
@@ -1127,6 +1077,48 @@ public class shipmentManagement {
 
     public boolean checkAvailableShipment() {
         return availableShipments.isEmpty();
+    }
+
+    public void printItemsDoc(String siteName){
+        for(ItemsDoc itemsDoc : availableShipments.get(0).getDocs()){
+            if (itemsDoc.getSiteName().equals(siteName)){
+                itemsDoc.printItemsDoc();
+            }
+        }
+    }
+
+    /**
+     * This function delete an item from shipment, this function is used when there is a problem loading the items at
+     * the vendor.
+     * @param itemName String, name of the item to delete.
+     * @param amount Int, the amount of the item to delete.
+     * @param siteName String, site to delete the item from.
+     * @return True if the item was deleted, false if not found.
+     */
+    public boolean deleteItemFromShipment(String itemName, int amount, String siteName){
+        ItemsDoc itmDoc = null;
+        for(ItemsDoc itemsDoc : availableShipments.get(0).getDocs()){
+            if (itemsDoc.getSiteName().equals(siteName)){
+                itmDoc = itemsDoc;
+            }
+        }
+        assert itmDoc != null;
+        for(Item item : itmDoc.getItemList()){
+            if (Objects.equals(item.getName(), itemName)){
+                if (item.getQuantity() >= amount){
+                    itmDoc.deleteItem(item);
+                    System.out.println("This item was deleted: ");
+                    item.printItem();
+                }
+                else{
+                   item.setQuantity(item.getQuantity() - amount);
+                   System.out.println("The amount of the item was reduced to " + item.getQuantity());
+                }
+                shipments.get(0).setShipmentStatus(Status.ItemsChange);
+                return true;
+            }
+        }
+        return false;
     }
 }
 
