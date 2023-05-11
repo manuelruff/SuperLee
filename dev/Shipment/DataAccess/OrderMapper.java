@@ -13,23 +13,25 @@ import java.util.Map;
 
 public class OrderMapper {
     private static OrderMapper instance = new OrderMapper();
-    private static Map<String, Order> orderMap;
-    private static Connection conn;
+    private Map<String, Order> orderMap;
+    private Connection conn;
 
     private OrderMapper() {
         orderMap = new HashMap<>();
         conn = Connect.getConnection();
     }
-    public  static  OrderMapper getInstance(){
+    public static OrderMapper getInstance(){
+        if (instance == null)
+            instance = new OrderMapper();
         return instance;
     }
-    public static  Order getOreder(String ID){
+    public Order getOreder(String ID){
         if (orderMap.get(ID)==null){
             readOrder(ID);
         }
         return orderMap.get(ID);
     }
-    private static void readOrder(String ID)
+    private void readOrder(String ID)
     {
         String id,destination,zone,source;
         try{
@@ -54,7 +56,7 @@ public class OrderMapper {
 
         }
     }
-    private static void readItems(String ID)
+    private void readItems(String ID)
     {
         String name,storage;
         int amount;
@@ -76,7 +78,7 @@ public class OrderMapper {
 
         }
     }
-    public static void writeAllOrders()
+    public void writeAllOrders()
     {
         for(Order order : orderMap.values())
         {
@@ -89,14 +91,14 @@ public class OrderMapper {
                 destination = order.getDestination();
                 zone = order.getZone();
                 source = order.getSource();
-                java.sql.ResultSet rs = stat.executeQuery("select * from Order WHERE ID=="+id+"" );
+                java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE ID=="+id+"" );
                 if(!rs.next())
                 {
-                    stat.executeUpdate("INSERT INTO Order(ID, Destination, Zone,Source) " +
+                    stat.executeUpdate("INSERT INTO Orders(ID, Destination, Zone,Source) " +
                             "VALUES (" + id + ", '" + destination + " '," + zone + "," + source + ")");
                 }
                 else {
-                    stat.executeUpdate("UPDATE Order SET ID='" + id + "', Destination='" + destination + "', Zone=" + zone + ", Sorce= "+source+"  WHERE ID=" + id);
+                    stat.executeUpdate("UPDATE Orders SET ID='" + id + "', Destination='" + destination + "', Zone=" + zone + ", Source= "+source+"  WHERE ID=" + id);
                 }
             }
             catch (SQLException e)
@@ -106,13 +108,13 @@ public class OrderMapper {
             writeItems(order);
         }
     }
-    private static void writeItems(Order order)
+    private void writeItems(Order order)
     {
         try {
             java.sql.Statement stat = conn.createStatement();
             for(Item item : order.getItemList())
             {
-                stat.executeUpdate("INSERT INTO Items(ID, Name, Amount,Storage) " +
+                stat.executeUpdate("INSERT INTO OrderItems(ID, Name, Amount,Storage) " +
                         "VALUES (" + order.getID() + ", '" + item.getName() + "', '" + item.getQuantity() + " '," + item.getStorageCondition().toString() + ")");
             }
         }

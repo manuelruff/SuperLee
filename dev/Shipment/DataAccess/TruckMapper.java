@@ -15,7 +15,7 @@ public class TruckMapper {
         truckMap = new HashMap<>();
         connect = Connect.getConnection();
     }
-    public TruckMapper getInstance()
+    public static TruckMapper getInstance()
     {
         if (instance == null){
             instance = new TruckMapper();
@@ -23,7 +23,7 @@ public class TruckMapper {
         return instance;
     }
 
-    public  Truck getTruck(String truckNumber)
+    public Truck getTruck(String truckNumber)
     {
         if(!truckMap.containsKey(truckNumber))
             readTruck(truckNumber);
@@ -36,7 +36,7 @@ public class TruckMapper {
         try
         {
             java.sql.Statement stat = connect.createStatement();
-            java.sql.ResultSet rs = stat.executeQuery("select * from WHERE truckNumber == "+truckNumber+"");
+            java.sql.ResultSet rs = stat.executeQuery("select * from Truck where truckNumber == "+truckNumber+"");
             if(rs.next())
             {
                 totalWeight = rs.findColumn("totalWeight");
@@ -89,14 +89,14 @@ public class TruckMapper {
                 storage = truck.getStorageType().toString();
                 totalWeight = truck.getTotalWeight();
                 truckWeight = truck.getTruckWeight();
-                java.sql.ResultSet rs = stat.executeQuery("select * from Order WHERE truckNumber=="+truckNumber+"" );
+                java.sql.ResultSet rs = stat.executeQuery("select * from Truck WHERE truckNumber=="+truckNumber+"" );
                 if(!rs.next())
                 {
-                    stat.executeUpdate("INSERT INTO Truck(truckNumber, totalWeight, truckWeight,model,storge) " +
+                    stat.executeUpdate("INSERT INTO Truck(truckNumber, totalWeight, truckWeight,model,Storage) " +
                             "VALUES ('" + truckNumber + "', " + totalWeight + " ," + truckWeight + ",'" + model +"', '"+storage+"')");
                 }
                 else {
-                    stat.executeUpdate("UPDATE Order SET truckNumber='" + truckNumber + "', totalWeight=" + totalWeight + ", truckWeight=" + truckWeight + ", model= '"+model+"', storage='"+storage+"'" +
+                    stat.executeUpdate("UPDATE Truck SET truckNumber='" + truckNumber + "', totalWeight=" + totalWeight + ", truckWeight=" + truckWeight + ", model= '"+model+"', storage='"+storage+"'" +
                             "  WHERE truckNumber=" + truckNumber);
                 }
             }

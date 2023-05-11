@@ -31,7 +31,7 @@ public class ShipmentMapper {
         vendorMapper = VendorMapper.getInstance();
     }
 
-    private static ShipmentMapper getInstance(){
+    static ShipmentMapper getInstance(){
         if (instance == null)
             instance = new ShipmentMapper();
         return instance;
