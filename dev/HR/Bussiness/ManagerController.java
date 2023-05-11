@@ -1,10 +1,9 @@
 package HR.Bussiness;
 import HR.DataAccess.*;
 import HR.DataAccess.DataController;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import Shipment.Service.HRService;
+
+import java.util.*;
 
 /**
  * the class ManagerController hold all the functions which HR manager can do
@@ -14,6 +13,8 @@ import java.util.Random;
 public class ManagerController{
     private static ManagerController instance;
     private DataController  dataController;
+    private ServiceController serviceController;
+    private HRService hrService;
     private ManagerPasswordMapper managerPasswordMapper;
     private WorkerMapper workerMapper;
     private SuperMapper superMapper;
@@ -29,11 +30,13 @@ public class ManagerController{
         ManagerPassword= managerPasswordMapper.getManagerPassword();
         workerMapper=WorkerMapper.getInstance();
         superMapper=SuperMapper.getInstance();
+        hrService = HRService.getInstance();
         Superim = superMapper.getSuperMap();
         Workers= workerMapper.getWorkerMap();
         Drivers=workerMapper.getDriverMap();
         rand = new Random();
         dataController=DataController.getInstance();
+        serviceController = ServiceController.getInstance();
     }
     public static ManagerController getInstance(){
         if (instance == null) {
@@ -446,6 +449,21 @@ public class ManagerController{
             day = day+1;
         return Superim.get(branch).GetWeekShifts().GetShift(day).IsEmptyShift();
     }
+
+
+    // the function asks all the shipments and prints them
+    public void PrintShipments(){
+        hrService.askForShipments();
+    }
+
+    public Set<String> ReadAllMessagesFromService(){
+        return serviceController.getChanges();
+    }
+
+    public void ResetMesseagesFromService(){
+        serviceController.resetChanges();
+    }
+
     public void loadAllWorkersFrom(){
         dataController.loadAllWorkersFrom();
     }

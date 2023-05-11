@@ -4,6 +4,7 @@ package HR.Bussiness;
 
 import HR.DataAccess.DataController;
 import HR.DataAccess.WorkerMapper;
+import Shipment.Service.HRService;
 
 import javax.xml.crypto.Data;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
  */
 public class WorkerController  {
     private static WorkerController instance ;
+    private HRService hrService;
     public Map<String, Worker> Workers;
     public Map<String, Driver> Drivers;
     private WorkerMapper workerMapper;
@@ -22,6 +24,7 @@ public class WorkerController  {
     private WorkerController() {
         workerMapper=WorkerMapper.getInstance();
         dataController=DataController.getInstance();
+        hrService=HRService.getInstance();
         Workers= workerMapper.getWorkerMap();
         Drivers=workerMapper.getDriverMap();
     }
@@ -87,6 +90,23 @@ public class WorkerController  {
     public boolean IsDriver(String ID){
         return Drivers.get(ID)!=null;
     }
-    
-    
+
+    // the function checks if worker is a storekeepr or shiftmanager in speficic shift
+    public boolean IsWorksTodayAsShiftManagerOrStoreKeeper(String ID, String day,String BranchName){
+        // if the worker isnt working today
+        if(Workers.get(ID).getWeeklyWorkingDays().contains(Days.valueOf(day)))
+            return false;
+        // if the worker isnt storekeeper or shift manager
+        if(Workers.get(ID).CanDoJob(Jobs.StoreKeeper)||Workers.get(ID).CanDoJob(Jobs.ShiftManager))
+            return false;
+        int shiftnum = Days.valueOf(day).ordinal()*2;
+        Map<Jobs, List<Worker>>curr1 = dataController.getSuper(BranchName).GetWeekShifts().GetShift(shiftnum).getWorkerList();
+        Map<Jobs, List<Worker>>curr2 = dataController.getSuper(BranchName).GetWeekShifts().GetShift(shiftnum+1).getWorkerList();
+        // checks if the worker works in the branch today in the correct job
+        return ((curr1.get(Jobs.StoreKeeper).contains(Workers.get(ID)) || curr1.get(Jobs.ShiftManager).contains(Workers.get(ID))) && (curr2.get(Jobs.StoreKeeper).contains(Workers.get(ID)) || curr2.get(Jobs.ShiftManager).contains(Workers.get(ID))));
+    }
+
+    public void printShipments(String day , String branchName){
+        hrService.askForShipments(Days.valueOf(day).ordinal(), branchName);
+    }
 }

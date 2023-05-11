@@ -6,6 +6,7 @@ import static HR.Presentation.UIGeneralFnctions.AskForIntNumber;
 public class HRManagerUI {
     private static Scanner scanner;
     private static ManagerController managerController = ManagerController.getInstance();
+
     //saves the Manager Password - started as 1234 and he can change it
     /**
      * manager (HR manager) needs to log in and it will be checked here
@@ -23,6 +24,15 @@ public class HRManagerUI {
             }
             else{
                 System.out.println("welcome MS BIG BOSS, what would you like to do today?");
+                //first read all the messages from the sihpment service
+                if(!managerController.ReadAllMessagesFromService().isEmpty()){
+                    System.out.println("look out! there are the changes that happened due to shipments");
+                    for(String s:managerController.ReadAllMessagesFromService()){
+                        System.out.println(s);
+                    }
+                    managerController.ResetMesseagesFromService();
+                    System.out.println("\n");
+                }
                 //we need to call the functionality for manager options
                 ManagerOptions();
                 //so we leave the while loop
@@ -37,18 +47,19 @@ public class HRManagerUI {
     //window with everything the manager can do
     public static void ManagerOptions(){
         int choice=-1;
-        while (choice!=8){
+        while (choice!=9){
             System.out.println("please choose your action:");
             System.out.println("1. work on a branch (snif)");
             System.out.println("2. add new branch");
             System.out.println("3. send weekly shifts to history for all branches");
             System.out.println("4. update employee");
             System.out.println("5. Show Drivers Schedule");
-            System.out.println("6. change password");
-            System.out.println("7. pay salaries");
-            System.out.println("8. Back ");
+            System.out.println("6. Show all shipments");
+            System.out.println("7. change password");
+            System.out.println("8. pay salaries");
+            System.out.println("9. Back ");
             //ask for input num
-            choice=UIGeneralFnctions.AskForNumber(1,8);
+            choice=UIGeneralFnctions.AskForNumber(1,9);
             switch (choice){
                 case 1:
                     String Name=UIGeneralFnctions.AskForBranch();
@@ -405,13 +416,16 @@ public class HRManagerUI {
                     managerController.PrintDriversSchedule();
                     break;
                 case 6:
+                    managerController.PrintShipments();
+                    break;
+                case 7:
                     System.out.println("enter new password: ");
                     String pass1 = scanner.nextLine();  // Read user input
                     managerController.setManagerPassword(pass1);
                     //after we did what we want we stop
                     System.out.println("password has changed");
                     break;
-                case 7:
+                case 8:
                     System.out.println("are you sure that you want to pay salaries? " +
                             "1.Yes" +
                             " 2.No");
@@ -423,7 +437,7 @@ public class HRManagerUI {
                         System.out.println("Payment done!");
                     }
                     break;
-                case 8:
+                case 9:
                     System.out.println("have a good day");
                     break;
                 default:

@@ -1,13 +1,23 @@
 package Shipment.Service;
 
-import Shipment.Bussiness.ServiceController;
+import HR.Bussiness.ServiceController;
 
 public class HRService {
 
-    ServiceController serviceController = ServiceController.getInstance();
+    private ServiceController serviceController;
+    private static HRService instance;
+
+    private HRService(){
+        serviceController = ServiceController.getInstance();
+    }
+    public static HRService getInstance(){
+        if(instance==null) {
+            instance = new HRService();
+        }
+        return instance;
+    }
 
     public void askForShipments(int day) {
-
     }
 
     public void askForShipments(int day, String siteName) {
@@ -19,5 +29,8 @@ public class HRService {
     }
     public void askForDeleteShipment(int day, String siteName){
 
+    }
+
+    public void askForShipments() {
     }
 }

@@ -1,7 +1,12 @@
 package HR.Presentation;
 
 import HR.Bussiness.WorkerController;
+import Shipment.Service.HRService;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class WorkerUI {
@@ -48,9 +53,10 @@ public class WorkerUI {
             System.out.println("3. remove constraints ");
             System.out.println("4. show constraints ");
             System.out.println("5. show shifts");
-            System.out.println("6. Back");
+            System.out.println("6. show today's shipment");
+            System.out.println("7. Back");
             //ask for input
-            choice=UIGeneralFnctions.AskForNumber(1,6);
+            choice=UIGeneralFnctions.AskForNumber(1,7);
             switch (choice){
                 case 1:
                     int op1_choice=-1;
@@ -200,6 +206,24 @@ public class WorkerUI {
                     }
                     break;
                 case 6:
+                    // ask the worker for his branch
+                    String branchName = UIGeneralFnctions.AskForBranch();
+                    // first check todays shift
+                    LocalDate today = LocalDate.now();
+                    String dayName = today.getDayOfWeek().toString().charAt(0)+today.getDayOfWeek().toString().substring(1).toLowerCase();
+                    //String dayName = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
+                    System.out.println(dayName);
+                    // check if the worker works today in the branch
+                    boolean works = workerController.IsWorksTodayAsShiftManagerOrStoreKeeper(ID,dayName,branchName);
+                    if(works) {
+                        workerController.printShipments(dayName, branchName);
+                        System.out.println("need to do");
+                    }
+                    else{
+                        System.out.println("you are not valid to see this content!");
+                    }
+                    break;
+                case 7:
                     System.out.println("have a good day");
                     break;
                 default:
