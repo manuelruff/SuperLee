@@ -53,6 +53,9 @@ public class Shipment {
 
     }
 
+    public LocalTime getDepartureTime() {
+        return departureTime;
+    }
 
     public String getID() {
         return ID;
