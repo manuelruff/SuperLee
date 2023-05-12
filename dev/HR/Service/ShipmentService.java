@@ -46,18 +46,11 @@ public class ShipmentService {
 
     }
     //we get updates for a driver, load if from db and write these updates
-    public void getUpdateForDriver(String ID,char licence, int training){
-
-    }
+    public void getUpdateForDriver(String ID,char licence, int training){serviceController.UpdateDriver(ID,licence,training);}
     //we need to load all the drivers from the database and print them by printme of driver
-    public void printAllDrivers(){
-
-    }
+    public void printAllDrivers(){serviceController.printDrivers();}
     //if a site wont get something in the day and we want to update hr manager so he can remove storekeeper
-    public void getUpdateForSite(String branchName, int day){
-    }
+    public void getUpdateForSite(String branchName, int day){serviceController.UpdateSiteMessage(branchName,day);}
     //update site info when we get it from shipment
-    public void getUpdateForSite(String branchName, String contactName, String contactNumber){
-
-    }
+    public void getUpdateForSite(String branchName, String contactName, String contactNumber){serviceController.UpdateSiteContact(branchName,contactName,contactNumber);}
 }

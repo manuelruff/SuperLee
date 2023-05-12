@@ -363,8 +363,27 @@ public class WorkerMapper {
             stmt.executeUpdate("DELETE FROM WeeklyWorkingDays WHERE WorkerID="+ID+"");
         }
         catch (SQLException e) {
-            System.out.println("i have a problem iun writing constraints sorry");
+            System.out.println("i have a problem iun deleting working days sorry");
         }
     }
-
+    public void deleteWorkerFromBranch(String ID, String branch){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM WorksAt WHERE WorkerID=" + ID + " AND SuperName='" + branch + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem iun deleting worker from branch constraints sorry");
+        }
+    }
+    public void deleteWorker(String ID){
+        DeleteWorkingDays(ID);
+        DeleteConstraints(ID);
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM Worker WHERE ID="+ID+"");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem iun deleting worker from branch constraints sorry");
+        }
+    }
 }

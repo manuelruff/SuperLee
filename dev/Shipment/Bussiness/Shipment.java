@@ -33,7 +33,7 @@ public class Shipment {
         departureTime = null;
 
     }
-    public Shipment(String ID, String truckNumber, Driver driver, Days day, Site source, List<Site> destinations, List<ItemsDoc> docs) {
+    public Shipment(String ID, String truckNumber, Driver driver, Days day, Site source, List<Site> destinations, List<ItemsDoc> docs, LocalDate date) {
         this.ID = ID;
         this.truckNumber = truckNumber;
         this.driver = driver;
@@ -42,6 +42,7 @@ public class Shipment {
         this.destinations = destinations;
         this.docs = docs;
         this.shipmentStatus = Status.NoChanges;
+        this.date = date;
         departureTime = null;
     }
 

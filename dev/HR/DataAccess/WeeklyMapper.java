@@ -176,7 +176,6 @@ public class WeeklyMapper {
     }
     public void DeleteWorkerFromShift(String ID,Shift curr){
         String ShiftDate = curr.getDate().toString();
-
         try {
             java.sql.Statement stmt = conn.createStatement();
             stmt.executeUpdate("DELETE FROM WorksAtShift WHERE WorkerID='" + ID + "' AND ShiftDate='" + ShiftDate + "'");
@@ -192,4 +191,7 @@ public class WeeklyMapper {
         WeeklyMap.get(Branch).put(weekly.getStartDate().toString(),weekly);
 
     }
+
+
+
 }
