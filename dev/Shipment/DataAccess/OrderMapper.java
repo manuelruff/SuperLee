@@ -58,7 +58,7 @@ public class OrderMapper {
         String id,destination,zone,source;
         try{
             java.sql.Statement stat = conn.createStatement();
-            java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE ID=="+ID+"");
+            java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE ID=='"+ID+"'");
             if(rs.next())
             {
                 id = rs.getString("ID");
@@ -84,7 +84,7 @@ public class OrderMapper {
         int amount;
         try {
             java.sql.Statement stat = conn.createStatement();
-            java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE ID=="+ID+"" );
+            java.sql.ResultSet rs = stat.executeQuery("select * from OrderItems WHERE ID=='"+ID+"'" );
             while (rs.next())
             {
                 name = rs.getString("Name");
@@ -113,7 +113,7 @@ public class OrderMapper {
                 destination = order.getDestination();
                 zone = order.getZone();
                 source = order.getSource();
-                java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE ID=="+id+"" );
+                java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE ID=='"+id+"'" );
                 if(!rs.next())
                 {
                     stat.executeUpdate("INSERT INTO Orders(ID, Destination, Zone,Source) " +

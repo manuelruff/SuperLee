@@ -19,6 +19,28 @@ public class LoadData {
     public static void main(String[] args) {
         truckMapper = TruckMapper.getInstance();
         orderMapper = OrderMapper.getInstance();
+        Truck truck;
+//        truck = truckMapper.getTruck("0007");
+//        truck.printTruck();
+//        truck = truckMapper.getTruck("0005");
+//        truck.printTruck();
+//        truck = truckMapper.getTruck("0003");
+//        truck.printTruck();
+        Order order;
+        order = orderMapper.getOreder("1");
+        order.printOrder();;
+        order = orderMapper.getOreder("2");
+        order.printOrder();
+        order = orderMapper.getOreder("3");
+        order.printOrder();
+        order = orderMapper.getOreder("4");
+        order.printOrder();;
+        order = orderMapper.getOreder("5");
+        order.printOrder();
+        order = orderMapper.getOreder("6");
+        order.printOrder();
+
+
 //        loadTrucks();
 //        truckMapper.writeAllTrucks();
 //        LoadOrders();
