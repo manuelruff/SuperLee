@@ -8,6 +8,7 @@ import resource.Connect;
 import java.net.IDN;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
@@ -149,6 +150,7 @@ public class ShipmentMapper {
     {
         String id,TruckNumber,DriverID,Source,Time,Status;
         Days day;
+        LocalDate date;
         List<Shipment> shipments = null;
         try{
             java.sql.Statement stat = conn.createStatement();
@@ -161,9 +163,10 @@ public class ShipmentMapper {
                 Source = rs.getString("Source");
                 Time = rs.getString("Time");
                 day = Days.valueOf(rs.getString("Day"));
+                date = LocalDate.parse(rs.getString("Date"));
                 Status = rs.getString("Status");
                 if(Status != "available") {
-                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source), readDestinations(id),getItemDocs(id));
+                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source), readDestinations(id),getItemDocs(id),date);
                     //shipment.setDepartureTime(Time);//todo: set time
                     shipmentsMap.put(id,shipment);
                 }
@@ -180,6 +183,7 @@ public class ShipmentMapper {
     {
         String id,TruckNumber,DriverID,Source,Time,Status;
         Days day;
+        LocalDate date;
         List<Shipment> availableShipments = null;
         try{
             java.sql.Statement stat = conn.createStatement();
@@ -193,9 +197,9 @@ public class ShipmentMapper {
                 Time = rs.getString("Time");
                 day = Days.valueOf(rs.getString("Day"));
                 Status = rs.getString("Status");
-
+                date = LocalDate.parse(rs.getString("Date"));
                 if(Objects.equals(Status, "available")) {
-                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id));
+                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id),date);
                     //shipment.setDepartureTime(Time);//todo: set time
                     availableShipments.add(shipment);
                     availableShipmentsMap.put(id,shipment);
