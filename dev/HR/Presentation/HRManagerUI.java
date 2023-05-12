@@ -325,7 +325,7 @@ public class HRManagerUI {
                                 int del=UIGeneralFnctions.AskForNumber(1,2);
                                 if(del==1){
                                     managerController.deleteBranch(Name);
-                                    System.out.println("branch deleted, you need to close the program and re open for the workers shift to update" +
+                                    System.out.println("branch deleted" +
                                             "\n you also need to manually fire/delete the workers who worked only in this branch");
                                 }
                                 else{
