@@ -2,6 +2,7 @@ package HR.Bussiness;
 import HR.DataAccess.DataController;
 import Shipment.Service.HRService;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -379,6 +380,8 @@ public class ManagerController{
     }
     //print a shift from history of a branch by its date if exists
     public void PrintWeeklyFromHist(String Name, int year, int month, int day) {
+        LocalDate date=LocalDate.of(year,month,day);
+        dataController.getWeekly(Name,date.toString());
         Superim.get(Name).PrintWeekFromHistByDate(year, month, day);
     }
     //remove a worker from a branch by id

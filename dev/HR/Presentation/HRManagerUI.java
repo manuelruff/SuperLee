@@ -66,7 +66,7 @@ public class HRManagerUI {
                     // once we now the name of the branch we need to ask what he wanna do with it
                     int choice2=-1;
                     while (choice2!=7) {
-                        System.out.println("please choose your action at the branch: ");
+                        System.out.println("please choose your action at the branch:");
                         System.out.println("1. create weekly shift");
                         System.out.println("2. update day in weekly shift");
                         System.out.println("3. show current shifts");
