@@ -308,7 +308,6 @@ public class ManagerController{
     }
     // remove worker from a shift of a branch
     public boolean RemoveFromDay(String ID, String branch, int day) {
-
         //we first need to load all the workers for this super from the db
         dataController.loadAllWorkersFromSuper(branch);
         //we check if the worker is working in this day
