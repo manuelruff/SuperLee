@@ -156,7 +156,6 @@ public class HRManagerUI {
                                     }
                                 }
                                 if(isCreatedWeekly){
-                                    //todo we need to add here the changes in each worker who was in that shift
                                     managerController.CancelWeekly(Name);
                                 }
                                 else{
@@ -217,7 +216,7 @@ public class HRManagerUI {
                                             break;
                                         }
                                         // if the shift isn't empty, or we want to add shift manager - we can add a worker
-                                        String workerID = managerController.AddToDay2(Name,shift_op,day_choice-1,job_choice-1);
+                                        String workerID = managerController.AddToDay(Name,shift_op,day_choice-1,job_choice-1);
                                         System.out.println(workerID + " has been added to the shift");
                                         break;
                                     case 3:
@@ -257,7 +256,10 @@ public class HRManagerUI {
                                     catch (Exception e){
                                         System.out.println("please enter a valid date ");
                                     }
-                                    managerController.PrintWeeklyFromHist(Name,Year,Month,Day);
+                                    boolean checkPrint=managerController.PrintWeeklyFromHist(Name,Year,Month,Day);
+                                    if(!checkPrint){
+                                        System.out.println("there is no weekly in that date");
+                                    }
                                     break;
                                 }
                                 break;

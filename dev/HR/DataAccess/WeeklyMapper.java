@@ -16,7 +16,6 @@ public class WeeklyMapper {
     private Map<String, Map<String , Weekly>> WeeklyMap;
     private Connection conn;
     private WorkerMapper workerMapper;
-
     private WeeklyMapper() {
         WeeklyMap=new HashMap<>();
         conn = Connect.getConnection();
@@ -186,8 +185,6 @@ public class WeeklyMapper {
             System.out.println("i have a problem iun deleting workers from shift sorry");
         }
     }
-
-
     public void InsertToMapper(String Branch,Weekly weekly){
         if(!WeeklyMap.containsKey(Branch)){
             WeeklyMap.put(Branch,new HashMap<>());
