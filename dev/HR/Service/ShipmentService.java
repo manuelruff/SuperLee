@@ -23,7 +23,7 @@ public class ShipmentService {
         if(!serviceController.checkHasWeekly(branches)){
             return null;
         }
-        //todo check we have employees for each super
+        //check we have employees for each super
         // check if all the branches has storekeeper for the day if one doesnt have we cant have the shipment
         if(!serviceController.checkStoreKeeper(branches,day)){
             return null;
@@ -32,24 +32,15 @@ public class ShipmentService {
         return serviceController.getDriver(licence,training,day);
     }
 
-    public List<String> askForDriver(String ID){
-        //todo add the right function to the service controler
-    	return serviceController.getDriver(ID);
-    }
+    public List<String> askForDriver(String ID){return serviceController.getDriver(ID);}
 
-    public boolean checkWeekly(List<String> branches, LocalDate date){
-        return serviceController.checkHasWeekly(branches,date);
-    }
+    public boolean checkWeekly(List<String> branches, LocalDate date){return serviceController.checkHasWeekly(branches,date);}
     //return a site by list of strings [String name, String address, String phoneNumber, String contactName, Zone zone]
     public List<String> askForSite(String branchName){
-        //todo gtSite in service controler
-        return null;
+        return serviceController.getSite(branchName);
     }
     //check if a site name exists
-    public boolean checkASite(String branchName){
-        //todo checkASite in service controler
-        return false;
-    }
+    public boolean checkASite(String branchName){return serviceController.checkSite(branchName);}
     //we get a driver and a day we remove from his shifts
     public void askRemoveDayForDriver(String ID,int day){
 

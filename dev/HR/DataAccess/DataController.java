@@ -73,7 +73,7 @@ public class DataController {
     }
 
 
-        public void DeleteConstraint(String ID){
+    public void DeleteConstraint(String ID){
         workerMapper.DeleteConstraints(ID);
     }
     public void DeleteWorkingDays(String ID, Shift shift){
