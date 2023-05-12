@@ -50,7 +50,10 @@ public class ShipmentService {
     }
     public void askRemoveDayForDriver(String ID,int day){
     }
-    public void getUpdateForDriver(char licence, int training){
+    public void getUpdateForDriver(String ID,char licence, int training){
+    }
+    public void printAllDrivers(){
+
     }
 
     //if a site wont get something in the day and we want to update hr manager so he can remove storekeeper
