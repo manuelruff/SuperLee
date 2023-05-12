@@ -3,29 +3,55 @@ package Shipment.DataAccess;
 import HR.Service.ShipmentService;
 import Shipment.Bussiness.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoadData {
 
     private LoadData instance = new LoadData();
 
     private static TruckMapper truckMapper;
     private static OrderMapper orderMapper;
+    private static ShipmentMapper shipmentMapper;
 
 
     public LoadData()
     {
         truckMapper = TruckMapper.getInstance();
         orderMapper = OrderMapper.getInstance();
+        shipmentMapper = ShipmentMapper.getInstance();
     }
     public static void main(String[] args) {
         truckMapper = TruckMapper.getInstance();
         orderMapper = OrderMapper.getInstance();
+        shipmentMapper = ShipmentMapper.getInstance();
+//        shipmentMapper.deleteShipments();
+//        checkTruck();
+//        checkOrder();
+//        checkShipment();
+//        loadShipments();
+//        shipmentMapper.writeAllShipments();
+//        loadTrucks();
+//        truckMapper.writeAllTrucks();
+//        LoadOrders();
+//        orderMapper.writeAllOrders();
+
+    }
+
+    public static void checkTruck()
+    {
         Truck truck;
-//        truck = truckMapper.getTruck("0007");
-//        truck.printTruck();
-//        truck = truckMapper.getTruck("0005");
-//        truck.printTruck();
-//        truck = truckMapper.getTruck("0003");
-//        truck.printTruck();
+        truck = truckMapper.getTruck("0007");
+        truck.printTruck();
+        truck = truckMapper.getTruck("0005");
+        truck.printTruck();
+        truck = truckMapper.getTruck("0003");
+        truck.printTruck();
+    }
+
+    public  static void checkOrder()
+    {
         Order order;
         order = orderMapper.getOreder("1");
         order.printOrder();;
@@ -34,21 +60,49 @@ public class LoadData {
         order = orderMapper.getOreder("3");
         order.printOrder();
         order = orderMapper.getOreder("4");
-        order.printOrder();;
+        order.printOrder();
         order = orderMapper.getOreder("5");
         order.printOrder();
         order = orderMapper.getOreder("6");
         order.printOrder();
-
-
-//        loadTrucks();
-//        truckMapper.writeAllTrucks();
-//        LoadOrders();
-//        orderMapper.writeAllOrders();
-
     }
-
-
+    public static void checkShipment()
+    {
+        List<Shipment> Shipments;
+        Shipments = shipmentMapper.getAvailableShipments();
+        Shipments.get(0).printShipment();
+    }
+    public static void loadShipments()
+    {
+        Truck truck;
+        truck = truckMapper.getTruck("0007");
+        Order order;
+        order = orderMapper.getOreder("1");
+        Driver driver = new Driver("0001","zoro",'D',Training.valueOf("Freezer"));
+        Site site = new Vendor("Osem","beer-sheva","0501234345","roee");
+        List<Site> destinations= new ArrayList<>();
+        Site site1 = new Branch("branch1","elbaf","0501101012","garp",Zone.Center);
+        Site site2 = new Branch("branch2","marinford","0501101033","sengoku",Zone.Center);
+        assert false;
+        destinations.add(site1);
+        destinations.add(site2);
+        List<ItemsDoc> itemsDocs= new ArrayList<>();
+        ItemsDoc itemsDoc = new ItemsDoc("branch1");
+        itemsDoc.addItemToDoc(new Item("ketchup", 10, Training.valueOf("Regular")));
+        itemsDoc.addItemToDoc(new Item( "spaghetti", 20, Training.valueOf("Regular")));
+        itemsDoc.addItemToDoc(new Item( "mayo", 10, Training.valueOf("Regular")));
+        ItemsDoc itemsDoc1 = new ItemsDoc("branch2");
+        itemsDoc1.addItemToDoc(new Item( "pene", 10, Training.valueOf("Regular")));
+        itemsDoc1.addItemToDoc(new Item( "bamba", 20, Training.valueOf("Regular")));
+        itemsDoc1.addItemToDoc(new Item( "bisli", 20, Training.valueOf("Regular")));
+        itemsDoc1.addItemToDoc(new Item( "peti ber", 20, Training.valueOf("Regular")));
+        itemsDocs.add(itemsDoc);
+        itemsDocs.add(itemsDoc1);
+        LocalDate date = LocalDate.now();
+        Shipment shipment = new Shipment("001",truck.getTruckNumber(),driver,Days.Sunday,site,destinations,itemsDocs,date);
+        shipment.setShipmentStatus(Status.Available);
+        shipmentMapper.addShipmentToAvailable(shipment);
+    }
     public static void loadTrucks(){
         addTruck("0000", 6000, 2000, "mercedes", 0);
         addTruck("0001", 13000, 2000, "mercedes", 1);
