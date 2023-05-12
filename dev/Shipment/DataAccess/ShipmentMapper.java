@@ -37,6 +37,18 @@ public class ShipmentMapper {
         return instance;
     }
 
+
+    public Map<String, Shipment> getShipmentsMap() {
+        return shipmentsMap;
+    }
+
+    public Shipment getShipment(String shipmentID){
+        if(!shipmentsMap.containsKey(shipmentID))
+            readShipment(shipmentID);
+        return shipmentsMap.get(shipmentID);
+
+    }
+
     private Driver GetDriver(List<String> driverDetails)
     {
         String name,id,licence,ability,workingDays;
@@ -48,6 +60,11 @@ public class ShipmentMapper {
         for(int i = 4; i < driverDetails.size(); i++)
             driver.addNewDay(Days.valueOf(driverDetails.get(i)));
         return driver;
+    }
+
+    //todo roee do it
+    public Shipment readShipment(String shipmentID){
+        return null;
     }
     private void readItems(ItemsDoc itemsDoc)
     {

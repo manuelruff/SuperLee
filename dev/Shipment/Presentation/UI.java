@@ -3,6 +3,7 @@ package Shipment.Presentation;
 import Shipment.Bussiness.Status;
 import Shipment.Bussiness.shipmentManagement;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -711,6 +712,7 @@ public class UI {
      */
     public static void addShipment()
     {
+        LocalDate date = null;
         boolean check5 = true,check50 = true, check51 = true;
         int day;
         String shipmentID,vendor;
@@ -750,7 +752,7 @@ public class UI {
                             vendor = scanner.nextLine();
                             if(Smanagement.checkVendor(vendor))
                             {
-                                Smanagement.createShipment(day,shipmentID,vendor);
+                                Smanagement.createShipment(day, date ,shipmentID,vendor);
                                 System.out.println("Shipment created");
                                 check5 = false;
                                 check50 = false;

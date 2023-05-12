@@ -23,6 +23,10 @@ public class TruckMapper {
         return instance;
     }
 
+    public Map<String, Truck> getTruckMap() {
+        return truckMap;
+    }
+
     public Truck getTruck(String truckNumber)
     {
         if(!truckMap.containsKey(truckNumber))

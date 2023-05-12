@@ -1,6 +1,7 @@
 package Shipment.Bussiness;
 
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import java.util.List;
@@ -9,6 +10,7 @@ public class Shipment {
 
     private String ID, truckNumber;
 
+    private LocalDate date;
     private Driver driver;
     private Days dayOfTheWeek;
 
@@ -18,6 +20,19 @@ public class Shipment {
     private List<ItemsDoc> docs;
     private Status shipmentStatus;
 
+    public Shipment(String ID, String truckNumber, Days day, Site source, List<Site> destinations, List <ItemsDoc> docs, LocalDate date){
+        this.ID = ID;
+        this.truckNumber = truckNumber;
+        this.dayOfTheWeek = day;
+        this.source = source;
+        this.driver = null;
+        this.destinations = destinations;
+        this.docs = docs;
+        this.shipmentStatus = Status.NoChanges;
+        this.date = date;
+        departureTime = null;
+
+    }
     public Shipment(String ID, String truckNumber, Driver driver, Days day, Site source, List<Site> destinations, List<ItemsDoc> docs) {
         this.ID = ID;
         this.truckNumber = truckNumber;
@@ -39,7 +54,10 @@ public class Shipment {
         }
         else{System.out.println("shipment scheduled for this " + dayOfTheWeek.toString());}
         System.out.println("Truck number: " + truckNumber);
-        System.out.println("Driver Name: "+ driver.getName());
+        if (driver != null) {
+            System.out.println("Driver Name: " + driver.getName());
+        }
+        else{System.out.println("No driver at the moment");}
         System.out.println("Vendor: "+ source.getName());
         if(shipmentStatus == Status.NoChanges)
             System.out.println("There isn't any changes in this shipment as of this moment");
@@ -114,4 +132,6 @@ public class Shipment {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
+
+    public LocalDate getDate(){return date;}
 }

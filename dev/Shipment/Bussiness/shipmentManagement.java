@@ -1,7 +1,9 @@
 package Shipment.Bussiness;
 
+import HR.Service.ShipmentService;
 import Shipment.DataAccess.DataController;
 
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -12,10 +14,11 @@ public class shipmentManagement {
     private static Truck staticsTruck;
     private final Map<String, List<Order>> vendorMap;
     private final List<Driver> drivers;
-    private final List<Truck> trucks;
+    private final Map<String,Truck> trucks;
     private final List<Site> sites;
 
-    private final List<Shipment> shipments;
+    private ShipmentService shipmentService;
+    private final Map<String, Shipment> shipments;
 
     private List<Shipment> availableShipments;
 
@@ -24,11 +27,12 @@ public class shipmentManagement {
     private shipmentManagement() {
         vendorMap = new HashMap<>();
         drivers = new ArrayList<>();
-        trucks = new ArrayList<>();
+        trucks = dataController.getTrucksMap();
         sites = new ArrayList<>();
-        shipments = new ArrayList<>();
+        shipments = dataController.getShipmentsMap();
         availableShipments = new ArrayList<>();
         dataController = DataController.getInstance();
+        shipmentService = ShipmentService.getInstance();
     }
     public static shipmentManagement getInstance() {
         if (instance == null) {
@@ -218,12 +222,7 @@ public class shipmentManagement {
      * @return true if the truck is found. false otherwise.
      */
     public boolean checkTruckNumber(String truckNumber) {
-        for (Truck truck : trucks) {
-            if (Objects.equals(truckNumber, truck.getTruckNumber())) {
-                return true;
-            }
-        }
-        return false;
+        return dataController.getTruck(truckNumber) == null;
     }
 
     /**
@@ -233,12 +232,7 @@ public class shipmentManagement {
      */
     public Truck getTruck(String truckNumber)
     {
-        for(Truck truck : trucks)
-        {
-            if(truck.getTruckNumber().equals(truckNumber))
-                return truck;
-        }
-        return null;
+        return dataController.getTruck(truckNumber);
     }
 
     /**
@@ -265,7 +259,7 @@ public class shipmentManagement {
                 truck = new FreezerTruck(truckNumber, totalWeight, truckWeight, model);
                 break;
         }
-        trucks.add(truck);
+        trucks.put(truckNumber,truck);
     }
 
     /**
@@ -274,12 +268,7 @@ public class shipmentManagement {
      * @param truckNumber string, the truck number.
      */
     public void removeTruck(String truckNumber) {
-        for (Truck truck : trucks) {
-            if (Objects.equals(truckNumber, truck.getTruckNumber())) {
-                trucks.remove(truck);
-                return;
-            }
-        }
+        dataController.deleteTruck(truckNumber);
     }
 
     /**
@@ -290,7 +279,7 @@ public class shipmentManagement {
      * @return string, the truck Number.
      */
     public String searchForTruck(Training train, int day, char licence) {
-        for (Truck truck : trucks) {
+        for (Truck truck : trucks.values()) {
             if (licence == 'D' || truck.getTotalWeight() < 12000)
                 if (truck.addNewDay(Days.values()[day])) {
                     if (((truck instanceof FreezerTruck) && (train == Training.Freezer))
@@ -302,30 +291,15 @@ public class shipmentManagement {
         return "";
     }
 
-
-    /**
-     * This function finds a truck by ID and retruns it
-     * @param truckNumber String of the truck.
-     * @return the found truck.
-     */
-    public Truck searchTruckByID(String truckNumber) {
-        for (Truck truck : trucks) {
-            if (truck.getTruckNumber().equals(truckNumber)) {
-                return truck;
-            }
-        }
-        return null;
-    }
-
     /**
      * This function prints every truck in the system.
      */
     public void printTrucks() {
+        dataController.loadAllTrucks();
         System.out.println("******* Trucks details *******");
         System.out.println("Number of trucks: " + trucks.size() + "\n");
-        for (Truck truck : trucks) {
+        for (Truck truck : trucks.values()) {
             truck.printTruck();
-
         }
     }
 
@@ -337,7 +311,7 @@ public class shipmentManagement {
         Shipment shipment = shipments.get(0);
         Truck currentTruck = getTruck(shipment.getTruckNumber());
         Driver currentDriver = shipment.getDriver();
-        for(Truck truck : trucks)
+        for(Truck truck : trucks.values())
         {
             if(currentTruck.getTotalWeight() < truck.getTotalWeight())
             {
@@ -604,13 +578,15 @@ public class shipmentManagement {
      * This function prints every shipment in the system.
      */
     public void printShipments(){
+        dataController.loadAllShipments();
         if (shipments.isEmpty()) {
             System.out.println("There isn't any shipments!");
             return;
         }
         System.out.println("******************** SHIPMENTS ********************");
-        for (Shipment shipment : shipments){
+        for (Shipment shipment : shipments.values()){
             shipment.printShipment();
+            System.out.println("\n");
         }
     }
 
@@ -637,17 +613,7 @@ public class shipmentManagement {
      * @return true if found. false otherwise
      */
     public boolean checkShipmentID(String ID) {
-        for (Shipment ship : shipments) {
-            if (Objects.equals(ship.getID(), ID)) {
-                return true;
-            }
-        }
-        for (Shipment ship : availableShipments){
-            if (Objects.equals(ship.getID(), ID)) {
-                return true;
-        }
-        }
-        return false;
+        return dataController.getShipment(ID) == null;
     }
 
 
@@ -673,7 +639,8 @@ public class shipmentManagement {
      * This function prints all the shipment item docs of the system.
      */
     public void printAllDocs(){
-        for(Shipment shipment : shipments){
+        dataController.loadAllShipments();
+        for(Shipment shipment : shipments.values()){
             for(ItemsDoc itemsDoc : shipment.getDocs()){
                 itemsDoc.printItemsDoc();
             }
@@ -690,12 +657,11 @@ public class shipmentManagement {
      * @param source    string, Vendor.
      * @return True/false if the shipment was created.
      */
-    public boolean createShipment(int dayOfWeek, String ID, String source) {
+    public boolean createShipment(int dayOfWeek, LocalDate date , String ID, String source) {
         ItemsDoc itemsDoc;
         Shipment shipment;
         Driver driverForShipment = null;
         String truckNumberForShipment = "";
-
         if (vendorMap.get(source).isEmpty()) {
             System.out.println("This vendor: " + source + " does not have any orders");
             return false;
@@ -713,6 +679,9 @@ public class shipmentManagement {
         Site vendor = getSite(source);
 
         //todo asking for a driver.
+//        if (shipmentService.checkShift(date)){
+//            shipmentService.askForDriver()
+//        }
 
         // finding driver and truck
         while (driverForShipment == null || Objects.equals(truckNumberForShipment, "")) {

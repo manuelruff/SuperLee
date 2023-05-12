@@ -2,6 +2,8 @@ package Shipment.DataAccess;
 
 import Shipment.Bussiness.*;
 
+import java.util.Map;
+
 // singleton
 public class DataController {
     private static DataController instance;
@@ -25,13 +27,30 @@ public class DataController {
         return instance;
     }
 
-
-    /****************************************** Getter From Mappers ******************************************/
     public Vendor getVendor(String name){
         return vendorMapper.getVendor(name);
     }
 
+    /**************************************** Shipment Related Methods ****************************************/
+
+    public Map<String, Shipment> getShipmentsMap(){return shipmentMapper.getShipmentsMap();}
+    public void loadAllShipments(){}
+    public Shipment getShipment(String shipmentID){return shipmentMapper.getShipment(shipmentID);}
+
+
+
+
+
+    /**************************************** Trucks Related Methods ****************************************/
+
     public Truck getTruck(String truckNumber){
         return truckMapper.getTruck(truckNumber);
+    }
+    public Map<String, Truck> getTrucksMap(){return truckMapper.getTruckMap();}
+
+    public void deleteTruck(String truckNumber) {
+    }
+    public void loadAllTrucks(){
+
     }
 }

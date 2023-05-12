@@ -85,5 +85,8 @@ public class VendorMapper {
         }
     }
 
+    public Map<String, Vendor> getVendors() {
+        return vendors;
+    }
 }
 
