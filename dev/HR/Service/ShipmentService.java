@@ -1,6 +1,7 @@
 package HR.Service;
 import HR.Bussiness.ServiceController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ShipmentService {
@@ -38,6 +39,10 @@ public class ShipmentService {
     public List<String> askForSite(String branchName){
         //todo gtSite in service controler
         return null;
+    }
+    public boolean checkWeekly(List<String> branches, LocalDate date){
+        //todo checkWeekly in service controler
+        return false;
     }
     public boolean checkASite(String branchName){
         //todo checkASite in service controler

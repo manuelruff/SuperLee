@@ -36,7 +36,11 @@ public class DataController {
     public void setManagerPassword(String managerPassword) {
         managerPasswordMapper.setManagerPassword(managerPassword);
     }
-        public Map<String,Super>getSuperMap(){return superMapper.getSuperMap();}
+    public Map<String,Super>getSuperMap(){return superMapper.getSuperMap();
+    }
+    public Weekly getWeekly(String Branch,String StartDate) {
+        return weeklyMapper.getWeekly(Branch,StartDate);
+    }
 
     public void ReadCancellations(String BranchName,int year,int month,int day){
         cashRegisterMapper.ReadCancellations(BranchName,year,month,day);
