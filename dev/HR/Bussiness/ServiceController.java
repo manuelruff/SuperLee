@@ -160,10 +160,35 @@ public class ServiceController {
         return driverInfo;
     }
 
+    // the function return all the inforamtion needed to build Driver Object
     public List<String>getDriver(String ID){
         Driver ret= dataController.getDriver(ID);
-        //todo break it up
-        return null;
+        //todo check if it works
+        List<String>driverInfo=new ArrayList<>();
+        driverInfo.add(ret.getID());
+        driverInfo.add(ret.getName());
+        driverInfo.add(String.valueOf(ret.getLicense()));
+        driverInfo.add(ret.getAbility().toString());
+        return driverInfo;
+    }
+
+    // the function return all the information needed to build Super Object
+    public List<String>getSite(String BranchName){
+        Super ret = dataController.getSuper(BranchName);
+        List<String>branchInfo = new ArrayList<>();
+        //[String name, String address, String phoneNumber, String contactName, Zone zone]
+        branchInfo.add(ret.getName());
+        branchInfo.add(ret.getAddress());
+        branchInfo.add(ret.getPhoneNumber());
+        branchInfo.add(ret.getContactName());
+        branchInfo.add(ret.getZone().toString());
+        return branchInfo;
+    }
+
+    // check if site is exist
+    public boolean checkSite(String name){
+        // check it from the mapper by the dataController
+        return dataController.getSuper(name) != null;
     }
 
     // funciton to reset changes
