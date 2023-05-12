@@ -189,9 +189,31 @@ public class HRManagerUI {
                                 //if i got here i have a good option
                                 switch (ActionChoice){
                                     case 1:
+                                        //todo: check if it works
                                         String ID = UIGeneralFnctions.AskForWorkerID();
+                                        if(!managerController.IsWorkAtDay(ID, Name,day_choice-1)){
+                                            System.out.println("this worker doesn't works at this day");
+                                            break;
+                                        }
+                                        if(managerController.IsOnlyStoreKeeperWithShipment(Name,ID,day_choice-1)){
+                                            System.out.println("the worker you want to remove is the only storekeeper and we have shipment today - what do you want to do: " +
+                                                    "1. cancel the shipment and remove the worker \n" +
+                                                    "2. go back and add other storekeeper before");
+                                            int removeChoice = UIGeneralFnctions.AskForNumber(1,2);
+                                            if(removeChoice==1){
+                                                // delete the shipment
+                                                managerController.DeleteShipment(Name,day_choice-1);
+                                                //remove the worker
+                                                managerController.RemoveFromDay(ID, Name,day_choice-1);
+                                            }
+                                            else{
+                                                break;
+                                            }
+                                        }
+                                        // remove the worker
                                         if(!managerController.RemoveFromDay(ID, Name,day_choice-1)){
-                                            System.out.println("this worker doesn't works at this shift");
+                                            // I think we dont need this - but check in tests
+                                            System.out.println("sorry, we have a problem - please try again!");
                                         }
                                         break;
                                     case 2:
