@@ -22,7 +22,10 @@ public class TruckMapper {
         }
         return instance;
     }
-
+    public void addTruckToMap(Truck truck)
+    {
+        truckMap.putIfAbsent(truck.getTruckNumber(),truck);
+    }
     public Map<String, Truck> getTruckMap() {
         return truckMap;
     }
