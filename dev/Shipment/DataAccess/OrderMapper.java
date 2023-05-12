@@ -25,11 +25,33 @@ public class OrderMapper {
             instance = new OrderMapper();
         return instance;
     }
+//    public void resetOrderCounter()
+//    {
+//        try {
+//            java.sql.Statement stat = conn.createStatement();
+//            java.sql.ResultSet rs = stat.executeQuery("SELECT ID FROM Orders ORDER BY ID DESC LIMIT 1");
+//            if (rs.next()) {
+//                String lastOrderID = rs.getString("ID");
+//
+//            } else {
+//                System.out.println("No orders found.");
+//            }
+//        }
+//        catch (SQLException e)
+//        {
+//            System.out.println("i have a problem sorry reset count");
+//
+//        }
+//    }
     public Order getOreder(String ID){
         if (orderMap.get(ID)==null){
             readOrder(ID);
         }
         return orderMap.get(ID);
+    }
+    public void addOrderToMap(Order order)
+    {
+        orderMap.putIfAbsent(order.getID(), order);
     }
     private void readOrder(String ID)
     {
@@ -52,7 +74,7 @@ public class OrderMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry1");
 
         }
     }
@@ -95,15 +117,15 @@ public class OrderMapper {
                 if(!rs.next())
                 {
                     stat.executeUpdate("INSERT INTO Orders(ID, Destination, Zone,Source) " +
-                            "VALUES (" + id + ", '" + destination + " '," + zone + "," + source + ")");
+                            "VALUES (" + id + ", '" + destination + " ','" + zone.toString() + "','" + source + "')");
                 }
                 else {
-                    stat.executeUpdate("UPDATE Orders SET ID='" + id + "', Destination='" + destination + "', Zone=" + zone + ", Source= "+source+"  WHERE ID=" + id);
+                    stat.executeUpdate("UPDATE Orders SET ID='" + id + "', Destination='" + destination + "', Zone='" + zone.toString() + "', Source= '"+source+"'  WHERE ID=" + id);
                 }
             }
             catch (SQLException e)
             {
-                System.out.println("i have a problem sorry");
+                System.out.println("i have a problem sorry2");
             }
             writeItems(order);
         }
@@ -115,12 +137,12 @@ public class OrderMapper {
             for(Item item : order.getItemList())
             {
                 stat.executeUpdate("INSERT INTO OrderItems(ID, Name, Amount,Storage) " +
-                        "VALUES (" + order.getID() + ", '" + item.getName() + "', '" + item.getQuantity() + " '," + item.getStorageCondition().toString() + ")");
+                        "VALUES ('" + order.getID() + "', '" + item.getName() + "', '" + item.getQuantity() + " ','" + item.getStorageCondition().toString() + "')");
             }
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry3");
         }
     }
 
