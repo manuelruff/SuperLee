@@ -114,7 +114,9 @@ public class Shift {
 
     //if the weekly is canceled in the middle we empty the shift and update each worker
     public void clearWorkers(){
-        Days day=Days.valueOf(this.date.getDayOfWeek().toString());
+        LocalDate today =this.date;
+        String dayName = today.getDayOfWeek().toString().charAt(0)+today.getDayOfWeek().toString().substring(1).toLowerCase();
+        Days day=Days.valueOf(dayName);
         for(Jobs job:WorkerList.keySet()){
             for(Worker worker: WorkerList.get(job)){
                 worker.RemoveShift(day);
