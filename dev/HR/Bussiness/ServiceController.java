@@ -191,6 +191,44 @@ public class ServiceController {
         return dataController.getSuper(name) != null;
     }
 
+    //print all the drivers we have
+    public void printDrivers(){
+        //first read all the workers from the DB by the datacontroller
+        dataController.loadAllWorkersFrom();
+        // print them
+        for(Driver driver: Drivers.values()){
+            driver.Printme();
+        }
+    }
+
+    // update driver informantion
+    public void UpdateDriver(String ID,char licence, int training){
+        Driver driver = dataController.getDriver(ID);
+        driver.setLicense(licence);
+        driver.setAbility(Training.values()[training]);
+    }
+
+    // add message to HR manager if shipment cancelled in specific day
+    public void UpdateSiteMessage(String branchName, int day){
+        Super branch = dataController.getSuper(branchName);
+        String message = "The site " + branch.getName() + " no longer have shipment for day " + Days.values()[day];
+        changes.add(message);
+    }
+
+    //update contact info for a site
+    public void UpdateSiteContact(String branchName, String contactName, String phoneNumber){
+        Super branch = dataController.getSuper(branchName);
+        branch.setContactName(contactName);
+        branch.setPhoneNumber(phoneNumber);
+    }
+
+    // remove a shift day from a driver
+    public void RemoveShiftDay(String ID, int day){
+        Driver driver = dataController.getDriver(ID);
+        // if the worker works at this day - remove it from his shifts - if not dont do nothing
+        if(!driver.checkDay(Days.values()[day]))
+            driver.RemoveShift(Days.values()[day]);
+    }
     // funciton to reset changes
     public void resetChanges() {changes.clear();}
 
