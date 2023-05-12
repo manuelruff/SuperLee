@@ -461,6 +461,8 @@ public class ManagerController{
 
 
     public void deleteBranch(String branch){
+        Superim.remove(branch);
+        hrService.removeSite(branch);
         dataController.deleteBranch(branch);
     }
     /**

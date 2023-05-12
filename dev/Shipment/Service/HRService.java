@@ -40,4 +40,8 @@ public class HRService {
     public void findDriversForShipments(){
 
     }
+    //update of a site removal
+    public void removeSite(String name){
+
+    }
 }
