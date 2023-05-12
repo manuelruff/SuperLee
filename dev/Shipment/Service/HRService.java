@@ -30,7 +30,9 @@ public class HRService {
     public void askForDeleteShipment(int day, String siteName){
 
     }
-
+    public boolean isThereAShipment(int day, String siteName){
+        return false;
+    }
     public void askForShipments() {
     }
 
