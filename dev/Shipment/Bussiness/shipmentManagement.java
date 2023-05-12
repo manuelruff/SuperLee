@@ -669,7 +669,6 @@ public class shipmentManagement {
         // initialize the lists
         List<Site> branchList = new ArrayList<>();
         List<ItemsDoc> itemsDocList = new ArrayList<>();
-        List<String> driverNameList = new ArrayList<>();
 
         // saving the values of the first order.
         Order firstOrder = vendorMap.get(source).get(0);
@@ -679,20 +678,20 @@ public class shipmentManagement {
         Site vendor = getSite(source);
 
         //todo asking for a driver.
-//        if (shipmentService.checkShift(date)){
+//        if (shipmentService.checkShift(date, destinations)){
 //            shipmentService.askForDriver()
 //        }
 
         // finding driver and truck
-        while (driverForShipment == null || Objects.equals(truckNumberForShipment, "")) {
-            driverForShipment = searchForDriver(trainToSearchBy, dayOfWeek, driverNameList);
-            if (driverForShipment == null){
-                System.out.println("There isn't any available driver for this shipment at that day");
-                return false;
-            }
-            driverNameList.add(driverForShipment.getName());
-            truckNumberForShipment = searchForTruck(trainToSearchBy, dayOfWeek, driverForShipment.getLicense());
-        }
+//        while (driverForShipment == null || Objects.equals(truckNumberForShipment, "")) {
+//            driverForShipment = searchForDriver(trainToSearchBy, dayOfWeek, driverNameList);
+//            if (driverForShipment == null){
+//                System.out.println("There isn't any available driver for this shipment at that day");
+//                return false;
+//            }
+//            driverNameList.add(driverForShipment.getName());
+//            truckNumberForShipment = searchForTruck(trainToSearchBy, dayOfWeek, driverForShipment.getLicense());
+//        }
         // creating the first item doc and adding it to the list of items.
         itemsDoc = new ItemsDoc(firstOrder.getDestination());
         itemsDoc.addListOfItems(firstOrder.getItemsForShipping(trainToSearchBy));
