@@ -145,7 +145,7 @@ public class ShipmentMapper {
         return destinations;
     }
 
-    public List<Shipment> getShipments()
+    public void getShipments()
     {
         String id,TruckNumber,DriverID,Source,Time,Status;
         Days day;
@@ -165,7 +165,6 @@ public class ShipmentMapper {
                 if(Status != "available") {
                     Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source), readDestinations(id),getItemDocs(id));
                     //shipment.setDepartureTime(Time);//todo: set time
-                    shipments.add(shipment);
                     shipmentsMap.put(id,shipment);
                 }
 
@@ -176,7 +175,6 @@ public class ShipmentMapper {
         {
             System.out.println("i have a problem sorry");
         }
-        return shipments;
     }
     public List<Shipment> getAvailableShipments()
     {
