@@ -3,10 +3,13 @@ package Shipment.Presentation;
 import Shipment.Bussiness.Status;
 import Shipment.Bussiness.shipmentManagement;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -710,62 +713,90 @@ public class UI {
      * this function gets input from the user about a new shipment he wants to add
      * and adds the new shipment to the system
      */
+
+    //todo checkers on fucking inputs.
     public static void addShipment()
     {
-        LocalDate date = null;
-        boolean check5 = true,check50 = true, check51 = true;
-        int day;
-        String shipmentID,vendor;
-        while(check5)
-        {
-            while (true) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate closestSunday = currentDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+        LocalDate nextFriday = currentDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
+        boolean check50 = true, check51 = true;
+        int day = 1;
+        String shipmentID, vendor;
+        String week;
+        int choice;
+        int counter = 1;
+        while (true) {
+            if (currentDate.isEqual(nextFriday)) {
+                week = "2";
+            } else {
+                System.out.println("You want the Shipment to be scheduled for this week or next week?");
                 System.out.println("""
-                    Please enter a day for the shipment:
-                    1 - Sunday
-                    2 - Monday
-                    3 - Tuesday
-                    4 - Wednesday
-                    5 - Thursday
-                    6 - Friday""");
-                if (scanner.hasNextInt()) {
-                    day = scanner.nextInt();
-                    break;
-                } else {
-                    scanner.nextLine(); // consume the invalid input
-                    System.out.println("Invalid input. Please enter an integer next");
-                }
+                        1. This Week
+                        2. Next Week""");
+                week = scanner.nextLine();
             }
-            if(day < 1 || day > 6)
-                System.out.println("please enter a number between 1 - 6 only");
-            else {
-                scanner.nextLine();
-                while (check50)
-                {
-                    System.out.println("Please enter ID for the shipment:");
-                    shipmentID = scanner.nextLine();
-                    if(Smanagement.checkShipmentID(shipmentID))
-                        System.out.println("Shipment ID already exist in the system");
-                    else {
-                        while(check51)
-                        {
-                            System.out.println("Please enter a vendor name:");
-                            vendor = scanner.nextLine();
-                            if(Smanagement.checkVendor(vendor))
-                            {
-                                Smanagement.createShipment(day, date ,shipmentID,vendor);
-                                System.out.println("Shipment created");
-                                check5 = false;
-                                check50 = false;
-                                check51 = false;
-                            }
-                            else
-                                System.out.println("vendor does not exist in the system");
-                        }
-
+            if (week.equals("1")) {
+                System.out.println("Please choose an pick a date: ");
+                while (currentDate.isBefore(nextFriday)) {
+                    currentDate = currentDate.plusDays(1);
+                    System.out.println(counter + " - " + currentDate.getDayOfWeek() + ": " + currentDate);
+                    counter++;
+                }
+                choice = Integer.parseInt(scanner.nextLine());
+                while (!(0 < choice && choice <= counter - 1)) {
+                    System.out.println("Please choose a valid number: ");
+                    choice = Integer.parseInt(scanner.nextLine());
+                }
+                currentDate = LocalDate.now().plusDays(choice);
+                break;
+            }
+            else if (week.equals("2")) {
+                while (true) {
+                    System.out.println("""
+                            Please enter a day for the shipment:
+                            1 - Sunday
+                            2 - Monday
+                            3 - Tuesday
+                            4 - Wednesday
+                            5 - Thursday
+                            6 - Friday""");
+                    day = Integer.parseInt(scanner.nextLine());
+                    if (day < 1 || day > 6) {
+                        System.out.println("please enter a number between 1 - 6 only");
                     }
-
+                    else {
+                        currentDate = closestSunday.plusDays(day - 1);
+                        break;
+                    }
                 }
+                break;
             }
+        }
+        while (check50)
+        {
+            System.out.println("Please enter ID for the shipment:");
+            shipmentID = scanner.nextLine();
+            if(Smanagement.checkShipmentID(shipmentID))
+                System.out.println("Shipment ID already exist in the system");
+            else {
+                while(check51)
+                {
+                    System.out.println("Please enter a vendor name:");
+                    vendor = scanner.nextLine();
+                    if(Smanagement.checkVendor(vendor))
+                    {
+                        Smanagement.createShipment(day, currentDate ,shipmentID,vendor);
+                        System.out.println("Shipment created");
+                        check50 = false;
+                        check51 = false;
+                    }
+                    else
+                        System.out.println("vendor does not exist in the system");
+                }
+
+            }
+
         }
     }
     public static void deleteShipment()
