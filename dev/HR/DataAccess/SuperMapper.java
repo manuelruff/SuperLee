@@ -171,4 +171,51 @@ public class SuperMapper {
             System.out.println("i have a problem in writing the workers sorry");
         }
     }
+
+    public void deleteBranch(String branch){
+        //we first need to delete all of its weekly and shifts
+        //weeklyMapper.deleteWeeklies(branch);
+        //weeklyMapper.deleteShifts(branch);
+        //delete the shift times of this super
+        //deleteSuperTime(branch);
+        //delete the Cancellations of this super
+        //deleteCancellations(branch);
+        //delete the workers from the shifts of this branch
+        //deleteWorksAtShift(branch);
+        //delete the branch
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM Super WHERE name='" + branch + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in deleting super sorry");
+        }
+    }
+    private void deleteSuperTime(String branch){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM SuperShiftsTime WHERE SuperName='" + branch + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in deleting SuperShiftsTime sorry");
+        }
+    }
+    private void deleteCancellations(String branch){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM Cancellations WHERE SuperName='" + branch + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in deleting Cancellations sorry");
+        }
+    }
+    private void deleteWorksAtShift(String branch){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM WorksAtShift WHERE SuperName='" + branch + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in deleting WorksAtShift sorry");
+        }
+    }
 }
