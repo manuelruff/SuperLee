@@ -141,7 +141,7 @@ public class OrderMapper {
             java.sql.Statement stat = conn.createStatement();
             for(Item item : order.getItemList())
             {
-                stat.executeUpdate("INSERT INTO OrderItems(ID, Name, Amount,Storage) " +
+                stat.executeUpdate("INSERT OR IGNORE INTO OrderItems(ID, Name, Amount,Storage) " +
                         "VALUES ('" + order.getID() + "', '" + item.getName() + "', '" + item.getQuantity() + " ','" + item.getStorageCondition().toString() + "')");
             }
         }
