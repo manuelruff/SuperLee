@@ -45,11 +45,11 @@ public class ServiceController {
             if(!Superim.get(branch).HasWeekly()){
                 return false;
             }
-            else{
-                if(!Superim.get(branch).GetWeekShifts().getStartDate().equals(date)){
-                    return false;
-                }
-            }
+        }
+        //we check the weekly contains the date we got
+        LocalDate dateSuper=Superim.get(branches).GetWeekShifts().getStartDate();
+        if(!dateSuper.plusDays(7).isAfter(date)){
+            return false;
         }
         return true;
     }
@@ -151,14 +151,11 @@ public class ServiceController {
                     driverInfo.add(driver.getName());
                     driverInfo.add(String.valueOf(driver.getLicense()));
                     driverInfo.add(driver.getAbility().toString());
-                    //todo add more stuff to the driver we give back
                     //when we took all the info go out of loop
                     break;
                 }
             }
         }
-        //todo if i find a driver i need to assign a store keeper for that day
-        //todo or make sure to tell the HR manager to do so
         //if i return it empty, no driver was found
         return driverInfo;
     }

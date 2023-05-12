@@ -36,27 +36,37 @@ public class ShipmentService {
         //todo add the right function to the service controler
     	return serviceController.getDriver(ID);
     }
+
+    public boolean checkWeekly(List<String> branches, LocalDate date){
+        return serviceController.checkHasWeekly(branches,date);
+    }
+    //return a site by list of strings [String name, String address, String phoneNumber, String contactName, Zone zone]
     public List<String> askForSite(String branchName){
         //todo gtSite in service controler
         return null;
     }
-    public boolean checkWeekly(List<String> branches, LocalDate date){
-        return serviceController.checkHasWeekly(branches,date);
-    }
+    //check if a site name exists
     public boolean checkASite(String branchName){
         //todo checkASite in service controler
         return false;
     }
+    //we get a driver and a day we remove from his shifts
     public void askRemoveDayForDriver(String ID,int day){
+
     }
+    //we get updates for a driver, load if from db and write these updates
     public void getUpdateForDriver(String ID,char licence, int training){
+
     }
+    //we need to load all the drivers from the database and print them by printme of driver
     public void printAllDrivers(){
 
     }
-
     //if a site wont get something in the day and we want to update hr manager so he can remove storekeeper
     public void getUpdateForSite(String branchName, int day){
     }
+    //update site info when we get it from shipment
+    public void getUpdateForSite(String branchName, String contactName, String contactNumber){
 
+    }
 }
