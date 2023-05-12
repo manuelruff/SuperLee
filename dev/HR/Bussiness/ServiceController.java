@@ -201,6 +201,11 @@ public class ServiceController {
         }
     }
 
+    public void RemoveShiftFromDriver(String ID,int day){
+        Driver driver = dataController.getDriver(ID);
+        driver.RemoveShift(Days.values()[day]);
+    }
+
     // update driver informantion
     public void UpdateDriver(String ID,char licence, int training){
         Driver driver = dataController.getDriver(ID);

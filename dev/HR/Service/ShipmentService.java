@@ -42,9 +42,7 @@ public class ShipmentService {
     //check if a site name exists
     public boolean checkASite(String branchName){return serviceController.checkSite(branchName);}
     //we get a driver and a day we remove from his shifts
-    public void askRemoveDayForDriver(String ID,int day){
-
-    }
+    public void askRemoveDayForDriver(String ID,int day){serviceController.RemoveShiftFromDriver(ID,day);}
     //we get updates for a driver, load if from db and write these updates
     public void getUpdateForDriver(String ID,char licence, int training){serviceController.UpdateDriver(ID,licence,training);}
     //we need to load all the drivers from the database and print them by printme of driver

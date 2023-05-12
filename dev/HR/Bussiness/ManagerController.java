@@ -308,25 +308,42 @@ public class ManagerController{
     }
     // remove worker from a shift of a branch
     public boolean RemoveFromDay(String ID, String branch, int day) {
-
         //we first need to load all the workers for this super from the db
         dataController.loadAllWorkersFromSuper(branch);
         //we check if the worker is working in this day
         if (!IsWorkAtDay(branch, ID, day)) {
             return false;
         }
-        //if he works in this day
+        int shiftnum = day * 2;
+
         // we will delete this workers working days so it will be re written in the db later with the updates
         dataController.DeleteWorkingDays(ID,Superim.get(branch).GetWeekShifts().GetShift(day));
-        int shiftnum = day * 2;
         //when were here we have a good number for employee so we remove him
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum).RemoveWorker(ID);
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum + 1).RemoveWorker(ID);
         Workers.get(ID).RemoveShift(Days.values()[day]);
         return true;
     }
+
+    // checks if worker is a only storekeeper in a shift at branch today
+    public boolean IsOnlyStoreKeeperWithShipment(String branch,String ID, int day){
+        //we first need to load all the workers for this super from the db
+        dataController.loadAllWorkersFromSuper(branch);
+        int shiftnum = day * 2;
+        //if he works in this day - first if the worker is a storekeepr and there is shipment today and he is the only storekeeper
+        Map<Jobs, List<Worker>> currWorkers1 = Superim.get(branch).GetWeekShifts().GetShift(shiftnum).getWorkerList();
+        Map<Jobs, List<Worker>> currWorkers2 = Superim.get(branch).GetWeekShifts().GetShift(shiftnum+1).getWorkerList();
+        // first check if there is shipment today
+        if(hrService.isThereAShipment(day,branch)){
+            // if there is check if the worker is a storekeeper and there is only one storekeeper in this shift
+            return (currWorkers1.get(Jobs.StoreKeeper).contains(Workers.get(ID)) && currWorkers1.get(Jobs.StoreKeeper).size() == 1) || (currWorkers2.get(Jobs.StoreKeeper).contains(Workers.get(ID)) && currWorkers2.get(Jobs.StoreKeeper).size() == 1);
+        }
+        return false;
+    }
     //checks if worker works in specific shift in a branch
     public boolean IsWorkAtDay(String branch, String ID, int day) {
+        //we first need to load all the workers for this super from the db
+        dataController.loadAllWorkersFromSuper(branch);
         day = day * 2;
         return (Superim.get(branch).GetWeekShifts().GetShift(day).IsWorkerAtShift(ID) || Superim.get(branch).GetWeekShifts().GetShift(day + 1).IsWorkerAtShift(ID));
     }
@@ -448,6 +465,9 @@ public class ManagerController{
     public void PrintShipments(){
         hrService.askForShipments();
     }
+
+    //delete shipment to branch
+    public void DeleteShipment(String branch,int day){hrService.askForDeleteShipment(day,branch);}
 
     public Set<String> ReadAllMessagesFromService(){
         return serviceController.getChanges();
