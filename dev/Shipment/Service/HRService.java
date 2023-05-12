@@ -44,4 +44,7 @@ public class HRService {
     public void removeSite(String name){
 
     }
+    public void weeklyCreated(){
+
+    }
 }

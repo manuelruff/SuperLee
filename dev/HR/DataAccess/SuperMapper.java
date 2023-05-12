@@ -202,10 +202,10 @@ public class SuperMapper {
     private void deleteWorksAt(String branch){
         try {
             java.sql.Statement stmt = conn.createStatement();
-            stmt.executeUpdate("DELETE FROM eWorksAt WHERE SuperName='" + branch + "'");
+            stmt.executeUpdate("DELETE FROM WorksAt WHERE SuperName='" + branch + "'");
         }
         catch (SQLException e) {
-            System.out.println("i have a problem in deleting SuperShiftsTime sorry");
+            System.out.println("i have a problem in deleting WorksAt sorry");
         }
     }
     private void deleteWorksAtShift(String branch){

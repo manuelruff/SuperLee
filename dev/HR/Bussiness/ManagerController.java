@@ -255,12 +255,11 @@ public class ManagerController{
         for (Map.Entry<String, Super> entry : Superim.entrySet()) {
             // remove if from every branch he works at
             Superim.get(entry.getKey()).RemoveWorker(ID);
-//            if (Superim.get(entry.getKey()).RemoveWorker(ID)) {
-//                System.out.println("worker removed successfully from " + Superim.get(entry.getKey()).getName());
-//            }
         }
         // remove it from the map of all Workers
         Workers.remove(ID);
+        //remove it from db
+        dataController.deleteWorker(ID);
     }
     //add a job for a worker (role) by id
     public void AddJobToWorker(String ID, int job_index) {
@@ -397,9 +396,12 @@ public class ManagerController{
         //Superim.get(Name).PrintWeekFromHistByDate(year, month, day);
     }
     //remove a worker from a branch by id
-    public void RemoveWorker(String ID, String Name) {
-        Super curr = Superim.get(Name);
+    public void RemoveWorker(String ID, String branch) {
+        //we remove him from super
+        Super curr = Superim.get(branch);
         curr.RemoveWorker(ID);
+        //we delete it from the db
+        dataController.deleteWorkerFromBranch(ID,branch);
     }
     // new added to connect between controllers functions - manu will check if its good or yell at me :(
     public boolean IsWorksInSuper(String ID, String SuperName){
@@ -479,6 +481,12 @@ public class ManagerController{
         dataController.loadAllWorkersFrom();
     }
 
+    /**
+     * we update shipment that someone has created a weekly
+     */
+    public void weeklyCreated(){
+        hrService.weeklyCreated();
+    }
 
     public void deleteBranch(String branch){
         Superim.remove(branch);

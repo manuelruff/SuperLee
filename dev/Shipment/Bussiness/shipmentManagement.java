@@ -100,15 +100,12 @@ public class shipmentManagement {
     }
     /**
      * This function creates a new driver and adds it to the system.
-     *
-     * @param Name    drivers name
-     * @param ID      drivers ID
-     * @param license license type. (C/D)
-     * @param train   training type. (regular/cooling/freezer)
      */
-    public void addDriver(String ID,String Name, char license, int train) {
-        Driver driver = new Driver(ID, Name, license, Training.values()[train]);
-        drivers.add(driver);
+    public Driver addDriver(List<String> list){
+        if (list == null)
+            return null;
+        return new Driver(list.get(0),list.get(1), list.get(2).charAt(0), Training.valueOf(list.get(3)));
+
     }
 
     /**
@@ -278,9 +275,8 @@ public class shipmentManagement {
      * @param day   int, represent the day of the week.
      * @return string, the truck Number.
      */
-    public String searchForTruck(Training train, int day, char licence) {
+    public String searchForTruck(Training train, int day) {
         for (Truck truck : trucks.values()) {
-            if (licence == 'D' || truck.getTotalWeight() < 12000)
                 if (truck.addNewDay(Days.values()[day])) {
                     if (((truck instanceof FreezerTruck) && (train == Training.Freezer))
                             || ((truck instanceof CoolingTruck) && (train == Training.Cooling))
@@ -660,6 +656,7 @@ public class shipmentManagement {
     public boolean createShipment(int dayOfWeek, LocalDate date , String ID, String source) {
         ItemsDoc itemsDoc;
         Shipment shipment;
+        List<String> destinations = new ArrayList<>();
         Driver driverForShipment = null;
         String truckNumberForShipment = "";
         if (vendorMap.get(source).isEmpty()) {
@@ -677,33 +674,23 @@ public class shipmentManagement {
         Training trainToSearchBy = firstOrder.firstItemType();
         Site vendor = getSite(source);
 
-        //todo asking for a driver.
-//        if (shipmentService.checkShift(date, destinations)){
-//            shipmentService.askForDriver()
-//        }
+        //finding suitable truck
+        truckNumberForShipment = searchForTruck(trainToSearchBy, dayOfWeek);
+        Truck truck = getTruck(truckNumberForShipment);
+        char licence = 'C';
+        if (truck.getTotalWeight() > 6000)
+            licence = 'D';
 
-        // finding driver and truck
-//        while (driverForShipment == null || Objects.equals(truckNumberForShipment, "")) {
-//            driverForShipment = searchForDriver(trainToSearchBy, dayOfWeek, driverNameList);
-//            if (driverForShipment == null){
-//                System.out.println("There isn't any available driver for this shipment at that day");
-//                return false;
-//            }
-//            driverNameList.add(driverForShipment.getName());
-//            truckNumberForShipment = searchForTruck(trainToSearchBy, dayOfWeek, driverForShipment.getLicense());
-//        }
-        // creating the first item doc and adding it to the list of items.
+        // adding the first order to the shipment
         itemsDoc = new ItemsDoc(firstOrder.getDestination());
         itemsDoc.addListOfItems(firstOrder.getItemsForShipping(trainToSearchBy));
         itemsDocList.add(itemsDoc);
+        destinations.add(itemsDoc.getSiteName());
 
         // in case there is only one order from the specific vendor
         if (vendorMap.get(source).size() == 1) {
-            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment, Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList);
-            addShipmentSorted(shipment);
             if (firstOrder.checkIfEmpty())
                 vendorMap.get(source).remove(firstOrder);
-            return true;
         }
         else {
             boolean skip = true;
@@ -734,15 +721,76 @@ public class shipmentManagement {
                     itemsDoc = new ItemsDoc(order.getDestination());
                     itemsDoc.addListOfItems(order.getItemsForShipping(trainToSearchBy));
                     itemsDocList.add(itemsDoc);
+                    destinations.add(itemsDoc.getSiteName());
 
                 }
             }
-            vendorMap.get(source).removeIf(Order::checkIfEmpty);
-            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment, Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList);
-            addShipmentSorted(shipment);
-            return true;
         }
+        if (shipmentService.checkWeekly(destinations, date)) {
+            driverForShipment = addDriver(shipmentService.askForDriver(licence, truck.getStorageType().ordinal(), dayOfWeek, destinations));
+            if (driverForShipment == null) {
+                System.out.println("There isn't any available driver that can work at that time");
+                truck.removeDay(Days.values()[dayOfWeek]);
+                for (ItemsDoc doc : itemsDocList)
+                    turnItemDocIntoOrder(doc, source);
+                return false;
+            }
+        }
+
+        vendorMap.get(source).removeIf(Order::checkIfEmpty);
+        if (driverForShipment == null){
+            shipment = new Shipment(ID, truckNumberForShipment, Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList, date);
+        }
+        else{
+            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment, Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList, date);
+        }
+        addShipmentSorted(shipment);
+
+        return true;
     }
+
+    private void turnItemDocIntoOrder(ItemsDoc itemsDoc, String source){
+        Branch branch = ((Branch)getSite(itemsDoc.getSiteName()));
+        Order order = new Order(itemsDoc.getSiteName(), branch.getZone(), source);
+        for (Item item : itemsDoc.getItemList()){
+            order.addItemToOrder(item);
+        }
+        vendorMap.get(source).add(order);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    /**
 //     * This function executes the shipment with the closest date.
