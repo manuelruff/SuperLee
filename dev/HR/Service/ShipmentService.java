@@ -23,7 +23,7 @@ public class ShipmentService {
         if(!serviceController.checkHasWeekly(branches)){
             return null;
         }
-        //todo check we have employees for each super
+        //check we have employees for each super
         // check if all the branches has storekeeper for the day if one doesnt have we cant have the shipment
         if(!serviceController.checkStoreKeeper(branches,day)){
             return null;
@@ -32,32 +32,25 @@ public class ShipmentService {
         return serviceController.getDriver(licence,training,day);
     }
 
-    public List<String> askForDriver(String ID){
-        //todo add the right function to the service controler
-    	return serviceController.getDriver(ID);
-    }
+    public List<String> askForDriver(String ID){return serviceController.getDriver(ID);}
+
+    public boolean checkWeekly(List<String> branches, LocalDate date){return serviceController.checkHasWeekly(branches,date);}
+    //return a site by list of strings [String name, String address, String phoneNumber, String contactName, Zone zone]
     public List<String> askForSite(String branchName){
-        //todo gtSite in service controler
-        return null;
+        return serviceController.getSite(branchName);
     }
-    public boolean checkWeekly(List<String> branches, LocalDate date){
-        //todo checkWeekly in service controler
-        return false;
-    }
-    public boolean checkASite(String branchName){
-        //todo checkASite in service controler
-        return false;
-    }
+    //check if a site name exists
+    public boolean checkASite(String branchName){return serviceController.checkSite(branchName);}
+    //we get a driver and a day we remove from his shifts
     public void askRemoveDayForDriver(String ID,int day){
-    }
-    public void getUpdateForDriver(String ID,char licence, int training){
-    }
-    public void printAllDrivers(){
 
     }
-
+    //we get updates for a driver, load if from db and write these updates
+    public void getUpdateForDriver(String ID,char licence, int training){serviceController.UpdateDriver(ID,licence,training);}
+    //we need to load all the drivers from the database and print them by printme of driver
+    public void printAllDrivers(){serviceController.printDrivers();}
     //if a site wont get something in the day and we want to update hr manager so he can remove storekeeper
-    public void getUpdateForSite(String branchName, int day){
-    }
-
+    public void getUpdateForSite(String branchName, int day){serviceController.UpdateSiteMessage(branchName,day);}
+    //update site info when we get it from shipment
+    public void getUpdateForSite(String branchName, String contactName, String contactNumber){serviceController.UpdateSiteContact(branchName,contactName,contactNumber);}
 }

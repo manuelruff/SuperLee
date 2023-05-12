@@ -41,7 +41,12 @@ public class DataController {
     public Weekly getWeekly(String Branch,String StartDate) {
         return weeklyMapper.getWeekly(Branch,StartDate);
     }
-
+    public void deleteWorkerFromBranch(String ID, String branch){
+        workerMapper.deleteWorkerFromBranch(ID,branch);
+    }
+    public void deleteWorker(String ID){
+        workerMapper.deleteWorker(ID);
+    }
     public void ReadCancellations(String BranchName,int year,int month,int day){
         cashRegisterMapper.ReadCancellations(BranchName,year,month,day);
     }
@@ -73,7 +78,7 @@ public class DataController {
     }
 
 
-        public void DeleteConstraint(String ID){
+    public void DeleteConstraint(String ID){
         workerMapper.DeleteConstraints(ID);
     }
     public void DeleteWorkingDays(String ID, Shift shift){
@@ -83,10 +88,15 @@ public class DataController {
     public Super getSuper(String name){
         return superMapper.getsuper(name);
     }
-    /**
-     * we will save all the changes when we go out of the system
-     *
-     */
+
+    public void deleteBranch(String branch){
+        superMapper.deleteBranch(branch);
+    }
+
+        /**
+         * we will save all the changes when we go out of the system
+         *
+         */
     public void saveData() {
 
         //todo add writing for the drivers shifts

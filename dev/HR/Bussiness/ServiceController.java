@@ -1,5 +1,7 @@
 package HR.Bussiness;
 import HR.DataAccess.DataController;
+
+import java.time.LocalDate;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,6 +36,20 @@ public class ServiceController {
             if(!Superim.get(branch).HasWeekly()){
                 return false;
             }
+        }
+        return true;
+    }
+    //this one checks for next week or this week, we need to knwo what he wants
+    public boolean checkHasWeekly(List<String> branches, LocalDate date){
+        for(String branch:branches){
+            if(!Superim.get(branch).HasWeekly()){
+                return false;
+            }
+        }
+        //we check the weekly contains the date we got
+        LocalDate dateSuper=Superim.get(branches).GetWeekShifts().getStartDate();
+        if(!dateSuper.plusDays(7).isAfter(date)){
+            return false;
         }
         return true;
     }
@@ -135,24 +151,84 @@ public class ServiceController {
                     driverInfo.add(driver.getName());
                     driverInfo.add(String.valueOf(driver.getLicense()));
                     driverInfo.add(driver.getAbility().toString());
-                    //todo add more stuff to the driver we give back
                     //when we took all the info go out of loop
                     break;
                 }
             }
         }
-        //todo if i find a driver i need to assign a store keeper for that day
-        //todo or make sure to tell the HR manager to do so
         //if i return it empty, no driver was found
         return driverInfo;
     }
 
+    // the function return all the inforamtion needed to build Driver Object
     public List<String>getDriver(String ID){
         Driver ret= dataController.getDriver(ID);
-        //todo break it up
-        return null;
+        //todo check if it works
+        List<String>driverInfo=new ArrayList<>();
+        driverInfo.add(ret.getID());
+        driverInfo.add(ret.getName());
+        driverInfo.add(String.valueOf(ret.getLicense()));
+        driverInfo.add(ret.getAbility().toString());
+        return driverInfo;
     }
 
+    // the function return all the information needed to build Super Object
+    public List<String>getSite(String BranchName){
+        Super ret = dataController.getSuper(BranchName);
+        List<String>branchInfo = new ArrayList<>();
+        //[String name, String address, String phoneNumber, String contactName, Zone zone]
+        branchInfo.add(ret.getName());
+        branchInfo.add(ret.getAddress());
+        branchInfo.add(ret.getPhoneNumber());
+        branchInfo.add(ret.getContactName());
+        branchInfo.add(ret.getZone().toString());
+        return branchInfo;
+    }
+
+    // check if site is exist
+    public boolean checkSite(String name){
+        // check it from the mapper by the dataController
+        return dataController.getSuper(name) != null;
+    }
+
+    //print all the drivers we have
+    public void printDrivers(){
+        //first read all the workers from the DB by the datacontroller
+        dataController.loadAllWorkersFrom();
+        // print them
+        for(Driver driver: Drivers.values()){
+            driver.Printme();
+        }
+    }
+
+    // update driver informantion
+    public void UpdateDriver(String ID,char licence, int training){
+        Driver driver = dataController.getDriver(ID);
+        driver.setLicense(licence);
+        driver.setAbility(Training.values()[training]);
+    }
+
+    // add message to HR manager if shipment cancelled in specific day
+    public void UpdateSiteMessage(String branchName, int day){
+        Super branch = dataController.getSuper(branchName);
+        String message = "The site " + branch.getName() + " no longer have shipment for day " + Days.values()[day];
+        changes.add(message);
+    }
+
+    //update contact info for a site
+    public void UpdateSiteContact(String branchName, String contactName, String phoneNumber){
+        Super branch = dataController.getSuper(branchName);
+        branch.setContactName(contactName);
+        branch.setPhoneNumber(phoneNumber);
+    }
+
+    // remove a shift day from a driver
+    public void RemoveShiftDay(String ID, int day){
+        Driver driver = dataController.getDriver(ID);
+        // if the worker works at this day - remove it from his shifts - if not dont do nothing
+        if(!driver.checkDay(Days.values()[day]))
+            driver.RemoveShift(Days.values()[day]);
+    }
     // funciton to reset changes
     public void resetChanges() {changes.clear();}
 

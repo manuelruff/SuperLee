@@ -171,4 +171,50 @@ public class SuperMapper {
             System.out.println("i have a problem in writing the workers sorry");
         }
     }
+
+    public void deleteBranch(String branch){
+        deleteSuperTime(branch);
+        //delete the works at of workers
+        deleteWorksAt(branch);
+
+        //todo delete the shifts and weekly that didnt happen yet??
+        //delete the workers from the shifts of this branch
+        //deleteWorksAtShift(branch);
+
+        //delete the branch
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM Super WHERE name='" + branch + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in deleting super sorry");
+        }
+    }
+    private void deleteSuperTime(String branch){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM SuperShiftsTime WHERE SuperName='" + branch + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in deleting SuperShiftsTime sorry");
+        }
+    }
+    private void deleteWorksAt(String branch){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM WorksAt WHERE SuperName='" + branch + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in deleting WorksAt sorry");
+        }
+    }
+    private void deleteWorksAtShift(String branch){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM WorksAtShift WHERE SuperName='" + branch + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem in deleting WorksAtShift sorry");
+        }
+    }
 }

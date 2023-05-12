@@ -1,5 +1,6 @@
 package HR.Bussiness;
 import HR.DataAccess.DataController;
+import Shipment.Bussiness.Branch;
 import Shipment.Service.HRService;
 
 import java.time.LocalDate;
@@ -162,7 +163,6 @@ public class ManagerController{
     }
     //tells the super that the weekly got canceled
     public void CancelWeekly(String BranchName) {
-        //todo  update the workers in the shift that they dont have it now
         Weekly week=Superim.get(BranchName).GetWeekShifts();
         //for each shift we tell it to empty and update thw workers inside
         for(Shift shift: week.getShiftList()){
@@ -255,12 +255,11 @@ public class ManagerController{
         for (Map.Entry<String, Super> entry : Superim.entrySet()) {
             // remove if from every branch he works at
             Superim.get(entry.getKey()).RemoveWorker(ID);
-//            if (Superim.get(entry.getKey()).RemoveWorker(ID)) {
-//                System.out.println("worker removed successfully from " + Superim.get(entry.getKey()).getName());
-//            }
         }
         // remove it from the map of all Workers
         Workers.remove(ID);
+        //remove it from db
+        dataController.deleteWorker(ID);
     }
     //add a job for a worker (role) by id
     public void AddJobToWorker(String ID, int job_index) {
@@ -332,24 +331,14 @@ public class ManagerController{
         return (Superim.get(branch).GetWeekShifts().GetShift(day).IsWorkerAtShift(ID) || Superim.get(branch).GetWeekShifts().GetShift(day + 1).IsWorkerAtShift(ID));
     }
     // add worker to a shift int a branch
-    public String AddToDay2(String branch, int shift_op, int day,int jobChoice){
+    public String AddToDay(String branch, int shift_op, int day,int jobChoice){
         //we first need to load all the workers for this super from the db
         dataController.loadAllWorkersFromSuper(branch);
-        double s = 0;
-        double e = 0;
         Jobs job = Jobs.values()[jobChoice];
         //savres it to use in day
         int days_day=day;
         day = day * 2;
         ShiftTime st = ShiftTime.values()[shift_op];
-        if (st == ShiftTime.Morning) {
-            s = Superim.get(branch).getStart_morning(Days.values()[days_day]);
-            e = Superim.get(branch).getEnd_morning(Days.values()[days_day]);
-        } else {
-            s = Superim.get(branch).getStart_evening(Days.values()[days_day]);
-            e = Superim.get(branch).getEnd_evening(Days.values()[days_day]);
-            day = day + 1;
-        }
         // get all the available employees from the asked branch
         List<String> availableEmployees= GetAvailableEmployee(Days.values()[days_day],job,st, Superim.get(branch).GetWorkersIDS(),branch);
         // add a worker to the shift
@@ -379,15 +368,23 @@ public class ManagerController{
         }
     }
     //print a shift from history of a branch by its date if exists
-    public void PrintWeeklyFromHist(String Name, int year, int month, int day) {
+    public boolean PrintWeeklyFromHist(String Name, int year, int month, int day) {
         LocalDate date=LocalDate.of(year,month,day);
-        dataController.getWeekly(Name,date.toString());
-        Superim.get(Name).PrintWeekFromHistByDate(year, month, day);
+        Weekly week=dataController.getWeekly(Name,date.toString());
+        if(week!=null){
+            week.PrintMe();
+            return true;
+        }
+        return false;
+        //Superim.get(Name).PrintWeekFromHistByDate(year, month, day);
     }
     //remove a worker from a branch by id
-    public void RemoveWorker(String ID, String Name) {
-        Super curr = Superim.get(Name);
+    public void RemoveWorker(String ID, String branch) {
+        //we remove him from super
+        Super curr = Superim.get(branch);
         curr.RemoveWorker(ID);
+        //we delete it from the db
+        dataController.deleteWorkerFromBranch(ID,branch);
     }
     // new added to connect between controllers functions - manu will check if its good or yell at me :(
     public boolean IsWorksInSuper(String ID, String SuperName){
@@ -464,6 +461,18 @@ public class ManagerController{
         dataController.loadAllWorkersFrom();
     }
 
+    /**
+     * we update shipment that someone has created a weekly
+     */
+    public void weeklyCreated(){
+        hrService.weeklyCreated();
+    }
+
+    public void deleteBranch(String branch){
+        Superim.remove(branch);
+        hrService.removeSite(branch);
+        dataController.deleteBranch(branch);
+    }
     /**
      * it will save the data in the database and close the connection
      */

@@ -16,7 +16,6 @@ public class WeeklyMapper {
     private Map<String, Map<String , Weekly>> WeeklyMap;
     private Connection conn;
     private WorkerMapper workerMapper;
-
     private WeeklyMapper() {
         WeeklyMap=new HashMap<>();
         conn = Connect.getConnection();
@@ -177,7 +176,6 @@ public class WeeklyMapper {
     }
     public void DeleteWorkerFromShift(String ID,Shift curr){
         String ShiftDate = curr.getDate().toString();
-
         try {
             java.sql.Statement stmt = conn.createStatement();
             stmt.executeUpdate("DELETE FROM WorksAtShift WHERE WorkerID='" + ID + "' AND ShiftDate='" + ShiftDate + "'");
@@ -186,8 +184,6 @@ public class WeeklyMapper {
             System.out.println("i have a problem iun deleting workers from shift sorry");
         }
     }
-
-
     public void InsertToMapper(String Branch,Weekly weekly){
         if(!WeeklyMap.containsKey(Branch)){
             WeeklyMap.put(Branch,new HashMap<>());
@@ -195,4 +191,7 @@ public class WeeklyMapper {
         WeeklyMap.get(Branch).put(weekly.getStartDate().toString(),weekly);
 
     }
+
+
+
 }

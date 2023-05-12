@@ -65,7 +65,7 @@ public class HRManagerUI {
                     String Name=UIGeneralFnctions.AskForBranch();
                     // once we now the name of the branch we need to ask what he wanna do with it
                     int choice2=-1;
-                    while (choice2!=7) {
+                    while (choice2!=8) {
                         System.out.println("please choose your action at the branch:");
                         System.out.println("1. create weekly shift");
                         System.out.println("2. update day in weekly shift");
@@ -73,8 +73,9 @@ public class HRManagerUI {
                         System.out.println("4. watch week from history");
                         System.out.println("5. remove worker from this super");
                         System.out.println("6. update super shift times");
-                        System.out.println("7. Exit ");
-                        choice2=UIGeneralFnctions.AskForNumber(1,7);
+                        System.out.println("7. delete this branch");
+                        System.out.println("8. Exit ");
+                        choice2=UIGeneralFnctions.AskForNumber(1,8);
                         switch (choice2) {
                             case 1:
                                 //check if there is not a weekly created already
@@ -156,11 +157,12 @@ public class HRManagerUI {
                                     }
                                 }
                                 if(isCreatedWeekly){
-                                    //todo we need to add here the changes in each worker who was in that shift
                                     managerController.CancelWeekly(Name);
                                 }
                                 else{
                                     System.out.println("weekly was created successfully!");
+                                    //we tell shipment that a weekly was created
+                                    managerController.weeklyCreated();
                                 }
                                 break;
                             case 2:
@@ -217,7 +219,7 @@ public class HRManagerUI {
                                             break;
                                         }
                                         // if the shift isn't empty, or we want to add shift manager - we can add a worker
-                                        String workerID = managerController.AddToDay2(Name,shift_op,day_choice-1,job_choice-1);
+                                        String workerID = managerController.AddToDay(Name,shift_op,day_choice-1,job_choice-1);
                                         System.out.println(workerID + " has been added to the shift");
                                         break;
                                     case 3:
@@ -257,7 +259,10 @@ public class HRManagerUI {
                                     catch (Exception e){
                                         System.out.println("please enter a valid date ");
                                     }
-                                    managerController.PrintWeeklyFromHist(Name,Year,Month,Day);
+                                    boolean checkPrint=managerController.PrintWeeklyFromHist(Name,Year,Month,Day);
+                                    if(!checkPrint){
+                                        System.out.println("there is no weekly in that date");
+                                    }
                                     break;
                                 }
                                 break;
@@ -316,7 +321,21 @@ public class HRManagerUI {
                                 }
                                 break;
                             case 7:
-                                choice2=7;
+                                System.out.println("are you sure you want to delete this branch and all of its information? \n" +
+                                        "1. yes\n" +
+                                        "2. no");
+                                int del=UIGeneralFnctions.AskForNumber(1,2);
+                                if(del==1){
+                                    managerController.deleteBranch(Name);
+                                    System.out.println("branch deleted" +
+                                            "\n you also need to manually fire/delete the workers who worked only in this branch");
+                                }
+                                else{
+                                    System.out.println("I didnt thought so!");
+                                }
+                                break;
+                            case 8:
+                                choice2=8;
                                 break;
                             default:
                                 System.out.println("please enter a valid option");
