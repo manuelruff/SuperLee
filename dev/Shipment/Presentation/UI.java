@@ -1,6 +1,6 @@
 package Shipment.Presentation;
 
-import Shipment.Bussiness.Status;
+
 import Shipment.Bussiness.shipmentManagement;
 
 import java.time.DayOfWeek;
@@ -8,17 +8,31 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.TemporalAdjuster;
+
 import java.time.temporal.TemporalAdjusters;
-import java.util.Objects;
+
 import java.util.Scanner;
 
 
 public class UI {
-    private static shipmentManagement Smanagement=shipmentManagement.getInstance();
+    private static shipmentManagement sManagement = shipmentManagement.getInstance();
     private static Scanner scanner;
-
-    public UI(Scanner sc){
+    public static void SManagerLogIN(Scanner sc) {
+        scanner = sc;
+        int choice = -1;
+        System.out.println("please log in: ");
+        while (choice != 4) {
+            System.out.println("Password: ");
+            String input = scanner.nextLine();  // Read user input
+            if (!sManagement.checkPassword(input)) {
+                System.out.println("Wrong password please try again");
+                continue;
+            } else {
+                System.out.println("welcome Shipment Manager!");
+            }
+            shippingMenu(sc);
+            choice = 4;
+        }
     }
 
     public static void shippingMenu(Scanner sc)
@@ -64,7 +78,7 @@ public class UI {
                                 deleteSite();
                                 break;
                             case 3:
-                                Smanagement.printSites();
+                                sManagement.printSites();
                                 break;
                             case 4:
                                 updateSite();
@@ -100,7 +114,7 @@ public class UI {
                                 deleteTruck();
                                 break;
                             case 3:
-                                Smanagement.printTrucks();
+                                sManagement.printTrucks();
                                 break;
                             case 4:
                                 break;
@@ -135,7 +149,7 @@ public class UI {
                                 deleteDriver();
                                 break;
                             case 3:
-                                Smanagement.printDrivers();
+                                sManagement.printDrivers();
                                 break;
                             case 4:
                                 updateDriverLicence();
@@ -170,7 +184,7 @@ public class UI {
                                 addOrder();
                                 break;
                             case 2:
-                                Smanagement.printOrders();
+                                sManagement.printOrders();
                                 break;
                             case 3:
                                 break;
@@ -206,10 +220,10 @@ public class UI {
                                 deleteShipment();
                                 break;
                             case 3:
-                                Smanagement.printShipments();
+                                sManagement.printShipments();
                                 break;
                             case 4:
-                                Smanagement.printAvailableShipments();
+                                sManagement.printAvailableShipments();
                                 break;
                             case 5:
                                 executeShipment();
@@ -223,7 +237,7 @@ public class UI {
                     }
                     break;
                 case "6":
-                    Smanagement.printAllDocs();
+                    sManagement.printAllDocs();
                     break;
                 case "7":
                     return;
@@ -251,7 +265,7 @@ public class UI {
                 else
                     System.out.println("Please enter numbers only");
             }
-            check3 = Smanagement.checkID(driverID);
+            check3 = sManagement.checkID(driverID);
             if (!check3)
                 System.out.println("Driver does not exist in the system");
             else
@@ -269,7 +283,7 @@ public class UI {
                     else if( driverLicence == 'd' || driverLicence == 'D') {
                         check3 = false;
                         driverLicence = Character.toUpperCase(driverLicence);
-                        Smanagement.updateDriverLicence(driverID,driverLicence);
+                        sManagement.updateDriverLicence(driverID,driverLicence);
                     }
                     else
                         System.out.println("Invalid input");
@@ -293,7 +307,7 @@ public class UI {
                 else
                     System.out.println("Please enter numbers only");
             }
-            check3 = Smanagement.checkID(driverID);
+            check3 = sManagement.checkID(driverID);
             if (!check3)
                 System.out.println("Driver does not exist in the system");
             else
@@ -312,7 +326,7 @@ public class UI {
                     else if( training == 1 || training == 2) {
                         check3 = false;
                         driverLicence = Character.toUpperCase(driverLicence);
-                        Smanagement.updateDriverTraining(driverID,training);
+                        sManagement.updateDriverTraining(driverID,training);
                     }
                     else
                         System.out.println("Invalid input");
@@ -332,7 +346,7 @@ public class UI {
         while(check) {
             System.out.println("Please enter site name:");
             siteName = scanner.nextLine();
-            check = Smanagement.checkSite(siteName);
+            check = sManagement.checkSite(siteName);
             if (check)
                 System.out.println("Site already exist please enter a new name");
         }
@@ -366,7 +380,7 @@ public class UI {
             }
 
             if(siteType == 1) {
-                Smanagement.addVendor(siteName, siteAddress, sitePhoneNumber, contactName);
+                sManagement.addVendor(siteName, siteAddress, sitePhoneNumber, contactName);
                 System.out.println("Vendor added to the system");
                 check = false;
             }
@@ -382,7 +396,7 @@ public class UI {
                     if(zone < 0 || zone > 2)
                         System.out.println("Please enter a number between 0 - 2");
                 }
-                Smanagement.addBranch(siteName,siteAddress,sitePhoneNumber,contactName,zone);
+                sManagement.addBranch(siteName,siteAddress,sitePhoneNumber,contactName,zone);
                 System.out.println("Branch added to the system");
                 check = false;
             }
@@ -400,8 +414,8 @@ public class UI {
         {
             System.out.println("Please enter site name you want to remove:");
             siteToDelete = scanner.nextLine();
-            if(Smanagement.checkSite(siteToDelete)) {
-                Smanagement.deleteSite(siteToDelete);
+            if(sManagement.checkSite(siteToDelete)) {
+                sManagement.deleteSite(siteToDelete);
                 System.out.println("site deleted");
                 check1 = false;
             }
@@ -419,7 +433,7 @@ public class UI {
     {
         System.out.println("Please enter the name of the site you would like to update:");
         String siteName = scanner.nextLine();
-        if(Smanagement.checkSite(siteName)){
+        if(sManagement.checkSite(siteName)){
             while (true) {
                 System.out.println("""
                         What would you like to change:
@@ -433,7 +447,7 @@ public class UI {
                     if (num >= 1 && num <= 4) {
                         System.out.println("Enter the new details");
                         String change = scanner.nextLine();
-                        Smanagement.updateSite(siteName,change,num);
+                        sManagement.updateSite(siteName,change,num);
                         return;
                     }
                     else {
@@ -455,7 +469,7 @@ public class UI {
         while (check2) {
             System.out.println("Please enter the truck number:");
             truckNumber = scanner.nextLine();
-            check2 = Smanagement.checkTruckNumber(truckNumber);
+            check2 = sManagement.checkTruckNumber(truckNumber);
             if (check2)
                 System.out.println("Truck already exist in the system");
         }
@@ -494,7 +508,7 @@ public class UI {
             if(storage < 0 || storage > 2)
                 System.out.println("Please enter a number between 0 - 2");
         }
-        Smanagement.addTruck(truckNumber,truckCarryWeight, truckWeight,truckModel,storage);
+        sManagement.addTruck(truckNumber,truckCarryWeight, truckWeight,truckModel,storage);
         System.out.println("Truck added to the system");
         scanner.nextLine();
     }
@@ -510,8 +524,8 @@ public class UI {
         {
             System.out.println("Please enter the truck number:");
             truckNumber = scanner.nextLine();
-            if(Smanagement.checkTruckNumber(truckNumber)) {
-                Smanagement.removeTruck(truckNumber);
+            if(sManagement.checkTruckNumber(truckNumber)) {
+                sManagement.removeTruck(truckNumber);
                 check2 = false;
                 System.out.println("truck has been removed from the system");
             }
@@ -538,7 +552,7 @@ public class UI {
 //                else
 //                    System.out.println("Please enter numbers only");
 //            }
-//            check3 = Smanagement.checkID(driverID);
+//            check3 = sManagement.checkID(driverID);
 //            if (check3)
 //                System.out.println("Driver already exist in the system");
 //        }
@@ -589,7 +603,7 @@ public class UI {
 //        }
 //        driverLicence = Character.toUpperCase(driverLicence);
 //        String genericPassword = "123";
-//        Smanagement.addDriver(driverName,driverID,bankNum,input_newContract,wage,genericPassword ,driverLicence,training);
+//        sManagement.addDriver(driverName,driverID,bankNum,input_newContract,wage,genericPassword ,driverLicence,training);
 //        System.out.println("Driver added to the system");
 //        scanner.nextLine();
 //    }
@@ -604,14 +618,14 @@ public class UI {
         while (check32) {
             System.out.println("Please enter drivers ID:");
             driversIDToRemove = scanner.nextLine();
-            check32 = Smanagement.checkID(driversIDToRemove);
+            check32 = sManagement.checkID(driversIDToRemove);
             if (!check32) {
                 System.out.println("Driver does not exist in the system");
                 return;
             }
             else {
                 check32 = false;
-                Smanagement.removeDriver(driversIDToRemove);
+                sManagement.removeDriver(driversIDToRemove);
                 System.out.println("driver has been removed from system");
             }
         }
@@ -630,12 +644,12 @@ public class UI {
             while (check4) {
                 System.out.println("Please enter a Vendor as a source:");
                 sourceSite = scanner.nextLine();
-                if (Smanagement.checkVendor(sourceSite)) {
+                if (sManagement.checkVendor(sourceSite)) {
                     while (check41) {
                         System.out.println("Please enter Destination site:");
                         destinationSite = scanner.nextLine();
-                        if (Smanagement.checkBranch(destinationSite)) {
-                            Smanagement.createOrder(sourceSite, destinationSite);
+                        if (sManagement.checkBranch(destinationSite)) {
+                            sManagement.createOrder(sourceSite, destinationSite);
                             while(cho != 3)
                             {
                                 System.out.println("Item menu:");
@@ -678,11 +692,11 @@ public class UI {
                                             if(training < 0 || training > 2)
                                                 System.out.println("Please enter a number between 0 - 2");
                                         }
-                                        Smanagement.addItemToOrder(sourceSite,itemName,amount,training);
+                                        sManagement.addItemToOrder(sourceSite,itemName,amount,training);
                                         System.out.println("Item add to order");
                                         break;
                                     case 2:
-                                        Smanagement.printLastOrder(sourceSite);
+                                        sManagement.printLastOrder(sourceSite);
                                         break;
                                     case 3:
                                         break;
@@ -727,7 +741,7 @@ public class UI {
         int choice;
         int counter = 1;
         while (true) {
-            if (currentDate.isEqual(nextFriday)) {
+            if (currentDate.isEqual(nextFriday) || currentDate.getDayOfWeek() == DayOfWeek.SATURDAY) {
                 week = "2";
             } else {
                 System.out.println("You want the Shipment to be scheduled for this week or next week?");
@@ -752,15 +766,13 @@ public class UI {
                 break;
             }
             else if (week.equals("2")) {
+                System.out.println("Please choose an pick a date: ");
+                LocalDate dateToMove = closestSunday;
+                for (int i=1 ; i < 7; i++){
+                    System.out.println(i + " - " + dateToMove.getDayOfWeek() + ": " + dateToMove);
+                    dateToMove = dateToMove.plusDays(1);
+                }
                 while (true) {
-                    System.out.println("""
-                            Please enter a day for the shipment:
-                            1 - Sunday
-                            2 - Monday
-                            3 - Tuesday
-                            4 - Wednesday
-                            5 - Thursday
-                            6 - Friday""");
                     day = Integer.parseInt(scanner.nextLine());
                     if (day < 1 || day > 6) {
                         System.out.println("please enter a number between 1 - 6 only");
@@ -777,16 +789,16 @@ public class UI {
         {
             System.out.println("Please enter ID for the shipment:");
             shipmentID = scanner.nextLine();
-            if(Smanagement.checkShipmentID(shipmentID))
+            if(sManagement.checkShipmentID(shipmentID))
                 System.out.println("Shipment ID already exist in the system");
             else {
                 while(check51)
                 {
                     System.out.println("Please enter a vendor name:");
                     vendor = scanner.nextLine();
-                    if(Smanagement.checkVendor(vendor))
+                    if(sManagement.checkVendor(vendor))
                     {
-                        Smanagement.createShipment(day, currentDate ,shipmentID,vendor);
+                        sManagement.createShipment(day, currentDate ,shipmentID,vendor);
                         System.out.println("Shipment created");
                         check50 = false;
                         check51 = false;
@@ -806,9 +818,9 @@ public class UI {
         {
             System.out.println("Please enter shipment ID to delete");
             String shipmentIDToDelete = scanner.nextLine();
-            if(Smanagement.checkShipmentID(shipmentIDToDelete))
+            if(sManagement.checkShipmentID(shipmentIDToDelete))
             {
-                Smanagement.deleteShipment(shipmentIDToDelete);
+                sManagement.deleteShipment(shipmentIDToDelete);
                 check52 = false;
             }
             else {
@@ -818,7 +830,7 @@ public class UI {
     }
 
     public static void executeShipment(){
-        if (!Smanagement.checkAvailableShipment()){
+        if (!sManagement.checkAvailableShipment()){
             System.out.println("There are no available shipments");
             return;
         }
@@ -849,7 +861,7 @@ public class UI {
                 System.out.println("Please enter an actual number");
             }
         }
-        while (Smanagement.checkTruckWeight(currWeight)){
+        while (sManagement.checkTruckWeight(currWeight)){
             String input = "0";
             while (!input.equals("1") && !input.equals("2") && !input.equals("3")) {
                 System.out.println("The truck exceeded the max carry weight, in order to proceed with the shipment\n" +
@@ -865,7 +877,7 @@ public class UI {
                         //shipment.setShipmentStatus(Status.ItemsChange);
                     }
                     case "2" -> {
-                        Smanagement.changeTruck();
+                        sManagement.changeTruck();
 //                        if (!Objects.equals(currTruck.getTruckNumber(), shipment.getTruckNumber()))
 //                            shipment.setShipmentStatus(Status.TruckExchange);
 //                        else {
@@ -874,7 +886,7 @@ public class UI {
 //                        currTruck = searchTruckByID(shipment.getTruckNumber());
                     }
                     case "3" -> {
-                        if (Smanagement.removeLastSiteFromShipment())
+                        if (sManagement.removeLastSiteFromShipment())
                             break;
                         System.out.println("There is only one site in the shipment");
                     }
@@ -902,14 +914,14 @@ public class UI {
     private static void itemsToDelete(){
         int amount;
         System.out.println("Those are the branches of the shipments: ");
-        Smanagement.printSiteOfShipment();
+        sManagement.printSiteOfShipment();
         System.out.println("Please choose the one you want to delete the item from, enter the name of the site: ");
         String answer = scanner.nextLine();
-        while(!Smanagement.checkSiteID(answer)){
+        while(!sManagement.checkSiteID(answer)){
             System.out.println("This site is not exist, please enter again");
             answer = scanner.nextLine();
         }
-        Smanagement.printItemsDoc(answer);
+        sManagement.printItemsDoc(answer);
         while(true){
             System.out.println("Please choose an item you want to delete:");
             String itemName = scanner.nextLine();
@@ -922,7 +934,7 @@ public class UI {
                     System.out.println("Please enter an actual number");
                 }
             }
-            if (Smanagement.deleteItemFromShipment(itemName, amount,answer))
+            if (sManagement.deleteItemFromShipment(itemName, amount,answer))
                 break;
             else{
                 System.out.println("The item was not found");

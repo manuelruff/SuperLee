@@ -2,6 +2,8 @@ package Shipment.DataAccess;
 
 import Shipment.Bussiness.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 // singleton
@@ -11,13 +13,16 @@ public class DataController {
     private ShipmentMapper shipmentMapper;
     private TruckMapper truckMapper;
     private VendorMapper vendorMapper;
+    private SManagerPasswordMapper sManagerPasswordMapper;
 
 
     private DataController(){
+        sManagerPasswordMapper = SManagerPasswordMapper.getInstance();
         orderMapper = OrderMapper.getInstance();
         shipmentMapper = ShipmentMapper.getInstance();
         truckMapper = TruckMapper.getInstance();
         vendorMapper = VendorMapper.getInstance();
+
     }
 
     public static DataController getInstance(){
@@ -57,5 +62,18 @@ public class DataController {
     }
     public void loadAllTrucks(){
 
+    }
+
+
+    /**************************************** Manager Passwords ****************************************/
+    public String getShipmentManagerPassword() {
+        return sManagerPasswordMapper.getSManagerPassword();
+    }
+    public void setShipmentManagerPassword(String Password) {
+        sManagerPasswordMapper.setSManagerPassword(Password);
+    }
+
+    public List<Shipment> getAvailableShipmentsIntoList() {
+        return new ArrayList<>(getAvailableShipments().values());
     }
 }

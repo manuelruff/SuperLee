@@ -2,6 +2,7 @@ import HR.Bussiness.ManagerController;
 import HR.Presentation.CashRegisterUI;
 import HR.Presentation.HRManagerUI;
 import HR.Presentation.WorkerUI;
+import Shipment.Bussiness.shipmentManagement;
 import Shipment.Presentation.UI;
 
 import java.util.Scanner;
@@ -9,6 +10,8 @@ import java.util.Scanner;
 public class GeneralUI {
     public static Scanner scanner;
     public static ManagerController managerController;
+    public static shipmentManagement sManagement;
+
     // all the info will come form there
     //the creation will create the beginning data
     /**
@@ -17,6 +20,7 @@ public class GeneralUI {
     //we will call this function from the main and all the user interface will be from here
     public static void StartMe(){
         managerController=ManagerController.getInstance();
+        sManagement= shipmentManagement.getInstance();
         scanner =new Scanner(System.in);
         //start the ui here
         int choice=-1;
@@ -46,7 +50,7 @@ public class GeneralUI {
                     //after we did what we want we stop
                     break;
                 case 3:
-                    UI.shippingMenu(scanner);
+                    UI.SManagerLogIN(scanner);
                     break;
                 case 4:
                     //whatever a cash register should do

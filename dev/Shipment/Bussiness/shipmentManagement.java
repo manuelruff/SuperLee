@@ -1,7 +1,9 @@
 package Shipment.Bussiness;
 
+import HR.Bussiness.ManagerController;
 import HR.Service.ShipmentService;
 import Shipment.DataAccess.DataController;
+import Shipment.DataAccess.ShipmentMapper;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -16,7 +18,7 @@ public class shipmentManagement {
     private final List<Driver> drivers;
     private final Map<String,Truck> trucks;
     private final List<Site> sites;
-
+    private String shipmentManagerPassword;
     private ShipmentService shipmentService;
     private final Map<String, Shipment> shipments;
 
@@ -25,14 +27,19 @@ public class shipmentManagement {
     private static shipmentManagement instance = null;
 
     private shipmentManagement() {
+        dataController = DataController.getInstance();
+        shipmentService = ShipmentService.getInstance();
         vendorMap = new HashMap<>();
         drivers = new ArrayList<>();
         trucks = dataController.getTrucksMap();
         sites = new ArrayList<>();
+        shipmentManagerPassword = dataController.getShipmentManagerPassword();
         shipments = dataController.getShipmentsMap();
         availableShipments = new ArrayList<>();
-        dataController = DataController.getInstance();
-        shipmentService = ShipmentService.getInstance();
+        availableShipments = dataController.getAvailableShipmentsIntoList();
+        availableShipments.sort(Comparator.comparing(Shipment::getDate));
+
+
     }
     public static shipmentManagement getInstance() {
         if (instance == null) {
@@ -40,6 +47,26 @@ public class shipmentManagement {
         }
         return instance;
     }
+
+    /**
+     * @param password input password
+     * @return true if password is correct
+     */
+    public boolean checkPassword(String password){
+        return password.equals(shipmentManagerPassword);
+    }
+    /**
+     * change the password in the database and the instance
+     * @param password new password
+     */
+    public void setManagerPassword(String password) {
+        shipmentManagerPassword = password;
+        dataController.setShipmentManagerPassword(password);
+    }
+
+
+
+
 
 
     /****************************** Drivers related Methods ******************************/
@@ -219,7 +246,7 @@ public class shipmentManagement {
      * @return true if the truck is found. false otherwise.
      */
     public boolean checkTruckNumber(String truckNumber) {
-        return dataController.getTruck(truckNumber) == null;
+        return dataController.getTruck(truckNumber) != null;
     }
 
     /**
@@ -609,7 +636,7 @@ public class shipmentManagement {
      * @return true if found. false otherwise
      */
     public boolean checkShipmentID(String ID) {
-        return dataController.getShipment(ID) == null;
+        return dataController.getShipment(ID) != null;
     }
 
 
@@ -677,10 +704,7 @@ public class shipmentManagement {
         //finding suitable truck
         truckNumberForShipment = searchForTruck(trainToSearchBy, dayOfWeek);
         Truck truck = getTruck(truckNumberForShipment);
-        char licence = 'C';
-        if (truck.getTotalWeight() > 6000)
-            licence = 'D';
-
+        char licence =  truck.getLicenceType();
         // adding the first order to the shipment
         itemsDoc = new ItemsDoc(firstOrder.getDestination());
         itemsDoc.addListOfItems(firstOrder.getItemsForShipping(trainToSearchBy));
