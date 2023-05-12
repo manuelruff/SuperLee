@@ -25,7 +25,12 @@ public class OrderMapper {
             instance = new OrderMapper();
         return instance;
     }
-//    public void resetOrderCounter()
+
+    public Map<String, Order> getOrderMap() {
+        return orderMap;
+    }
+
+    //    public void resetOrderCounter()
 //    {
 //        try {
 //            java.sql.Statement stat = conn.createStatement();

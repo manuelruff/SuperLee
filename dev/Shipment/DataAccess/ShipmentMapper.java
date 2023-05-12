@@ -43,6 +43,10 @@ public class ShipmentMapper {
         return shipmentsMap;
     }
 
+    public Map<String, Shipment> getAvailableShipmentsMap() {
+        return availableShipmentsMap;
+    }
+
     public Shipment getShipment(String shipmentID){
         if(!shipmentsMap.containsKey(shipmentID))
             readShipment(shipmentID);

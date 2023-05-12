@@ -27,6 +27,10 @@ public class DataController {
         return instance;
     }
 
+    public Map<String, Order> getOrderMap() {
+        return orderMapper.getOrderMap();
+    }
+
     public Vendor getVendor(String name){
         return vendorMapper.getVendor(name);
     }
@@ -34,6 +38,7 @@ public class DataController {
     /**************************************** Shipment Related Methods ****************************************/
 
     public Map<String, Shipment> getShipmentsMap(){return shipmentMapper.getShipmentsMap();}
+    public Map<String,Shipment> getAvailableShipments(){return shipmentMapper.getAvailableShipmentsMap();}
     public void loadAllShipments(){}
     public Shipment getShipment(String shipmentID){return shipmentMapper.getShipment(shipmentID);}
 

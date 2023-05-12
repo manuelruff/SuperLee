@@ -20,6 +20,13 @@ public abstract class Truck {
         this.model = model;
         this.inUse = new ArrayList<>();
     }
+    public char getLicenceType()
+    {
+        if(totalWeight > 12000)
+            return 'D';
+        else
+            return 'C';
+    }
     public String getTruckNumber() {
         return truckNumber;
     }
