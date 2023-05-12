@@ -30,12 +30,18 @@ public class HRService {
     public void askForDeleteShipment(int day, String siteName){
 
     }
-
+    public boolean isThereAShipment(int day, String siteName){
+        return false;
+    }
     public void askForShipments() {
     }
 
     // this fucntion will go over the available shipments and find drivers.
     public void findDriversForShipments(){
+
+    }
+    //update of a site removal
+    public void removeSite(String name){
 
     }
 }

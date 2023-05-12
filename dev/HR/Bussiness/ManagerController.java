@@ -1,5 +1,6 @@
 package HR.Bussiness;
 import HR.DataAccess.DataController;
+import Shipment.Bussiness.Branch;
 import Shipment.Service.HRService;
 
 import java.time.LocalDate;
@@ -457,6 +458,12 @@ public class ManagerController{
         dataController.loadAllWorkersFrom();
     }
 
+
+    public void deleteBranch(String branch){
+        Superim.remove(branch);
+        hrService.removeSite(branch);
+        dataController.deleteBranch(branch);
+    }
     /**
      * it will save the data in the database and close the connection
      */

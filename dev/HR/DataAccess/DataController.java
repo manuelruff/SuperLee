@@ -83,10 +83,15 @@ public class DataController {
     public Super getSuper(String name){
         return superMapper.getsuper(name);
     }
-    /**
-     * we will save all the changes when we go out of the system
-     *
-     */
+
+    public void deleteBranch(String branch){
+        superMapper.deleteBranch(branch);
+    }
+
+        /**
+         * we will save all the changes when we go out of the system
+         *
+         */
     public void saveData() {
 
         //todo add writing for the drivers shifts

@@ -359,10 +359,8 @@ public class StartData {
         Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO Super(name) " +
-                    "VALUES('zolretzah')");
-            stmt.executeUpdate("INSERT INTO Super(name) " +
-                    "VALUES('yakarmeod')");
+            stmt.executeUpdate("INSERT INTO Super(name, PhoneNumber, ContactName, Zone, Address) " + "VALUES('zolretzah', '123-456-7890', 'John', 'North', '123 Main St')");
+            stmt.executeUpdate("INSERT INTO Super(name, PhoneNumber, ContactName, Zone, Address) " + "VALUES('yakarmeod', '123-456-7890', 'Doe', 'North', '125 Main St')");
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
