@@ -43,7 +43,7 @@ public class TruckMapper {
         try
         {
             java.sql.Statement stat = connect.createStatement();
-            java.sql.ResultSet rs = stat.executeQuery("select * from Truck where truckNumber == "+truckNumber+"");
+            java.sql.ResultSet rs = stat.executeQuery("select * from Truck where truckNumber == '"+truckNumber+"'");
             if(rs.next())
             {
                 totalWeight = rs.findColumn("totalWeight");
@@ -71,7 +71,7 @@ public class TruckMapper {
         String day;
         try {
             java.sql.Statement stmt = connect.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("select * from TruckWorkingDays WHERE truckNumber=="+truckNumber+"" );
+            java.sql.ResultSet rs = stmt.executeQuery("select * from TruckWorkingDays WHERE truckNumber=='"+truckNumber+"'" );
             while (rs.next()){
                 day=rs.getString("Day");
                 truckMap.get(truckNumber).addNewDay(Days.valueOf(day));
