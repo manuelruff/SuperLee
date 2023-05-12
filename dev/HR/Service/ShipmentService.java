@@ -41,8 +41,7 @@ public class ShipmentService {
         return null;
     }
     public boolean checkWeekly(List<String> branches, LocalDate date){
-        //todo checkWeekly in service controler
-        return false;
+        return serviceController.checkHasWeekly(branches,date);
     }
     public boolean checkASite(String branchName){
         //todo checkASite in service controler

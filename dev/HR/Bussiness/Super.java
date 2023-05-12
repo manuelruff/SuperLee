@@ -29,7 +29,7 @@ public class Super {
 
     protected String name;
     //builder for super
-    public Super(String Name, String address, String phoneNumber, String contactName, Zone zone){
+    public Super(String name, String address, String phoneNumber, String contactName, Zone zone){
 
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -129,6 +129,9 @@ public class Super {
         this.WeeklyHist.add(this.WeekShifts);
         //sets the weekly shift to null so he will need to create new one
         this.WeekShifts=null;
+    }
+    public void addToHistory(Weekly week){
+        this.WeeklyHist.add(week);
     }
     public double getEnd_evening(Days day) {
         return end_evening.get(day);

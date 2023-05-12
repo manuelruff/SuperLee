@@ -1,5 +1,7 @@
 package HR.Bussiness;
 import HR.DataAccess.DataController;
+
+import java.time.LocalDate;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,6 +35,20 @@ public class ServiceController {
         for(String branch:branches){
             if(!Superim.get(branch).HasWeekly()){
                 return false;
+            }
+        }
+        return true;
+    }
+    //this one checks for next week or this week, we need to knwo what he wants
+    public boolean checkHasWeekly(List<String> branches, LocalDate date){
+        for(String branch:branches){
+            if(!Superim.get(branch).HasWeekly()){
+                return false;
+            }
+            else{
+                if(!Superim.get(branch).GetWeekShifts().getStartDate().equals(date)){
+                    return false;
+                }
             }
         }
         return true;
