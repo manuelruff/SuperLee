@@ -161,6 +161,8 @@ public class HRManagerUI {
                                 }
                                 else{
                                     System.out.println("weekly was created successfully!");
+                                    //we tell shipment that a weekly was created
+                                    managerController.weeklyCreated();
                                 }
                                 break;
                             case 2:
