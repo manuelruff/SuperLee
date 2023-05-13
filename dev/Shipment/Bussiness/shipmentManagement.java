@@ -27,6 +27,8 @@ public class shipmentManagement {
 
     private static shipmentManagement instance = null;
 
+    private Map<String, Order> orderMap;
+
     private shipmentManagement() {
         dataController = DataController.getInstance();
         shipmentService = ShipmentService.getInstance();
@@ -40,6 +42,7 @@ public class shipmentManagement {
         availableShipments = new ArrayList<>();
         availableShipments = dataController.getAvailableShipmentsIntoList();
         availableShipments.sort(Comparator.comparing(Shipment::getDate));
+        orderMap = dataController.getOrderMap();
         loadAllSites();
     }
     public static shipmentManagement getInstance() {
@@ -559,6 +562,7 @@ public class shipmentManagement {
 
     //todo LoadALlOrders
     public void printOrders() {
+        dataController.loadAllOrders();
         for (Map.Entry<String, List<Order>> entry : vendorMap.entrySet()){
             System.out.println("********** " + entry.getKey() + " **********");
             if (entry.getValue().isEmpty()) {

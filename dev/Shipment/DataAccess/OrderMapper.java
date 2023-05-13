@@ -42,6 +42,20 @@ public class OrderMapper {
     {
         orderMap.putIfAbsent(order.getID(), order);
     }
+
+
+    public void readAllOrder(){
+        try{
+            java.sql.Statement stat = conn.createStatement();
+            java.sql.ResultSet rs = stat.executeQuery("select * from Orders");
+            while(rs.next()) {
+                readOrderWithVendor(rs.getString("Source"));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry1");
+        }
+    }
     private void readOrder(String ID)
     {
         String id,destination,zone,source;
@@ -54,6 +68,8 @@ public class OrderMapper {
                 destination = rs.getString("Destination");
                 zone = rs.getString("Zone");
                 source = rs.getString("Source");
+                if (orderMap.containsKey(id))
+                    return;
                 Order order = new Order(destination,Zone.valueOf(zone),source);
                 order.setID(id);
                 orderMap.put(id,order);
@@ -198,7 +214,7 @@ public class OrderMapper {
             java.sql.Statement stat = conn.createStatement();
             stat.executeUpdate("UPDATE StaticSaves SET LastID = '"+count+"' WHERE object == 'Order'");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("can't read");
         }
     }
 

@@ -23,7 +23,6 @@ public class DataController {
         shipmentMapper = ShipmentMapper.getInstance();
         truckMapper = TruckMapper.getInstance();
         vendorMapper = VendorMapper.getInstance();
-
     }
 
     public static DataController getInstance(){
@@ -41,6 +40,9 @@ public class DataController {
 
     public void loadOrdersByVendor(String vendorName){orderMapper.readOrderWithVendor(vendorName);}
 
+    public void loadAllOrders(){
+        orderMapper.readAllOrder();
+    }
 
 
     /**************************************** Vendor Related Methods ****************************************/
@@ -103,7 +105,6 @@ public class DataController {
         truckMapper.writeAllTrucks();
         orderMapper.writeStaticSave();
         shipmentMapper.writeItemDocsCounter();
-        Connect.disconnect();
     }
 
     public void loadSaves() {

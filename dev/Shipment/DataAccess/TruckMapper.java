@@ -89,14 +89,9 @@ public class TruckMapper {
                 storage = truck.getStorageType().toString();
                 totalWeight = truck.getTotalWeight();
                 truckWeight = truck.getTruckWeight();
-                java.sql.ResultSet rs = stat.executeQuery("select * from Truck WHERE truckNumber==" + truckNumber + "");
-                if (!rs.next()) {
-                    stat.executeUpdate("INSERT INTO Truck(truckNumber, totalWeight, truckWeight,model,Storage) " +
-                            "VALUES ('" + truckNumber + "', " + totalWeight + " ," + truckWeight + ",'" + model + "', '" + storage + "')");
-                } else {
-                    stat.executeUpdate("UPDATE Truck SET truckNumber='" + truckNumber + "', totalWeight=" + totalWeight + ", truckWeight=" + truckWeight + ", model= '" + model + "', storage='" + storage + "'" +
-                            "  WHERE truckNumber=" + truckNumber);
-                }
+                stat.executeUpdate("INSERT OR IGNORE INTO Truck(truckNumber, totalWeight, truckWeight,model,Storage) " +
+                        "VALUES ('" + truckNumber + "', " + totalWeight + " ," + truckWeight + ",'" + model + "', '" + storage + "')");
+
             } catch (SQLException e) {
                 System.out.println("i have a problem sorry");
             }
