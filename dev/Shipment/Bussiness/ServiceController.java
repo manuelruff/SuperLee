@@ -12,7 +12,7 @@ import java.util.Objects;
 public class ServiceController {
     private static  ServiceController instance;
     private DataController dataController;
-    private shipmentManagement shipmentManagement;
+    private shipmentManagement shipmentM;
     private List<Shipment> shipments;
     private Map<String,Order> orders;
     private Map<String,Truck> trucks;
@@ -24,9 +24,9 @@ public class ServiceController {
         return instance;
     }
     private ServiceController(){
-        shipmentManagement = Shipment.Bussiness.shipmentManagement.getInstance();
+        shipmentM = shipmentManagement.getInstance();
         dataController = DataController.getInstance();
-        shipments = shipmentManagement.getAvailableShipment();
+        shipments = shipmentM.getAvailableShipment();
         orders = dataController.getOrderMap();
         trucks = dataController.getTrucksMap();
     }
@@ -66,7 +66,7 @@ public class ServiceController {
             if (shipment.getDayOfTheWeek() == day){
                 if (shipment.getDestinations().size() == 1){
                     if (shipment.getDestinations().get(0).getName().equals(siteName)){
-                        shipmentManagement.deleteShipment(shipment.getID());
+                        shipmentM.deleteShipment(shipment.getID());
                         return;
                     }
                 }
