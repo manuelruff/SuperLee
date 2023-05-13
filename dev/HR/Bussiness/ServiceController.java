@@ -33,6 +33,7 @@ public class ServiceController {
     //check if all the branches have a weekly if not we return false
     public boolean checkHasWeekly(List<String> branches){
         for(String branch:branches){
+            dataController.getSuper(branch);
             if(!Superim.get(branch).HasWeekly()){
                 return false;
             }
