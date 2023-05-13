@@ -46,6 +46,20 @@ public class SuperMapper {
      * @param branchName name of super
      *
      */
+    public void readSupers(){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            //java.sql.ResultSet rs = stmt.executeQuery("select * from Super WHERE name=="+branchName+"" );
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Super");
+            if(rs.next()) {
+                String name = rs.getString("name");
+                getsuper(name);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem sorry");
+        }
+    }
     private void ReadSuper(String branchName){
         String name,address,phoneNumber,contactName,zone;
         try {

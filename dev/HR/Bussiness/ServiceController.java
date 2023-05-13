@@ -184,6 +184,21 @@ public class ServiceController {
         branchInfo.add(ret.getZone().toString());
         return branchInfo;
     }
+    public List<List<String>>getSites(){
+        dataController.getSupers();
+        List<List<String>> arr = new ArrayList<>();
+        for(Super sup : Superim.values()){
+            List<String>branchInfo = new ArrayList<>();
+            //[String name, String address, String phoneNumber, String contactName, Zone zone]
+            branchInfo.add(sup.getName());
+            branchInfo.add(sup.getAddress());
+            branchInfo.add(sup.getPhoneNumber());
+            branchInfo.add(sup.getContactName());
+            branchInfo.add(sup.getZone().toString());
+            arr.add(branchInfo);
+        }
+        return arr;
+    }
 
     // check if site is exist
     public boolean checkSite(String name){

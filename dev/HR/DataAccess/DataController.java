@@ -88,6 +88,8 @@ public class DataController {
     public Super getSuper(String name){
         return superMapper.getsuper(name);
     }
+    public void getSupers(){superMapper.readSupers();
+    }
 
     public void deleteBranch(String branch){
         superMapper.deleteBranch(branch);
