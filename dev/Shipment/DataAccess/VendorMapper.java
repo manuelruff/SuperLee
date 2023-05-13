@@ -1,28 +1,23 @@
 package Shipment.DataAccess;
 
 
-import Shipment.Bussiness.Order;
 import Shipment.Bussiness.Vendor;
 
 import resource.Connect;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class VendorMapper {
 
     private static VendorMapper instance;
     private Map<String, Vendor> vendors;
-    private Map<String, List<Order>> vendorOrderMap;
     private Connection conn;
     private VendorMapper() {
         conn = Connect.getConnection();
         vendors = new HashMap<>();
-        vendorOrderMap = new HashMap<>();
     }
 
     public static VendorMapper getInstance() {
@@ -44,8 +39,6 @@ public class VendorMapper {
         return vendors.get(name);
     }
 
-    public Map<String, List<Order>> getVendorOrderMap(){return vendorOrderMap;}
-
 
     /**
      * This function reads a vendor from the database according to the unique name it has and creating a vendor object
@@ -54,7 +47,6 @@ public class VendorMapper {
      */
     public void readVendor(String name) {
         String contactName, address, phoneNumber;
-        List<Order> orderList = new ArrayList<>();
         try {
             java.sql.Statement stmt = conn.createStatement();
             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Vendors WHERE NAME = '" + name + "'");
@@ -65,7 +57,6 @@ public class VendorMapper {
                 address = rs.getString("Address");
                 Vendor vendor = new Vendor(name, address, phoneNumber, contactName);
                 vendors.put(name, vendor);
-                vendorOrderMap.put(name, orderList);
             }
         }
         catch (SQLException e)

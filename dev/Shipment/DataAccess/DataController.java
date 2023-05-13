@@ -32,13 +32,6 @@ public class DataController {
         return instance;
     }
 
-    public Map<String, List<Order>> getVendorsOrderMap(){
-        return vendorMapper.getVendorOrderMap();
-    }
-    public void checkVendorOrders(String source) {
-        orderMapper.readOrderWithVendor(source);
-    }
-
     public Map<String, Order> getOrderMap() {
         return orderMapper.getOrderMap();
     }

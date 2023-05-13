@@ -29,7 +29,7 @@ public class shipmentManagement {
     private shipmentManagement() {
         dataController = DataController.getInstance();
         shipmentService = ShipmentService.getInstance();
-        vendorMap = dataController.getVendorsOrderMap();
+        vendorMap = new HashMap<>();
         drivers = new ArrayList<>();
         trucks = dataController.getTrucksMap();
         sites = new ArrayList<>();
@@ -331,7 +331,7 @@ public class shipmentManagement {
      * This function searching for a new truck for the shipment.
      */
     public void changeTruck() {
-        Shipment shipment = availableShipments.get(0);
+        Shipment shipment = shipments.get(0);
         Truck currentTruck = getTruck(shipment.getTruckNumber());
         Driver currentDriver = shipment.getDriver();
         for(Truck truck : trucks.values())
@@ -686,7 +686,6 @@ public class shipmentManagement {
         List<String> destinations = new ArrayList<>();
         Driver driverForShipment = null;
         String truckNumberForShipment = "";
-
         if (vendorMap.get(source).isEmpty()) {
             System.out.println("This vendor: " + source + " does not have any orders");
             return false;
