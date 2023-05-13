@@ -746,6 +746,8 @@ public class shipmentManagement {
                 }
             }
         }
+        for(String string : destinations)
+            System.out.println(string);
         if (shipmentService.checkWeekly(destinations, date)) {
             driverForShipment = addDriver(shipmentService.askForDriver(licence, truck.getStorageType().ordinal(), dayOfWeek, destinations));
             if (driverForShipment == null) {

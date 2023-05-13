@@ -179,10 +179,10 @@ public class OrderMapper {
                 if(!rs.next())
                 {
                     stat.executeUpdate("INSERT INTO Orders(ID, Destination, Zone,Source) " +
-                            "VALUES (" + id + ", '" + destination + " ','" + zone.toString() + "','" + source + "')");
+                            "VALUES (" + id + ",'" + destination + "','" + zone.toString() + "','" + source + "')");
                 }
                 else {
-                    stat.executeUpdate("INSERT OR IGNORE INTO Orders (ID, Destination, Zone,Source) " +  "VALUES (" + id + ", '" + destination + " ','" + zone.toString() + "','" + source + "')");
+                    stat.executeUpdate("INSERT OR IGNORE INTO Orders (ID, Destination, Zone,Source) " +  "VALUES (" + id + ",'" + destination + "','" + zone.toString() + "','" + source + "')");
                 }
             }
             catch (SQLException e)

@@ -161,7 +161,7 @@ public class LoadData {
 //        order = new Order("branch3", Zone.valueOf(shipmentService.askForSite("branch3").get(4)),"Zogloveg");
 //        order.addItemToOrder(new Item( "pastrama", 10, Training.valueOf("Cooling")));
 //        order.addItemToOrder(new Item( "hot dog", 20, Training.valueOf("Freezer")));
-//        order.addItemToOrder(new Item( "salami", 20, Training.valueOf("Cooling")));
+//        order.addItemToOrder(new Item( "salami", 20, Training.--valueOf("Cooling")));
 //        order.addItemToOrder(new Item( "hamburger", 20, Training.valueOf("Freezer")));
 //        orderMapper.addOrderToMap(order);
 //
