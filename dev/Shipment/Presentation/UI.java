@@ -57,7 +57,7 @@ public class UI {
                         System.out.println("Site Menu:");
                         System.out.println("1 - Add Vendor");
                         System.out.println("2 - Remove Vendor");
-                        System.out.println("3 - Print All Sites");
+                        System.out.println("3 - Print All Sites (vendors and branches");
                         System.out.println("4 - Update site info");
                         System.out.println("5 - Exit");
                         int ch = 0;
@@ -126,12 +126,10 @@ public class UI {
                     int ch3=0;
                     while(ch3 != 6) {
                         System.out.println("Drivers Menu:");
-                        System.out.println("1 - Add driver");
-                        System.out.println("2 - remove driver");
-                        System.out.println("3 - Print All drivers");
-                        System.out.println("4 - Update driver licence");
-                        System.out.println("5 - Update driver training");
-                        System.out.println("6 - Exit");
+                        System.out.println("1 - Print All drivers");
+                        System.out.println("2 - Update driver licence");
+                        System.out.println("3 - Update driver training");
+                        System.out.println("4 - Exit");
                         try{
                             ch3 = Integer.parseInt(scanner.nextLine());
                         }
@@ -141,22 +139,16 @@ public class UI {
                         }
                         switch (ch3)
                         {
-                            case 1 :
-                                //addDriver();
-                                break;
-                            case 2:
-                                deleteDriver();
-                                break;
-                            case 3:
+                            case 1:
                                 sManagement.printDrivers();
                                 break;
-                            case 4:
+                            case 2:
                                 updateDriverLicence();
                                 break;
-                            case 5:
+                            case 3:
                                 updateDriverTraining();
                                 break;
-                            case 6:
+                            case 4:
                                 break;
                             default:
                                 System.out.println("Invalid input");

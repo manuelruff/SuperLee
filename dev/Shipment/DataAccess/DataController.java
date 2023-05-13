@@ -47,6 +47,8 @@ public class DataController {
     public Map<String, Vendor> getVendorMap(){return vendorMapper.getVendorMap();}
     public Map<String, List<Order>> getVendorOrderMap(){return vendorMapper.getVendorsOrderMap();}
 
+    public void loadAllVendors(){vendorMapper.readAllVendors();}
+
 
 
 

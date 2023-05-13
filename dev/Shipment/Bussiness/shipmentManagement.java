@@ -190,10 +190,7 @@ public class shipmentManagement {
      * This Function prints every driver in the system.
      */
     public void printDrivers() {
-        for (Driver driver : drivers) {
-            driver.Printme();
-            System.out.println(" ");
-        }
+        shipmentService.printAllDrivers();
     }
 
     /**
@@ -490,6 +487,7 @@ public class shipmentManagement {
         for (Branch branch : branches){
             branch.printSite();
         }
+        dataController.loadAllVendors();
         System.out.println("******* VENDORS DETAILS *******");
         System.out.println("Number of Vendors: " + vendors.size() + "\n");
         for(Vendor vendor : vendors.values()){
