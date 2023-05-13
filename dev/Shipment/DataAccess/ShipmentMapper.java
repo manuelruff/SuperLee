@@ -9,10 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class ShipmentMapper {
     private static ShipmentMapper instance = new ShipmentMapper();
@@ -100,7 +97,7 @@ public class ShipmentMapper {
     private List<ItemsDoc> getItemDocs(String shipmentID)
     {
         String name,id;
-        List<ItemsDoc> itemsDocs=null;
+        List<ItemsDoc> itemsDocs= new ArrayList<>();
         try
         {
             java.sql.Statement stat = conn.createStatement();
