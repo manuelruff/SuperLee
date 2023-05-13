@@ -214,14 +214,14 @@ public class StartData {
         try {
             java.sql.Statement stmt = conn.createStatement();
             //shift managers
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1000, 'D', 'Freezer')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1001, 'D', 'Freezer')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1002, 'D', 'Cooling')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1003, 'D', 'Regular')");
             stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1000,'ron',1,'2000-04-20','asd',123,0,130,0)");
             stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1001,'yanos',1,'2000-04-20','asd',123,0,130,0)");
             stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1002,'roi',1,'2000-04-20','asd',123,0,130,0)");
             stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1003,'ohayon',1,'2000-04-20','asd',123,0,130,0)");
-            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID,Licence,Training)" + " VALUES (1000,'D',1)");
-            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID,Licence,Training)" + " VALUES (1001,'D',1)");
-            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID,Licence,Training)" + " VALUES (1002,'C',0)");
-            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID,Licence,Training)" + " VALUES (1003,'D',1)");
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");

@@ -1,6 +1,8 @@
 package HR.DataAccess;
 import HR.Bussiness.*;
 import resource.Connect;
+
+import java.util.List;
 import java.util.Map;
 
 //this will be singleton
@@ -88,7 +90,7 @@ public class DataController {
     public Super getSuper(String name){
         return superMapper.getsuper(name);
     }
-    public void getSupers(){superMapper.readSupers();
+    public List<List<String>> getSupers(){return superMapper.readSupers();
     }
 
     public void deleteBranch(String branch){
