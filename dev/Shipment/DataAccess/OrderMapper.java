@@ -15,12 +15,11 @@ import java.util.Map;
 public class OrderMapper {
     private static OrderMapper instance = new OrderMapper();
     private Map<String, Order> orderMap;
-    private Map<String, String> ordersVendorMap;
+
     private Connection conn;
 
     private OrderMapper() {
         orderMap = new HashMap<>();
-        ordersVendorMap = new HashMap<>();
         conn = Connect.getConnection();
     }
     public static OrderMapper getInstance(){

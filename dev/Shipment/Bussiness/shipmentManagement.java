@@ -943,6 +943,7 @@ public class shipmentManagement {
         }
         shipmentToDelete.printShipment();
         availableShipments.remove(shipmentToDelete);
+        shipmentService.askRemoveDayForDriver(shipmentToDelete.getDriver().getID(), shipmentToDelete.getDayOfTheWeek().ordinal());
         System.out.println("This shipment has been deleted!");
     }
 

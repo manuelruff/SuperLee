@@ -129,7 +129,7 @@ public class Shift {
             System.out.println("at "+this.date + " " + this.shift_time + " at: "+this.date.getDayOfWeek() +" there is no shift ");
         }
         else {
-            System.out.println(this.date +" at: "+this.date.getDayOfWeek() + this.shift_time + "\n" +
+            System.out.println(this.date +" at: "+this.date.getDayOfWeek() +" "+ this.shift_time + "\n" +
                     "from: " + this.start + " until: " + this.end);
             for (Jobs job : this.WorkerList.keySet()) {
                 if(WorkerList.get(job).size()!=0){
