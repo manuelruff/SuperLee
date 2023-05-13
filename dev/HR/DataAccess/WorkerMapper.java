@@ -211,7 +211,7 @@ public class WorkerMapper {
         String id;
         try {
             java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM DriverInfo WHERE Licence = '" + licence + "' AND Training = '" + ability.toString() + "'");
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM DriverInfo WHERE Licence >= " + licence + " AND Training >= " + ability.toString());
             //ill get each worker
             while (rs.next()){
                 id=rs.getString("DriverID");
