@@ -1,6 +1,7 @@
 package Shipment.DataAccess;
 
 import Shipment.Bussiness.*;
+import resource.Connect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,9 @@ public class DataController {
     public void loadAllShipments(){}
     public Shipment getShipment(String shipmentID){return shipmentMapper.getShipment(shipmentID);}
 
-
+    public List<Shipment> getAvailableShipmentsIntoList() {
+        return new ArrayList<>(getAvailableShipments().values());
+    }
 
 
 
@@ -89,7 +92,15 @@ public class DataController {
         sManagerPasswordMapper.setSManagerPassword(Password);
     }
 
-    public List<Shipment> getAvailableShipmentsIntoList() {
-        return new ArrayList<>(getAvailableShipments().values());
+
+
+
+
+    public void closeShipmentsDB(){
+        vendorMapper.writeAllVendors();
+        shipmentMapper.writeAllShipments();
+        orderMapper.writeAllOrders();
+        truckMapper.writeAllTrucks();
+        Connect.disconnect();
     }
 }
