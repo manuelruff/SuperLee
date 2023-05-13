@@ -75,10 +75,14 @@ public class ServiceController {
         }
     }
     public boolean checkStoreKeeper(List<String> branches,int day){
+
         int shifttime = day*2;
         // get all the branches that have can a store keeper-
-        List<String>addedStoreKeeper1=CanAddStoreKeeper(branches,shifttime,0);
-        List<String>addedStoreKeeper2=CanAddStoreKeeper(branches,shifttime+1,1);
+        List<String>addedStoreKeeper1=CanAddStoreKeeper(branches,day,shifttime,0);
+        List<String>addedStoreKeeper2=CanAddStoreKeeper(branches,day,shifttime+1,1);
+        // if we dont have this shift return false
+        if(addedStoreKeeper1.size() == 0 || addedStoreKeeper2.size() == 0)
+            return false;
         // flag to check if all the branches have a store keeper
         boolean checkadded1 = checkAllBranchesStoreKeeper(addedStoreKeeper1,shifttime);
         boolean checkadded2 = checkAllBranchesStoreKeeper(addedStoreKeeper2,shifttime+1);
@@ -99,19 +103,22 @@ public class ServiceController {
 
     // if branch doesnt have store keeper - try to add one
     // we will return the list of all the branches we succeed to add a store keeper
-    public List<String> CanAddStoreKeeper(List<String> branches,int day,int shiftTime){
+    public List<String> CanAddStoreKeeper(List<String> branches,int day,int shiftnumber,int shiftTime){
         List<String> added=new ArrayList<>();
         Days day1=Days.values()[day];
         //check for each branch if he has a store keeper
         for(String branch:branches){
-            if(!Superim.get(branch).GetWeekShifts().GetShift(day).getWorkerList().containsKey(Jobs.StoreKeeper)){
+            // todo: check this if
+            if(Superim.get(branch).GetWeekShifts().GetShift(shiftnumber).IsEmptyShift())
+                continue;
+            if(!Superim.get(branch).GetWeekShifts().GetShift(shiftnumber).getWorkerList().containsKey(Jobs.StoreKeeper)){
                 List <String> workers = Superim.get(branch).GetWorkersIDS();
                 // check if there is a store keeper that can be added to the shift
                 for(String worker:workers){
                     if(shiftTime == 0){
                     if((Workers.get(worker).CanDoJob(Jobs.StoreKeeper) && !Workers.get(worker).IsFree(day1,Superim.get(branch).getStart_morning(day1),Superim.get(branch).getEnd_morning(day1))))
                     {
-                        Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.StoreKeeper, Workers.get(worker));
+                        Superim.get(branch).GetWeekShifts().GetShift(shiftnumber).AddWorker(Jobs.StoreKeeper, Workers.get(worker));
                         Workers.get(worker).AddShift(Days.values()[day]);
                         Workers.get(worker).AddShiftWorked();
                         added.add(branch);
@@ -120,7 +127,7 @@ public class ServiceController {
                     else{
                         if((Workers.get(worker).CanDoJob(Jobs.StoreKeeper) && !Workers.get(worker).IsFree(day1,Superim.get(branch).getStart_evening(day1),Superim.get(branch).getEnd_evening(day1))))
                         {
-                            Superim.get(branch).GetWeekShifts().GetShift(day).AddWorker(Jobs.StoreKeeper, Workers.get(worker));
+                            Superim.get(branch).GetWeekShifts().GetShift(shiftnumber).AddWorker(Jobs.StoreKeeper, Workers.get(worker));
                             Workers.get(worker).AddShift(Days.values()[day]);
                             Workers.get(worker).AddShiftWorked();
                             added.add(branch);
