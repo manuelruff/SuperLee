@@ -70,8 +70,8 @@ public class OrderMapper {
             if(rs.next())
             {
                 id = rs.getString("ID");
-                destination = rs.getString("destination");
-                zone = rs.getString("zone");
+                destination = rs.getString("Destination");
+                zone = rs.getString("Zone");
                 source = rs.getString("Source");
                 Order order = new Order(destination,Zone.valueOf(zone),source);
                 order.setID(id);// when writing back to the database maybe duplication
@@ -97,8 +97,8 @@ public class OrderMapper {
             while(rs.next())
             {
                 id = rs.getString("ID");
-                destination = rs.getString("destination");
-                zone = rs.getString("zone");
+                destination = rs.getString("Destination");
+                zone = rs.getString("Zone");
                 source = rs.getString("Source");
                 Order order = new Order(destination,Zone.valueOf(zone),source);
                 order.setID(id); // when writing back to the database maybe duplication

@@ -787,7 +787,7 @@ public class UI {
     }
 
     public static void executeShipment(){
-        if (!sManagement.checkAvailableShipment()){
+        if (sManagement.checkAvailableShipment()){
             System.out.println("There are no available shipments");
             return;
         }
@@ -867,6 +867,8 @@ public class UI {
                 }
             }
         }
+        System.out.println("The Items Were delivered to their destinations");
+        sManagement.updateShipment();
     }
     private static void itemsToDelete(){
         int amount;

@@ -745,8 +745,6 @@ public class shipmentManagement {
                 }
             }
         }
-        for(String string : destinations)
-            System.out.println(string);
         if (shipmentService.checkWeekly(destinations, date)) {
             driverForShipment = addDriver(shipmentService.askForDriver(licence, truck.getStorageType().ordinal(), dayOfWeek, destinations));
             if (driverForShipment == null) {
@@ -1161,6 +1159,13 @@ public class shipmentManagement {
             }
         }
         return false;
+    }
+
+    public void updateShipment() {
+        Shipment shipment = availableShipments.get(0);
+        availableShipments.remove(shipment);
+        shipments.put(shipment.getID(), shipment);
+        shipment.setShipmentStatus(Status.NoChanges);
     }
 }
 
