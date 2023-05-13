@@ -100,7 +100,7 @@ public class ShipmentMapper {
         {
             java.sql.Statement stat = conn.createStatement();
             java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM StaticSaves WHERE Object == '"+"ItemDoc"+"' ");
-            ItemsDoc.setCount(rs.getInt("LstID"));
+            ItemsDoc.setCount(rs.getInt("LastID"));
         }
         catch (SQLException e)
         {

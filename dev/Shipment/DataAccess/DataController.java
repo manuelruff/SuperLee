@@ -98,7 +98,7 @@ public class DataController {
 
     public void closeShipmentsDB(){
         vendorMapper.writeAllVendors();
-        shipmentMapper.writeAllShipments();
+        //shipmentMapper.writeAllShipments();
         orderMapper.writeAllOrders();
         truckMapper.writeAllTrucks();
         orderMapper.writeStaticSave();
