@@ -32,24 +32,6 @@ public class OrderMapper {
         return orderMap;
     }
 
-    //    public void resetOrderCounter()
-//    {
-//        try {
-//            java.sql.Statement stat = conn.createStatement();
-//            java.sql.ResultSet rs = stat.executeQuery("SELECT ID FROM Orders ORDER BY ID DESC LIMIT 1");
-//            if (rs.next()) {
-//                String lastOrderID = rs.getString("ID");
-//
-//            } else {
-//                System.out.println("No orders found.");
-//            }
-//        }
-//        catch (SQLException e)
-//        {
-//            System.out.println("i have a problem sorry reset count");
-//
-//        }
-//    }
     public Order getOrder(String ID){
         if (orderMap.get(ID)==null){
             readOrder(ID);
@@ -73,7 +55,7 @@ public class OrderMapper {
                 zone = rs.getString("Zone");
                 source = rs.getString("Source");
                 Order order = new Order(destination,Zone.valueOf(zone),source);
-                order.setID(id);// when writing back to the database maybe duplication
+                order.setID(id);
                 orderMap.put(id,order);
                 readItems(id,order);
 
@@ -100,8 +82,9 @@ public class OrderMapper {
                 zone = rs.getString("Zone");
                 source = rs.getString("Source");
                 Order order = new Order(destination,Zone.valueOf(zone),source);
-                order.setID(id); // when writing back to the database maybe duplication
-//                orderMap.put(id,order);    //             vendor -> order1, order2
+                order.minusCount();
+                order.setID(id);
+                orderMap.put(id,order);
                 readItems(id,order);
                 orders.add(order);
                 deleteItems(id);
@@ -147,8 +130,6 @@ public class OrderMapper {
     }
     private  void deleteItems(String id)
     {
-        String name,storage;
-        int amount;
         try {
             java.sql.Statement stat = conn.createStatement();
             java.sql.ResultSet rs = stat.executeQuery("select * from OrderItems WHERE ID=='" + id + "'");
@@ -165,9 +146,8 @@ public class OrderMapper {
     {
         for(Order order : orderMap.values())
         {
-            String id = null,destination,source;
+            String id ,destination,source;
             Zone zone;
-            List<Item> itemList;
             try{
                 java.sql.Statement stat = conn.createStatement();
                 id = order.getID();
@@ -200,5 +180,26 @@ public class OrderMapper {
         }
     }
 
+    public void readStaticSave(){
+        int rs;
+        try{
+            java.sql.Statement stat = conn.createStatement();
+            rs = stat.executeUpdate("select * from StaticSaves WHERE Object=='" + "Order" + "'");
+            Order.setCount(rs);
+        }
+        catch (SQLException e) {
+            System.out.println("can't read");
+        }
+    }
+
+    public void writeStaticSave(){
+        int count = Order.getCount();
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            stat.executeUpdate("UPDATE StaticSaves SET LastID = '"+count+"' WHERE object == 'Order'");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

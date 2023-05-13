@@ -60,6 +60,7 @@ public class GeneralUI {
                     System.out.println("have a good day");
                     //do what we need in the database when closed
                     managerController.closeDB();
+                    sManagement.closeDB();
                     //close the scanner
                     scanner.close();
                     //stops the program

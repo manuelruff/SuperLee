@@ -101,6 +101,13 @@ public class DataController {
         shipmentMapper.writeAllShipments();
         orderMapper.writeAllOrders();
         truckMapper.writeAllTrucks();
+        orderMapper.writeStaticSave();
+        shipmentMapper.writeItemDocsCounter();
         Connect.disconnect();
+    }
+
+    public void loadSaves() {
+        orderMapper.readStaticSave();
+        shipmentMapper.getItemDocsCounter();
     }
 }
