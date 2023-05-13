@@ -133,7 +133,6 @@ public class shipmentManagement {
         if (list == null)
             return null;
         return new Driver(list.get(0),list.get(1), list.get(2).charAt(0), Training.valueOf(list.get(3)));
-
     }
 
     /**
