@@ -36,9 +36,19 @@ public class DataController {
         return orderMapper.getOrderMap();
     }
 
+
+
+    /**************************************** Vendor Related Methods ****************************************/
+
     public Vendor getVendor(String name){
         return vendorMapper.getVendor(name);
     }
+
+    public Map<String, Vendor> getVendorMap(){return vendorMapper.getVendorMap();}
+    public Map<String, List<Order>> getVendorOrderMap(){return vendorMapper.getVendorsOrderMap();}
+
+
+
 
     /**************************************** Shipment Related Methods ****************************************/
 

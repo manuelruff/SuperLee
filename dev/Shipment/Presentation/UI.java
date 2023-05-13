@@ -55,9 +55,9 @@ public class UI {
                     boolean chF=true;
                     while(chF) {
                         System.out.println("Site Menu:");
-                        System.out.println("1 - Add Site");
-                        System.out.println("2 - Remove Site");
-                        System.out.println("3 - Print All Sites ");
+                        System.out.println("1 - Add Vendor");
+                        System.out.println("2 - Remove Vendor");
+                        System.out.println("3 - Print All Sites");
                         System.out.println("4 - Update site info");
                         System.out.println("5 - Exit");
                         int ch = 0;
@@ -72,7 +72,6 @@ public class UI {
                             case 1:
                                 addSite();
                                 break;
-                                //asd
 
                             case 2:
                                 deleteSite();
@@ -343,13 +342,13 @@ public class UI {
         boolean check = true;
         String siteName = null;
         while (check) {
-            System.out.println("Please enter site name:");
+            System.out.println("Please enter Vendor name:");
             siteName = scanner.nextLine();
             check = sManagement.checkVendor(siteName);
             if (check)
-                System.out.println("Site already exist please enter a new name");
+                System.out.println("Vendor already exist please enter a new name");
         }
-        System.out.println("Please enter Site Address:");
+        System.out.println("Please enter Vendor Address:");
         String siteAddress = scanner.nextLine();
         String sitePhoneNumber;
         System.out.println("Please enter site phone number (10 digits - only numbers):");
@@ -379,7 +378,7 @@ public class UI {
             System.out.println("Please enter site name you want to remove:");
             siteToDelete = scanner.nextLine();
             if(sManagement.checkVendor(siteToDelete)) {
-                sManagement.deleteSite(siteToDelete);
+                sManagement.deleteVendor(siteToDelete);
                 System.out.println("site deleted");
                 check1 = false;
             }
@@ -397,7 +396,7 @@ public class UI {
     {
         System.out.println("Please enter the name of the site you would like to update:");
         String siteName = scanner.nextLine();
-        if(sManagement.checkSite(siteName)){
+        if(sManagement.checkBranch(siteName)){
             while (true) {
                 System.out.println("""
                         What would you like to change:

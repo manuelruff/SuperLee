@@ -17,7 +17,8 @@ public class shipmentManagement {
     private final Map<String, List<Order>> vendorMap;
     private final List<Driver> drivers;
     private final Map<String,Truck> trucks;
-    private final List<Site> sites;
+    private final Map<String, Vendor> vendors;
+    private List<Branch> branches;
     private String shipmentManagerPassword;
     private ShipmentService shipmentService;
     private final Map<String, Shipment> shipments;
@@ -31,8 +32,9 @@ public class shipmentManagement {
         shipmentService = ShipmentService.getInstance();
         vendorMap = new HashMap<>();
         drivers = new ArrayList<>();
+        branches = new ArrayList<>();
         trucks = dataController.getTrucksMap();
-        sites = new ArrayList<>();
+        vendors = dataController.getVendorMap();
         shipmentManagerPassword = dataController.getShipmentManagerPassword();
         shipments = dataController.getShipmentsMap();
         availableShipments = new ArrayList<>();
@@ -331,7 +333,7 @@ public class shipmentManagement {
      * This function searching for a new truck for the shipment.
      */
     public void changeTruck() {
-        Shipment shipment = shipments.get(0);
+        Shipment shipment = availableShipments.get(0);
         Truck currentTruck = getTruck(shipment.getTruckNumber());
         Driver currentDriver = shipment.getDriver();
         for(Truck truck : trucks.values())
@@ -373,13 +375,13 @@ public class shipmentManagement {
      * @return true if found. false otherwise.
      */
 
-    public boolean checkSite(String name) {
-        for (Site site : sites) {
-            if (Objects.equals(site.getName(), name))
-                return true;
-        }
-        return false;
-    }
+//    public boolean checkSite(String name) {
+//        for (Site site : sites) {
+//            if (Objects.equals(site.getName(), name))
+//                return true;
+//        }
+//        return false;
+//    }
 
     /**
      * This site updates the data of the site.
@@ -420,22 +422,17 @@ public class shipmentManagement {
         vendor = new Vendor(name, address, phoneNumber, contactName);
         List<Order> orderList = new ArrayList<>();
         vendorMap.put(name, orderList);
-        sites.add(vendor);
+        vendors.put(name, vendor);
     }
 
-    /**
-     * This function creates a new branch and adds it to the system.
-     *
-     * @param name        string, name of the branch.
-     * @param address     string, address of the vendor.
-     * @param phoneNumber string, phone number of the contact person.
-     * @param contactName string, name of the contact person.
-     * @param zone        enum Zone, zone area.
-     */
-    public void addBranch(String name, String address, String phoneNumber, String contactName, int zone) {
+
+    public void addBranch(List<List<String>> siteDetails) {
         Branch branch;
-        branch = new Branch(name, address, phoneNumber, contactName, Zone.values()[zone]);
-        sites.add(branch);
+        for(int i=0; i < siteDetails.size(); i++) {
+            branch = new Branch(siteDetails.get(1).get(0), siteDetails.get(1).get(1), siteDetails.get(1).get(2)
+                    , siteDetails.get(1).get(3), Zone.valueOf(siteDetails.get(1).get(4)));
+            branches.add(branch);
+        }
     }
 
 
@@ -444,14 +441,11 @@ public class shipmentManagement {
      *
      * @param name string, name of the site.
      */
-    public void deleteSite(String name) {
-        for (Site site : sites) {
-            if (Objects.equals(site.getName(), name)) {
-                sites.remove(site);
-                vendorMap.remove(name);
-                return;
-            }
-        }
+    //todo add remove orders with this name for DB
+    public void deleteVendor(String name) {
+        vendors.remove(name);
+        //todo save all OrdersID
+        vendorMap.remove(name);
     }
 
     /**
@@ -476,19 +470,8 @@ public class shipmentManagement {
      * @return true if found. false otherwise.
      */
 
-    //todo fix it
-    public boolean checkBranch(String name) {
-        if (shipmentService.askForSite(name) == null){
-            return false;
-        }
-        for (Site site : sites) {
-            if (Objects.equals(site.getName(), name)) {
-                if (site instanceof Branch)
-                    return true;
-                break;
-            }
-        }
-        return false;
+    public boolean checkBranch(String name){
+        return shipmentService.checkASite(name);
     }
 
     /**
@@ -498,19 +481,21 @@ public class shipmentManagement {
      * @return the site if found.
      */
     public Site getSite(String name) {
-        for (Site site : sites) {
-            if (Objects.equals(site.getName(), name))
-                return site;
-        }
-        return null;
+        return vendors.get(name);
     }
 
     public void printSites(){
-        System.out.println("******* SITE DETAILS *******");
-        System.out.println("Number of Sites: " + sites.size() + "\n");
-        for (Site site : sites){
-            site.printSite();
+        System.out.println("******* BRANCHES DETAILS *******");
+        System.out.println("Number of Branches: " + branches.size() + "\n");
+        for (Branch branch : branches){
+            branch.printSite();
         }
+        System.out.println("******* VENDORS DETAILS *******");
+        System.out.println("Number of Vendors: " + vendors.size() + "\n");
+        for(Vendor vendor : vendors.values()){
+            vendor.printSite();
+        }
+
     }
 
     /**
@@ -536,6 +521,7 @@ public class shipmentManagement {
                 }
                 shipment.getDocs().remove(doc);
                 shipment.removeSite(siteToRemove);
+                shipmentService.getUpdateForSite(siteToRemove.getName(), shipment.getDayOfTheWeek().ordinal());
                 shipment.setShipmentStatus(Status.SiteChange);
                 System.out.println("The site: " + siteToRemove.getName() + " was removed from the shipment");
                 return true;
@@ -555,9 +541,9 @@ public class shipmentManagement {
      */
     public void createOrder(String source, String destination) {
         Zone zone = null;
-        for (Site site : sites) {
-            if (Objects.equals(destination, site.getName())) {
-                zone = ((Branch) site).getZone();
+        for (Branch branch : branches) {
+            if (Objects.equals(destination, branch.getName())) {
+                zone = branch.getZone();
             }
         }
         Order order = new Order(destination, zone, source);
@@ -567,6 +553,8 @@ public class shipmentManagement {
     public void printLastOrder(String source){
         vendorMap.get(source).get(vendorMap.get(source).size() - 1).printOrder();
     }
+
+    //todo LoadALlOrders
     public void printOrders() {
         for (Map.Entry<String, List<Order>> entry : vendorMap.entrySet()){
             System.out.println("********** " + entry.getKey() + " **********");
@@ -1028,12 +1016,12 @@ public class shipmentManagement {
         addVendor("Strauss", "kiryat gat", "0547388478", "chopper");
         addVendor("Elit", "haifa", "0547388479", "brook");
 
-        addBranch("branch1", "beer sheva", "0542318475", "jinbi", 2);
-        addBranch("branch2", "kiryat gat", "0542318476", "robin", 2);
-        addBranch("branch3", "TLV", "0542318477", "garp", 1);
-        addBranch("branch4", "givataim", "0542318478", "shanks", 1);
-        addBranch("branch5", "katzrin", "0542318479", "kaido", 0);
-        addBranch("branch6", "haifa", "0542318470", "oden", 0);
+//        addBranch("branch1", "beer sheva", "0542318475", "jinbi", 2);
+//        addBranch("branch2", "kiryat gat", "0542318476", "robin", 2);
+//        addBranch("branch3", "TLV", "0542318477", "garp", 1);
+//        addBranch("branch4", "givataim", "0542318478", "shanks", 1);
+//        addBranch("branch5", "katzrin", "0542318479", "kaido", 0);
+//        addBranch("branch6", "haifa", "0542318470", "oden", 0);
     }
 
 
