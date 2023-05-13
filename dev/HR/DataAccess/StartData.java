@@ -214,19 +214,14 @@ public class StartData {
         try {
             java.sql.Statement stmt = conn.createStatement();
             //shift managers
-            stmt.executeUpdate(
-                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
-                            " VALUES (0000000001,'ron',1,'2000-04-20','asd',123,0,130,0)");
-            stmt.executeUpdate(
-                    "INSERT INTO DriverInfo(DriverID,Licence,Training)" +
-                            " VALUES (0000000001,C,0)");
-            stmt.executeUpdate(
-                    "INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" +
-                            " VALUES (0000000002,'yanos',1,'2000-04-20','asd',123,0,130,0)");
-            stmt.executeUpdate(
-                    "INSERT INTO DriverInfo(DriverID,Licence,Training)" +
-                            " VALUES (0000000002,D,1)");
-
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (100,'ron',1,'2000-04-20','asd',123,0,130,0)");            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID,Licence,Training)" + " VALUES (100,C,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (101,'yanos',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (102,'roi',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (103,'ohayon',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID,Licence,Training)" + " VALUES (100,'D',1)");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID,Licence,Training)" + " VALUES (101,'D',1)");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID,Licence,Training)" + " VALUES (102,'C',0)");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID,Licence,Training)" + " VALUES (103,'D',1)");
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
