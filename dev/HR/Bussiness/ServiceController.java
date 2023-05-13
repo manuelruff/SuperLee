@@ -42,6 +42,7 @@ public class ServiceController {
     //this one checks for next week or this week, we need to knwo what he wants
     public boolean checkHasWeekly(List<String> branches, LocalDate date){
         for(String branch:branches){
+            dataController.getSuper(branch);
             if(!Superim.get(branch).HasWeekly()){
                 return false;
             }
