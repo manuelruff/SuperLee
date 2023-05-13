@@ -41,17 +41,13 @@ public class SuperMapper {
         }
         return SuperMap.get(name);
     }
-    /**
-     * this functiuon read the brnach from the db
-     * @param branchName name of super
-     *
-     */
+
     public void readSupers(){
         try {
             java.sql.Statement stmt = conn.createStatement();
             //java.sql.ResultSet rs = stmt.executeQuery("select * from Super WHERE name=="+branchName+"" );
             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Super");
-            if(rs.next()) {
+            while(rs.next()) {
                 String name = rs.getString("name");
                 getsuper(name);
             }
@@ -60,6 +56,11 @@ public class SuperMapper {
             System.out.println("i have a problem sorry");
         }
     }
+    /**
+     * this functiuon read the brnach from the db
+     * @param branchName name of super
+     *
+     */
     private void ReadSuper(String branchName){
         String name,address,phoneNumber,contactName,zone;
         try {
