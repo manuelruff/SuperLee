@@ -8,6 +8,7 @@ import resource.Connect;
 import java.net.IDN;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -46,6 +47,11 @@ public class ShipmentMapper {
     public Map<String, Shipment> getAvailableShipmentsMap() {
         return availableShipmentsMap;
     }
+    public void addShipmentToAvailable(Shipment shipment)
+    {
+        availableShipmentsMap.putIfAbsent(shipment.getID(),shipment);
+    }
+
 
     public Shipment getShipment(String shipmentID){
         if(!shipmentsMap.containsKey(shipmentID))
@@ -77,7 +83,7 @@ public class ShipmentMapper {
         int amount;
         try {
             java.sql.Statement stat = conn.createStatement();
-            java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE ID=="+itemsDoc.getID()+"" );
+            java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE ID=='"+itemsDoc.getID()+"'" );
             while (rs.next())
             {
                 name = rs.getString("Name");
@@ -100,7 +106,7 @@ public class ShipmentMapper {
         try
         {
             java.sql.Statement stat = conn.createStatement();
-            java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM ItemDocs WHERE ShipmentID == "+shipmentID+" ");
+            java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM ItemDocs WHERE ShipmentID == '"+shipmentID+"' ");
             while (rs.next())
             {
                 name = rs.getString("Name");
@@ -135,7 +141,7 @@ public class ShipmentMapper {
         try
         {
             java.sql.Statement stat = conn.createStatement();
-            java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM ShipmentBranches WHERE ShipmentID == "+shipmentID+" ");
+            java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM ShipmentBranches WHERE ShipmentID == '"+shipmentID+"' ");
             while (rs.next())
             {
                 name = rs.getString("SiteName");
@@ -169,7 +175,7 @@ public class ShipmentMapper {
                 day = Days.valueOf(rs.getString("Day"));
                 date = LocalDate.parse(rs.getString("Date"));
                 Status = rs.getString("Status");
-                if(Status != "available") {
+                if(Status != "Available") {
                     Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source), readDestinations(id),getItemDocs(id),date);
                     //shipment.setDepartureTime(Time);//todo: set time
                     shipmentsMap.put(id,shipment);
@@ -202,7 +208,7 @@ public class ShipmentMapper {
                 day = Days.valueOf(rs.getString("Day"));
                 Status = rs.getString("Status");
                 date = LocalDate.parse(rs.getString("Date"));
-                if(Objects.equals(Status, "available")) {
+                if(Objects.equals(Status, "Available")) {
                     Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id),date);
                     //shipment.setDepartureTime(Time);//todo: set time
                     availableShipments.add(shipment);
@@ -229,31 +235,33 @@ public class ShipmentMapper {
     }
     public void writeShipment(Shipment shipment)
     {
-        String id,truckNumber,day,driverID,time = null,status,source;
+        String id,truckNumber,day,driverID,time = null,status,source,date;
+
         try{
             java.sql.Statement stat = conn.createStatement();
             id = shipment.getID();
             truckNumber = shipment.getTruckNumber();
             day = shipment.getDayOfTheWeek().toString();
             driverID = shipment.getDriver().getID();
-            source = shipment.getSource().toString();
+            source = shipment.getSource().getName();
             status = shipment.getShipmentStatus().toString();
+            date = shipment.getDate().toString();
             if(!Objects.equals(status, "available") && shipment.getDepartureTime() != null)// check how to enter time
                 time = shipment.getDepartureTime().toString();
-            java.sql.ResultSet rs = stat.executeQuery("select * from Shipments WHERE ID == "+id+"");
+            java.sql.ResultSet rs = stat.executeQuery("select * from Shipments WHERE ID == '"+id+"'");
             if (!rs.next())
             {
-                stat.executeUpdate("INSERT INTO Shipments(ID, TruckNumber, DriverID,Day,Source,Time,Status) " +
-                        "VALUES ('" + id + "', '" + truckNumber + "', '"+driverID+"' ,'" + day + "','" + source +"', '"+time+"', '"+status+"')");
+                stat.executeUpdate("INSERT INTO Shipments(ID, TruckNumber, DriverID,Day,Source,Time,Status,Date) " +
+                        "VALUES ('" + id + "', '" + truckNumber + "', '"+driverID+"' ,'" + day + "','" + source +"', '"+time+"', '"+status+"', '"+date+"')");
             }
             else
             {
-                stat.executeUpdate("UPDATE Shipments SET ID='" + id + "', TruckNumber='" + truckNumber + "', DriverID=" + driverID + ", Source= "+source+", Time= "+time+", Status= "+source+"  WHERE ID=" + id);
+                stat.executeUpdate("UPDATE Shipments SET ID='" + id + "', TruckNumber='" + truckNumber + "', DriverID='" + driverID + "', Source= '"+source+"', Time= '"+time+"', Status= '"+status+"',Date='" +date+ "'  WHERE ID=" + id);
             }
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry1");
         }
         writeItemDocs(shipment);
         writeDestinations(shipment);
@@ -265,13 +273,13 @@ public class ShipmentMapper {
             java.sql.Statement stat = conn.createStatement();
             for(Site site : shipment.getDestinations())
             {
-                stat.executeUpdate("INSERT INTO ShipmentBranches(ShipmentID,SiteName) " +
-                        "VALUES (" + shipment.getID() + ", '" + site.getName() + " ')");
+                stat.executeUpdate("INSERT OR IGNORE INTO ShipmentBranches(ShipmentID,SiteName) " +
+                        "VALUES ('" + shipment.getID() + "', '" + site.getName() + "')");
             }
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry2");
         }
     }
     private void writeItemDocs(Shipment shipment)
@@ -281,14 +289,14 @@ public class ShipmentMapper {
             java.sql.Statement stat = conn.createStatement();
             for(ItemsDoc itemsDoc : shipment.getDocs())
             {
-                stat.executeUpdate("INSERT INTO ItemDocs(ShipmentID, DocID, SiteName) " +
-                        "VALUES (" + shipment.getID() + ", '" + itemsDoc.getID() + "', '" + itemsDoc.getSiteName() + " ')");
+                stat.executeUpdate("INSERT OR IGNORE INTO ItemDocs(ShipmentID, DocID, SiteName) " +
+                        "VALUES ('" + shipment.getID() + "', '" + itemsDoc.getID() + "', '" + itemsDoc.getSiteName() + "')");
                 writeItemsForDocs(itemsDoc);
             }
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry3");
         }
     }
     private void writeItemsForDocs(ItemsDoc itemsDoc)
@@ -297,15 +305,27 @@ public class ShipmentMapper {
             java.sql.Statement stat = conn.createStatement();
             for(Item item : itemsDoc.getItemList())
             {
-                stat.executeUpdate("INSERT INTO ItemsForDocs(DocID, Name, Amount,Storage) " +
-                        "VALUES (" + itemsDoc.getID() + ", '" + item.getName() + "', '" + item.getQuantity() + " '," + item.getStorageCondition().toString() + ")");
+                stat.executeUpdate("INSERT OR IGNORE INTO ItemsForDocs(DocID, Name, Amount,Storage) " +
+                        "VALUES ('" + itemsDoc.getID() + "', '" + item.getName() + "', " + item.getQuantity() + " ,'" + item.getStorageCondition().toString() + "')");
             }
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry4");
         }
     }
+    public void deleteShipments()
+    {
+        try {
+            Statement stat = conn.createStatement();
+            stat.executeUpdate("DELETE FROM Shipments");
+            stat.executeUpdate("DELETE FROM ShipmentBranches");
+        }
+        catch (SQLException e)
+        {
+            System.out.println("i have a problem sorry4");
+        }
 
+    }
 
 }
