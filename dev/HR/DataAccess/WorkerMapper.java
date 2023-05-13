@@ -53,7 +53,6 @@ public class WorkerMapper {
         try {
             java.sql.Statement stmt = conn.createStatement();
             //we will read it from the driver info table to know if its a driver
-            java.sql.ResultSet isDriver = stmt.executeQuery("select * from DriverInfo WHERE DriverID=="+ID+"" );
             java.sql.ResultSet rs = stmt.executeQuery("select * from Worker WHERE ID=="+ID+"" );
             if(rs.next()) {
                 id = rs.getString("ID");
@@ -68,9 +67,10 @@ public class WorkerMapper {
                 //shiftworked=rs.getString("shiftworked");
                 shiftworked = "0";
                 //check if its driver or worker
+                java.sql.ResultSet isDriver = stmt.executeQuery("select * from DriverInfo WHERE DriverID=="+ID+"" );
                 if(isDriver.next()){
-                    char licence=isDriver.getString("licence").charAt(0);
-                    String training=isDriver.getString("training");
+                    char licence=isDriver.getString("Licence").charAt(0);
+                    String training=isDriver.getString("Training");
                     Driver driver=new Driver(id, name, Integer.parseInt(bank),
                             contract, Double.parseDouble(wage), password,
                             LocalDate.parse(startdate), Double.parseDouble(bonus),
@@ -208,15 +208,19 @@ public class WorkerMapper {
 
     public void ReadAllDriversByInfo(char licence,Training ability){
         //todo check if workign
-        String id;
+        String id, l,a;
         try {
             java.sql.Statement stmt = conn.createStatement();
-            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM DriverInfo WHERE Licence >= " + licence + " AND Training >= " + ability.toString());
+            java.sql.ResultSet rs = stmt.executeQuery("select * from DriverInfo" );
             //ill get each worker
             while (rs.next()){
                 id=rs.getString("DriverID");
-                //if i had him in database already i wont do it again
-                getWorker(id);
+                l=rs.getString("Licence");
+                a=rs.getString("Training");
+                if(l.equals(String.valueOf(licence)) && a.equals(ability.toString())) {
+                    //if i had him in database already i wont do it again
+                    getDriver(id);
+                }
             }
         }
         catch (SQLException e) {

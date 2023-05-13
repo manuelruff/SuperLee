@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 public class SuperMapper {
     private static SuperMapper instance;
@@ -42,18 +44,33 @@ public class SuperMapper {
         return SuperMap.get(name);
     }
 
-    public void readSupers(){
+    public List<List<String>> readSupers(){
         try {
+            String name,address,phoneNumber,contactName,zone;
+            List<List<String>> list=new ArrayList<>();
             java.sql.Statement stmt = conn.createStatement();
             //java.sql.ResultSet rs = stmt.executeQuery("select * from Super WHERE name=="+branchName+"" );
             java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Super");
+            int index=0;
             while(rs.next()) {
-                String name = rs.getString("name");
-                getsuper(name);
+                list.add(new ArrayList<>());
+                name = rs.getString("name");
+                address = rs.getString("Address");
+                phoneNumber= rs.getString("PhoneNumber");
+                contactName= rs.getString("ContactName");
+                zone= rs.getString("Zone");
+                list.get(index).add(name);
+                list.get(index).add(address);
+                list.get(index).add(phoneNumber);
+                list.get(index).add(contactName);
+                list.get(index).add(zone);
+                index++;
             }
+            return list;
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
+            return null;
         }
     }
     /**
