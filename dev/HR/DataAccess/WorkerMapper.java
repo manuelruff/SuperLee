@@ -132,7 +132,12 @@ public class WorkerMapper {
             java.sql.ResultSet rs = stmt.executeQuery("select * from WeeklyWorkingDays WHERE WorkerID=="+ID+"" );
             while (rs.next()){
                 day=rs.getString("Day");
-                WorkerMap.get(ID).AddShift(Days.valueOf(day));
+                if(WorkerMap.get(ID)!=null) {
+                    WorkerMap.get(ID).AddShift(Days.valueOf(day));
+                }
+                if(DriverMap.get(ID)!=null) {
+                    DriverMap.get(ID).AddShift(Days.valueOf(day));
+                }
             }
         }
         catch (SQLException e) {
@@ -154,7 +159,12 @@ public class WorkerMapper {
                 end=rs.getString("End");
                 reason=rs.getString("Reason");
                 day=rs.getString("Day");
-                WorkerMap.get(ID).AddCantWork(Days.valueOf(day),Double.parseDouble(start),Double.parseDouble(end),reason);
+                if(WorkerMap.get(ID)!=null) {
+                    WorkerMap.get(ID).AddCantWork(Days.valueOf(day),Double.parseDouble(start),Double.parseDouble(end),reason);
+                }
+                if(DriverMap.get(ID)!=null) {
+                    DriverMap.get(ID).AddCantWork(Days.valueOf(day),Double.parseDouble(start),Double.parseDouble(end),reason);
+                }
             }
         }
         catch (SQLException e) {
