@@ -40,8 +40,7 @@ public class shipmentManagement {
         availableShipments = new ArrayList<>();
         availableShipments = dataController.getAvailableShipmentsIntoList();
         availableShipments.sort(Comparator.comparing(Shipment::getDate));
-
-
+        loadAllSites();
     }
     public static shipmentManagement getInstance() {
         if (instance == null) {
@@ -405,7 +404,9 @@ public class shipmentManagement {
         }
     }
 
-
+    public void loadAllSites(){
+        addBranch(shipmentService.getAllSites());
+    }
     /**
      * This function creates a new vendor and adds it to the system.
      *
