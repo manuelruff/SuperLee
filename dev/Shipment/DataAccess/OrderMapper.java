@@ -103,7 +103,6 @@ public class OrderMapper {
                 order.setID(id); // when writing back to the database maybe duplication
                 orderMap.put(id,order);
                 readItems(id);
-
             }
         }
         catch (SQLException e)
