@@ -17,7 +17,6 @@ public class ShipmentService {
         }
         return instance;
     }
-
     public List<String> askForDriver(char licence, int training,int day,List<String> branches){
         //check that all the branches has weekly if one doesnt have we return null
         if(!serviceController.checkHasWeekly(branches)){
@@ -31,9 +30,7 @@ public class ShipmentService {
         //go get a suitable driver if we have one
         return serviceController.getDriver(licence,training,day);
     }
-
     public List<String> askForDriver(String ID){return serviceController.getDriver(ID);}
-
     public boolean checkWeekly(List<String> branches, LocalDate date){return serviceController.checkHasWeekly(branches,date);}
     //return a site by list of strings [String name, String address, String phoneNumber, String contactName, Zone zone]
     public List<String> askForSite(String branchName){
