@@ -89,7 +89,7 @@ public class OrderMapper {
     public void readOrderWithVendor(String vendor)
     {
         String id,destination,zone,source;
-        Map<String,List<Order>> vendorOrderMap = VendorMapper.getInstance().getVendorOrderMap();
+        Map<String,List<Order>> vendorOrderMap = VendorMapper.getInstance().getVendorsOrderMap();
         List<Order> orders = new ArrayList<>();
         try{
             java.sql.Statement stat = conn.createStatement();
