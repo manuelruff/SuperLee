@@ -765,6 +765,7 @@ public class shipmentManagement {
         }
         addShipmentSorted(shipment);
         return true;
+
     }
 
     private void turnItemDocIntoOrder(ItemsDoc itemsDoc, String source){
@@ -1166,6 +1167,10 @@ public class shipmentManagement {
         availableShipments.remove(shipment);
         shipments.put(shipment.getID(), shipment);
         shipment.setShipmentStatus(Status.NoChanges);
+    }
+
+    public List<Shipment> getAvailableShipment() {
+        return availableShipments;
     }
 }
 

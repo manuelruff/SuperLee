@@ -12,7 +12,8 @@ import java.util.Objects;
 public class ServiceController {
     private static  ServiceController instance;
     private DataController dataController;
-    private Map<String,Shipment> shipments;
+    private shipmentManagement shipmentManagement;
+    private List<Shipment> shipments;
     private Map<String,Order> orders;
     private Map<String,Truck> trucks;
 
@@ -23,8 +24,9 @@ public class ServiceController {
         return instance;
     }
     private ServiceController(){
+        shipmentManagement = Shipment.Bussiness.shipmentManagement.getInstance();
         dataController = DataController.getInstance();
-        shipments = dataController.getAvailableShipments();
+        shipments = shipmentManagement.getAvailableShipment();
         orders = dataController.getOrderMap();
         trucks = dataController.getTrucksMap();
     }
@@ -36,7 +38,7 @@ public class ServiceController {
      */
     public void printShipmentsDS(Days day, String siteName)
     {
-        for(Shipment shipment : shipments.values())
+        for(Shipment shipment : shipments )
         {
             if(shipment.getDayOfTheWeek() == day)
             {
@@ -60,22 +62,21 @@ public class ServiceController {
      */
     public void deleteShipmentsDS(Days day, String siteName)
     {
-        Iterator<Shipment> iterator = shipments.values().iterator();
-
-        while (iterator.hasNext())
-        {
-            Shipment shipment = iterator.next();
-            if (shipment.getDayOfTheWeek() == day)
-            {
-                for(Site site: shipment.getDestinations())// check if to replace with iterator
-                {
-                    if(site.getName().equals(siteName))
-                    {
-                        iterator.remove();
-                        break;
+        for(Shipment shipment : shipments){
+            if (shipment.getDayOfTheWeek() == day){
+                if (shipment.getDestinations().size() == 1){
+                    if (shipment.getDestinations().get(0).getName().equals(siteName)){
+                        shipmentManagement.deleteShipment(shipment.getID());
+                        return;
                     }
                 }
-
+                for(Site site: shipment.getDestinations()){
+                    if (site.getName().equals(siteName)){
+                        shipment.getDestinations().remove(site);
+                        shipments.remove(shipment);
+                        return;
+                    }
+                }
             }
         }
     }
@@ -88,7 +89,7 @@ public class ServiceController {
      */
     public  boolean checkShipment(Days day, String siteName)
     {
-        for(Shipment shipment : shipments.values())
+        for(Shipment shipment : shipments)
         {
             if(shipment.getDayOfTheWeek() == day)
             {
@@ -108,7 +109,7 @@ public class ServiceController {
     //prints all available shipments
     public void printAllShipments()
     {
-        for(Shipment shipment : shipments.values())
+        for(Shipment shipment : shipments)
             shipment.printShipment();
     }
 
@@ -118,7 +119,7 @@ public class ServiceController {
         ShipmentService shipmentService = ShipmentService.getInstance();
         List<String> driverDetails;
         List<String> branchesNames = null;
-        for(Shipment shipment:shipments.values())
+        for(Shipment shipment:shipments)
         {
             if (shipment.getDriver() == null)
             {
