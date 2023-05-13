@@ -45,11 +45,11 @@ public class ServiceController {
             if(!Superim.get(branch).HasWeekly()){
                 return false;
             }
-        }
-        //we check the weekly contains the date we got
-        LocalDate dateSuper=Superim.get(branches).GetWeekShifts().getStartDate();
-        if(!dateSuper.plusDays(7).isAfter(date)){
-            return false;
+            //we check the weekly contains the date we got
+            LocalDate dateSuper=Superim.get(branch).GetWeekShifts().getStartDate();
+            if(!dateSuper.plusDays(7).isAfter(date)){
+                return false;
+            }
         }
         return true;
     }
