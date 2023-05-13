@@ -7,6 +7,7 @@ import resource.Connect;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +15,12 @@ import java.util.Map;
 public class OrderMapper {
     private static OrderMapper instance = new OrderMapper();
     private Map<String, Order> orderMap;
+    private Map<String, String> ordersVendorMap;
     private Connection conn;
 
     private OrderMapper() {
         orderMap = new HashMap<>();
+        ordersVendorMap = new HashMap<>();
         conn = Connect.getConnection();
     }
     public static OrderMapper getInstance(){
@@ -48,7 +51,7 @@ public class OrderMapper {
 //
 //        }
 //    }
-    public Order getOreder(String ID){
+    public Order getOrder(String ID){
         if (orderMap.get(ID)==null){
             readOrder(ID);
         }
@@ -73,7 +76,7 @@ public class OrderMapper {
                 Order order = new Order(destination,Zone.valueOf(zone),source);
                 order.setID(id);// when writing back to the database maybe duplication
                 orderMap.put(id,order);
-                readItems(id);
+                readItems(id,order);
 
             }
         }
@@ -83,7 +86,45 @@ public class OrderMapper {
 
         }
     }
-    private void readItems(String ID)
+    public void readOrderWithVendor(String vendor)
+    {
+        String id,destination,zone,source;
+        Map<String,List<Order>> vendorOrderMap = VendorMapper.getInstance().getVendorsOrderMap();
+        List<Order> orders = new ArrayList<>();
+        try{
+            java.sql.Statement stat = conn.createStatement();
+            java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE Source=='"+vendor+"'");
+            while(rs.next())
+            {
+                id = rs.getString("ID");
+                destination = rs.getString("destination");
+                zone = rs.getString("zone");
+                source = rs.getString("Source");
+                Order order = new Order(destination,Zone.valueOf(zone),source);
+                order.setID(id); // when writing back to the database maybe duplication
+//                orderMap.put(id,order);    //             vendor -> order1, order2
+                readItems(id,order);
+                orders.add(order);
+                deleteItems(id);
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("i have a problem sorry1");
+        }
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            stat.executeUpdate("DELETE FROM Orders WHERE Source ==  '" + vendor + "' ");
+        }
+        catch (SQLException e)
+        {
+            System.out.println("i have a problem sorry1");
+        }
+        vendorOrderMap.put(vendor,orders);
+    }
+
+
+    private void readItems(String ID, Order order)
     {
         String name,storage;
         int amount;
@@ -96,13 +137,29 @@ public class OrderMapper {
                 storage = rs.getString("Storage");
                 amount = rs.findColumn("Amount");
                 Item item = new Item(name,amount, Training.valueOf(storage));
-                orderMap.get(ID).addItemToOrder(item);
+                order.addItemToOrder(item);
             }
         }
         catch (SQLException e)
         {
             System.out.println("i have a problem sorry");
 
+        }
+    }
+    private  void deleteItems(String id)
+    {
+        String name,storage;
+        int amount;
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            java.sql.ResultSet rs = stat.executeQuery("select * from OrderItems WHERE ID=='" + id + "'");
+            while (rs.next()) {
+                stat.executeUpdate("DELETE FROM OrderItems WHERE ID = " + id);
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("i have a problem in deleting items sorry");
         }
     }
     public void writeAllOrders()
