@@ -359,8 +359,12 @@ public class StartData {
         Connection conn = Connect.getConnection();
         try {
             java.sql.Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO Super(name, PhoneNumber, ContactName, Zone, Address) " + "VALUES('zolretzah', '123-456-7890', 'John', 'North', '123 Main St')");
-            stmt.executeUpdate("INSERT INTO Super(name, PhoneNumber, ContactName, Zone, Address) " + "VALUES('yakarmeod', '123-456-7890', 'Doe', 'North', '125 Main St')");
+            stmt.executeUpdate("INSERT INTO Super(name, PhoneNumber, ContactName, Zone, Address) " + "VALUES('branch1', '000000000', 'na', 'South', '123 Main St')");
+            stmt.executeUpdate("INSERT INTO Super(name, PhoneNumber, ContactName, Zone, Address) " + "VALUES('branch2', '111111111', 'nah', 'South', '125 Main St')");
+            stmt.executeUpdate("INSERT INTO Super(name, PhoneNumber, ContactName, Zone, Address) " + "VALUES('branch3', '222222222', 'nahm', 'Center', '125 Main St')");
+            stmt.executeUpdate("INSERT INTO Super(name, PhoneNumber, ContactName, Zone, Address) " + "VALUES('branch4', '333333333', 'nahma', 'Center', '125 Main St')");
+            stmt.executeUpdate("INSERT INTO Super(name, PhoneNumber, ContactName, Zone, Address) " + "VALUES('branch5', '444444444', 'nahman', 'Center', '125 Main St')");
+
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
