@@ -76,7 +76,6 @@ public class OrderMapper {
                 Order order = new Order(destination,Zone.valueOf(zone),source);
                 order.setID(id);// when writing back to the database maybe duplication
                 orderMap.put(id,order);
-                ordersVendorMap.put(id, source);
                 readItems(id);
 
             }
@@ -90,6 +89,7 @@ public class OrderMapper {
     public void readOrderWithVendor(String vendor)
     {
         String id,destination,zone,source;
+        List<Order> orderList = new ArrayList<>();
         try{
             java.sql.Statement stat = conn.createStatement();
             java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE Source=='"+vendor+"'");
@@ -101,7 +101,9 @@ public class OrderMapper {
                 source = rs.getString("Source");
                 Order order = new Order(destination,Zone.valueOf(zone),source);
                 order.setID(id); // when writing back to the database maybe duplication
-                orderMap.put(id,order);
+                orderList.add(order);
+                orderMap.put(id,order);    //             vendor -> order1, order2
+                //todo add to ordersVendorMap;
                 readItems(id);
             }
         }
