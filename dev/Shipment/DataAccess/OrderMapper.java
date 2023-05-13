@@ -175,15 +175,8 @@ public class OrderMapper {
                 destination = order.getDestination();
                 zone = order.getZone();
                 source = order.getSource();
-                java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE ID=='"+id+"'" );
-                if(!rs.next())
-                {
-                    stat.executeUpdate("INSERT INTO Orders(ID, Destination, Zone,Source) " +
-                            "VALUES (" + id + ",'" + destination + "','" + zone.toString() + "','" + source + "')");
-                }
-                else {
-                    stat.executeUpdate("INSERT OR IGNORE INTO Orders (ID, Destination, Zone,Source) " +  "VALUES (" + id + ",'" + destination + "','" + zone.toString() + "','" + source + "')");
-                }
+                stat.executeUpdate("INSERT OR IGNORE INTO Orders(ID, Destination, Zone,Source) " +
+                        "VALUES (" + id + ",'" + destination + "','" + zone.toString() + "','" + source + "')");
             }
             catch (SQLException e)
             {
