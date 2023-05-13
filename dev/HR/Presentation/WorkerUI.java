@@ -46,7 +46,7 @@ public class WorkerUI {
     public static void WorkerOption(String ID){
         //start the worker options here - Omri's Code!
         int choice=-1;
-        while (choice!=6){
+        while (choice!=7){
             System.out.println("hello please choose your option: ");
             System.out.println("1. update personal details ");
             System.out.println("2. add new constraints ");
@@ -224,6 +224,7 @@ public class WorkerUI {
                     }
                     break;
                 case 7:
+                    choice=7;
                     System.out.println("have a good day");
                     break;
                 default:
