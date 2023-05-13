@@ -62,7 +62,6 @@ public class VendorMapper {
         catch (SQLException e)
         {
             System.out.println("Can't read this vendor: " + name);
-
         }
     }
 

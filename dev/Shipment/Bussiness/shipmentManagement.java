@@ -476,7 +476,11 @@ public class shipmentManagement {
      * @return true if found. false otherwise.
      */
 
+    //todo fix it
     public boolean checkBranch(String name) {
+        if (shipmentService.askForSite(name) == null){
+            return false;
+        }
         for (Site site : sites) {
             if (Objects.equals(site.getName(), name)) {
                 if (site instanceof Branch)
