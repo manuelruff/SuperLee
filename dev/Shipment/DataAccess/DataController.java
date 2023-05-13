@@ -32,20 +32,29 @@ public class DataController {
         return instance;
     }
 
-    public Map<String, List<Order>> getVendorsOrderMap(){
-        return vendorMapper.getVendorOrderMap();
-    }
-    public void checkVendorOrders(String source) {
-        orderMapper.readOrderWithVendor(source);
-    }
+    /**************************************** Order Related Methods ****************************************/
 
     public Map<String, Order> getOrderMap() {
         return orderMapper.getOrderMap();
     }
 
+    public void loadOrdersByVendor(String vendorName){orderMapper.readOrderWithVendor(vendorName);}
+
+
+
+    /**************************************** Vendor Related Methods ****************************************/
+
     public Vendor getVendor(String name){
         return vendorMapper.getVendor(name);
     }
+
+    public Map<String, Vendor> getVendorMap(){return vendorMapper.getVendorMap();}
+    public Map<String, List<Order>> getVendorOrderMap(){return vendorMapper.getVendorsOrderMap();}
+
+    public void loadAllVendors(){vendorMapper.readAllVendors();}
+
+
+
 
     /**************************************** Shipment Related Methods ****************************************/
 
@@ -68,7 +77,7 @@ public class DataController {
     public void deleteTruck(String truckNumber) {
     }
     public void loadAllTrucks(){
-
+        truckMapper.readAllTrucks();
     }
 
 

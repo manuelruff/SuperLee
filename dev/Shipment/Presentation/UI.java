@@ -55,9 +55,9 @@ public class UI {
                     boolean chF=true;
                     while(chF) {
                         System.out.println("Site Menu:");
-                        System.out.println("1 - Add Site");
-                        System.out.println("2 - Remove Site");
-                        System.out.println("3 - Print All Sites ");
+                        System.out.println("1 - Add Vendor");
+                        System.out.println("2 - Remove Vendor");
+                        System.out.println("3 - Print All Sites (vendors and branches");
                         System.out.println("4 - Update site info");
                         System.out.println("5 - Exit");
                         int ch = 0;
@@ -72,7 +72,6 @@ public class UI {
                             case 1:
                                 addSite();
                                 break;
-                                //asd
 
                             case 2:
                                 deleteSite();
@@ -125,14 +124,12 @@ public class UI {
                     break;
                 case "3":
                     int ch3=0;
-                    while(ch3 != 6) {
+                    while(ch3 != 4) {
                         System.out.println("Drivers Menu:");
-                        System.out.println("1 - Add driver");
-                        System.out.println("2 - remove driver");
-                        System.out.println("3 - Print All drivers");
-                        System.out.println("4 - Update driver licence");
-                        System.out.println("5 - Update driver training");
-                        System.out.println("6 - Exit");
+                        System.out.println("1 - Print All drivers");
+                        System.out.println("2 - Update driver licence");
+                        System.out.println("3 - Update driver training");
+                        System.out.println("4 - Exit");
                         try{
                             ch3 = Integer.parseInt(scanner.nextLine());
                         }
@@ -142,22 +139,16 @@ public class UI {
                         }
                         switch (ch3)
                         {
-                            case 1 :
-                                //addDriver();
-                                break;
-                            case 2:
-                                deleteDriver();
-                                break;
-                            case 3:
+                            case 1:
                                 sManagement.printDrivers();
                                 break;
-                            case 4:
+                            case 2:
                                 updateDriverLicence();
                                 break;
-                            case 5:
+                            case 3:
                                 updateDriverTraining();
                                 break;
-                            case 6:
+                            case 4:
                                 break;
                             default:
                                 System.out.println("Invalid input");
@@ -339,69 +330,33 @@ public class UI {
      * this function gets input from the user about a new site he wants to add
      * and adds the new site to the system
      */
-    public static void addSite()
-    {
+    public static void addSite() {
         boolean check = true;
         String siteName = null;
-        while(check) {
-            System.out.println("Please enter site name:");
+        while (check) {
+            System.out.println("Please enter Vendor name:");
             siteName = scanner.nextLine();
-            check = sManagement.checkSite(siteName);
+            check = sManagement.checkVendor(siteName);
             if (check)
-                System.out.println("Site already exist please enter a new name");
+                System.out.println("Vendor already exist please enter a new name");
         }
-        System.out.println("Please enter Site Address:");
+        System.out.println("Please enter Vendor Address:");
         String siteAddress = scanner.nextLine();
         String sitePhoneNumber;
         System.out.println("Please enter site phone number (10 digits - only numbers):");
         sitePhoneNumber = scanner.nextLine();
-        while(sitePhoneNumber.length() != 10 || !sitePhoneNumber.matches("[0-9]+")) {
+        while (sitePhoneNumber.length() != 10 || !sitePhoneNumber.matches("[0-9]+")) {
             System.out.println("Please enter site phone number (10 digits - only numbers):");
             sitePhoneNumber = scanner.nextLine();
         }
         System.out.println("Please enter contact name:");
         String contactName = scanner.nextLine();
-        check = true;
-        int siteType;
-        while (check)
-        {
-            while (true) {
-                System.out.println("""
-                        Please enter Site type:
-                        1 - Vendor
-                        2 - Branch""");
-                if (scanner.hasNextInt()) {
-                    siteType = scanner.nextInt();
-                    break;
-                } else {
-                    scanner.nextLine(); // consume the invalid input
-                    System.out.println("Invalid input. Please enter an integer next");
-                }
-            }
+        sManagement.addVendor(siteName, siteAddress, sitePhoneNumber, contactName);
+        System.out.println("Vendor added to the system");
 
-            if(siteType == 1) {
-                sManagement.addVendor(siteName, siteAddress, sitePhoneNumber, contactName);
-                System.out.println("Vendor added to the system");
-                check = false;
-            }
-            else if (siteType == 2) {
-                int zone = 4;
-                while(zone < 0 || zone > 2) {
-                    System.out.println("""
-                            Please enter branch zone:
-                            0 - North
-                            1 - Center
-                            2 - South""");
-                    zone = scanner.nextInt();
-                    if(zone < 0 || zone > 2)
-                        System.out.println("Please enter a number between 0 - 2");
-                }
-                sManagement.addBranch(siteName,siteAddress,sitePhoneNumber,contactName,zone);
-                System.out.println("Branch added to the system");
-                check = false;
-            }
-        }
-    }
+
+     }
+
     /**
      * this function gets input from the user about a site to delete
      * and delete it from the system
@@ -414,8 +369,8 @@ public class UI {
         {
             System.out.println("Please enter site name you want to remove:");
             siteToDelete = scanner.nextLine();
-            if(sManagement.checkSite(siteToDelete)) {
-                sManagement.deleteSite(siteToDelete);
+            if(sManagement.checkVendor(siteToDelete)) {
+                sManagement.deleteVendor(siteToDelete);
                 System.out.println("site deleted");
                 check1 = false;
             }
@@ -433,7 +388,7 @@ public class UI {
     {
         System.out.println("Please enter the name of the site you would like to update:");
         String siteName = scanner.nextLine();
-        if(sManagement.checkSite(siteName)){
+        if(sManagement.checkBranch(siteName)){
             while (true) {
                 System.out.println("""
                         What would you like to change:
@@ -798,8 +753,10 @@ public class UI {
                     vendor = scanner.nextLine();
                     if(sManagement.checkVendor(vendor))
                     {
-                        sManagement.createShipment(day, currentDate ,shipmentID,vendor);
-                        System.out.println("Shipment created");
+                        if (sManagement.createShipment(day, currentDate ,shipmentID,vendor))
+                            System.out.println("Shipment created");
+                        else{System.out.println("cant create shipment");
+                        }
                         check50 = false;
                         check51 = false;
                     }

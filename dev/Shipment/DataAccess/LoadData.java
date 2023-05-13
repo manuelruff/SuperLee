@@ -6,6 +6,7 @@ import Shipment.Bussiness.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class LoadData {
 
@@ -14,6 +15,7 @@ public class LoadData {
     private static TruckMapper truckMapper;
     private static OrderMapper orderMapper;
     private static ShipmentMapper shipmentMapper;
+    private static VendorMapper vendorMapper;
 
 
     public LoadData()
@@ -21,11 +23,13 @@ public class LoadData {
         truckMapper = TruckMapper.getInstance();
         orderMapper = OrderMapper.getInstance();
         shipmentMapper = ShipmentMapper.getInstance();
+        vendorMapper = VendorMapper.getInstance();
     }
     public static void main(String[] args) {
         truckMapper = TruckMapper.getInstance();
         orderMapper = OrderMapper.getInstance();
         shipmentMapper = ShipmentMapper.getInstance();
+        vendorMapper = VendorMapper.getInstance();
 //        shipmentMapper.deleteShipments();
 //        checkTruck();
 //        checkOrder();
@@ -34,8 +38,15 @@ public class LoadData {
 //        shipmentMapper.writeAllShipments();
 //        loadTrucks();
 //        truckMapper.writeAllTrucks();
-//        LoadOrders();
-//        orderMapper.writeAllOrders();
+        LoadOrders();
+        orderMapper.writeAllOrders();
+//        orderMapper.readOrderWithVendor("Zogloveg");
+//        Map<String,List<Order>> ordersByVendors = vendorMapper.getVendorOrderMap();
+//        for(List<Order> orders : ordersByVendors.values()) {
+//            for (Order order : orders) {
+//                order.printOrder();
+//            }
+//        }
 
     }
 
@@ -53,17 +64,17 @@ public class LoadData {
     public  static void checkOrder()
     {
         Order order;
-        order = orderMapper.getOreder("1");
+        order = orderMapper.getOrder("1");
         order.printOrder();;
-        order = orderMapper.getOreder("2");
+        order = orderMapper.getOrder("2");
         order.printOrder();
-        order = orderMapper.getOreder("3");
+        order = orderMapper.getOrder("3");
         order.printOrder();
-        order = orderMapper.getOreder("4");
+        order = orderMapper.getOrder("4");
         order.printOrder();
-        order = orderMapper.getOreder("5");
+        order = orderMapper.getOrder("5");
         order.printOrder();
-        order = orderMapper.getOreder("6");
+        order = orderMapper.getOrder("6");
         order.printOrder();
     }
     public static void checkShipment()
@@ -77,7 +88,7 @@ public class LoadData {
         Truck truck;
         truck = truckMapper.getTruck("0007");
         Order order;
-        order = orderMapper.getOreder("1");
+        order = orderMapper.getOrder("1");
         Driver driver = new Driver("0001","zoro",'D',Training.valueOf("Freezer"));
         Site site = new Vendor("Osem","beer-sheva","0501234345","roee");
         List<Site> destinations= new ArrayList<>();
@@ -129,44 +140,44 @@ public class LoadData {
     {
         ShipmentService shipmentService = ShipmentService.getInstance();
         Order order;
-        order = new Order("branch1", Zone.valueOf(shipmentService.askForSite("zolretzhah").get(4)),"Osem");
+        order = new Order("branch1", Zone.valueOf(shipmentService.askForSite("branch1").get(4)),"Osem");
         order.addItemToOrder(new Item( "ketchup", 10, Training.valueOf("Regular")));
         order.addItemToOrder(new Item( "spaghetti", 20, Training.valueOf("Regular")));
         order.addItemToOrder(new Item( "mayo", 10, Training.valueOf("Regular")));
         orderMapper.addOrderToMap(order);
 
-        order = new Order("branch1", Zone.valueOf(shipmentService.askForSite("zolretzhah").get(4)),"Osem");
+        order = new Order("branch1", Zone.valueOf(shipmentService.askForSite("branch1").get(4)),"Osem");
         order.addItemToOrder(new Item( "ketchup", 10, Training.valueOf("Regular")));
         order.addItemToOrder(new Item( "apropo", 20, Training.valueOf("Regular")));
         orderMapper.addOrderToMap(order);
 
-        order = new Order("branch2", Zone.valueOf(shipmentService.askForSite("zolretzhah").get(4)),"Osem");
+        order = new Order("branch2", Zone.valueOf(shipmentService.askForSite("branch2").get(4)),"Osem");
         order.addItemToOrder(new Item( "pene", 10, Training.valueOf("Regular")));
         order.addItemToOrder(new Item( "bamba", 20, Training.valueOf("Regular")));
         order.addItemToOrder(new Item( "bisli", 20, Training.valueOf("Regular")));
         order.addItemToOrder(new Item( "peti ber", 20, Training.valueOf("Regular")));
         orderMapper.addOrderToMap(order);
 
-        order = new Order("branch3", Zone.valueOf(shipmentService.askForSite("yakarmeod").get(4)),"Zogloveg");
-        order.addItemToOrder(new Item( "pastrama", 10, Training.valueOf("Cooling")));
-        order.addItemToOrder(new Item( "hot dog", 20, Training.valueOf("Freezer")));
-        order.addItemToOrder(new Item( "salami", 20, Training.valueOf("Cooling")));
-        order.addItemToOrder(new Item( "hamburger", 20, Training.valueOf("Freezer")));
-        orderMapper.addOrderToMap(order);
-
-        order = new Order("branch4", Zone.valueOf(shipmentService.askForSite("yakarmeod").get(4)),"Zogloveg");
-        order.addItemToOrder(new Item( "pastrama", 20, Training.valueOf("Cooling")));
-        order.addItemToOrder(new Item( "hot dog", 10, Training.valueOf("Freezer")));
-        order.addItemToOrder(new Item( "salami", 10, Training.valueOf("Cooling")));
-        order.addItemToOrder(new Item( "hamburger", 30, Training.valueOf("Freezer")));
-        orderMapper.addOrderToMap(order);
-
-        order = new Order("branch5", Zone.valueOf(shipmentService.askForSite("yakarmeod").get(4)),"Zogloveg");
-        order.addItemToOrder(new Item( "pastrama", 30, Training.valueOf("Cooling")));
-        order.addItemToOrder(new Item( "hot dog", 10, Training.valueOf("Freezer")));
-        order.addItemToOrder(new Item( "salami", 20, Training.valueOf("Cooling")));
-        order.addItemToOrder(new Item( "hamburger", 20, Training.valueOf("Freezer")));
-        orderMapper.addOrderToMap(order);
+//        order = new Order("branch3", Zone.valueOf(shipmentService.askForSite("branch3").get(4)),"Zogloveg");
+//        order.addItemToOrder(new Item( "pastrama", 10, Training.valueOf("Cooling")));
+//        order.addItemToOrder(new Item( "hot dog", 20, Training.valueOf("Freezer")));
+//        order.addItemToOrder(new Item( "salami", 20, Training.valueOf("Cooling")));
+//        order.addItemToOrder(new Item( "hamburger", 20, Training.valueOf("Freezer")));
+//        orderMapper.addOrderToMap(order);
+//
+//        order = new Order("branch4", Zone.valueOf(shipmentService.askForSite("branch4").get(4)),"Zogloveg");
+//        order.addItemToOrder(new Item( "pastrama", 20, Training.valueOf("Cooling")));
+//        order.addItemToOrder(new Item( "hot dog", 10, Training.valueOf("Freezer")));
+//        order.addItemToOrder(new Item( "salami", 10, Training.valueOf("Cooling")));
+//        order.addItemToOrder(new Item( "hamburger", 30, Training.valueOf("Freezer")));
+//        orderMapper.addOrderToMap(order);
+//
+//        order = new Order("branch5", Zone.valueOf(shipmentService.askForSite("branch5").get(4)),"Zogloveg");
+//        order.addItemToOrder(new Item( "pastrama", 30, Training.valueOf("Cooling")));
+//        order.addItemToOrder(new Item( "hot dog", 10, Training.valueOf("Freezer")));
+//        order.addItemToOrder(new Item( "salami", 20, Training.valueOf("Cooling")));
+//        order.addItemToOrder(new Item( "hamburger", 20, Training.valueOf("Freezer")));
+//        orderMapper.addOrderToMap(order);
 //        createOrder("Zogloveg", "branch6");
 //        addItemToOrder("Zogloveg", "pastrama", 10, 1);
 //        addItemToOrder("Zogloveg", "hot dog", 20, 2);
