@@ -23,7 +23,7 @@ public class Order {
     public String getSource() {
         return source;
     }
-    public void setCount(int num){count = num;}
+
 
     public void setID(String ID) {
         this.ID = ID;

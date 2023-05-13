@@ -24,10 +24,12 @@ public class ItemsDoc {
             item.printItem();
     }
 
-
+    public static void setCount(int num){count = num;}
+    public void fixCounter(){count--;}
     public String getID() {
         return ID;
     }
+    public static int getCount(){return count;}
 
     public String getSiteName() {
         return siteName;

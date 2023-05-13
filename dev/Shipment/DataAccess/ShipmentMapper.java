@@ -94,6 +94,33 @@ public class ShipmentMapper {
 
         }
     }
+    public void getItemDocsCounter()
+    {
+        try
+        {
+            java.sql.Statement stat = conn.createStatement();
+            java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM StaticSaves WHERE Object == '"+"ItemDoc"+"' ");
+            ItemsDoc.setCount(rs.getInt("LstID"));
+        }
+        catch (SQLException e)
+        {
+            System.out.println("i have a problem in setting ItemDocs counter sorry");
+
+        }
+    }
+
+    public void writeItemDocsCounter()
+    {
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            stat.executeUpdate("UPDATE StaticSaves SET LastID=" + ItemsDoc.getCount() + "");
+        }
+        catch (SQLException e)
+        {
+            System.out.println("i have a problem in writing ItemDocs counter sorry");
+
+        }
+    }
     private List<ItemsDoc> getItemDocs(String shipmentID)
     {
         String name,id;
@@ -107,6 +134,7 @@ public class ShipmentMapper {
                 name = rs.getString("Name");
                 id = rs.getString("ID");
                 ItemsDoc itemsDoc = new ItemsDoc(name);
+                itemsDoc.fixCounter();
                 itemsDoc.setID(id);
                 itemsDocs.add(itemsDoc);
                 readItems(itemsDoc);
