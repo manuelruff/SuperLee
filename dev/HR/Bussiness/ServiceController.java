@@ -140,7 +140,7 @@ public class ServiceController {
         //ill load all the drivers that have those training and licence to the DB so we can choose a relevant one
         dataController.ReadAllDriversByInfo(licence,ability);
         for(Driver driver:Drivers.values()){
-            if(driver.getLicense()==licence&&driver.getAbility()==ability){
+            if(driver.getLicense()>=licence&&driver.getAbility().ordinal()>=ability.ordinal()){
                 if(driver.checkDay(day1)){
                     //todo check if this works
                     //we tell the driver he works in this day

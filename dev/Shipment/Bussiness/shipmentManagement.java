@@ -29,7 +29,7 @@ public class shipmentManagement {
     private shipmentManagement() {
         dataController = DataController.getInstance();
         shipmentService = ShipmentService.getInstance();
-        vendorMap = new HashMap<>();
+        vendorMap = dataController.getVendorsOrderMap();
         drivers = new ArrayList<>();
         trucks = dataController.getTrucksMap();
         sites = new ArrayList<>();
@@ -331,7 +331,7 @@ public class shipmentManagement {
      * This function searching for a new truck for the shipment.
      */
     public void changeTruck() {
-        Shipment shipment = shipments.get(0);
+        Shipment shipment = availableShipments.get(0);
         Truck currentTruck = getTruck(shipment.getTruckNumber());
         Driver currentDriver = shipment.getDriver();
         for(Truck truck : trucks.values())
@@ -476,7 +476,11 @@ public class shipmentManagement {
      * @return true if found. false otherwise.
      */
 
+    //todo fix it
     public boolean checkBranch(String name) {
+        if (shipmentService.askForSite(name) == null){
+            return false;
+        }
         for (Site site : sites) {
             if (Objects.equals(site.getName(), name)) {
                 if (site instanceof Branch)
@@ -686,6 +690,7 @@ public class shipmentManagement {
         List<String> destinations = new ArrayList<>();
         Driver driverForShipment = null;
         String truckNumberForShipment = "";
+
         if (vendorMap.get(source).isEmpty()) {
             System.out.println("This vendor: " + source + " does not have any orders");
             return false;

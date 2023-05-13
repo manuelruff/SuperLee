@@ -339,14 +339,13 @@ public class UI {
      * this function gets input from the user about a new site he wants to add
      * and adds the new site to the system
      */
-    public static void addSite()
-    {
+    public static void addSite() {
         boolean check = true;
         String siteName = null;
-        while(check) {
+        while (check) {
             System.out.println("Please enter site name:");
             siteName = scanner.nextLine();
-            check = sManagement.checkSite(siteName);
+            check = sManagement.checkVendor(siteName);
             if (check)
                 System.out.println("Site already exist please enter a new name");
         }
@@ -355,53 +354,18 @@ public class UI {
         String sitePhoneNumber;
         System.out.println("Please enter site phone number (10 digits - only numbers):");
         sitePhoneNumber = scanner.nextLine();
-        while(sitePhoneNumber.length() != 10 || !sitePhoneNumber.matches("[0-9]+")) {
+        while (sitePhoneNumber.length() != 10 || !sitePhoneNumber.matches("[0-9]+")) {
             System.out.println("Please enter site phone number (10 digits - only numbers):");
             sitePhoneNumber = scanner.nextLine();
         }
         System.out.println("Please enter contact name:");
         String contactName = scanner.nextLine();
-        check = true;
-        int siteType;
-        while (check)
-        {
-            while (true) {
-                System.out.println("""
-                        Please enter Site type:
-                        1 - Vendor
-                        2 - Branch""");
-                if (scanner.hasNextInt()) {
-                    siteType = scanner.nextInt();
-                    break;
-                } else {
-                    scanner.nextLine(); // consume the invalid input
-                    System.out.println("Invalid input. Please enter an integer next");
-                }
-            }
+        sManagement.addVendor(siteName, siteAddress, sitePhoneNumber, contactName);
+        System.out.println("Vendor added to the system");
 
-            if(siteType == 1) {
-                sManagement.addVendor(siteName, siteAddress, sitePhoneNumber, contactName);
-                System.out.println("Vendor added to the system");
-                check = false;
-            }
-            else if (siteType == 2) {
-                int zone = 4;
-                while(zone < 0 || zone > 2) {
-                    System.out.println("""
-                            Please enter branch zone:
-                            0 - North
-                            1 - Center
-                            2 - South""");
-                    zone = scanner.nextInt();
-                    if(zone < 0 || zone > 2)
-                        System.out.println("Please enter a number between 0 - 2");
-                }
-                sManagement.addBranch(siteName,siteAddress,sitePhoneNumber,contactName,zone);
-                System.out.println("Branch added to the system");
-                check = false;
-            }
-        }
-    }
+
+     }
+
     /**
      * this function gets input from the user about a site to delete
      * and delete it from the system
@@ -414,7 +378,7 @@ public class UI {
         {
             System.out.println("Please enter site name you want to remove:");
             siteToDelete = scanner.nextLine();
-            if(sManagement.checkSite(siteToDelete)) {
+            if(sManagement.checkVendor(siteToDelete)) {
                 sManagement.deleteSite(siteToDelete);
                 System.out.println("site deleted");
                 check1 = false;

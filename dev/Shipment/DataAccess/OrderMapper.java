@@ -7,6 +7,7 @@ import resource.Connect;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +15,12 @@ import java.util.Map;
 public class OrderMapper {
     private static OrderMapper instance = new OrderMapper();
     private Map<String, Order> orderMap;
+    private Map<String, String> ordersVendorMap;
     private Connection conn;
 
     private OrderMapper() {
         orderMap = new HashMap<>();
+        ordersVendorMap = new HashMap<>();
         conn = Connect.getConnection();
     }
     public static OrderMapper getInstance(){
@@ -83,6 +86,34 @@ public class OrderMapper {
 
         }
     }
+    public void readOrderWithVendor(String vendor)
+    {
+        String id,destination,zone,source;
+        List<Order> orderList = new ArrayList<>();
+        try{
+            java.sql.Statement stat = conn.createStatement();
+            java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE Source=='"+vendor+"'");
+            while(rs.next())
+            {
+                id = rs.getString("ID");
+                destination = rs.getString("destination");
+                zone = rs.getString("zone");
+                source = rs.getString("Source");
+                Order order = new Order(destination,Zone.valueOf(zone),source);
+                order.setID(id); // when writing back to the database maybe duplication
+                orderList.add(order);
+                orderMap.put(id,order);    //             vendor -> order1, order2
+                //todo add to ordersVendorMap;
+                readItems(id);
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("i have a problem sorry1");
+        }
+    }
+
+
     private void readItems(String ID)
     {
         String name,storage;
