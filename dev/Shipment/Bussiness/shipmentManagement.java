@@ -405,6 +405,7 @@ public class shipmentManagement {
 
     public void loadAllSites(){
         addBranch(shipmentService.getAllSites());
+        dataController.loadSaves();
     }
     /**
      * This function creates a new vendor and adds it to the system.
@@ -1172,6 +1173,10 @@ public class shipmentManagement {
 
     public List<Shipment> getAvailableShipment() {
         return availableShipments;
+    }
+
+    public void closeDB() {
+        dataController.closeShipmentsDB();
     }
 }
 

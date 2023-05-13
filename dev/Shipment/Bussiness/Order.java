@@ -10,7 +10,7 @@ public class Order {
     private List<Item> itemList;
     private String source;
     private String ID;
-    private  static int count;
+    private static int count;
     public Order(String destination, Zone zone,String source) {
         count++;
         this.ID = String.valueOf(count);
@@ -23,7 +23,9 @@ public class Order {
     public String getSource() {
         return source;
     }
-    public void setCount(int num){count = num;}
+    public static void setCount(int num){count = num;}
+    public static int getCount(){return count;}
+    public void minusCount(){count--;}
 
     public void setID(String ID) {
         this.ID = ID;

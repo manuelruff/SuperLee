@@ -753,7 +753,7 @@ public class UI {
                     vendor = scanner.nextLine();
                     if(sManagement.checkVendor(vendor))
                     {
-                        if (sManagement.createShipment(day, currentDate ,shipmentID,vendor))
+                        if (sManagement.createShipment(day - 1, currentDate ,shipmentID,vendor))
                             System.out.println("Shipment created");
                         else{System.out.println("cant create shipment");
                         }
