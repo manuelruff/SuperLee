@@ -428,8 +428,8 @@ public class shipmentManagement {
     public void addBranch(List<List<String>> siteDetails) {
         Branch branch;
         for(int i=0; i < siteDetails.size(); i++) {
-            branch = new Branch(siteDetails.get(1).get(0), siteDetails.get(1).get(1), siteDetails.get(1).get(2)
-                    , siteDetails.get(1).get(3), Zone.valueOf(siteDetails.get(1).get(4)));
+            branch = new Branch(siteDetails.get(i).get(0), siteDetails.get(i).get(1), siteDetails.get(i).get(2)
+                    , siteDetails.get(i).get(3), Zone.valueOf(siteDetails.get(i).get(4)));
             branches.add(branch);
         }
     }
