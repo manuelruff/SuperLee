@@ -44,8 +44,8 @@ public class TruckMapper {
             java.sql.Statement stat = connect.createStatement();
             java.sql.ResultSet rs = stat.executeQuery("select * from Truck where truckNumber == '" + truckNumber + "'");
             if (rs.next()) {
-                totalWeight = rs.findColumn("totalWeight");
-                truckWeight = rs.findColumn("truckWeight");
+                totalWeight = rs.getInt("totalWeight");
+                truckWeight = rs.getInt("truckWeight");
                 model = rs.getString("model");
                 storage = rs.getString("storage");
                 Truck truck = null;
@@ -122,8 +122,8 @@ public class TruckMapper {
             java.sql.ResultSet rs = stmt.executeQuery("select * from Truck");
             while (rs.next()) {
                 truckNumber = rs.getString("truckNumber");
-                totalWeight = rs.findColumn("totalWeight");
-                truckWeight = rs.findColumn("truckWeight");
+                totalWeight = rs.getInt("totalWeight");
+                truckWeight = rs.getInt("truckWeight");
                 model = rs.getString("model");
                 storage = rs.getString("storage");
                 if (truckMap.containsKey(truckNumber))

@@ -30,7 +30,7 @@ public class shipmentManagement {
     private shipmentManagement() {
         dataController = DataController.getInstance();
         shipmentService = ShipmentService.getInstance();
-        vendorMap = new HashMap<>();
+        vendorMap = dataController.getVendorOrderMap();
         drivers = new ArrayList<>();
         branches = new ArrayList<>();
         trucks = dataController.getTrucksMap();
@@ -302,6 +302,7 @@ public class shipmentManagement {
      * @return string, the truck Number.
      */
     public String searchForTruck(Training train, int day) {
+        dataController.loadAllTrucks();
         for (Truck truck : trucks.values()) {
                 if (truck.addNewDay(Days.values()[day])) {
                     if (((truck instanceof FreezerTruck) && (train == Training.Freezer))
@@ -478,6 +479,9 @@ public class shipmentManagement {
      * @return the site if found.
      */
     public Site getSite(String name) {
+        for(Branch branch : branches)
+            if (branch.getName().equals(name))
+                return branch;
         return vendors.get(name);
     }
 
@@ -671,6 +675,7 @@ public class shipmentManagement {
      * @return True/false if the shipment was created.
      */
     public boolean createShipment(int dayOfWeek, LocalDate date , String ID, String source) {
+        dataController.loadOrdersByVendor(source);
         ItemsDoc itemsDoc;
         Shipment shipment;
         List<String> destinations = new ArrayList<>();
@@ -759,7 +764,6 @@ public class shipmentManagement {
             shipment = new Shipment(ID, truckNumberForShipment, driverForShipment, Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList, date);
         }
         addShipmentSorted(shipment);
-
         return true;
     }
 

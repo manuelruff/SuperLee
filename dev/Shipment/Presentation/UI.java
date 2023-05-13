@@ -124,7 +124,7 @@ public class UI {
                     break;
                 case "3":
                     int ch3=0;
-                    while(ch3 != 6) {
+                    while(ch3 != 4) {
                         System.out.println("Drivers Menu:");
                         System.out.println("1 - Print All drivers");
                         System.out.println("2 - Update driver licence");
@@ -753,8 +753,10 @@ public class UI {
                     vendor = scanner.nextLine();
                     if(sManagement.checkVendor(vendor))
                     {
-                        sManagement.createShipment(day, currentDate ,shipmentID,vendor);
-                        System.out.println("Shipment created");
+                        if (sManagement.createShipment(day, currentDate ,shipmentID,vendor))
+                            System.out.println("Shipment created");
+                        else{System.out.println("cant create shipment");
+                        }
                         check50 = false;
                         check51 = false;
                     }

@@ -32,9 +32,13 @@ public class DataController {
         return instance;
     }
 
+    /**************************************** Order Related Methods ****************************************/
+
     public Map<String, Order> getOrderMap() {
         return orderMapper.getOrderMap();
     }
+
+    public void loadOrdersByVendor(String vendorName){orderMapper.readOrderWithVendor(vendorName);}
 
 
 
@@ -73,7 +77,7 @@ public class DataController {
     public void deleteTruck(String truckNumber) {
     }
     public void loadAllTrucks(){
-
+        truckMapper.readAllTrucks();
     }
 
 
