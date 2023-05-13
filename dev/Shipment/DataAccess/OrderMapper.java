@@ -182,7 +182,7 @@ public class OrderMapper {
                             "VALUES (" + id + ", '" + destination + " ','" + zone.toString() + "','" + source + "')");
                 }
                 else {
-                    stat.executeUpdate("UPDATE Orders SET ID='" + id + "', Destination='" + destination + "', Zone='" + zone.toString() + "', Source= '"+source+"'  WHERE ID=" + id);
+                    stat.executeUpdate("INSERT OR IGNORE INTO Orders (ID, Destination, Zone,Source) " +  "VALUES (" + id + ", '" + destination + " ','" + zone.toString() + "','" + source + "')");
                 }
             }
             catch (SQLException e)
