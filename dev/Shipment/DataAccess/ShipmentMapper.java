@@ -113,7 +113,7 @@ public class ShipmentMapper {
     {
         try {
             java.sql.Statement stat = conn.createStatement();
-            stat.executeUpdate("UPDATE StaticSaves SET LastID=" + ItemsDoc.getCount() + "");
+            stat.executeUpdate("UPDATE StaticSaves SET LastID=" + ItemsDoc.getCount() + " WHERE Object == '"+"ItemDoc"+"' ");
         }
         catch (SQLException e)
         {
