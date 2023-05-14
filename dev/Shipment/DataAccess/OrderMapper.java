@@ -164,6 +164,7 @@ public class OrderMapper {
     }
     public void writeAllOrders()
     {
+        removeEmptyOrders();
         for(Order order : orderMap.values())
         {
             String id ,destination,source;
