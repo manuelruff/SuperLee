@@ -1,9 +1,8 @@
 package Shipment.DataAccess;
 import Shipment.Bussiness.*;
-import resource.Connect;
+import DBConnect.Connect;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;

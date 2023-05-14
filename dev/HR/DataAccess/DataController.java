@@ -1,6 +1,6 @@
 package HR.DataAccess;
 import HR.Bussiness.*;
-import resource.Connect;
+import DBConnect.Connect;
 
 import java.util.List;
 import java.util.Map;

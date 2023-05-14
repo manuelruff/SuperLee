@@ -1,7 +1,6 @@
 package Shipment.DataAccess;
 
 import Shipment.Bussiness.*;
-import resource.Connect;
 
 import java.util.ArrayList;
 import java.util.List;

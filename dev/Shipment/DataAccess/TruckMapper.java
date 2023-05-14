@@ -1,10 +1,9 @@
 package Shipment.DataAccess;
 import Shipment.Bussiness.*;
-import resource.Connect;
+import DBConnect.Connect;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 public class TruckMapper {
     private static TruckMapper instance;
