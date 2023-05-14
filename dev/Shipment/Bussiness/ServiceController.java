@@ -71,7 +71,10 @@ public class ServiceController {
                 for(Site site: shipment.getDestinations()){
                     if (site.getName().equals(siteName)){
                         shipment.getDestinations().remove(site);
-                        shipments.remove(shipment);
+                        ItemsDoc itemsDoc = shipment.getItemDoc(siteName);
+                        dataController.deleteItemDoc(shipment.getID(),siteName);
+                        shipmentM.turnItemDocIntoOrder(itemsDoc,shipment.getSource().getName());
+                        shipment.deleteItemDoc(itemsDoc);
                         return;
                     }
                 }

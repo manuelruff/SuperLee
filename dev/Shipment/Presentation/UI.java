@@ -394,7 +394,7 @@ public class UI {
                         return;
                     }
                     else {
-                        System.out.println("The string must be a number between 1 and 4.");
+                        System.out.println("The string must be a number between 1 and 3.");
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("The string does not contain a valid integer.");
