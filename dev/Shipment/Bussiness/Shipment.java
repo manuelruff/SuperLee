@@ -99,6 +99,15 @@ public class Shipment {
 
     public String getTruckNumber(){return truckNumber;}
 
+    public ItemsDoc getItemDoc(String des)
+    {
+        for(ItemsDoc itemsDoc: docs)
+        {
+            if(itemsDoc.getSiteName().equals(des))
+                return itemsDoc;
+        }
+        return null;
+    }
 
     public List<Site> getDestinations() {
         return destinations;

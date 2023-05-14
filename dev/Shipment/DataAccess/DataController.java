@@ -73,6 +73,11 @@ public class DataController {
 
     public void deleteShipment(String ID){shipmentMapper.deleteShipment(ID);}
 
+    public void deleteItemDoc(String shipmentID, String destination)
+    {
+        shipmentMapper.deleteItemDoc(shipmentID,destination);
+    }
+
 
 
 
