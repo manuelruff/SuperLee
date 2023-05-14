@@ -98,18 +98,14 @@ public class shipmentManagement {
      * @param licence char, licence type.(C/D)
      */
     public void updateDriverLicence(String ID, char licence){
-        for (Driver driver : drivers){
-            if (ID.equals(driver.getID())){
-                if (driver.getLicense() < licence) {
-                    driver.setLicense(licence);
-                    System.out.println("This driver licence has been upgraded to " + licence);
-                }
-                else {
-                    System.out.println("This driver licence is " + driver.getLicense() + " which is already higher then " + licence);
-                }
-                return;
-            }
+        List<String> info = shipmentService.askForDriver(ID);
+        if (info.size() == 0) {
+            System.out.println("Driver ID doesn't exist");
+            return;
         }
+        Training training = Training.valueOf(info.get(3));
+        shipmentService.getUpdateForDriver(ID, licence, training.ordinal());
+        System.out.println("Licence was changed");
     }
 
     /**
@@ -118,16 +114,14 @@ public class shipmentManagement {
      * @param training int, will indicate the Training Enum.
      */
     public void updateDriverTraining(String ID, int training) {
-        for (Driver driver : drivers) {
-            if (ID.equals(driver.getID())) {
-                if (driver.getAbility().ordinal() < training){
-                    driver.setAbility(Training.values()[training]);
-                    System.out.println("This driver training has been upgraded to " + driver.getAbility().toString());
-                }
-                else{System.out.println("This driver training is " + driver.getLicense() + " which is already higher then " + Training.values()[training]);}
-                return;
-            }
+        List<String> info = shipmentService.askForDriver(ID);
+        if (info.size() == 0) {
+            System.out.println("Driver ID doesn't exist");
+            return;
         }
+        char licence = info.get(2).charAt(0);
+        shipmentService.getUpdateForDriver(ID, licence, training);
+        System.out.println("Training was changed");
     }
     /**
      * This function creates a new driver and adds it to the system.
