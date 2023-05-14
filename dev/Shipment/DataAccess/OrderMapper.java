@@ -126,6 +126,8 @@ public class OrderMapper {
         {
             System.out.println("i have a problem sorry1");
         }
+        if (orders.isEmpty())
+            return;
         vendorOrderMap.put(vendor,orders);
     }
 
