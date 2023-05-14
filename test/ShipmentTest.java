@@ -1,10 +1,9 @@
 import org.junit.jupiter.api.Test;
 
 
-class CancellationsTest {
+class ShipmentTest {
 
     @Test
-    void getYear() {
-
+    void getID() {
     }
 }
