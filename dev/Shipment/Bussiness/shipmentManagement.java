@@ -147,41 +147,6 @@ public class shipmentManagement {
     }
 
     /**
-     * This function search for a specific driver and return it.
-     * @param ID String, ID of the driver
-     * @return found driver/ null
-     */
-    public Driver getDriver(String ID)
-    {
-        for (Driver driver : drivers)
-        {
-            if(driver.getID().equals(ID))
-                return driver;
-        }
-        return null;
-    }
-
-    /**
-     * This function search for a driver that can do a shipment.
-     *
-     * @param train enum, his ability to driver truck.
-     * @param day   int represent the day of the week.
-     * @return the available driver.
-     */
-    public Driver searchForDriver(Training train, int day, List<String> driverNameList) {
-        for (Driver driver : drivers) {
-            if (driverNameList.contains(driver.getName())){
-                continue;
-            }
-            if (driver.getAbility().ordinal() <= train.ordinal())
-                if (driver.addNewDay(Days.values()[day])) {
-                    return driver;
-                }
-        }
-        return null;
-    }
-
-    /**
      * This Function prints every driver in the system.
      */
     public void printDrivers() {
@@ -907,8 +872,9 @@ public class shipmentManagement {
             Order order = vendorMap.get(source).get(vendorMap.get(source).size() - 1);
             order.addListOfItems(shipmentToDelete.getDocs().get(i).getItemList());
         }
-        shipmentToDelete.printShipment();
         availableShipments.remove(shipmentToDelete);
+        shipments.remove(shipmentToDelete.getID());
+        dataController.deleteShipment(shipmentToDelete.getID());
         shipmentService.askRemoveDayForDriver(shipmentToDelete.getDriver().getID(), shipmentToDelete.getDayOfTheWeek().ordinal());
         System.out.println("This shipment has been deleted!");
     }

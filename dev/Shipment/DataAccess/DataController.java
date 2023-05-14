@@ -71,6 +71,8 @@ public class DataController {
     }
     public void loadAllAvailableShipments() {shipmentMapper.getAvailableShipments();}
 
+    public void deleteShipment(String ID){shipmentMapper.deleteShipment(ID);}
+
 
 
 

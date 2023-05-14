@@ -367,12 +367,12 @@ public class ShipmentMapper {
             System.out.println("i have a problem sorry11");
         }
     }
-    public void deleteShipments()
+    public void deleteShipment(String ID)
     {
         try {
             Statement stat = conn.createStatement();
-            stat.executeUpdate("DELETE FROM Shipments");
-            stat.executeUpdate("DELETE FROM ShipmentBranches");
+            stat.executeUpdate("DELETE FROM Shipments WHERE ID == '"+ID+"'");
+            stat.executeUpdate("DELETE FROM ShipmentBranches WHERE ShipmentID == '"+ID+"'");
         }
         catch (SQLException e)
         {
