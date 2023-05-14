@@ -98,6 +98,45 @@ class SuperTest {
         Super1.setStart_morning(Days.Sunday,10.00);
         assertEquals(10,Super1.getStart_morning(Days.Sunday),0);
     }
-
-
+    @Test
+    public void getZone() {
+        Super Super1 = new Super("zolretzah","bersheva","55555555","manu",Zone.Center);
+        assertEquals(Zone.Center,Super1.getZone());
+    }
+    @Test
+    public void getAddress() {
+        Super Super1 = new Super("zolretzah","bersheva","55555555","manu",Zone.Center);
+        assertEquals("bersheva",Super1.getAddress());
+    }
+    @Test
+    public void getphoneNumber() {
+        Super Super1 = new Super("zolretzah","bersheva","55555555","manu",Zone.Center);
+        assertEquals("55555555",Super1.getPhoneNumber());
+    }
+    @Test
+    public void getcontactName() {
+        Super Super1 = new Super("zolretzah","bersheva","55555555","manu",Zone.Center);
+        assertEquals("manu",Super1.getContactName());
+    }
+    @Test
+    public void setAddress() {
+        Super Super1 = new Super("zolretzah","bersheva","55555555","manu",Zone.Center);
+        assertEquals("bersheva",Super1.getAddress());
+        Super1.setAddress("bershevaaaa");
+        assertEquals("bershevaaaa",Super1.getAddress());
+    }
+    @Test
+    public void setphoneNumber() {
+        Super Super1 = new Super("zolretzah","bersheva","55555555","manu",Zone.Center);
+        assertEquals("55555555",Super1.getPhoneNumber());
+        Super1.setPhoneNumber("66666666");
+        assertEquals("66666666",Super1.getPhoneNumber());
+    }
+    @Test
+    public void setcontactName() {
+        Super Super1 = new Super("zolretzah","bersheva","55555555","manu",Zone.Center);
+        assertEquals("manu",Super1.getContactName());
+        Super1.setContactName("manuuuu");
+        assertEquals("manuuuu",Super1.getContactName());
+    }
 }
