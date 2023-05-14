@@ -208,7 +208,9 @@ public class ManagerController{
             sup.SendConstraintsToHistory();
         }
         //prepare the Workers state for next weekly
+        dataController.loadAllWorkers();
         for (Worker worker : Workers.values()) {
+            dataController.DeleteWorkingDays(worker.getID());
             worker.ResetDaysOfWork();
         }
     }
@@ -315,9 +317,8 @@ public class ManagerController{
             return false;
         }
         int shiftnum = day * 2;
-
         // we will delete this workers working days so it will be re written in the db later with the updates
-        dataController.DeleteWorkingDays(ID,Superim.get(branch).GetWeekShifts().GetShift(day));
+        dataController.DeleteWorkingDaysAndShifts(ID,Superim.get(branch).GetWeekShifts().GetShift(day));
         //when were here we have a good number for employee so we remove him
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum).RemoveWorker(ID);
         Superim.get(branch).GetWeekShifts().GetShift(shiftnum + 1).RemoveWorker(ID);
@@ -483,7 +484,7 @@ public class ManagerController{
     }
 
     public void loadAllWorkersFrom(){
-        dataController.loadAllWorkersFrom();
+        dataController.loadAllWorkers();
     }
 
     /**

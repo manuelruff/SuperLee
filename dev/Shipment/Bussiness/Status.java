@@ -6,8 +6,6 @@ public enum Status {
     Available,
     SiteChange,
     Canceled,
-
     NoChanges
-
 
 }

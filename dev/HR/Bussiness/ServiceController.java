@@ -209,7 +209,7 @@ public class ServiceController {
     //print all the drivers we have
     public void printDrivers(){
         //first read all the workers from the DB by the datacontroller
-        dataController.loadAllWorkersFrom();
+        dataController.loadAllWorkers();
         // print them
         for(Driver driver: Drivers.values()){
             driver.Printme();
@@ -219,6 +219,7 @@ public class ServiceController {
 
     public void RemoveShiftFromDriver(String ID,int day){
         Driver driver = dataController.getDriver(ID);
+        dataController.DeleteWorkingDays(ID,day);
         driver.RemoveShift(Days.values()[day]);
     }
 

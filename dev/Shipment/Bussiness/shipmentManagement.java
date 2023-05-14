@@ -1095,6 +1095,7 @@ public class shipmentManagement {
         if (shipment.getShipmentStatus() == Status.Available)
             shipment.setShipmentStatus(Status.NoChanges);
         shipment.setDepartureTime(time);
+        shipmentService.askRemoveDayForDriver(shipment.getID(), shipment.getDayOfTheWeek().ordinal());
     }
 
     public List<Shipment> getAvailableShipment() {

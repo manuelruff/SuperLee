@@ -381,6 +381,16 @@ public class WorkerMapper {
             System.out.println("i have a problem iun deleting working days sorry");
         }
     }
+    public void DeleteWorkingDays(String ID,int day){
+        try {
+            Days d=Days.values()[day];
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM WeeklyWorkingDays WHERE WorkerID=" + ID + " AND Day='" + d + "'");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem iun deleting working days sorry");
+        }
+    }
     public void deleteWorkerFromBranch(String ID, String branch){
         try {
             java.sql.Statement stmt = conn.createStatement();

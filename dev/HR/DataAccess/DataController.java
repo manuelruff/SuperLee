@@ -62,7 +62,7 @@ public class DataController {
     /**
      * this function will tell the mapper of workers to get all the workers
      */
-    public void loadAllWorkersFrom(){
+    public void loadAllWorkers(){
         workerMapper.ReadAllWorkers();
     }
     /**
@@ -83,9 +83,15 @@ public class DataController {
     public void DeleteConstraint(String ID){
         workerMapper.DeleteConstraints(ID);
     }
-    public void DeleteWorkingDays(String ID, Shift shift){
+    public void DeleteWorkingDaysAndShifts(String ID, Shift shift){
         weeklyMapper.DeleteWorkerFromShift(ID,shift);
         workerMapper.DeleteWorkingDays(ID);
+    }
+    public void DeleteWorkingDays(String ID){
+        workerMapper.DeleteWorkingDays(ID);
+    }
+    public void DeleteWorkingDays(String ID, int day){
+        workerMapper.DeleteWorkingDays(ID,day);
     }
     public Super getSuper(String name){
         return superMapper.getsuper(name);
