@@ -107,7 +107,7 @@ public class ShipmentMapper {
             {
                 name = rs.getString("Name");
                 storage = rs.getString("Storage");
-                amount = rs.findColumn("Amount");
+                amount = rs.getInt("Amount");
                 Item item = new Item(name,amount, Training.valueOf(storage));
                 itemsDoc.addItemToDoc(item);
             }
@@ -301,7 +301,7 @@ public class ShipmentMapper {
             date = shipment.getDate().toString();
             if(!Objects.equals(status, "available") && shipment.getDepartureTime() != null)// check how to enter time
                 time = shipment.getDepartureTime().toString();
-            java.sql.ResultSet rs = stat.executeQuery("select * from Shipments WHERE ID == '"+id+"'");
+            java.sql.ResultSet rs = stat.executeQuery("select * from Shipments WHERE ID='"+id+"'");
             if (!rs.next())
             {
                 stat.executeUpdate("INSERT INTO Shipments(ID, TruckNumber, DriverID,Day,Source,Time,Status,Date) " +
@@ -411,7 +411,8 @@ public class ShipmentMapper {
                 {
                     String docID = rs.getString("DocID");
                     deleteItemsForDocs(docID);
-                    stat.executeUpdate("DELETE FROM ItemDocs WHERE DocID== '" + docID + "'");
+                    stat.executeUpdate("DELETE FROM ItemDocs WHERE ShipmentID== '" + shipmentID+ "'");
+                    stat.executeUpdate("DELETE FROM ItemsForDocs WHERE DocID== '" + docID + "'");
                 }
             }
         } catch (SQLException e) {

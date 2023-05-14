@@ -91,6 +91,7 @@ public class TruckMapper {
                 truckWeight = truck.getTruckWeight();
                 stat.executeUpdate("INSERT OR IGNORE INTO Truck(truckNumber, totalWeight, truckWeight,model,Storage) " +
                         "VALUES ('" + truckNumber + "', " + totalWeight + " ," + truckWeight + ",'" + model + "', '" + storage + "')");
+                WriteWorkingDays(truck);
 
             } catch (SQLException e) {
                 System.out.println("i have a problem sorry");
