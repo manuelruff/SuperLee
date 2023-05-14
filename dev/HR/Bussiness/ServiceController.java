@@ -113,7 +113,8 @@ public class ServiceController {
             // todo: check this if
             if(Superim.get(branch).GetWeekShifts().GetShift(shiftnumber).IsEmptyShift())
                 continue;
-            if(!Superim.get(branch).GetWeekShifts().GetShift(shiftnumber).getWorkerList().containsKey(Jobs.StoreKeeper)){
+            boolean noStoreKeeperFlag = Superim.get(branch).GetWeekShifts().GetShift(shiftnumber).getWorkerList().containsKey(Jobs.StoreKeeper);
+            if(!noStoreKeeperFlag){
                 List <String> workers = Superim.get(branch).GetWorkersIDS();
                 // check if there is a store keeper that can be added to the shift
                 for(String worker:workers){
@@ -124,6 +125,7 @@ public class ServiceController {
                         Workers.get(worker).AddShift(Days.values()[day]);
                         Workers.get(worker).AddShiftWorked();
                         added.add(branch);
+                        break;
                         }
                     }
                     else{
@@ -133,6 +135,7 @@ public class ServiceController {
                             Workers.get(worker).AddShift(Days.values()[day]);
                             Workers.get(worker).AddShiftWorked();
                             added.add(branch);
+                            break;
                         }
 
                     }
@@ -212,7 +215,7 @@ public class ServiceController {
         // print them
         for(Driver driver: Drivers.values()){
             driver.Printme();
-            System.out.println("\n");
+            System.out.println();
         }
     }
 
