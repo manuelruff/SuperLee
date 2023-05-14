@@ -736,6 +736,8 @@ public class shipmentManagement {
                         if (Objects.equals(order.getDestination(), itemD.getSiteName())) {
                             itemD.addListOfItems(order.getItemsForShipping(trainToSearchBy));
                             // checking if the order is empty, to delete.
+                            if (order.checkIfEmpty())
+                                orderMap.remove(order.getID());
                             found = true;
                             break;
                         }
