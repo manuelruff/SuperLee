@@ -342,6 +342,7 @@ public class UI {
      * and adds the new truck to the system
      */
 
+    //todo fix it
     public static void updateSite()
     {
         System.out.println("Please enter the name of the site you would like to update:");

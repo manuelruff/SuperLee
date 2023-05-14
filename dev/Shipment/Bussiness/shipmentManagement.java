@@ -75,23 +75,6 @@ public class shipmentManagement {
 
     /****************************** Drivers related Methods ******************************/
 
-
-    /**
-     * This function checks if the ID of a driver is in the system.
-     *
-     * @param ID ID of the driver.
-     * @return true if found. false otherwise.
-     */
-    public boolean checkID(String ID) {
-        for (Driver driver : drivers) {
-            if (Objects.equals(driver.getID(), ID)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     /**
      * This function update the licence of a specific driver
      * @param ID String, driver ID
@@ -238,14 +221,6 @@ public class shipmentManagement {
         trucks.put(truckNumber,truck);
     }
 
-    /**
-     * This function removes a truck from the system.
-     *
-     * @param truckNumber string, the truck number.
-     */
-    public void removeTruck(String truckNumber) {
-        dataController.deleteTruck(truckNumber);
-    }
 
     /**
      * This function search for a suitable truck and returns its truck number.
@@ -322,20 +297,6 @@ public class shipmentManagement {
 
     /****************************** Sites related Methods ******************************/
 
-    /**
-     * This function checks if a site is already exist in the system.
-     *
-     * @param name String, name of the site.
-     * @return true if found. false otherwise.
-     */
-
-//    public boolean checkSite(String name) {
-//        for (Site site : sites) {
-//            if (Objects.equals(site.getName(), name))
-//                return true;
-//        }
-//        return false;
-//    }
 
     /**
      * This site updates the data of the site.
@@ -390,16 +351,6 @@ public class shipmentManagement {
         }
     }
 
-
-    /**
-     * This function removes a site from the system
-     *
-     * @param name string, name of the site.
-     */
-    public void deleteVendor(String name) {
-        vendors.remove(name);
-        vendorMap.remove(name);
-    }
 
     /**
      * This function checks if a vendor is already exist in the system.
