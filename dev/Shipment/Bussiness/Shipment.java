@@ -61,8 +61,12 @@ public class Shipment {
         }
         else{System.out.println("No driver at the moment");}
         System.out.println("Vendor: "+ source.getName());
+        System.out.print("Status: ");
         if(shipmentStatus == Status.Available)
+            System.out.println("The shipment is ready to be executed");
+        else if (shipmentStatus == Status.NoChanges) {
             System.out.println("There isn't any changes in this shipment as of this moment");
+        }
         else {System.out.println("This shipment has undergone some changes: " + shipmentStatus.toString());}
         System.out.println("Destinations:");
         for(Site site : destinations)

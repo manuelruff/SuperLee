@@ -41,10 +41,10 @@ public class shipmentManagement {
         shipmentManagerPassword = dataController.getShipmentManagerPassword();
         shipments = dataController.getShipmentsMap();
         availableShipments = new ArrayList<>();
-        availableShipments = dataController.getAvailableShipmentsIntoList();
-        availableShipments.sort(Comparator.comparing(Shipment::getDate));
         orderMap = dataController.getOrderMap();
         loadAll();
+        availableShipments = dataController.getAvailableShipmentsIntoList();
+        availableShipments.sort(Comparator.comparing(Shipment::getDate));
     }
     public static shipmentManagement getInstance() {
         if (instance == null) {
@@ -615,7 +615,7 @@ public class shipmentManagement {
             System.out.println("There isn't any shipments!");
             return;
         }
-        System.out.println("******************** SHIPMENTS ********************");
+        System.out.println("******************** AVAILABLE SHIPMENTS ********************");
         for ( Shipment shipment : availableShipments){
             shipment.printShipment();
         }
