@@ -1,8 +1,5 @@
 package Shipment.DataAccess;
-import Shipment.Bussiness.Item;
-import Shipment.Bussiness.Order;
-import Shipment.Bussiness.Training;
-import Shipment.Bussiness.Zone;
+import Shipment.Bussiness.*;
 import resource.Connect;
 
 import java.sql.Connection;
@@ -222,12 +219,8 @@ public class OrderMapper {
         int count = Order.getCount();
         try {
             java.sql.Statement stat = conn.createStatement();
-            String sql = "UPDATE StaticSaves SET LastID = ? WHERE Object = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, count);
-            pstmt.setString(2, "Order");
-            pstmt.executeUpdate();
-            pstmt.close();
+            stat.executeUpdate("UPDATE StaticSaves SET LastID=" +count+ " WHERE Object == '"+"Order"+"' ");
+
         } catch (SQLException e) {
             System.out.println("can't read");
         }
