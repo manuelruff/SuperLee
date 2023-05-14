@@ -687,14 +687,15 @@ public class UI {
     public static void addShipment()
     {
         LocalDate currentDate = LocalDate.now();
-        LocalDate closestSunday = currentDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+        LocalDate runningDate = LocalDate.now();
+        LocalDate closestSunday = currentDate.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
         LocalDate nextFriday = currentDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
         boolean check50 = true, check51 = true;
-        int day = 1;
+        int day;
         String shipmentID, vendor;
         String week;
+        int startFrom;
         int choice;
-        int counter = 1;
         while (true) {
             if (currentDate.isEqual(nextFriday) || currentDate.getDayOfWeek() == DayOfWeek.SATURDAY) {
                 week = "2";
@@ -706,34 +707,39 @@ public class UI {
                 week = scanner.nextLine();
             }
             if (week.equals("1")) {
-                System.out.println("Please choose an pick a date: ");
-                while (currentDate.isBefore(nextFriday)) {
-                    currentDate = currentDate.plusDays(1);
-                    System.out.println(counter + " - " + currentDate.getDayOfWeek() + ": " + currentDate);
-                    counter++;
+                System.out.println("Please choose and pick a date: ");
+                while (runningDate.isBefore(nextFriday)) {
+                    runningDate = runningDate.plusDays(1); // tue 2, wed 3, thur 4, fri 5,
+                    System.out.println((runningDate.getDayOfWeek().ordinal() + 1) + " - " + runningDate.getDayOfWeek() + ": " + runningDate);
                 }
                 choice = Integer.parseInt(scanner.nextLine());
-                while (!(0 < choice && choice <= counter - 1)) {
+                if (currentDate.getDayOfWeek().equals(DayOfWeek.SUNDAY))
+                    startFrom = 0;
+                else{
+                    startFrom = currentDate.getDayOfWeek().ordinal();
+                }
+                while (!(startFrom < choice && choice <= runningDate.getDayOfWeek().ordinal())) {
                     System.out.println("Please choose a valid number: ");
                     choice = Integer.parseInt(scanner.nextLine());
                 }
-                currentDate = LocalDate.now().plusDays(choice);
+                runningDate = LocalDate.now().plusDays(choice);
+                day = runningDate.getDayOfWeek().ordinal() + 1;
                 break;
             }
             else if (week.equals("2")) {
                 System.out.println("Please choose an pick a date: ");
                 LocalDate dateToMove = closestSunday;
-                for (int i=1 ; i < 7; i++){
+                for (int i=0 ; i < 6; i++){
                     System.out.println(i + " - " + dateToMove.getDayOfWeek() + ": " + dateToMove);
                     dateToMove = dateToMove.plusDays(1);
                 }
                 while (true) {
                     day = Integer.parseInt(scanner.nextLine());
-                    if (day < 1 || day > 6) {
-                        System.out.println("please enter a number between 1 - 6 only");
+                    if (day < 0 || day > 5) {
+                        System.out.println("please enter a number between 1 - 5 only");
                     }
                     else {
-                        currentDate = closestSunday.plusDays(day - 1);
+                        runningDate = closestSunday.plusDays(day);
                         break;
                     }
                 }
@@ -753,7 +759,7 @@ public class UI {
                     vendor = scanner.nextLine();
                     if(sManagement.checkVendor(vendor))
                     {
-                        if (sManagement.createShipment(day - 1, currentDate ,shipmentID,vendor))
+                        if (sManagement.createShipment(day, runningDate ,shipmentID,vendor))
                             System.out.println("Shipment created");
                         else{System.out.println("cant create shipment");
                         }
