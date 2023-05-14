@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class ShipmentMapper {
@@ -55,9 +56,36 @@ public class ShipmentMapper {
 
     }
 
+    private void readShipment(String shipmentID) {
+        String id, truckNumber, driverID, source, time, status;
+        Days day;
+        LocalDate date;
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM Shipments WHERE ID=='"+shipmentID+"'" );
+            if (rs.next()) {
+                id = rs.getString("ID");
+                truckNumber = rs.getString("TruckNumber");
+                driverID = rs.getString("DriverID");
+                source = rs.getString("Source");
+                time = rs.getString("Time");
+                day = Days.valueOf(rs.getString("Day"));
+                date = LocalDate.parse(rs.getString("Date"));
+                status = rs.getString("Status");
+                Shipment shipment = new Shipment(id, truckNumber,GetDriver(shipmentService.askForDriver(driverID)), day, vendorMapper.getVendor(source), readDestinations(id),getItemDocs(id),date);
+                shipment.setDepartureTime(LocalTime.parse(time));
+                shipment.setShipmentStatus(Status.valueOf(status));
+                shipmentsMap.put(id,shipment);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private Driver GetDriver(List<String> driverDetails)
     {
-        String name,id,licence,ability,workingDays;
+        String name,id,licence,ability;
         name = driverDetails.get(0);
         id = driverDetails.get(1);
         licence = driverDetails.get(2);
@@ -68,10 +96,6 @@ public class ShipmentMapper {
         return driver;
     }
 
-    //todo roee do it
-    public Shipment readShipment(String shipmentID){
-        return null;
-    }
     private void readItems(ItemsDoc itemsDoc)
     {
         String name,storage;
@@ -159,7 +183,7 @@ public class ShipmentMapper {
     private List<Site> readDestinations(String shipmentID)
     {
         String name;
-        List<Site> destinations=null;
+        List<Site> destinations= new ArrayList<>();
         try
         {
             java.sql.Statement stat = conn.createStatement();
@@ -180,10 +204,9 @@ public class ShipmentMapper {
 
     public void getShipments()
     {
-        String id,TruckNumber,DriverID,Source,Time,Status;
+        String id,TruckNumber,DriverID,Source,Time,status;
         Days day;
         LocalDate date;
-        List<Shipment> shipments = null;
         try{
             java.sql.Statement stat = conn.createStatement();
             java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM Shipments");
@@ -196,10 +219,11 @@ public class ShipmentMapper {
                 Time = rs.getString("Time");
                 day = Days.valueOf(rs.getString("Day"));
                 date = LocalDate.parse(rs.getString("Date"));
-                Status = rs.getString("Status");
-                if(Status != "Available") {
-                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source), readDestinations(id),getItemDocs(id),date);
-                    //shipment.setDepartureTime(Time);//todo: set time
+                status = rs.getString("Status");
+                if(!Objects.equals(status, "Available")) {
+                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)), day, vendorMapper.getVendor(Source), readDestinations(id),getItemDocs(id),date);
+                    shipment.setDepartureTime(LocalTime.parse(Time));
+                    shipment.setShipmentStatus(Status.valueOf(status));
                     shipmentsMap.put(id,shipment);
                 }
 
@@ -211,12 +235,11 @@ public class ShipmentMapper {
             System.out.println("i have a problem sorry");
         }
     }
-    public List<Shipment> getAvailableShipments()
+    public void getAvailableShipments()
     {
-        String id,TruckNumber,DriverID,Source,Time,Status;
+        String id,TruckNumber,DriverID,Source,Time,status;
         Days day;
         LocalDate date;
-        List<Shipment> availableShipments = null;
         try{
             java.sql.Statement stat = conn.createStatement();
             java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM Shipments");
@@ -228,13 +251,14 @@ public class ShipmentMapper {
                 Source = rs.getString("Source");
                 Time = rs.getString("Time");
                 day = Days.valueOf(rs.getString("Day"));
-                Status = rs.getString("Status");
+                status = rs.getString("Status");
                 date = LocalDate.parse(rs.getString("Date"));
-                if(Objects.equals(Status, "Available")) {
+                if(Objects.equals(status, "Available")) {
                     Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id),date);
-                    //shipment.setDepartureTime(Time);//todo: set time
-                    availableShipments.add(shipment);
+                    shipment.setDepartureTime(LocalTime.parse(Time));
+                    shipment.setShipmentStatus(Status.valueOf(status));
                     availableShipmentsMap.put(id,shipment);
+                    shipmentsMap.put(id, shipment);
                 }
 
             }
@@ -244,7 +268,6 @@ public class ShipmentMapper {
         {
             System.out.println("i have a problem sorry");
         }
-        return availableShipments;
     }
 
     public void writeAllShipments()

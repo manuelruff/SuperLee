@@ -81,8 +81,8 @@ public class LoadData {
     public static void checkShipment()
     {
         List<Shipment> Shipments;
-        Shipments = shipmentMapper.getAvailableShipments();
-        Shipments.get(0).printShipment();
+        //Shipments = shipmentMapper.getAvailableShipments();
+        //Shipments.get(0).printShipment();
     }
     public static void loadShipments()
     {

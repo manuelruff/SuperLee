@@ -204,6 +204,8 @@ public class shipmentManagement {
      */
     private Driver changeDriver(Driver oldDriver, Truck truck, Days day)
     {
+        Shipment shipment = availableShipments.get(0);
+        List<String> siteNames = new ArrayList<>();
         if(oldDriver.getAbility().ordinal() >= truck.getStorageType().ordinal())
         {
             if(oldDriver.getLicense() == 'D')
@@ -212,26 +214,17 @@ public class shipmentManagement {
                 return oldDriver;
             }
         }
-        else
-        {
-            for (Driver driver1 : drivers)
-            {
-                if(oldDriver.checkDay(day)) {
-                    if (driver1.getAbility().ordinal() >= truck.getStorageType().ordinal()) {
-                        if (driver1.getLicense() == 'D') {
-                            driver1.addNewDay(day);
-                            oldDriver.removeDay(day);
-                            return driver1;
-                        } else if (oldDriver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
-                            driver1.addNewDay(day);
-                            oldDriver.removeDay(day);
-                            return driver1;
-                        }
-                    }
-                }
-            }
+        for(Site site : shipment.getDestinations()){
+            siteNames.add(site.getName());
         }
-        return null;
+        Driver driver = addDriver(shipmentService.askForDriver(truck.getLicenceType(), truck.getStorageType().ordinal(), day.ordinal(),siteNames));
+        if (driver != null) {
+            System.out.println("Driver changed to: " + driver.getID() + " " + driver.getName());
+        }
+        else{
+            System.out.println("No driver found");
+        }
+        return driver;
     }
 
 
@@ -354,7 +347,9 @@ public class shipmentManagement {
                             shipment.setTruckNumber(truck.getTruckNumber());
                             truck.addNewDay(shipment.getDayOfTheWeek());
                             currentTruck.removeDay(shipment.getDayOfTheWeek());
-                            System.out.println("Truck Changed");
+                            System.out.println("Truck Changed to: ");
+                            truck.printTruck();
+                            shipment.setShipmentStatus(Status.TruckExchange);
                             return;
                         }
                     }
@@ -1141,7 +1136,8 @@ public class shipmentManagement {
         Shipment shipment = availableShipments.get(0);
         availableShipments.remove(shipment);
         shipments.put(shipment.getID(), shipment);
-        shipment.setShipmentStatus(Status.NoChanges);
+        if (shipment.getShipmentStatus() == Status.Available)
+            shipment.setShipmentStatus(Status.NoChanges);
         shipment.setDepartureTime(time);
     }
 
