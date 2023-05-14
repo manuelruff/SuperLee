@@ -418,7 +418,7 @@ public class ManagerController{
     public boolean isExistWorker(String ID){
         //we tell the database to load that id if exists before we check him
         dataController.getWorker(ID);
-        return Workers.get(ID) != null && Drivers.get(ID) == null;
+        return Workers.get(ID) != null || Drivers.get(ID) != null;
     }
     public boolean CheckBranchExist(String branchName){ //we tell the database to load that id if exists before we check him
         dataController.getSuper(branchName);
