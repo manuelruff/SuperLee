@@ -6,10 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OrderMapper {
     private static OrderMapper instance = new OrderMapper();
@@ -223,6 +220,17 @@ public class OrderMapper {
 
         } catch (SQLException e) {
             System.out.println("can't read");
+        }
+    }
+
+    private void removeEmptyOrders(){
+        Iterator<Order> iterator = orderMap.values().iterator();
+
+        while (iterator.hasNext())
+        {
+            Order order = iterator.next();
+            if(order.checkIfEmpty())
+                iterator.remove();
         }
     }
 

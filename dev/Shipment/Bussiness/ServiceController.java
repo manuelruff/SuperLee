@@ -149,6 +149,5 @@ public class ServiceController {
             if(Objects.equals(order.getDestination(), siteName))
                 iterator.remove();
         }
-
     }
 }
