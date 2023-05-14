@@ -50,6 +50,7 @@ public class Shipment {
     {
         System.out.println("****** Shipment details ******");
         System.out.println("Shipment ID: " + ID);
+        System.out.println("Date: " + date);
         if (departureTime != null) {
             System.out.println("shipment occurred on " + dayOfTheWeek.toString() + " at " + departureTime);
         }

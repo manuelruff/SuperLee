@@ -40,6 +40,7 @@ public class LoadData {
 //        truckMapper.writeAllTrucks();
         LoadOrders();
         orderMapper.writeAllOrders();
+        Order.setCount(3);
 //        orderMapper.readOrderWithVendor("Zogloveg");
 //        Map<String,List<Order>> ordersByVendors = vendorMapper.getVendorOrderMap();
 //        for(List<Order> orders : ordersByVendors.values()) {
