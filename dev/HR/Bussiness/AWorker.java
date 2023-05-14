@@ -141,11 +141,6 @@ public abstract class AWorker {
         return Password;
     }
 
-    public int getShiftworked() {
-        return WeeklyWorkingDays.size();
-    }
-    // used to add new Domain.Constraints
-
     public void ShowConstraints(){
         this.ShiftsCantWork.PrintMe();
     }

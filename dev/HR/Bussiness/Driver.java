@@ -54,13 +54,6 @@ public class Driver extends AWorker{
         return true;
     }
 
-    public void removeDay(Days dayToRemove)
-    {
-        for (Days day : WeeklyWorkingDays) {
-            if (day == dayToRemove)
-                WeeklyWorkingDays.remove(day);
-        }
-    }
 
     public boolean PrintDaysShift() {
         if(getWeeklyWorkingDays().isEmpty())
