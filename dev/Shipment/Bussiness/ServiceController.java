@@ -3,10 +3,7 @@ package Shipment.Bussiness;
 import HR.Service.ShipmentService;
 import Shipment.DataAccess.DataController;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 // todo will be singleton in the end
 public class ServiceController {
@@ -119,7 +116,7 @@ public class ServiceController {
     {
         ShipmentService shipmentService = ShipmentService.getInstance();
         List<String> driverDetails;
-        List<String> branchesNames = null;
+        List<String> branchesNames = new ArrayList<>();
         for(Shipment shipment:shipments)
         {
             if (shipment.getDriver() == null)
