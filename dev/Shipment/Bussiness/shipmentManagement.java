@@ -762,6 +762,7 @@ public class shipmentManagement {
         }
 
         vendorMap.get(source).removeIf(Order::checkIfEmpty);
+        System.out.println(vendorMap.get(source).toString());
         if (driverForShipment == null){
             shipment = new Shipment(ID, truckNumberForShipment, Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList, date);
         }
