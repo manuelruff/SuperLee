@@ -133,7 +133,7 @@ public class shipmentManagement {
      * This function creates a new driver and adds it to the system.
      */
     public Driver addDriver(List<String> list){
-        if (list == null)
+        if (list.size() == 0)
             return null;
         return new Driver(list.get(0),list.get(1), list.get(2).charAt(0), Training.valueOf(list.get(3)));
     }
