@@ -72,7 +72,6 @@ public class shipmentManagement {
 
 
 
-
     /****************************** Drivers related Methods ******************************/
 
 
@@ -554,6 +553,7 @@ public class shipmentManagement {
         }
         Order order = new Order(destination, zone, source);
         vendorMap.get(source).add(order);
+        orderMap.put(order.getID(), order);
     }
 
     public void printLastOrder(String source){
@@ -780,6 +780,7 @@ public class shipmentManagement {
             order.addItemToOrder(item);
         }
         vendorMap.get(source).add(order);
+        orderMap.put(order.getID(), order);
     }
 
 

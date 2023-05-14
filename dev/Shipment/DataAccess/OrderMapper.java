@@ -6,6 +6,8 @@ import Shipment.Bussiness.Zone;
 import resource.Connect;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,12 +99,18 @@ public class OrderMapper {
                 destination = rs.getString("Destination");
                 zone = rs.getString("Zone");
                 source = rs.getString("Source");
+                if (orderMap.containsKey(id))
+                    continue;
                 Order order = new Order(destination,Zone.valueOf(zone),source);
+                orderMap.put(id,order);
                 order.minusCount();
                 order.setID(id);
-                orderMap.put(id,order);
                 readItems(id,order);
-                orders.add(order);
+                if (vendorOrderMap.containsKey(source))
+                    vendorOrderMap.get(source).add(order);
+                else{
+                    orders.add(order);
+                }
                 deleteItems(id);
             }
         }
@@ -133,7 +141,7 @@ public class OrderMapper {
             {
                 name = rs.getString("Name");
                 storage = rs.getString("Storage");
-                amount = rs.findColumn("Amount");
+                amount = rs.getInt("Amount");
                 Item item = new Item(name,amount, Training.valueOf(storage));
                 order.addItemToOrder(item);
             }
@@ -197,11 +205,11 @@ public class OrderMapper {
     }
 
     public void readStaticSave(){
-        int rs;
+        ResultSet rs;
         try{
             java.sql.Statement stat = conn.createStatement();
-            rs = stat.executeUpdate("select * from StaticSaves WHERE Object=='" + "Order" + "'");
-            Order.setCount(rs);
+            rs = stat.executeQuery("select * from StaticSaves WHERE Object=='" + "Order" + "'");
+            Order.setCount(rs.getInt("LastID"));
         }
         catch (SQLException e) {
             System.out.println("can't read");
@@ -212,7 +220,12 @@ public class OrderMapper {
         int count = Order.getCount();
         try {
             java.sql.Statement stat = conn.createStatement();
-            stat.executeUpdate("UPDATE StaticSaves SET LastID = '"+count+"' WHERE object == 'Order'");
+            String sql = "UPDATE StaticSaves SET LastID = ? WHERE Object = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, count);
+            pstmt.setString(2, "Order");
+            pstmt.executeUpdate();
+            pstmt.close();
         } catch (SQLException e) {
             System.out.println("can't read");
         }
