@@ -118,7 +118,6 @@ public class ShipmentMapper {
         catch (SQLException e)
         {
             System.out.println("i have a problem in writing ItemDocs counter sorry");
-
         }
     }
     private List<ItemsDoc> getItemDocs(String shipmentID)
