@@ -110,7 +110,6 @@ public class ServiceController {
         Days day1=Days.values()[day];
         //check for each branch if he has a store keeper
         for(String branch:branches){
-            // todo: check this if
             if(Superim.get(branch).GetWeekShifts().GetShift(shiftnumber).IsEmptyShift())
                 continue;
             boolean noStoreKeeperFlag = Superim.get(branch).GetWeekShifts().GetShift(shiftnumber).getWorkerList().containsKey(Jobs.StoreKeeper);
@@ -156,7 +155,6 @@ public class ServiceController {
         for(Driver driver:Drivers.values()){
             if(driver.getLicense()>=licence&&driver.getAbility().ordinal()>=ability.ordinal()){
                 if(driver.checkDay(day1)){
-                    //todo check if this works
                     //we tell the driver he works in this day
                     driver.addNewDay(day1);
                     //add the driver shift to driver shifts for each branch
