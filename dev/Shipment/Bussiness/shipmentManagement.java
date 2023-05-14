@@ -765,6 +765,8 @@ public class shipmentManagement {
         else{
             shipment = new Shipment(ID, truckNumberForShipment, driverForShipment, Days.values()[dayOfWeek], vendor, branchList, itemsDocList, date);
         }
+        shipment.setShipmentStatus(Status.Available);
+        shipments.put(shipment.getID(),shipment);
         addShipmentSorted(shipment);
         return true;
 

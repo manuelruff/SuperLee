@@ -174,10 +174,11 @@ public class ShipmentMapper {
         String address,phoneNumber,contactName;
         Zone zone;
         List<String> siteDetails = shipmentService.askForSite(siteName);
-        address = siteDetails.get(0);
-        phoneNumber = siteDetails.get(1);
-        contactName = siteDetails.get(2);
-        zone = Zone.valueOf(siteDetails.get(3));
+        siteName = siteDetails.get(0);
+        address = siteDetails.get(1);
+        phoneNumber = siteDetails.get(2);
+        contactName = siteDetails.get(3);
+        zone = Zone.valueOf(siteDetails.get(4));
         return new Branch(siteName,address,phoneNumber,contactName,zone);
     }
     private List<Site> readDestinations(String shipmentID)

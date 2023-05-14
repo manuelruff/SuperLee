@@ -708,7 +708,7 @@ public class UI {
             if (week.equals("1")) {
                 System.out.println("Please choose and pick a date: ");
                 while (runningDate.isBefore(nextFriday)) {
-                    runningDate = runningDate.plusDays(1); // tue 2, wed 3, thur 4, fri 5,
+                    runningDate = runningDate.plusDays(1);
                     System.out.println((runningDate.getDayOfWeek().ordinal() + 1) + " - " + runningDate.getDayOfWeek() + ": " + runningDate);
                 }
                 choice = Integer.parseInt(scanner.nextLine());
