@@ -44,7 +44,7 @@ public class shipmentManagement {
         availableShipments = dataController.getAvailableShipmentsIntoList();
         availableShipments.sort(Comparator.comparing(Shipment::getDate));
         orderMap = dataController.getOrderMap();
-        loadAllSites();
+        loadAll();
     }
     public static shipmentManagement getInstance() {
         if (instance == null) {
@@ -399,9 +399,10 @@ public class shipmentManagement {
         }
     }
 
-    public void loadAllSites(){
+    private void loadAll(){
         addBranch(shipmentService.getAllSites());
         dataController.loadSaves();
+        dataController.loadAllAvailableShipments();
     }
     /**
      * This function creates a new vendor and adds it to the system.
@@ -1079,13 +1080,6 @@ public class shipmentManagement {
             addItemToOrder("Strauss", "doritos", 100, 0);
             addItemToOrder("Strauss", "chips", 60, 0);
             addItemToOrder("Strauss", "milki", 100, 1);
-        }
-
-        public void loadAll(){
-            loadDrivers();
-            loadTrucks();
-            loadSites();
-            LoadOrder();
         }
 
     public boolean checkAvailableShipment() {

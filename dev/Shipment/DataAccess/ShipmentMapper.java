@@ -233,7 +233,7 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry5");
         }
     }
     public void getAvailableShipments()

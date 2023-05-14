@@ -62,13 +62,15 @@ public class DataController {
     /**************************************** Shipment Related Methods ****************************************/
 
     public Map<String, Shipment> getShipmentsMap(){return shipmentMapper.getShipmentsMap();}
-    public Map<String,Shipment> getAvailableShipments(){return shipmentMapper.getAvailableShipmentsMap();}
+    private Map<String,Shipment> getAvailableShipments(){return shipmentMapper.getAvailableShipmentsMap();}
     public void loadAllShipments(){shipmentMapper.getShipments();}
     public Shipment getShipment(String shipmentID){return shipmentMapper.getShipment(shipmentID);}
 
     public List<Shipment> getAvailableShipmentsIntoList() {
         return new ArrayList<>(getAvailableShipments().values());
     }
+    public void loadAllAvailableShipments() {shipmentMapper.getAvailableShipments();}
+
 
 
 
