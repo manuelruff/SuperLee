@@ -47,12 +47,13 @@ public class ServiceController {
                     if(site.getName().equals(siteName))
                     {
                         shipment.printShipment();
-                        return;
+                        break;
                     }
                 }
 
             }
         }
+        System.out.println("there is no shipments in this day: " + day + " for this site: " + siteName);
     }
 
     /**
@@ -87,7 +88,7 @@ public class ServiceController {
      * @param siteName a branch name
      * @return yes if found, false otherwise
      */
-    public  boolean checkShipment(Days day, String siteName)
+    public boolean checkShipment(Days day, String siteName)
     {
         for(Shipment shipment : shipments)
         {

@@ -217,11 +217,27 @@ public class StartData {
             stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1000, 'D', 'Freezer')");
             stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1001, 'D', 'Freezer')");
             stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1002, 'D', 'Cooling')");
-            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1003, 'D', 'Regular')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1003, 'C', 'Regular')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1004, 'C', 'Freezer')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1005, 'D', 'Freezer')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1006, 'C', 'Cooling')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1007, 'D', 'Regular')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1008, 'C', 'Freezer')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1009, 'C', 'Freezer')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1010, 'D', 'Cooling')");
+            stmt.executeUpdate("INSERT INTO DriverInfo(DriverID, Licence, Training) VALUES (1011, 'D', 'Regular')");
             stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1000,'ron',1,'2000-04-20','asd',123,0,130,0)");
             stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1001,'yanos',1,'2000-04-20','asd',123,0,130,0)");
             stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1002,'roi',1,'2000-04-20','asd',123,0,130,0)");
             stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1003,'ohayon',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1004,'ron',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1005,'yanos',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1006,'roi',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1007,'ohayon',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1008,'ron',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1009,'yanos',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1010,'roi',1,'2000-04-20','asd',123,0,130,0)");
+            stmt.executeUpdate("INSERT INTO Worker(id, name, bank, startdate, contract, password, bonus, wage, shiftworked)" + " VALUES (1011,'ohayon',1,'2000-04-20','asd',123,0,130,0)");
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");

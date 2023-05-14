@@ -6,6 +6,7 @@ import Shipment.DataAccess.DataController;
 import Shipment.DataAccess.ShipmentMapper;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 
@@ -524,7 +525,7 @@ public class shipmentManagement {
                     order = vendorMap.get(source).get(vendorMap.get(source).size() - 1);
                     order.addItemToOrder(item);
                 }
-                shipment.getDocs().remove(doc);
+                shipment.deleteItemDoc(doc);
                 shipment.removeSite(siteToRemove);
                 shipmentService.getUpdateForSite(siteToRemove.getName(), shipment.getDayOfTheWeek().ordinal());
                 shipment.setShipmentStatus(Status.SiteChange);
@@ -560,8 +561,8 @@ public class shipmentManagement {
         vendorMap.get(source).get(vendorMap.get(source).size() - 1).printOrder();
     }
 
-    //todo LoadALlOrders
     public void printOrders() {
+        dataController.loadAllVendors();
         dataController.loadAllOrders();
         for (Map.Entry<String, List<Order>> entry : vendorMap.entrySet()){
             System.out.println("********** " + entry.getKey() + " **********");
@@ -713,8 +714,10 @@ public class shipmentManagement {
 
         // in case there is only one order from the specific vendor
         if (vendorMap.get(source).size() == 1) {
-            if (firstOrder.checkIfEmpty())
+            if (firstOrder.checkIfEmpty()) {
                 vendorMap.get(source).remove(firstOrder);
+                orderMap.remove(firstOrder.getID());
+            }
         }
         else {
             boolean skip = true;
@@ -733,6 +736,8 @@ public class shipmentManagement {
                         if (Objects.equals(order.getDestination(), itemD.getSiteName())) {
                             itemD.addListOfItems(order.getItemsForShipping(trainToSearchBy));
                             // checking if the order is empty, to delete.
+                            if (order.checkIfEmpty())
+                                orderMap.remove(order.getID());
                             found = true;
                             break;
                         }
@@ -750,6 +755,7 @@ public class shipmentManagement {
                 }
             }
         }
+        vendorMap.get(source).removeIf(Order::checkIfEmpty);
         if (shipmentService.checkWeekly(destinations, date)) {
             driverForShipment = addDriver(shipmentService.askForDriver(licence, truck.getStorageType().ordinal(), dayOfWeek, destinations));
             if (driverForShipment == null) {
@@ -760,13 +766,11 @@ public class shipmentManagement {
                 return false;
             }
         }
-
-        vendorMap.get(source).removeIf(Order::checkIfEmpty);
         if (driverForShipment == null){
-            shipment = new Shipment(ID, truckNumberForShipment, Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList, date);
+            shipment = new Shipment(ID, truckNumberForShipment, Days.values()[dayOfWeek], vendor, branchList, itemsDocList, date);
         }
         else{
-            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment, Days.values()[dayOfWeek - 1], vendor, branchList, itemsDocList, date);
+            shipment = new Shipment(ID, truckNumberForShipment, driverForShipment, Days.values()[dayOfWeek], vendor, branchList, itemsDocList, date);
         }
         addShipmentSorted(shipment);
         return true;
@@ -782,40 +786,6 @@ public class shipmentManagement {
         vendorMap.get(source).add(order);
         orderMap.put(order.getID(), order);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //    /**
 //     * This function executes the shipment with the closest date.
@@ -1162,18 +1132,19 @@ public class shipmentManagement {
                    item.setQuantity(item.getQuantity() - amount);
                    System.out.println("The amount of the item was reduced to " + item.getQuantity());
                 }
-                shipments.get(0).setShipmentStatus(Status.ItemsChange);
+                availableShipments.get(0).setShipmentStatus(Status.ItemsChange);
                 return true;
             }
         }
         return false;
     }
 
-    public void updateShipment() {
+    public void updateShipment(LocalTime time) {
         Shipment shipment = availableShipments.get(0);
         availableShipments.remove(shipment);
         shipments.put(shipment.getID(), shipment);
         shipment.setShipmentStatus(Status.NoChanges);
+        shipment.setDepartureTime(time);
     }
 
     public List<Shipment> getAvailableShipment() {

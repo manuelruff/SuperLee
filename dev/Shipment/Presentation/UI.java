@@ -793,6 +793,7 @@ public class UI {
     }
 
     public static void executeShipment(){
+        int save;
         if (sManagement.checkAvailableShipment()){
             System.out.println("There are no available shipments");
             return;
@@ -857,10 +858,10 @@ public class UI {
             }
             while (true){
                 try{
-                    int save = currWeight;
+                    save = currWeight;
                     System.out.println("Please enter the weight of the truck with the items (in KG): ");
                     currWeight = Integer.parseInt(scanner.nextLine());
-                    if (save > currWeight) {
+                    if (save < currWeight) {
                         System.out.println("Please input the lower number then the last weight");
                         currWeight = save;
                         continue;
@@ -874,7 +875,7 @@ public class UI {
             }
         }
         System.out.println("The Items Were delivered to their destinations");
-        sManagement.updateShipment();
+        sManagement.updateShipment(time);
     }
     private static void itemsToDelete(){
         int amount;

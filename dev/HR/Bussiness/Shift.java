@@ -137,7 +137,9 @@ public class Shift {
                     for (Worker worker: WorkerList.get(job)){
                         worker.Printme();
                     }
+                    System.out.println();
                 }
+
             }
         }
     }
