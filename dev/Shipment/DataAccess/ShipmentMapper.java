@@ -241,11 +241,13 @@ public class ShipmentMapper {
         String id,TruckNumber,DriverID,Source,Time,status;
         Days day;
         LocalDate date;
+
         try{
             java.sql.Statement stat = conn.createStatement();
             java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM Shipments");
             while (rs.next())
             {
+                Shipment shipment;
                 id = rs.getString("ID");
                 TruckNumber = rs.getString("TruckNumber");
                 DriverID = rs.getString("DriverID");
@@ -255,7 +257,9 @@ public class ShipmentMapper {
                 status = rs.getString("Status");
                 date = LocalDate.parse(rs.getString("Date"));
                 if(Objects.equals(status, "Available")) {
-                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id),date);
+                    if (Objects.equals(DriverID, "null"))
+                         shipment = new Shipment(id, TruckNumber , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id),date);
+                    else{shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id),date);}
                     if (!Objects.equals(Time, "null"))
                         shipment.setDepartureTime(LocalTime.parse(Time));
                     shipment.setShipmentStatus(Status.valueOf(status));
@@ -289,7 +293,9 @@ public class ShipmentMapper {
             id = shipment.getID();
             truckNumber = shipment.getTruckNumber();
             day = shipment.getDayOfTheWeek().toString();
-            driverID = shipment.getDriver().getID();
+            if (shipment.getDriver() != null)
+                driverID = shipment.getDriver().getID();
+            else{driverID = null;}
             source = shipment.getSource().getName();
             status = shipment.getShipmentStatus().toString();
             date = shipment.getDate().toString();
