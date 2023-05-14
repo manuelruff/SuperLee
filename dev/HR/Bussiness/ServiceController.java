@@ -77,12 +77,14 @@ public class ServiceController {
     public boolean checkStoreKeeper(List<String> branches,int day){
 
         int shifttime = day*2;
+        // if we dont have this shift return false
+        for(String branch:branches){
+            if(Superim.get(branch).GetWeekShifts().GetShift(shifttime).IsEmptyShift()||Superim.get(branch).GetWeekShifts().GetShift(shifttime+1).IsEmptyShift())
+                return false;
+        }
         // get all the branches that have can a store keeper-
         List<String>addedStoreKeeper1=CanAddStoreKeeper(branches,day,shifttime,0);
         List<String>addedStoreKeeper2=CanAddStoreKeeper(branches,day,shifttime+1,1);
-        // if we dont have this shift return false
-        if(addedStoreKeeper1.size() == 0 || addedStoreKeeper2.size() == 0)
-            return false;
         // flag to check if all the branches have a store keeper
         boolean checkadded1 = checkAllBranchesStoreKeeper(addedStoreKeeper1,shifttime);
         boolean checkadded2 = checkAllBranchesStoreKeeper(addedStoreKeeper2,shifttime+1);
