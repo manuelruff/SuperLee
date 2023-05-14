@@ -5,7 +5,6 @@ import Shipment.DataAccess.DataController;
 
 import java.util.*;
 
-// todo will be singleton in the end
 public class ServiceController {
     private static  ServiceController instance;
     private DataController dataController;

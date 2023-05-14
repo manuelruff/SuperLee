@@ -1072,7 +1072,7 @@ public class shipmentManagement {
         assert itmDoc != null;
         for(Item item : itmDoc.getItemList()){
             if (Objects.equals(item.getName(), itemName)){
-                if (item.getQuantity() >= amount){
+                if (item.getQuantity() <= amount){
                     itmDoc.deleteItem(item);
                     System.out.println("This item was deleted: ");
                     item.printItem();
