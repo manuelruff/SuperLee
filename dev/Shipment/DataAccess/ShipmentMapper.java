@@ -107,7 +107,7 @@ public class ShipmentMapper {
             {
                 name = rs.getString("Name");
                 storage = rs.getString("Storage");
-                amount = rs.findColumn("Amount");
+                amount = rs.getInt("Amount");
                 Item item = new Item(name,amount, Training.valueOf(storage));
                 itemsDoc.addItemToDoc(item);
             }
@@ -301,7 +301,7 @@ public class ShipmentMapper {
             date = shipment.getDate().toString();
             if(!Objects.equals(status, "available") && shipment.getDepartureTime() != null)// check how to enter time
                 time = shipment.getDepartureTime().toString();
-            java.sql.ResultSet rs = stat.executeQuery("select * from Shipments WHERE ID == '"+id+"'");
+            java.sql.ResultSet rs = stat.executeQuery("select * from Shipments WHERE ID='"+id+"'");
             if (!rs.next())
             {
                 stat.executeUpdate("INSERT INTO Shipments(ID, TruckNumber, DriverID,Day,Source,Time,Status,Date) " +
@@ -371,14 +371,65 @@ public class ShipmentMapper {
     {
         try {
             Statement stat = conn.createStatement();
+            deleteItemDocs(ID);
             stat.executeUpdate("DELETE FROM Shipments WHERE ID == '"+ID+"'");
             stat.executeUpdate("DELETE FROM ShipmentBranches WHERE ShipmentID == '"+ID+"'");
+            //todo all adds of shipments
         }
         catch (SQLException e)
         {
             System.out.println("i have a problem sorry12");
         }
 
+    }
+
+    public void deleteItemDocs(String shipmentID)
+    {
+        try
+        {
+            Statement stat = conn.createStatement();
+            java.sql.ResultSet rs= stat.executeQuery("SELECT * FROM ItemDocs WHERE ShipmentID= '"+shipmentID+"'");
+            while (rs.next())
+            {
+                String docID = rs.getString("DocID");
+                deleteItemsForDocs(docID);
+                stat.executeUpdate("DELETE FROM ItemDocs WHERE DocID == '"+docID+"'");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void deleteItemDoc(String shipmentID,String destination)
+    {
+        try
+        {
+            Statement stat = conn.createStatement();
+            java.sql.ResultSet rs= stat.executeQuery("SELECT * FROM ItemDocs WHERE ShipmentID= '"+shipmentID+"'");
+            while (rs.next()) {
+                String des = rs.getString("SiteName");
+                if (des.equals(destination))
+                {
+                    String docID = rs.getString("DocID");
+                    deleteItemsForDocs(docID);
+                    stat.executeUpdate("DELETE FROM ItemDocs WHERE ShipmentID== '" + shipmentID+ "'");
+                    stat.executeUpdate("DELETE FROM ItemsForDocs WHERE DocID== '" + docID + "'");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteItemsForDocs(String docID)
+    {
+        try
+        {
+            Statement stat = conn.createStatement();
+            stat.executeUpdate("DELETE FROM ItemsForDocs WHERE DocID == '"+docID+"'");
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

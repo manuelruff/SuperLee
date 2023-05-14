@@ -732,7 +732,7 @@ public class shipmentManagement {
 
     }
 
-    private void turnItemDocIntoOrder(ItemsDoc itemsDoc, String source){
+    public void turnItemDocIntoOrder(ItemsDoc itemsDoc, String source){
         Branch branch = ((Branch)getSite(itemsDoc.getSiteName()));
         Order order = new Order(itemsDoc.getSiteName(), branch.getZone(), source);
         for (Item item : itemsDoc.getItemList()){
@@ -1095,6 +1095,7 @@ public class shipmentManagement {
         if (shipment.getShipmentStatus() == Status.Available)
             shipment.setShipmentStatus(Status.NoChanges);
         shipment.setDepartureTime(time);
+        shipmentService.askRemoveDayForDriver(shipment.getID(), shipment.getDayOfTheWeek().ordinal());
     }
 
     public List<Shipment> getAvailableShipment() {
