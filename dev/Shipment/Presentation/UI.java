@@ -57,7 +57,7 @@ public class UI {
                         System.out.println("Site Menu:");
                         System.out.println("1 - Add Vendor");
                         System.out.println("2 - Remove Vendor");
-                        System.out.println("3 - Print All Sites (vendors and branches");
+                        System.out.println("3 - Print All Sites (vendors and branches)");
                         System.out.println("4 - Update site info");
                         System.out.println("5 - Exit");
                         int ch = 0;
