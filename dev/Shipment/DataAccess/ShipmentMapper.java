@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class ShipmentMapper {
@@ -55,11 +56,38 @@ public class ShipmentMapper {
 
     }
 
+    private void readShipment(String shipmentID) {
+        String id, truckNumber, driverID, source, time, status;
+        Days day;
+        LocalDate date;
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM Shipments WHERE ID=='"+shipmentID+"'" );
+            if (rs.next()) {
+                id = rs.getString("ID");
+                truckNumber = rs.getString("TruckNumber");
+                driverID = rs.getString("DriverID");
+                source = rs.getString("Source");
+                time = rs.getString("Time");
+                day = Days.valueOf(rs.getString("Day"));
+                date = LocalDate.parse(rs.getString("Date"));
+                status = rs.getString("Status");
+                Shipment shipment = new Shipment(id, truckNumber,GetDriver(shipmentService.askForDriver(driverID)), day, vendorMapper.getVendor(source), readDestinations(id),getItemDocs(id),date);
+                shipment.setDepartureTime(LocalTime.parse(time));
+                shipment.setShipmentStatus(Status.valueOf(status));
+                shipmentsMap.put(id,shipment);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private Driver GetDriver(List<String> driverDetails)
     {
-        String name,id,licence,ability,workingDays;
-        name = driverDetails.get(0);
-        id = driverDetails.get(1);
+        String name,id,licence,ability;
+        name = driverDetails.get(1);
+        id = driverDetails.get(0);
         licence = driverDetails.get(2);
         ability = driverDetails.get(3);
         Driver driver = new Driver(id,name,licence.charAt(0), Training.valueOf(ability));
@@ -68,17 +96,13 @@ public class ShipmentMapper {
         return driver;
     }
 
-    //todo roee do it
-    public Shipment readShipment(String shipmentID){
-        return null;
-    }
     private void readItems(ItemsDoc itemsDoc)
     {
         String name,storage;
         int amount;
         try {
             java.sql.Statement stat = conn.createStatement();
-            java.sql.ResultSet rs = stat.executeQuery("select * from Orders WHERE ID=='"+itemsDoc.getID()+"'" );
+            java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM ItemsForDocs WHERE DocID='"+itemsDoc.getID()+"'" );
             while (rs.next())
             {
                 name = rs.getString("Name");
@@ -90,7 +114,7 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry1");
 
         }
     }
@@ -104,7 +128,7 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem in setting ItemDocs counter sorry");
+            System.out.println("i have a problem in setting ItemDocs counter sorry2");
 
         }
     }
@@ -117,7 +141,7 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem in writing ItemDocs counter sorry");
+            System.out.println("i have a problem in writing ItemDocs counter sorry3");
         }
     }
     private List<ItemsDoc> getItemDocs(String shipmentID)
@@ -130,8 +154,8 @@ public class ShipmentMapper {
             java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM ItemDocs WHERE ShipmentID == '"+shipmentID+"' ");
             while (rs.next())
             {
-                name = rs.getString("Name");
-                id = rs.getString("ID");
+                name = rs.getString("SiteName");
+                id = rs.getString("DocID");
                 ItemsDoc itemsDoc = new ItemsDoc(name);
                 itemsDoc.fixCounter();
                 itemsDoc.setID(id);
@@ -141,7 +165,7 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry4");
         }
         return itemsDocs;
     }
@@ -150,16 +174,17 @@ public class ShipmentMapper {
         String address,phoneNumber,contactName;
         Zone zone;
         List<String> siteDetails = shipmentService.askForSite(siteName);
-        address = siteDetails.get(0);
-        phoneNumber = siteDetails.get(1);
-        contactName = siteDetails.get(2);
-        zone = Zone.valueOf(siteDetails.get(3));
+        siteName = siteDetails.get(0);
+        address = siteDetails.get(1);
+        phoneNumber = siteDetails.get(2);
+        contactName = siteDetails.get(3);
+        zone = Zone.valueOf(siteDetails.get(4));
         return new Branch(siteName,address,phoneNumber,contactName,zone);
     }
     private List<Site> readDestinations(String shipmentID)
     {
         String name;
-        List<Site> destinations=null;
+        List<Site> destinations= new ArrayList<>();
         try
         {
             java.sql.Statement stat = conn.createStatement();
@@ -173,17 +198,16 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry5");
         }
         return destinations;
     }
 
     public void getShipments()
     {
-        String id,TruckNumber,DriverID,Source,Time,Status;
+        String id,TruckNumber,DriverID,Source,Time,status;
         Days day;
         LocalDate date;
-        List<Shipment> shipments = null;
         try{
             java.sql.Statement stat = conn.createStatement();
             java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM Shipments");
@@ -196,10 +220,11 @@ public class ShipmentMapper {
                 Time = rs.getString("Time");
                 day = Days.valueOf(rs.getString("Day"));
                 date = LocalDate.parse(rs.getString("Date"));
-                Status = rs.getString("Status");
-                if(Status != "Available") {
-                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source), readDestinations(id),getItemDocs(id),date);
-                    //shipment.setDepartureTime(Time);//todo: set time
+                status = rs.getString("Status");
+                if(!Objects.equals(status, "Available")) {
+                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)), day, vendorMapper.getVendor(Source), readDestinations(id),getItemDocs(id),date);
+                    shipment.setDepartureTime(LocalTime.parse(Time));
+                    shipment.setShipmentStatus(Status.valueOf(status));
                     shipmentsMap.put(id,shipment);
                 }
 
@@ -208,33 +233,38 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry6");
         }
     }
-    public List<Shipment> getAvailableShipments()
+    public void getAvailableShipments()
     {
-        String id,TruckNumber,DriverID,Source,Time,Status;
+        String id,TruckNumber,DriverID,Source,Time,status;
         Days day;
         LocalDate date;
-        List<Shipment> availableShipments = null;
+
         try{
             java.sql.Statement stat = conn.createStatement();
             java.sql.ResultSet rs = stat.executeQuery("SELECT * FROM Shipments");
             while (rs.next())
             {
+                Shipment shipment;
                 id = rs.getString("ID");
                 TruckNumber = rs.getString("TruckNumber");
                 DriverID = rs.getString("DriverID");
                 Source = rs.getString("Source");
                 Time = rs.getString("Time");
                 day = Days.valueOf(rs.getString("Day"));
-                Status = rs.getString("Status");
+                status = rs.getString("Status");
                 date = LocalDate.parse(rs.getString("Date"));
-                if(Objects.equals(Status, "Available")) {
-                    Shipment shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id),date);
-                    //shipment.setDepartureTime(Time);//todo: set time
-                    availableShipments.add(shipment);
+                if(Objects.equals(status, "Available")) {
+                    if (Objects.equals(DriverID, "null"))
+                         shipment = new Shipment(id, TruckNumber , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id),date);
+                    else{shipment = new Shipment(id, TruckNumber,GetDriver(shipmentService.askForDriver(DriverID)) , day, vendorMapper.getVendor(Source),readDestinations(id),getItemDocs(id),date);}
+                    if (!Objects.equals(Time, "null"))
+                        shipment.setDepartureTime(LocalTime.parse(Time));
+                    shipment.setShipmentStatus(Status.valueOf(status));
                     availableShipmentsMap.put(id,shipment);
+                    shipmentsMap.put(id, shipment);
                 }
 
             }
@@ -242,9 +272,8 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry");
+            System.out.println("i have a problem sorry7");
         }
-        return availableShipments;
     }
 
     public void writeAllShipments()
@@ -264,7 +293,9 @@ public class ShipmentMapper {
             id = shipment.getID();
             truckNumber = shipment.getTruckNumber();
             day = shipment.getDayOfTheWeek().toString();
-            driverID = shipment.getDriver().getID();
+            if (shipment.getDriver() != null)
+                driverID = shipment.getDriver().getID();
+            else{driverID = null;}
             source = shipment.getSource().getName();
             status = shipment.getShipmentStatus().toString();
             date = shipment.getDate().toString();
@@ -283,7 +314,7 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry1");
+            System.out.println("i have a problem sorry8");
         }
         writeItemDocs(shipment);
         writeDestinations(shipment);
@@ -301,7 +332,7 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry2");
+            System.out.println("i have a problem sorry9");
         }
     }
     private void writeItemDocs(Shipment shipment)
@@ -318,7 +349,7 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry3");
+            System.out.println("i have a problem sorry10");
         }
     }
     private void writeItemsForDocs(ItemsDoc itemsDoc)
@@ -333,7 +364,7 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry4");
+            System.out.println("i have a problem sorry11");
         }
     }
     public void deleteShipments()
@@ -345,7 +376,7 @@ public class ShipmentMapper {
         }
         catch (SQLException e)
         {
-            System.out.println("i have a problem sorry4");
+            System.out.println("i have a problem sorry12");
         }
 
     }

@@ -41,10 +41,10 @@ public class shipmentManagement {
         shipmentManagerPassword = dataController.getShipmentManagerPassword();
         shipments = dataController.getShipmentsMap();
         availableShipments = new ArrayList<>();
+        orderMap = dataController.getOrderMap();
+        loadAll();
         availableShipments = dataController.getAvailableShipmentsIntoList();
         availableShipments.sort(Comparator.comparing(Shipment::getDate));
-        orderMap = dataController.getOrderMap();
-        loadAllSites();
     }
     public static shipmentManagement getInstance() {
         if (instance == null) {
@@ -98,18 +98,14 @@ public class shipmentManagement {
      * @param licence char, licence type.(C/D)
      */
     public void updateDriverLicence(String ID, char licence){
-        for (Driver driver : drivers){
-            if (ID.equals(driver.getID())){
-                if (driver.getLicense() < licence) {
-                    driver.setLicense(licence);
-                    System.out.println("This driver licence has been upgraded to " + licence);
-                }
-                else {
-                    System.out.println("This driver licence is " + driver.getLicense() + " which is already higher then " + licence);
-                }
-                return;
-            }
+        List<String> info = shipmentService.askForDriver(ID);
+        if (info.size() == 0) {
+            System.out.println("Driver ID doesn't exist");
+            return;
         }
+        Training training = Training.valueOf(info.get(3));
+        shipmentService.getUpdateForDriver(ID, licence, training.ordinal());
+        System.out.println("Licence was changed");
     }
 
     /**
@@ -118,22 +114,20 @@ public class shipmentManagement {
      * @param training int, will indicate the Training Enum.
      */
     public void updateDriverTraining(String ID, int training) {
-        for (Driver driver : drivers) {
-            if (ID.equals(driver.getID())) {
-                if (driver.getAbility().ordinal() < training){
-                    driver.setAbility(Training.values()[training]);
-                    System.out.println("This driver training has been upgraded to " + driver.getAbility().toString());
-                }
-                else{System.out.println("This driver training is " + driver.getLicense() + " which is already higher then " + Training.values()[training]);}
-                return;
-            }
+        List<String> info = shipmentService.askForDriver(ID);
+        if (info.size() == 0) {
+            System.out.println("Driver ID doesn't exist");
+            return;
         }
+        char licence = info.get(2).charAt(0);
+        shipmentService.getUpdateForDriver(ID, licence, training);
+        System.out.println("Training was changed");
     }
     /**
      * This function creates a new driver and adds it to the system.
      */
     public Driver addDriver(List<String> list){
-        if (list == null)
+        if (list == null || list.size() == 0)
             return null;
         return new Driver(list.get(0),list.get(1), list.get(2).charAt(0), Training.valueOf(list.get(3)));
     }
@@ -204,6 +198,8 @@ public class shipmentManagement {
      */
     private Driver changeDriver(Driver oldDriver, Truck truck, Days day)
     {
+        Shipment shipment = availableShipments.get(0);
+        List<String> siteNames = new ArrayList<>();
         if(oldDriver.getAbility().ordinal() >= truck.getStorageType().ordinal())
         {
             if(oldDriver.getLicense() == 'D')
@@ -212,26 +208,17 @@ public class shipmentManagement {
                 return oldDriver;
             }
         }
-        else
-        {
-            for (Driver driver1 : drivers)
-            {
-                if(oldDriver.checkDay(day)) {
-                    if (driver1.getAbility().ordinal() >= truck.getStorageType().ordinal()) {
-                        if (driver1.getLicense() == 'D') {
-                            driver1.addNewDay(day);
-                            oldDriver.removeDay(day);
-                            return driver1;
-                        } else if (oldDriver.getLicense() == 'C' && truck.getTotalWeight() <= 12000) {
-                            driver1.addNewDay(day);
-                            oldDriver.removeDay(day);
-                            return driver1;
-                        }
-                    }
-                }
-            }
+        for(Site site : shipment.getDestinations()){
+            siteNames.add(site.getName());
         }
-        return null;
+        Driver driver = addDriver(shipmentService.askForDriver(truck.getLicenceType(), truck.getStorageType().ordinal(), day.ordinal(),siteNames));
+        if (driver != null) {
+            System.out.println("Driver changed to: " + driver.getID() + " " + driver.getName());
+        }
+        else{
+            System.out.println("No driver found");
+        }
+        return driver;
     }
 
 
@@ -354,7 +341,9 @@ public class shipmentManagement {
                             shipment.setTruckNumber(truck.getTruckNumber());
                             truck.addNewDay(shipment.getDayOfTheWeek());
                             currentTruck.removeDay(shipment.getDayOfTheWeek());
-                            System.out.println("Truck Changed");
+                            System.out.println("Truck Changed to: ");
+                            truck.printTruck();
+                            shipment.setShipmentStatus(Status.TruckExchange);
                             return;
                         }
                     }
@@ -362,6 +351,7 @@ public class shipmentManagement {
 
             }
         }
+        System.out.println("couldn't switch truck for this shipment at this moment");
     }
 
 
@@ -403,9 +393,10 @@ public class shipmentManagement {
         }
     }
 
-    public void loadAllSites(){
+    private void loadAll(){
         addBranch(shipmentService.getAllSites());
         dataController.loadSaves();
+        dataController.loadAllAvailableShipments();
     }
     /**
      * This function creates a new vendor and adds it to the system.
@@ -618,7 +609,7 @@ public class shipmentManagement {
             System.out.println("There isn't any shipments!");
             return;
         }
-        System.out.println("******************** SHIPMENTS ********************");
+        System.out.println("******************** AVAILABLE SHIPMENTS ********************");
         for ( Shipment shipment : availableShipments){
             shipment.printShipment();
         }
@@ -769,6 +760,8 @@ public class shipmentManagement {
         else{
             shipment = new Shipment(ID, truckNumberForShipment, driverForShipment, Days.values()[dayOfWeek], vendor, branchList, itemsDocList, date);
         }
+        shipment.setShipmentStatus(Status.Available);
+        shipments.put(shipment.getID(),shipment);
         addShipmentSorted(shipment);
         return true;
 
@@ -1083,13 +1076,6 @@ public class shipmentManagement {
             addItemToOrder("Strauss", "milki", 100, 1);
         }
 
-        public void loadAll(){
-            loadDrivers();
-            loadTrucks();
-            loadSites();
-            LoadOrder();
-        }
-
     public boolean checkAvailableShipment() {
         return availableShipments.isEmpty();
     }
@@ -1140,7 +1126,8 @@ public class shipmentManagement {
         Shipment shipment = availableShipments.get(0);
         availableShipments.remove(shipment);
         shipments.put(shipment.getID(), shipment);
-        shipment.setShipmentStatus(Status.NoChanges);
+        if (shipment.getShipmentStatus() == Status.Available)
+            shipment.setShipmentStatus(Status.NoChanges);
         shipment.setDepartureTime(time);
     }
 

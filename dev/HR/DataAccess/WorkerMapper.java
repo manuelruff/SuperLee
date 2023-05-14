@@ -228,7 +228,7 @@ public class WorkerMapper {
                 id=rs.getString("DriverID");
                 l=rs.getString("Licence");
                 a=rs.getString("Training");
-                if(l.compareTo(String.valueOf(licence))<=0 && a.compareTo(ability.toString())<=0) {
+                if(l.compareTo(String.valueOf(licence))>=0 && a.compareTo(ability.toString())>=0) {
                     //if i had him in database already i wont do it again
                     getDriver(id);
                 }

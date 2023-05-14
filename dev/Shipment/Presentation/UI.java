@@ -57,7 +57,7 @@ public class UI {
                         System.out.println("Site Menu:");
                         System.out.println("1 - Add Vendor");
                         System.out.println("2 - Remove Vendor");
-                        System.out.println("3 - Print All Sites (vendors and branches");
+                        System.out.println("3 - Print All Sites (vendors and branches)");
                         System.out.println("4 - Update site info");
                         System.out.println("5 - Exit");
                         int ch = 0;
@@ -247,7 +247,6 @@ public class UI {
         String driverID=null;
         while (check3) {
             while (check31)
-
             {
                 System.out.println("Please enter drivers ID:");
                 driverID = scanner.nextLine();
@@ -256,32 +255,27 @@ public class UI {
                 else
                     System.out.println("Please enter numbers only");
             }
-            check3 = sManagement.checkID(driverID);
-            if (!check3)
-                System.out.println("Driver does not exist in the system");
-            else
+
+            char driverLicence = '0';
+            while(check3)
             {
-                char driverLicence = '0';
-                while(check3)
-                {
-                    System.out.println("""
-                    Please enter licence type :
-                    C - for trucks under 12 ton
-                    D - for above 12 ton""");
-                    driverLicence = scanner.nextLine().charAt(0);
-                    if(driverLicence == 'C' || driverLicence == 'c')
-                        System.out.println("All drivers have at least C licence(cannot upgrade licence to C type) ");
-                    else if( driverLicence == 'd' || driverLicence == 'D') {
-                        check3 = false;
-                        driverLicence = Character.toUpperCase(driverLicence);
-                        sManagement.updateDriverLicence(driverID,driverLicence);
-                    }
-                    else
-                        System.out.println("Invalid input");
+                System.out.println("""
+                Please enter licence type :
+                C - for trucks under 12 ton
+                D - for above 12 ton""");
+                driverLicence = scanner.nextLine().charAt(0);
+                if(driverLicence == 'C' || driverLicence == 'c')
+                    System.out.println("All drivers have at least C licence(cannot upgrade licence to C type) ");
+                else if( driverLicence == 'd' || driverLicence == 'D') {
+                    check3 = false;
+                    driverLicence = Character.toUpperCase(driverLicence);
+                    sManagement.updateDriverLicence(driverID,driverLicence);
+                }
+                else
+                    System.out.println("Invalid input");
                 }
             }
         }
-    }
 
     public static void updateDriverTraining()
     {
@@ -298,34 +292,29 @@ public class UI {
                 else
                     System.out.println("Please enter numbers only");
             }
-            check3 = sManagement.checkID(driverID);
-            if (!check3)
-                System.out.println("Driver does not exist in the system");
-            else
+            char driverLicence = '0';
+            while(check3)
             {
-                char driverLicence = '0';
-                while(check3)
-                {
-                    System.out.println("""
-                        Please enter driver storage capabilities training:
-                        0 - Regular
-                        1 - Cooling
-                        2 - Freezer""");
-                    training = scanner.nextInt();
-                    if(training == 0)
-                        System.out.println("All drivers have at least regular training(cannot upgrade training to regular) ");
-                    else if( training == 1 || training == 2) {
-                        check3 = false;
-                        driverLicence = Character.toUpperCase(driverLicence);
-                        sManagement.updateDriverTraining(driverID,training);
-                    }
-                    else
-                        System.out.println("Invalid input");
+                System.out.println("""
+                    Please enter driver storage capabilities training:
+                    0 - Regular
+                    1 - Cooling
+                    2 - Freezer""");
+                training = scanner.nextInt();
+                if(training == 0)
+                    System.out.println("All drivers have at least regular training(cannot upgrade training to regular) ");
+                else if( training == 1 || training == 2) {
+                    check3 = false;
+                    driverLicence = Character.toUpperCase(driverLicence);
+                    sManagement.updateDriverTraining(driverID,training);
                 }
+                else
+                    System.out.println("Invalid input");
             }
         }
         scanner.nextLine();
-    }
+        }
+
     /**
      * this function gets input from the user about a new site he wants to add
      * and adds the new site to the system
@@ -708,7 +697,7 @@ public class UI {
             if (week.equals("1")) {
                 System.out.println("Please choose and pick a date: ");
                 while (runningDate.isBefore(nextFriday)) {
-                    runningDate = runningDate.plusDays(1); // tue 2, wed 3, thur 4, fri 5,
+                    runningDate = runningDate.plusDays(1);
                     System.out.println((runningDate.getDayOfWeek().ordinal() + 1) + " - " + runningDate.getDayOfWeek() + ": " + runningDate);
                 }
                 choice = Integer.parseInt(scanner.nextLine());
