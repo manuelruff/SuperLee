@@ -1,24 +1,24 @@
-import HR.Bussiness.Shift;
-import HR.Bussiness.ShiftTime;
-import HR.Bussiness.Weekly;
+import HR.Bussiness.*;
 import org.junit.jupiter.api.Test;
-
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class WeeklyTest {
+
+
     @Test
     public void addShift() {
         Weekly week=new Weekly();
         assertNotNull(week);
-        Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Worker manager = new Worker( "1","manu" , 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
+        Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         week.AddShift(shift);
-        Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         week.AddShift(shift1);
-        Shift shift2=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift2=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         week.AddShift(shift2);
-        Shift shift3=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift3=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         week.AddShift(shift3);
         assertNotNull(week.GetShift(0));
         assertNotNull(week.GetShift(1));
@@ -27,21 +27,24 @@ class WeeklyTest {
     }
     @Test
     public void getShift() {
+        Worker manager = new Worker( "1","manu" , 318 , "ata ahla gever",130, Jobs.ShiftManager ,"123" );
         Weekly week=new Weekly();
-        Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         week.AddShift(shift);
-        Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift1=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         week.AddShift(shift1);
-        Shift shift2=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift2=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         week.AddShift(shift2);
-        Shift shift3=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,"1","manu");
+        Shift shift3=new Shift(LocalDate.now(), ShiftTime.Morning,10,16,manager);
         week.AddShift(shift3);
         assertNotNull(week.GetShift(0));
         assertNotNull(week.GetShift(1));
         assertNotNull(week.GetShift(2));
         assertNotNull(week.GetShift(3));
-        shift.AddWorker("2","lala");
-        shift.AddWorker("3","lali");
+        Worker worker1 = new Worker("2","lala" ,  318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
+        Worker worker2 = new Worker("3","lali" ,  318 , "ata ahla gever",130, Jobs.Cashier ,"123" );
+        shift.AddWorker(Jobs.Cashier,worker1);
+        shift.AddWorker(Jobs.Cashier,worker2);
         assertTrue(week.GetShift(0).IsWorkerAtShift("1"));
         assertTrue(week.GetShift(0).IsWorkerAtShift("2"));
         assertTrue(week.GetShift(0).IsWorkerAtShift("3"));
@@ -63,5 +66,6 @@ class WeeklyTest {
         assertEquals(s.getDayOfMonth(),week.getStartDate().getDayOfMonth());
         assertEquals(s,week.getStartDate());
     }
+
 
 }

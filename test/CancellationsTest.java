@@ -8,8 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CancellationsTest {
 
     @Test
-    public void getYear()
-    {
+    public void getYear() {
         Cancellations tester=new Cancellations(10,"banana","1","manu");
         assertEquals(LocalDateTime.now().getYear(), tester.getYear());
     }
