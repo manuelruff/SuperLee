@@ -56,10 +56,9 @@ public class UI {
                     while(chF) {
                         System.out.println("Site Menu:");
                         System.out.println("1 - Add Vendor");
-                        System.out.println("2 - Remove Vendor");
-                        System.out.println("3 - Print All Sites (vendors and branches)");
-                        System.out.println("4 - Update site info");
-                        System.out.println("5 - Exit");
+                        System.out.println("2 - Print All Sites (vendors and branches)");
+                        System.out.println("3 - Update site info");
+                        System.out.println("4 - Exit");
                         int ch = 0;
                         try{
                             ch = Integer.parseInt(scanner.nextLine());
@@ -74,15 +73,12 @@ public class UI {
                                 break;
 
                             case 2:
-                                deleteSite();
-                                break;
-                            case 3:
                                 sManagement.printSites();
                                 break;
-                            case 4:
+                            case 3:
                                 updateSite();
                                 break;
-                            case 5:
+                            case 4:
                                 chF=false;
                                 break;
                             default:
@@ -92,12 +88,11 @@ public class UI {
                     break;
                 case "2":
                     int ch2=0;
-                    while(ch2 != 4) {
+                    while(ch2 != 3) {
                         System.out.println("Truck Menu:");
                         System.out.println("1 - Add Truck");
-                        System.out.println("2 - Delete Truck");
-                        System.out.println("3 - Print All Trucks");
-                        System.out.println("4 - Exit");
+                        System.out.println("2 - Print All Trucks");
+                        System.out.println("3 - Exit");
                         try{
                             ch2 = Integer.parseInt(scanner.nextLine());
                         }
@@ -110,12 +105,9 @@ public class UI {
                                 addTruck();
                                 break;
                             case 2:
-                                deleteTruck();
-                                break;
-                            case 3:
                                 sManagement.printTrucks();
                                 break;
-                            case 4:
+                            case 3:
                                 break;
                             default:
                                 System.out.println("Invalid input");
@@ -345,34 +337,12 @@ public class UI {
 
 
      }
-
-    /**
-     * this function gets input from the user about a site to delete
-     * and delete it from the system
-     */
-    public static void deleteSite()
-    {
-        boolean check1 = true;
-        String siteToDelete;
-        while (check1)
-        {
-            System.out.println("Please enter site name you want to remove:");
-            siteToDelete = scanner.nextLine();
-            if(sManagement.checkVendor(siteToDelete)) {
-                sManagement.deleteVendor(siteToDelete);
-                System.out.println("site deleted");
-                check1 = false;
-            }
-            else {
-                System.out.println("Site does not exist in the system");
-            }
-        }
-    }
     /**
      * this function gets input from the user about a new truck he wants to add
      * and adds the new truck to the system
      */
 
+    //todo fix it
     public static void updateSite()
     {
         System.out.println("Please enter the name of the site you would like to update:");
@@ -455,124 +425,7 @@ public class UI {
         System.out.println("Truck added to the system");
         scanner.nextLine();
     }
-    /**
-     * this function gets input from the user about a truck to delete
-     * and delete the truck from the system
-     */
-    public static void deleteTruck()
-    {
-        boolean check2 = true;
-        String truckNumber;
-        while (check2)
-        {
-            System.out.println("Please enter the truck number:");
-            truckNumber = scanner.nextLine();
-            if(sManagement.checkTruckNumber(truckNumber)) {
-                sManagement.removeTruck(truckNumber);
-                check2 = false;
-                System.out.println("truck has been removed from the system");
-            }
-            else {
-                System.out.println("truck number does not exist in the system");
-            }
-        }
-    }
-    /**
-     * this function gets input from the user about a new Driver he wants to add
-     * and adds the new driver to the system
-     */
-//    public static void addDriver()
-//    {
-//        boolean check3 = true, check31 =true;
-//        String driverID=null;
-//        while (check3) {
-//            while (check31)
-//            {
-//                System.out.println("Please enter drivers ID:");
-//                driverID = scanner.nextLine();
-//                if(driverID.matches("[0-9]+"))
-//                    check31 = false;
-//                else
-//                    System.out.println("Please enter numbers only");
-//            }
-//            check3 = sManagement.checkID(driverID);
-//            if (check3)
-//                System.out.println("Driver already exist in the system");
-//        }
-//        System.out.println("Please enter driver's name:");
-//        String driverName = scanner.nextLine();
-//        check3 = true;
-//        boolean bank_flag = false;
-//        int bankNum = 0;
-//        while (!bank_flag) {
-//            System.out.println("please enter the new worker's bank number");
-//            String input_newBank = scanner.nextLine();  // Read user input
-//            try {
-//                bankNum = Integer.parseInt(input_newBank);
-//                bank_flag = true;
-//            }
-//            //if he entered something not suitable we will repeat
-//            catch (Exception e) {
-//                System.out.println("you entered wrong bank number (should be only numbers) - please try again!");
-//            }
-//        }
-//        System.out.println("please enter the new worker's contract");
-//        String input_newContract = scanner.nextLine();  // Read user input
-//        System.out.println("please enter the new worker's wage");
-//        int wage = AskForIntNumber();
-//        char driverLicence = '0';
-//        while(check3)
-//        {
-//            System.out.println("""
-//                    Please enter licence type :
-//                    C - for trucks under 12 ton
-//                    D - for above 12 ton""");
-//            driverLicence = scanner.next().charAt(0);
-//            if(driverLicence == 'C' || driverLicence == 'D' || driverLicence == 'c' || driverLicence == 'd')
-//                check3 = false;
-//            else
-//                System.out.println("Invalid input");
-//        }
-//        int training = 4;
-//        while(training < 0 || training > 2) {
-//            System.out.println("""
-//                        Please enter driver storage capabilities training:
-//                        0 - Regular
-//                        1 - Cooling
-//                        2 - Freezer""");
-//            training = scanner.nextInt();
-//            if(training < 0 || training > 2)
-//                System.out.println("Please enter a number between 0 - 2");
-//        }
-//        driverLicence = Character.toUpperCase(driverLicence);
-//        String genericPassword = "123";
-//        sManagement.addDriver(driverName,driverID,bankNum,input_newContract,wage,genericPassword ,driverLicence,training);
-//        System.out.println("Driver added to the system");
-//        scanner.nextLine();
-//    }
-    /**
-     * this function gets input from the user about a driver to delete
-     * and delete the driver from the system
-     */
-    public static void deleteDriver()
-    {
-        boolean check32 = true;
-        String driversIDToRemove;
-        while (check32) {
-            System.out.println("Please enter drivers ID:");
-            driversIDToRemove = scanner.nextLine();
-            check32 = sManagement.checkID(driversIDToRemove);
-            if (!check32) {
-                System.out.println("Driver does not exist in the system");
-                return;
-            }
-            else {
-                check32 = false;
-                sManagement.removeDriver(driversIDToRemove);
-                System.out.println("driver has been removed from system");
-            }
-        }
-    }
+
     /**
      * this function gets input from the user about a new order he wants to add
      * and adds the new order to the system
@@ -671,7 +524,6 @@ public class UI {
      * and adds the new shipment to the system
      */
 
-    //todo checkers on fucking inputs.
     public static void addShipment()
     {
         LocalDate currentDate = LocalDate.now();
@@ -824,18 +676,10 @@ public class UI {
                 input = scanner.nextLine();
                 switch (input) {
                     case "1" -> {
-                        //todo maybe check if the shipment was cancelled
                         itemsToDelete();
-                        //shipment.setShipmentStatus(Status.ItemsChange);
                     }
                     case "2" -> {
                         sManagement.changeTruck();
-//                        if (!Objects.equals(currTruck.getTruckNumber(), shipment.getTruckNumber()))
-//                            shipment.setShipmentStatus(Status.TruckExchange);
-//                        else {
-//                            System.out.println("There isn't a bigger truck available at the moment");
-//                        }
-//                        currTruck = searchTruckByID(shipment.getTruckNumber());
                     }
                     case "3" -> {
                         if (sManagement.removeLastSiteFromShipment())

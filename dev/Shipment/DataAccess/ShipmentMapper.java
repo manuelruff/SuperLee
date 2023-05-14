@@ -388,15 +388,22 @@ public class ShipmentMapper {
         try
         {
             Statement stat = conn.createStatement();
-            java.sql.ResultSet rs= stat.executeQuery("SELECT * FROM ItemDocs WHERE ShipmentID= '"+shipmentID+"'");
+            java.sql.ResultSet rs= stat.executeQuery("SELECT * FROM ItemDocs WHERE ShipmentID== '"+shipmentID+"'");
             while (rs.next())
             {
                 String docID = rs.getString("DocID");
                 deleteItemsForDocs(docID);
-                stat.executeUpdate("DELETE FROM ItemDocs WHERE DocID == '"+docID+"'");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("I SUCK balls");
+        }
+        try{
+            Statement stat = conn.createStatement();
+            stat.executeUpdate("DELETE FROM ItemDocs WHERE ShipmentID== '"+shipmentID+"'");
+        }
+        catch (SQLException e)
+        {
+            System.out.println("I SUCK");
         }
     }
     public void deleteItemDoc(String shipmentID,String destination)
@@ -416,7 +423,7 @@ public class ShipmentMapper {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("I SUCK");
         }
     }
 
@@ -428,7 +435,7 @@ public class ShipmentMapper {
             stat.executeUpdate("DELETE FROM ItemsForDocs WHERE DocID == '"+docID+"'");
         }
         catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("I SUCK");
         }
     }
 

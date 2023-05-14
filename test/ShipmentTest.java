@@ -42,7 +42,6 @@ class ShipmentTest {
         docs.add(itemsDoc2);
         shipment = new Shipment("123", "1234", Days.Sunday,vendor1,sites,docs, date);
         shipment1 = new Shipment("12345", "1234",driver, Days.Monday,vendor1,sites,docs, date);
-
     }
 
 
@@ -101,4 +100,6 @@ class ShipmentTest {
     void getDate() {
         assertEquals(date, shipment.getDate());
     }
+
+
 }
