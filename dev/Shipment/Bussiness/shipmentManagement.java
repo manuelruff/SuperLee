@@ -362,6 +362,7 @@ public class shipmentManagement {
 
             }
         }
+        System.out.println("couldn't switch truck for this shipment at this moment");
     }
 
 
