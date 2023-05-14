@@ -8,7 +8,9 @@ import resource.Connect;
 
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,18 +88,23 @@ public class VendorMapper {
     public void writeAllVendors() {
         for (Vendor vendor : vendors.values()) {
             String name, address, phoneNumber, contactName;
-            try {
-                java.sql.Statement stmt = conn.createStatement();
+            try (Statement stmt = conn.createStatement()) {
                 name = vendor.getName();
                 address = vendor.getAddress();
                 phoneNumber = vendor.getPhoneNumber();
                 contactName = vendor.getContactName();
-                stmt.executeUpdate("INSERT OR IGNORE INTO Vendors (name, Address, PhoneNumber, ContactName) VALUES ('" + name + "', '" + address + "', '" + phoneNumber + "', '" + contactName + "')");
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Vendors WHERE Name ='" + name + "'");
+                if (!rs.next()) {
+                    stmt.executeUpdate("INSERT OR IGNORE INTO Vendors (name, Address, PhoneNumber, ContactName) VALUES ('" + name + "', '" + address + "', '" + phoneNumber + "', '" + contactName + "')");
+                } else {
+                    stmt.executeUpdate("UPDATE Vendors SET ContactName = '" + contactName + "', PhoneNumber = '" + phoneNumber + "', Address = '" + address + "' WHERE Name = '" + name + "'");
+                }
             } catch (SQLException e) {
-                System.out.println("can't write this Vendor");
+                System.out.println("Can't write this Vendor");
             }
         }
     }
+
 
     public void readAllVendors() {
         String vendorName, contactName, address, phoneNumber;

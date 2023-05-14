@@ -388,18 +388,17 @@ public class UI {
     {
         System.out.println("Please enter the name of the site you would like to update:");
         String siteName = scanner.nextLine();
-        if(sManagement.checkBranch(siteName)){
+        if(sManagement.checkBranch(siteName) || sManagement.checkVendor(siteName)){
             while (true) {
                 System.out.println("""
                         What would you like to change:
-                        1 - Site name
-                        2 - Site address
-                        3 - Contact name
-                        4 - Contact phone number""");
+                        1 - Site address
+                        2 - Contact name
+                        3 - Contact phone number""");
                 String str = scanner.nextLine();
                 try {
                     int num = Integer.parseInt(str);
-                    if (num >= 1 && num <= 4) {
+                    if (num >= 1 && num <= 3) {
                         System.out.println("Enter the new details");
                         String change = scanner.nextLine();
                         sManagement.updateSite(siteName,change,num);

@@ -392,15 +392,12 @@ public class shipmentManagement {
         Site site = getSite(oldSite);
         switch (number){
             case 1:
-                site.setName(somethingToChane);
-                break;
-            case 2:
                 site.setAddress(somethingToChane);
                 break;
-            case 3:
+            case 2:
                 site.setContactName(somethingToChane);
                 break;
-            case 4:
+            case 3:
                 site.setPhoneNumber(somethingToChane);
                 break;
         }
