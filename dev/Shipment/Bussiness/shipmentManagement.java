@@ -714,8 +714,10 @@ public class shipmentManagement {
 
         // in case there is only one order from the specific vendor
         if (vendorMap.get(source).size() == 1) {
-            if (firstOrder.checkIfEmpty())
+            if (firstOrder.checkIfEmpty()) {
                 vendorMap.get(source).remove(firstOrder);
+                orderMap.remove(firstOrder.getID());
+            }
         }
         else {
             boolean skip = true;
@@ -751,6 +753,7 @@ public class shipmentManagement {
                 }
             }
         }
+        vendorMap.get(source).removeIf(Order::checkIfEmpty);
         if (shipmentService.checkWeekly(destinations, date)) {
             driverForShipment = addDriver(shipmentService.askForDriver(licence, truck.getStorageType().ordinal(), dayOfWeek, destinations));
             if (driverForShipment == null) {
@@ -761,8 +764,6 @@ public class shipmentManagement {
                 return false;
             }
         }
-
-
         if (driverForShipment == null){
             shipment = new Shipment(ID, truckNumberForShipment, Days.values()[dayOfWeek], vendor, branchList, itemsDocList, date);
         }

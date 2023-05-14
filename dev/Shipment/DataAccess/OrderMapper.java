@@ -117,7 +117,7 @@ public class OrderMapper {
         }
         try {
             java.sql.Statement stat = conn.createStatement();
-            stat.executeUpdate("DELETE FROM Orders WHERE Source ==  '" + vendor + "' ");
+            stat.executeUpdate("DELETE FROM Orders WHERE Source =='" + vendor + "'");
         }
         catch (SQLException e)
         {
