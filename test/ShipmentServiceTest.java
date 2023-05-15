@@ -34,17 +34,21 @@ class ShipmentServiceTest {
         list.add("branch1");
         if(Superim.get("branch1")!=null) {
             //we check that he has a weekly in the database
-            if (Superim.get("branch1").HasWeekly()) {
-                assertTrue(shipmentService.checkWeekly(list, Superim.get("branch1").GetWeekShifts().getStartDate()));
-            } else {
-                assertFalse(shipmentService.checkWeekly(list, Superim.get("branch1").GetWeekShifts().getStartDate()));
-            }
-            list.add("branch2");
-            if(Superim.get("branch2")!=null) {
-                if (Superim.get("branch1").HasWeekly() && Superim.get("branch2").HasWeekly()) {
+            if(Superim.get("branch1").GetWeekShifts()!=null) {
+                if (Superim.get("branch1").HasWeekly()) {
                     assertTrue(shipmentService.checkWeekly(list, Superim.get("branch1").GetWeekShifts().getStartDate()));
                 } else {
                     assertFalse(shipmentService.checkWeekly(list, Superim.get("branch1").GetWeekShifts().getStartDate()));
+                }
+            }
+            if(Superim.get("branch2").GetWeekShifts()!=null) {
+                list.add("branch2");
+                if (Superim.get("branch2") != null) {
+                    if (Superim.get("branch1").HasWeekly() && Superim.get("branch2").HasWeekly()) {
+                        assertTrue(shipmentService.checkWeekly(list, Superim.get("branch1").GetWeekShifts().getStartDate()));
+                    } else {
+                        assertFalse(shipmentService.checkWeekly(list, Superim.get("branch1").GetWeekShifts().getStartDate()));
+                    }
                 }
             }
         }
