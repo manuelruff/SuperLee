@@ -339,7 +339,9 @@ public class ManagerController{
         boolean shiftm1 = currWorkers1.get(Jobs.ShiftManager).contains(Workers.get(ID));
         boolean shiftm2 = currWorkers2.get(Jobs.ShiftManager).contains(Workers.get(ID));
         // first check if there is shipment today
-        if(hrService.isThereAShipment(day,branch)){
+
+        LocalDate send=Superim.get(branch).GetWeekShifts().GetShift(shiftnum).getDate();
+        if(hrService.isThereAShipment(send,branch)){
             // if there is check if the worker is a storekeeper and there is only one storekeeper in this shift
             return storek1 || storek2 || shiftm1 || shiftm2;
         }
@@ -473,7 +475,10 @@ public class ManagerController{
     }
 
     //delete shipment to branch
-    public void DeleteShipment(String branch,int day){hrService.askForDeleteShipment(day,branch);}
+    public void DeleteShipment(String branch,int day){
+        //we send by the weekly we have in the storage//can be this week or next
+        LocalDate send=Superim.get(branch).GetWeekShifts().GetShift(day*2).getDate();
+        hrService.askForDeleteShipment(send,branch);}
 
     public Set<String> ReadAllMessagesFromService(){
         return serviceController.getChanges();

@@ -3,6 +3,7 @@ package Shipment.Bussiness;
 import HR.Service.ShipmentService;
 import Shipment.DataAccess.DataController;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class ServiceController {
@@ -32,11 +33,11 @@ public class ServiceController {
      * @param day day of the week
      * @param siteName destination name
      */
-    public void printShipmentsDS(Days day, String siteName)
+    public void printShipmentsDS(LocalDate day, String siteName)
     {
         for(Shipment shipment : shipments )
         {
-            if(shipment.getDayOfTheWeek() == day)
+            if(shipment.getDate() == day)
             {
                 for(Site site: shipment.getDestinations())
                 {
@@ -57,10 +58,10 @@ public class ServiceController {
      * @param day day of the week
      * @param siteName destination name
      */
-    public void deleteShipmentsDS(Days day, String siteName)
+    public void deleteShipmentsDS(LocalDate day, String siteName)
     {
         for(Shipment shipment : shipments){
-            if (shipment.getDayOfTheWeek() == day){
+            if (shipment.getDate() == day){
                 if (shipment.getDestinations().size() == 1){
                     if (shipment.getDestinations().get(0).getName().equals(siteName)){
                         shipmentM.deleteShipment(shipment.getID());
@@ -87,11 +88,11 @@ public class ServiceController {
      * @param siteName a branch name
      * @return yes if found, false otherwise
      */
-    public boolean checkShipment(Days day, String siteName)
+    public boolean checkShipment(LocalDate day, String siteName)
     {
         for(Shipment shipment : shipments)
         {
-            if(shipment.getDayOfTheWeek() == day)
+            if(shipment.getDate() == day)
             {
                 for(Site site: shipment.getDestinations())
                 {

@@ -19,7 +19,6 @@ public class Connect {
 //            String url = "jdbc:sqlite:../dev/resource/HRDB";
 //            String url = "jdbc:sqlite:dev/resource/HRDB";
             String url ="jdbc:sqlite::resource:HRDB";
-
             // create a connection to the database
             conn = DriverManager.getConnection(url);
 //            System.out.println("Connection to SQLite has been established.");

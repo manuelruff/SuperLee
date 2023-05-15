@@ -3,6 +3,8 @@ package Shipment.Service;
 import Shipment.Bussiness.Days;
 import Shipment.Bussiness.ServiceController;
 
+import java.time.LocalDate;
+
 public class HRService {
 
     private Shipment.Bussiness.ServiceController serviceController;
@@ -19,18 +21,18 @@ public class HRService {
     }
 
     //print all the shipments in a specific day that will get to siteName
-    public void askForShipments(int day, String siteName) {
-        serviceController.printShipmentsDS(Days.values()[day],siteName);}
+    public void askForShipments(LocalDate day, String siteName) {
+        serviceController.printShipmentsDS(day,siteName);}
 
 
     //delete all shipments that are going to sitename in a specific day
-    public void askForDeleteShipment(int day, String siteName){
-        serviceController.deleteShipmentsDS(Days.values()[day],siteName);}
+    public void askForDeleteShipment(LocalDate day, String siteName){
+        serviceController.deleteShipmentsDS(day,siteName);}
 
 
     //return true if there is a shipment for the day and siteName
-    public boolean isThereAShipment(int day, String siteName){
-        return serviceController.checkShipment(Days.values()[day],siteName);
+    public boolean isThereAShipment(LocalDate day, String siteName){
+        return serviceController.checkShipment(day,siteName);
     }
 
     //print all the shipments in the system for hr manager

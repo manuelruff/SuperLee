@@ -212,12 +212,10 @@ public class WorkerUI {
                     LocalDate today = LocalDate.now();
                     String dayName = today.getDayOfWeek().toString().charAt(0)+today.getDayOfWeek().toString().substring(1).toLowerCase();
                     //String dayName = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
-                    System.out.println(dayName);
                     // check if the worker works today in the branch
                     boolean works = workerController.IsWorksTodayAsShiftManagerOrStoreKeeper(ID,dayName,branchName);
                     if(works) {
-                        workerController.printShipments(dayName, branchName);
-                        System.out.println("need to do");
+                        workerController.printShipments(today, branchName);
                     }
                     else{
                         System.out.println("you are not valid to see this content!");
