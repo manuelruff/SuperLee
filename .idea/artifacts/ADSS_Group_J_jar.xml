@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ADSS_Group_J:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ADSS_Group_J_jar</output-path>
+    <root id="archive" name="ADSS_Group_J.jar">
+      <element id="module-output" name="ADSS_Group_J" />
+      <element id="extracted-dir" path="$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.40.1/org/xerial/sqlite-jdbc/3.40.1.0/sqlite-jdbc-3.40.1.0.jar" path-in-jar="/" />
+      <element id="dir-copy" path="$USER_HOME$/Documents/GitHub/ADSS_Group_J/dev/resource" />
+      <element id="file-copy" path="$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.40.1/org/xerial/sqlite-jdbc/3.40.1.0/sqlite-jdbc-3.40.1.0.jar" />
+    </root>
+  </artifact>
+</component>
