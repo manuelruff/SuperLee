@@ -1,6 +1,10 @@
-import HR.Bussiness.*;
+import HR.Bussiness.Zone;
+import HR.Bussiness.Super;
+import HR.Bussiness.Worker;
+import HR.Bussiness.Weekly;
+import HR.Bussiness.Days;
+import HR.Bussiness.Jobs;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class SuperTest {

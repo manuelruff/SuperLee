@@ -1,7 +1,8 @@
-import HR.Bussiness.*;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
+import HR.Bussiness.Driver;
+import HR.Bussiness.Training;
+import HR.Bussiness.Days;
 
 class DriverTest {
 
