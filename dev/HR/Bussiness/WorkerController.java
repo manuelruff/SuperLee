@@ -4,6 +4,8 @@ package HR.Bussiness;
 
 import HR.DataAccess.DataController;
 import Shipment.Service.HRService;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -101,7 +103,7 @@ public class WorkerController  {
         return ((curr1.get(Jobs.StoreKeeper).contains(Workers.get(ID)) || curr1.get(Jobs.ShiftManager).contains(Workers.get(ID))) && (curr2.get(Jobs.StoreKeeper).contains(Workers.get(ID)) || curr2.get(Jobs.ShiftManager).contains(Workers.get(ID))));
     }
 
-    public void printShipments(String day , String branchName){
-        hrService.askForShipments(Days.valueOf(day).ordinal(), branchName);
+    public void printShipments(LocalDate day , String branchName){
+        hrService.askForShipments(day, branchName);
     }
 }
