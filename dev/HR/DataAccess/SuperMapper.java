@@ -8,10 +8,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 public class SuperMapper {
     private static SuperMapper instance;
     private Map<String, Super> SuperMap;
@@ -98,21 +96,60 @@ public class SuperMapper {
                 //rad the times of shift in each day
                 ReadSuperTime(name);
                 //calculate the date of next week
-                LocalDate StartDate=LocalDate.now();
+                String StartDate=GetLastDate();
                 //we want to start at next sunday so we add one until we are there
-                DayOfWeek day=StartDate.getDayOfWeek();
-                while(day!=DayOfWeek.SUNDAY){
-                    StartDate=StartDate.plusDays(1);
-                    day=StartDate.getDayOfWeek();
-                }
+//                DayOfWeek day=StartDate.getDayOfWeek();
+//                while(day!=DayOfWeek.SUNDAY){
+//                    StartDate=StartDate.plusDays(1);
+//                    day=StartDate.getDayOfWeek();
+//                }
                 //read the weekly
-                SuperMap.get(branchName).setWeekly(weeklyMapper.getWeekly(branchName,StartDate.toString()));
+                SuperMap.get(branchName).setWeekly(weeklyMapper.getWeekly(branchName,StartDate));
                 //read the workers
                 ReadWorkers(branchName);
             }
         }
         catch (SQLException e) {
             System.out.println("i have a problem sorry");
+        }
+    }
+    private String GetLastDate(){
+        String dateMax = "";
+        Date date=null;
+        LocalDate next=LocalDate.now();
+        //we want to start at next sunday so we add one until we are there
+        DayOfWeek day=next.getDayOfWeek();
+        while(day!=DayOfWeek.SUNDAY){
+            next=next.plusDays(1);
+            day=next.getDayOfWeek();
+        }
+        LocalDate prev=LocalDate.now();
+        day=prev.getDayOfWeek();
+        //we want to start at next sunday so we add one until we are there
+        while(day!=DayOfWeek.SUNDAY){
+            prev=prev.minusDays(1);
+            day=prev.getDayOfWeek();
+        }
+        String prevString = prev.toString();
+        String nextString = next.toString();
+        try{
+            java.sql.Statement stmt = conn.createStatement();
+//            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Weekly WHERE StartDate >= (SELECT * FROM Weekly WHERE StartDate )");
+            java.sql.ResultSet rs = stmt.executeQuery("SELECT * FROM Weekly WHERE StartDate = '" + nextString + "'");
+            if(rs.next()) {
+                dateMax = rs.getString("StartDate");
+                return dateMax;
+            }
+            else{
+                rs = stmt.executeQuery("SELECT * FROM Weekly WHERE StartDate = '" + prevString + "'");
+                if(rs.next()){
+                    dateMax = rs.getString("StartDate");
+                    return dateMax;
+                }
+                return prevString;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
     private void ReadSuperTime(String BranchName){
