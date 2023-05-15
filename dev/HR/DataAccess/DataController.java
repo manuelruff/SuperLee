@@ -2,6 +2,7 @@ package HR.DataAccess;
 import HR.Bussiness.*;
 import DBConnect.Connect;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -78,8 +79,6 @@ public class DataController {
     public void ReadAllDriversByInfo(char licence,Training ability){
         workerMapper.ReadAllDriversByInfo(licence,ability);
     }
-
-
     public void DeleteConstraint(String ID){
         workerMapper.DeleteConstraints(ID);
     }
@@ -96,8 +95,8 @@ public class DataController {
     public Super getSuper(String name){
         return superMapper.getsuper(name);
     }
-    public List<List<String>> getSupers(){return superMapper.readSupers();
-    }
+    public List<List<String>> getSupers(){return superMapper.readSupers();}
+    public void getAllSupers(){superMapper.readAllSupers();}
 
     public void deleteBranch(String branch){
         superMapper.deleteBranch(branch);
@@ -108,9 +107,7 @@ public class DataController {
          *
          */
     public void saveData() {
-
         //todo add writing for the drivers shifts
-
         workerMapper.WriteAllWorkers();
         workerMapper.WriteAllDrivers();
         cashRegisterMapper.WriteAllCancellations();

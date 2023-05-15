@@ -810,6 +810,14 @@ public class shipmentManagement {
         shipmentService.askRemoveDayForDriver(shipment.getDriver().getID(), shipment.getDayOfTheWeek().ordinal());
     }
 
+    public boolean checkExecuteNow(){
+        List<String> list = new ArrayList<>();
+        for(Site site:availableShipments.get(0).getDestinations()){
+            list.add(site.getName());
+        }
+        return shipmentService.checkStoreKeeperNow(list,LocalDate.now());
+    }
+
     public List<Shipment> getAvailableShipment() {
         return availableShipments;
     }

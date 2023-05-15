@@ -243,18 +243,29 @@ public class ServiceController {
         branch.setContactName(contactName);
         branch.setPhoneNumber(phoneNumber);
     }
-
-    // remove a shift day from a driver
-    public void RemoveShiftDay(String ID, int day){
-        Driver driver = dataController.getDriver(ID);
-        // if the worker works at this day - remove it from his shifts - if not dont do nothing
-        if(!driver.checkDay(Days.values()[day]))
-            driver.RemoveShift(Days.values()[day]);
-    }
     // funciton to reset changes
     public void resetChanges() {changes.clear();}
 
     // function to get the changes
     public Set<String> getChanges() {return changes;}
 
+    public boolean checkStoreKeeperNow(List<String> branches,LocalDate day) {
+        int count=0;
+        for (String branch : branches) {
+            dataController.getSuper(branch);
+            for (Shift sh : Superim.get(branch).GetWeekShifts().getShiftList()) {
+                if (sh.getDate() == day) {
+                    if(sh.getWorkerList().get(Jobs.StoreKeeper)==null || sh.getWorkerList().get(Jobs.StoreKeeper).size()==0 ){
+                        return false;
+                    }
+                    count++;
+                }
+            }
+        }
+        //we didnt even found a shift for the day
+        if (count==0){
+            return false;
+        }
+        return true;
+    }
 }

@@ -50,4 +50,8 @@ public class ShipmentService {
     public void getUpdateForSite(String branchName, String contactName, String contactNumber){serviceController.UpdateSiteContact(branchName,contactName,contactNumber);}
     //get all sites in the system which I will create. stuff I need: (String name,String address, String phoneNumber, String contactName, string Zone)
     public List<List<String>> getAllSites(){return serviceController.getSites();}
+
+    public boolean checkStoreKeeperNow(List<String> branches,LocalDate day){
+        return serviceController.checkStoreKeeperNow(branches,day);
+    }
 }

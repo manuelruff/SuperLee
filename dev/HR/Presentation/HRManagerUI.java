@@ -33,6 +33,11 @@ public class HRManagerUI {
                     managerController.ResetMesseagesFromService();
                     System.out.println("\n");
                 }
+                //add message that he needs to create shifts for next week in less then 24 hours!!
+                //check if he has shifts for next week and we are in saturday now
+                if(!managerController.checkNextWeek()){
+                    System.out.println("you need to create shifts for next week to all branches in less then 24 hours!!");
+                }
                 //we need to call the functionality for manager options
                 ManagerOptions();
                 //so we leave the while loop

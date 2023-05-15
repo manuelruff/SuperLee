@@ -3,6 +3,7 @@ import HR.DataAccess.DataController;
 import Shipment.Bussiness.Branch;
 import Shipment.Service.HRService;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -511,4 +512,28 @@ public class ManagerController{
         dataController.saveData();
     }
 
+    //check if there is a weekly for next week
+    public boolean checkNextWeek(){
+        dataController.getAllSupers();
+        LocalDate next=LocalDate.now();
+        //we want to start at next sunday so we add one until we are there
+        DayOfWeek day=next.getDayOfWeek();
+        while(day!=DayOfWeek.SUNDAY){
+            next=next.plusDays(1);
+            day=next.getDayOfWeek();
+        }
+        if(LocalDate.now().plusDays(1)==next){
+            for(Super sup:Superim.values()){
+                if(sup.GetWeekShifts()!=null){
+                    if(sup.GetWeekShifts().getStartDate()!=next){
+                        return false;
+                    }
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

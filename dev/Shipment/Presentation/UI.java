@@ -638,6 +638,10 @@ public class UI {
             System.out.println("There are no available shipments");
             return;
         }
+        if(!sManagement.checkExecuteNow()){
+            System.out.println("There is no storekeeper assigned to all the branches shifts so you cant execute now");
+            return;
+        }
         if(!sManagement.checkIfDriverExist())
         {
             System.out.println("There is no driver assigned to this shipment please update the weekly shift");
