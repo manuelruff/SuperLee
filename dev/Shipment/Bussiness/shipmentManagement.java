@@ -817,6 +817,12 @@ public class shipmentManagement {
     public void closeDB() {
         dataController.closeShipmentsDB();
     }
+
+    public boolean checkIfDriverExist() {
+        if (availableShipments.get(0).getDriver() == null)
+            return false;
+        return true;
+    }
 }
 
 

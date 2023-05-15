@@ -638,6 +638,11 @@ public class UI {
             System.out.println("There are no available shipments");
             return;
         }
+        if(!sManagement.checkIfDriverExist())
+        {
+            System.out.println("There is no driver assigned to this shipment please update the weekly shift");
+            return;
+        }
         //time formatter
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime time = null;
