@@ -130,9 +130,6 @@ public class Super {
         //sets the weekly shift to null so he will need to create new one
         this.WeekShifts=null;
     }
-    public void addToHistory(Weekly week){
-        this.WeeklyHist.add(week);
-    }
     public double getEnd_evening(Days day) {
         return end_evening.get(day);
     }

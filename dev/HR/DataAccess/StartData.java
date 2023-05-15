@@ -1,7 +1,7 @@
 package HR.DataAccess;
 import HR.Bussiness.Super;
 import HR.Bussiness.Worker;
-import resource.Connect;
+import DBConnect.Connect;
 
 import java.sql.Connection;
 import java.sql.SQLException;

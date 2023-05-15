@@ -4,7 +4,7 @@ package Shipment.DataAccess;
 import Shipment.Bussiness.Order;
 import Shipment.Bussiness.Vendor;
 
-import resource.Connect;
+import DBConnect.Connect;
 
 
 import java.sql.Connection;

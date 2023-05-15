@@ -26,7 +26,7 @@ public class HRManagerUI {
                 System.out.println("welcome MS BIG BOSS, what would you like to do today?");
                 //first read all the messages from the sihpment service
                 if(!managerController.ReadAllMessagesFromService().isEmpty()){
-                    System.out.println("look out! there are the changes that happened due to shipments");
+                    System.out.println("look out! there might be changes that happened due to shipments in those branches: ");
                     for(String s:managerController.ReadAllMessagesFromService()){
                         System.out.println(s);
                     }

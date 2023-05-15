@@ -1,4 +1,9 @@
-import Shipment.Bussiness.*;
+import Shipment.Bussiness.Truck;
+import Shipment.Bussiness.FreezerTruck;
+import Shipment.Bussiness.CoolingTruck;
+import Shipment.Bussiness.RegularTruck;
+import Shipment.Bussiness.Days;
+import Shipment.Bussiness.Training;
 
 import org.junit.jupiter.api.Test;
 

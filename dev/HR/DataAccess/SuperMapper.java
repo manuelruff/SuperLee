@@ -2,7 +2,7 @@ package HR.DataAccess;
 import HR.Bussiness.Days;
 import HR.Bussiness.Super;
 import HR.Bussiness.Zone;
-import resource.Connect;
+import DBConnect.Connect;
 
 import java.sql.Connection;
 import java.sql.SQLException;
