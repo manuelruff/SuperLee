@@ -30,14 +30,14 @@ public class WorkerMapper {
      */
     public Worker getWorker(String ID){
         //if i dont have this worker in the data ill go read it from DB
-        if (WorkerMap.get(ID)==null){
+        if (WorkerMap.get(ID)==null && DriverMap.get(ID)==null){
             ReadWorker(ID);
         }
         return WorkerMap.get(ID);
     }
     public Driver getDriver(String ID){
         //if i dont have this worker in the data ill go read it from DB
-        if (DriverMap.get(ID)==null){
+        if (DriverMap.get(ID)==null && WorkerMap.get(ID)==null){
             ReadWorker(ID);
         }
         return DriverMap.get(ID);
@@ -209,6 +209,7 @@ public class WorkerMapper {
                 id=rs.getString("ID");
                 //if i had him in database already i wont do it again
                 getWorker(id);
+                getDriver(id);
             }
         }
         catch (SQLException e) {
