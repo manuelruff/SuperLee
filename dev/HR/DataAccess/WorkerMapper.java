@@ -300,7 +300,7 @@ public class WorkerMapper {
     public void WriteAllLicenceAndTraining(String ID){
         try {
             java.sql.Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT OR IGNORE INTO DriverInfo (DriverID,Licence,Training ) VALUES (" + ID + ", '" + DriverMap.get(ID) .getLicense() + "', '" + DriverMap.get(ID).getAbility() + "')");
+            stmt.executeUpdate("INSERT INTO DriverInfo (DriverID, Licence, Training) VALUES (" + ID + ", '" + DriverMap.get(ID).getLicense() + "', '" + DriverMap.get(ID).getAbility() + "') ON CONFLICT(DriverID) DO UPDATE SET Licence = excluded.Licence, Training = excluded.Training");
         }
         catch (SQLException e) {
             System.out.println("i have a problem int writing the worker job sorry");
