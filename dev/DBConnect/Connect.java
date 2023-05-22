@@ -18,9 +18,9 @@ public class Connect {
             // url for when creating the jar and put him in the release
 //            String url = "jdbc:sqlite:../dev/resource/HRDB";
             //works withe view here
-//            String url = "jdbc:sqlite:dev/resource/HRDB";
+            String url = "jdbc:sqlite:dev/resource/HRDB";
             //works for jar
-            String url ="jdbc:sqlite::resource:HRDB";
+//            String url ="jdbc:sqlite::resource:HRDB";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
 //            System.out.println("Connection to SQLite has been established.");

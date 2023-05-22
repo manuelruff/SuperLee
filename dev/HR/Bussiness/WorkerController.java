@@ -72,7 +72,7 @@ public class WorkerController  {
         //we tell the database to load that id if exists before we check him
         dataController.getWorker(ID);
         //check if the worker is not a worker or a driver
-        return Workers.get(ID) != null && Drivers.get(ID) == null;
+        return Workers.get(ID) != null || Drivers.get(ID) != null;
     }
     public boolean ShowWorkerShifts(String BranchName){
         return ManagerController.getInstance().PrintWeekly(BranchName);

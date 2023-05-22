@@ -261,6 +261,7 @@ public class ManagerController{
         }
         // remove it from the map of all Workers
         Workers.remove(ID);
+        Drivers.remove(ID);
         //remove it from db
         dataController.deleteWorker(ID);
     }

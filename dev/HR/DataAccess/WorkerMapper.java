@@ -391,6 +391,15 @@ public class WorkerMapper {
             System.out.println("i have a problem iun deleting working days sorry");
         }
     }
+    public void DeleteDriverInfo(String ID){
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM DriverInfo WHERE DriverID="+ID+"");
+        }
+        catch (SQLException e) {
+            System.out.println("i have a problem iun deleting working days sorry");
+        }
+    }
     public void deleteWorkerFromBranch(String ID, String branch){
         try {
             java.sql.Statement stmt = conn.createStatement();
@@ -403,6 +412,7 @@ public class WorkerMapper {
     public void deleteWorker(String ID){
         DeleteWorkingDays(ID);
         DeleteConstraints(ID);
+        DeleteDriverInfo(ID);
         try {
             java.sql.Statement stmt = conn.createStatement();
             stmt.executeUpdate("DELETE FROM Worker WHERE ID="+ID+"");
