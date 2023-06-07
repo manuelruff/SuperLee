@@ -1,7 +1,6 @@
 package HR.PresentationGUI;
 
 import javax.swing.*;
-import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -40,7 +39,7 @@ public class HRManager extends JFrame implements ActionListener{
         {
             if(comboBox1.getSelectedItem().equals("work on a branch (snif)"))
             {
-            
+
             }
             else if(comboBox1.getSelectedItem().equals("add new branch"))
             {
@@ -50,7 +49,6 @@ public class HRManager extends JFrame implements ActionListener{
             {
 
             }
-
             else if(comboBox1.getSelectedItem().equals("update employee"))
             {
 
