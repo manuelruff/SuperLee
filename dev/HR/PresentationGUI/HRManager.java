@@ -1,5 +1,6 @@
 package HR.PresentationGUI;
 import HR.Bussiness.ManagerController;
+import HR.PresentationGUI.HRManagaerWindows.UpdateEmployee;
 import HR.PresentationGUI.HRManagaerWindows.WorkOnABranch;
 import javax.swing.*;
 import java.awt.*;
