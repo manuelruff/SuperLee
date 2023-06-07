@@ -38,13 +38,9 @@ public class HRManager extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Start"))
         {
-            if(comboBox1.getSelectedItem().equals(""))
+            if(comboBox1.getSelectedItem().equals("work on a branch (snif)"))
             {
-                
-            }
-            else if(comboBox1.getSelectedItem().equals("work on a branch (snif)"))
-            {
-
+            
             }
             else if(comboBox1.getSelectedItem().equals("add new branch"))
             {

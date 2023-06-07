@@ -1,9 +1,7 @@
-import HR.Presentation.CashRegisterUI;
-import HR.Presentation.HRManagerUI;
-import HR.Presentation.StoreManagerUI;
-import HR.Presentation.WorkerUI;
 import HR.PresentationGUI.HRManager;
-import Shipment.Presentation.UI;
+
+import javax.swing.*;
+import javax.swing.JOptionPane;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,10 +25,13 @@ public class Main {
             if (role.equals("HRManager")){
                 HRManager a=new HRManager();
             }
-
+            else{
+                JOptionPane.showMessageDialog(null,"Wrong role");
+                System.exit(0);
+            }
         }
         else{
-            System.out.println("Wrong mode");
+            JOptionPane.showMessageDialog(null,"Wrong parameters");
             System.exit(0);
         }
 
