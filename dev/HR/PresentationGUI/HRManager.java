@@ -1,9 +1,8 @@
 package HR.PresentationGUI;
-
 import HR.Bussiness.ManagerController;
-import HR.DataAccess.DataController;
-
+import HR.PresentationGUI.HRManagaerWindows.WorkOnABranch;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +16,7 @@ public class HRManager extends JFrame implements ActionListener{
     public HRManager() {
         this.setContentPane(HRManagerWin);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setMinimumSize(new Dimension(300,200));
         this.pack();
         this.setVisible(true);
         this.setTitle("HR Manager");
@@ -43,7 +43,8 @@ public class HRManager extends JFrame implements ActionListener{
         {
             if(comboBox1.getSelectedItem().equals("work on a branch (snif)"))
             {
-
+                WorkOnABranch  workOnABranch = new WorkOnABranch(this);
+                this.setVisible(false);
             }
             else if(comboBox1.getSelectedItem().equals("add new branch"))
             {
