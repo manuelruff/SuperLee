@@ -1,5 +1,8 @@
 package HR.PresentationGUI;
 
+import HR.Bussiness.ManagerController;
+import HR.DataAccess.DataController;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +12,7 @@ public class HRManager extends JFrame implements ActionListener{
     private JComboBox<String> comboBox1;
     private JButton startButton;
     private JButton exitButton;
+    private ManagerController managerController;
 
     public HRManager() {
         this.setContentPane(HRManagerWin);
@@ -19,6 +23,7 @@ public class HRManager extends JFrame implements ActionListener{
         startButton.addActionListener(this);
         exitButton.addActionListener(this);
         comboBox1.addActionListener(this);
+        this.managerController = ManagerController.getInstance();
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -29,7 +34,6 @@ public class HRManager extends JFrame implements ActionListener{
         comboBox1.addItem("update employee");
         comboBox1.addItem("Show Drivers Schedule");
         comboBox1.addItem("Show all shipments");
-        comboBox1.addItem("change password");
         comboBox1.addItem("pay salaries");
     }
 
@@ -61,11 +65,20 @@ public class HRManager extends JFrame implements ActionListener{
             {
 
             }
-            else if(comboBox1.getSelectedItem().equals("change password")) {
-
-            }
             else if(comboBox1.getSelectedItem().equals("pay salaries"))
             {
+                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to pay salaries?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    // user clicked "Yes"
+                    managerController.loadAllWorkersFrom();
+                    managerController.Payment();
+                    JOptionPane.showMessageDialog(null, "Payment Done!", "Payment", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else {
+                    // user clicked "No" or closed the dialog
+                    JOptionPane.showMessageDialog(null, "Payment Canceled!", "Payment", JOptionPane.INFORMATION_MESSAGE);
+                }
+
 
             }
 
