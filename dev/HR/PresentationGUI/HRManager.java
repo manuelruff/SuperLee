@@ -1,5 +1,6 @@
 package HR.PresentationGUI;
 import HR.Bussiness.ManagerController;
+import HR.PresentationGUI.HRManagaerWindows.UpdateEmployee;
 import HR.PresentationGUI.HRManagaerWindows.WorkOnABranch;
 import javax.swing.*;
 import java.awt.*;
@@ -66,19 +67,36 @@ public class HRManager extends JFrame implements ActionListener{
             }
             else if(comboBox1.getSelectedItem().equals("send weekly shifts to history for all branches"))
             {
+                //check if he created the weekly for everyone
+                if(!managerController.CheckAllHaveWeekly()){
+                    JOptionPane.showMessageDialog(null, "not all the branches has a weekly plan create them first and then you can send", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to send weekly shifts to history for all branches?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    // user clicked "Yes"
+                    //send all to history
+                    managerController.SendConstraintsToHistory();
+                    JOptionPane.showMessageDialog(null, "Sending Done!", "Send To History", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else {
+                    // user clicked "No" or closed the dialog
+                    JOptionPane.showMessageDialog(null, "Sending Canceled!", "Send To History", JOptionPane.INFORMATION_MESSAGE);
+                }
 
             }
             else if(comboBox1.getSelectedItem().equals("update employee"))
             {
-
+                new UpdateEmployee(this);
+                this.setVisible(false);
             }
             else if(comboBox1.getSelectedItem().equals("Show Drivers Schedule"))
             {
-
+                //todo: add the drivers schedule print
             }
             else if(comboBox1.getSelectedItem().equals("Show all shipments"))
             {
-
+                //todo: add the shipments print
             }
             else if(comboBox1.getSelectedItem().equals("pay salaries"))
             {
@@ -93,8 +111,6 @@ public class HRManager extends JFrame implements ActionListener{
                     // user clicked "No" or closed the dialog
                     JOptionPane.showMessageDialog(null, "Payment Canceled!", "Payment", JOptionPane.INFORMATION_MESSAGE);
                 }
-
-
             }
 
         }
