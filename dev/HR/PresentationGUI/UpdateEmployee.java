@@ -11,24 +11,37 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
 
     private JPanel UpdateEmployeeWin;
     private JComboBox comboBox1;
-    private JButton exitButton;
+    private JButton backButton;
     private JButton startButton;
     private ManagerController managerController;
+    private HRManager save;
 
-    public UpdateEmployee() {
+    public UpdateEmployee(HRManager save) {
         setContentPane(UpdateEmployeeWin);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         this.setMaximumSize(new Dimension(300,200));
         this.pack();
         this.setTitle("Update Employee");
-        exitButton.addActionListener(this);
+        backButton.addActionListener(this);
         startButton.addActionListener(this);
         comboBox1.addActionListener(this);
         this.managerController = ManagerController.getInstance();
+        this.save = save;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("Start"))
+        {
+
+        }
+        else if(e.getActionCommand().equals("Back"))
+        {
+            //we show the main window
+            save.setVisible(true);
+            //close this window
+            this.dispose();
+        }
 
     }
 

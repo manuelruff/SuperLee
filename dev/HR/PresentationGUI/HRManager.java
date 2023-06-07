@@ -72,7 +72,8 @@ public class HRManager extends JFrame implements ActionListener{
             }
             else if(comboBox1.getSelectedItem().equals("update employee"))
             {
-                UpdateEmployee updateEmployee = new UpdateEmployee();
+                new UpdateEmployee(this);
+                this.setVisible(false);
             }
             else if(comboBox1.getSelectedItem().equals("Show Drivers Schedule"))
             {
