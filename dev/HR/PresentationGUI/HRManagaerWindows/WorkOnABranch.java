@@ -15,8 +15,11 @@ public class WorkOnABranch extends JFrame implements ActionListener {
 
     //save the window that opened us to show him after closing
     private HRManager save;
-    public WorkOnABranch(HRManager save) {
+    //name of this branch we are working on
+    private String name;
+    public WorkOnABranch(HRManager save,String name) {
         this.save=save;
+        this.name=name;
         this.setContentPane(WorkOnABranchWin);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(300,200));
@@ -42,7 +45,44 @@ public class WorkOnABranch extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Start"))
         {
+            if(comboBox1.getSelectedItem().equals("create weekly shift")) {
 
+            }
+            else if(comboBox1.getSelectedItem().equals("update day in weekly shift")) {
+                //check if this branch has weekly
+                if(!managerController.HasWeekly(name)){
+                    JOptionPane.showMessageDialog(null, "no weekly yet, go create one first", "weekly", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    //todo open update day bla bla
+                }
+            }
+            else if(comboBox1.getSelectedItem().equals("watch week from history")) {
+
+            }
+            else if(comboBox1.getSelectedItem().equals("remove worker from this super")) {
+
+            }
+            else if(comboBox1.getSelectedItem().equals("update super shift times")) {
+
+            }
+            else if(comboBox1.getSelectedItem().equals("delete this branch")) {
+                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this branch?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    // user clicked "Yes"
+                    managerController.deleteBranch(name);
+                    JOptionPane.showMessageDialog(null, "delete Done!", "delete", JOptionPane.INFORMATION_MESSAGE);
+                    // if we delete we go out
+                    //we show the main window
+                    save.setVisible(true);
+                    //close this window
+                    this.dispose();
+                }
+                else {
+                    // user clicked "No" or closed the dialog
+                    JOptionPane.showMessageDialog(null, "I didnt thought so!", "delete", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
         }
         else if(e.getActionCommand().equals("Back"))
         {
