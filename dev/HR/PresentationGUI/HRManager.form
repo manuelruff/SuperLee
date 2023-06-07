@@ -23,7 +23,8 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="choose youre action:"/>
+          <foreground color="-1"/>
+          <text value="please choose your action:"/>
         </properties>
       </component>
       <component id="3eb7" class="javax.swing.JButton" binding="startButton" default-binding="true">

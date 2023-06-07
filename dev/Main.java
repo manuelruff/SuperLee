@@ -1,3 +1,10 @@
+import HR.Presentation.CashRegisterUI;
+import HR.Presentation.HRManagerUI;
+import HR.Presentation.StoreManagerUI;
+import HR.Presentation.WorkerUI;
+import HR.PresentationGUI.HRManager;
+import Shipment.Presentation.UI;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -9,14 +16,17 @@ public class Main {
         //we get the role that is coming in
         String role = args[1];
 
-        if(mode== "CLI")
+        if(mode.equals("CLI"))
         {
             //    calls the GeneralUI object starting function
             GeneralUI.StartMe(role);
         }
-        else if(mode == "GUI")
+        else if(mode.equals("GUI"))
         {
             // todo   calls the GUI object starting function
+            if (role.equals("HRManager")){
+                HRManager a=new HRManager();
+            }
 
         }
         else{
