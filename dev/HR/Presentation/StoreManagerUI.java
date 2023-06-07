@@ -10,6 +10,6 @@ public class StoreManagerUI {
     public static void Work(Scanner sc){
         scanner=sc;
         UIGeneralFnctions.setScanner(sc);
-        
+
     }
 }
