@@ -1,14 +1,10 @@
 package HR.Presentation;
-
-
 import HR.Bussiness.CashRegisterController;
-
 import java.util.Scanner;
 
 
 public class CashRegisterUI {
     private static Scanner scanner;
-
     private static CashRegisterController cashRegisterController = CashRegisterController.getInstance();
     /**
      * option for the cashregistry
