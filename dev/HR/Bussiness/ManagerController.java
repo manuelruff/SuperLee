@@ -537,4 +537,7 @@ public class ManagerController{
         }
         return true;
     }
+
+    //stuff for the GUI
+
 }

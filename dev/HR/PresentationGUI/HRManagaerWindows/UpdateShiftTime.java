@@ -1,9 +1,13 @@
 package HR.PresentationGUI.HRManagaerWindows;
 
+import HR.Bussiness.Days;
 import HR.Bussiness.ManagerController;
 import HR.PresentationGUI.HRManager;
 
 import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
@@ -55,13 +59,97 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
         endEveningTextField = new JTextField(10);
 
 
-// Set the document class for the text fields
+        // Set the document class for the text fields
         startMorningTextField.setDocument(new DoubleDocument());
         endMorningTextField.setDocument(new DoubleDocument());
         startEveningTextField.setDocument(new DoubleDocument());
         endEveningTextField.setDocument(new DoubleDocument());
-        // put initial values in the tsxt boxes
 
+        //add listener to the text boxes
+        startMorningTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = startMorningTextField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = startMorningTextField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkAllTextBoxes();
+                // this method is not called for changes to the text content of the JTextField
+            }
+        });
+        endMorningTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = endMorningTextField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = endMorningTextField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkAllTextBoxes();
+                // this method is not called for changes to the text content of the JTextField
+            }
+        });
+        startEveningTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = startEveningTextField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = startEveningTextField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkAllTextBoxes();
+                // this method is not called for changes to the text content of the JTextField
+            }
+        });
+        endEveningTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = endEveningTextField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = endEveningTextField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkAllTextBoxes();
+                // this method is not called for changes to the text content of the JTextField
+            }
+        });
 
         doButton = new JButton("Do");
         backButton = new JButton("Back");
@@ -115,10 +203,15 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
         Dimension maxButtonSize = new Dimension(Integer.MAX_VALUE, doButton.getPreferredSize().height);
         doButton.setMaximumSize(maxButtonSize);
         backButton.setMaximumSize(maxButtonSize);
+        doButton.setEnabled(false);
 
         // Set the action listeners for the buttons
         doButton.addActionListener(this);
         backButton.addActionListener(this);
+        startMorningTextField.addActionListener(this);
+        endMorningTextField.addActionListener(this);
+        startEveningTextField.addActionListener(this);
+        endEveningTextField.addActionListener(this);
 
         // Set the content pane and display the window
         setContentPane(UpdateTimeWin);
@@ -132,7 +225,10 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Do"))
         {
-
+            managerController.UpdateSuperTimes(name, Days.valueOf(dayComboBox.getActionCommand().toString()),
+                    Double.parseDouble(startMorningTextField.getText()), Double.parseDouble(endMorningTextField.getText().toString()),
+                    Double.parseDouble(startEveningTextField.getText()), Double.parseDouble(endEveningTextField.getText().toString()));
+            backButton.doClick();
         }
         else if(e.getActionCommand().equals("Back"))
         {
@@ -143,32 +239,58 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
         }
     }
 
-    // Create a custom document class that sets the double filter
-    class DoubleDocument extends PlainDocument {
-        public DoubleDocument() {
-            setDocumentFilter(new DoubleFilter());
+    private void checkAllTextBoxes() {
+        if (startMorningTextField.getText().isEmpty() || endMorningTextField.getText().isEmpty() ||
+                startEveningTextField.getText().isEmpty() || endEveningTextField.getText().isEmpty()) {
+            doButton.setEnabled(false);
+        } else {
+            doButton.setEnabled(true);
         }
     }
-    // Create a document filter that only allows double values
-    class DoubleFilter extends DocumentFilter {
-        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-            String newStr = fb.getDocument().getText(0, fb.getDocument().getLength()) + string;
-            try {
-                Double.parseDouble(newStr);
+    class HourFilter extends DocumentFilter {
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+                throws BadLocationException {
+            StringBuilder builder = new StringBuilder();
+            builder.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+            builder.insert(offset, string);
+            if (isValid(builder.toString())) {
                 super.insertString(fb, offset, string, attr);
-            } catch (NumberFormatException e) {
+            } else {
                 Toolkit.getDefaultToolkit().beep();
             }
         }
 
-        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-            String newStr = fb.getDocument().getText(0, fb.getDocument().getLength()) + text;
-            try {
-                Double.parseDouble(newStr);
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+                throws BadLocationException {
+            StringBuilder builder = new StringBuilder();
+            builder.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+            builder.replace(offset, offset + length, text);
+            if (isValid(builder.toString())) {
                 super.replace(fb, offset, length, text, attrs);
-            } catch (NumberFormatException e) {
+            } else {
                 Toolkit.getDefaultToolkit().beep();
             }
+        }
+
+        private boolean isValid(String text) {
+            if (text.isEmpty()) {
+                return true;
+            }
+            try {
+                double value = Double.parseDouble(text);
+                int hours = (int) value;
+                int minutes = (int) ((value - hours) * 100);
+                return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+    }
+    class DoubleDocument extends PlainDocument {
+        public DoubleDocument() {
+            setDocumentFilter(new HourFilter());
         }
     }
 }
