@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 public class UpdateEmployee extends JFrame implements ActionListener  {
 
@@ -16,7 +17,6 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
     private JButton backButton;
     private JButton startButton;
     private ManagerController managerController;
-    private WorkerController workerController;
     private HRManager save;
 
     public UpdateEmployee(HRManager save) {
@@ -30,7 +30,6 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
         startButton.addActionListener(this);
         comboBox1.addActionListener(this);
         this.managerController = ManagerController.getInstance();
-        this.workerController = WorkerController.getInstance();
         this.save = save;
     }
     @Override
@@ -41,9 +40,27 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
             {
                 // todo: add a new window for adding new worker
             }
-            else if(comboBox1.getSelectedItem().equals("add worker to branch"))
-            {
-                //todo: first build the function for list of supers and then do this one
+            else if(comboBox1.getSelectedItem().equals("add worker to branch")) {
+                JTextField textField = new JTextField();
+                int result = JOptionPane.showConfirmDialog(null, textField, "Enter worker id:", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    String ID = textField.getText();
+                    boolean check = managerController.isExistWorker(ID);
+                    //if the worker exists
+                    if (!check) {
+                        JOptionPane.showMessageDialog(null, "worker id not found");
+                    } else {
+                        String[] allBranches = managerController.getAllSuperNames();
+                        JList<String> list = new JList<>(allBranches);
+                        result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to add the employee:", JOptionPane.OK_CANCEL_OPTION);
+                        if (result == JOptionPane.OK_OPTION) {
+                            // save the selected option
+                            String selectedOption = list.getSelectedValue();
+                            managerController.AddWorkerToBranch(ID, selectedOption);
+                            JOptionPane.showMessageDialog(null, "The worker added successfully!", "Role", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                }
             }
             else if(comboBox1.getSelectedItem().equals("remove worker"))
             {
@@ -101,7 +118,7 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
                     String ID = field1.getText();
                     String value2 = field2.getText();
                     int wage = Integer.parseInt(value2);
-                    if(!workerController.isExistWorker(ID)){
+                    if(!managerController.isExistWorker(ID)){
                         JOptionPane.showMessageDialog(null, "This worker doesn't exist", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
@@ -126,7 +143,7 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
                 if (result == JOptionPane.OK_OPTION) {
                     String ID = field1.getText();
                     String value2 = field2.getText();
-                    if(!workerController.isExistWorker(ID)){
+                    if(!managerController.isExistWorker(ID)){
                         JOptionPane.showMessageDialog(null, "This worker doesn't exist", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
@@ -148,7 +165,7 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
                     String ID = field1.getText();
                     String value2 = field2.getText();
                     int bonus = Integer.parseInt(value2);
-                    if(!workerController.isExistWorker(ID)){
+                    if(!managerController.isExistWorker(ID)){
                         JOptionPane.showMessageDialog(null, "This worker doesn't exist", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
@@ -174,7 +191,7 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
                     String ID = field1.getText();
                     String value2 = field2.getText();
                     int bonus = Integer.parseInt(value2);
-                    if(!workerController.isExistWorker(ID)){
+                    if(!managerController.isExistWorker(ID)){
                         JOptionPane.showMessageDialog(null, "This worker doesn't exist", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }

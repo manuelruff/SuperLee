@@ -44,22 +44,30 @@ public class HRManager extends JFrame implements ActionListener{
         {
             if(comboBox1.getSelectedItem().equals("work on a branch (snif)"))
             {
-                JTextField textField = new JTextField();
-                int result = JOptionPane.showConfirmDialog(null, textField, "Enter branch name:", JOptionPane.OK_CANCEL_OPTION);
+                String[] allBranches = managerController.getAllSuperNames();
+                JList<String> list = new JList<>(allBranches);
+                int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to add the employee:", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
-                    String name = textField.getText();
-                    boolean check =managerController.CheckBranchExist(name);
-                    //if the branch exists
-                    if(check)
-                    {
-                        new WorkOnABranch(this,name);
-                        this.setVisible(false);
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(null,"no such branch");
-                    }
+                    // save the selected option
+                    String name = list.getSelectedValue();
+                    new WorkOnABranch(this,name);
+                    this.setVisible(false);
                 }
-
+                //JTextField textField = new JTextField();
+                //int result = JOptionPane.showConfirmDialog(null, textField, "Enter branch name:", JOptionPane.OK_CANCEL_OPTION);
+//                if (result == JOptionPane.OK_OPTION) {
+//                    String name = textField.getText();
+//                    boolean check =managerController.CheckBranchExist(name);
+//                    //if the branch exists
+//                    if(check)
+//                    {
+//                        new WorkOnABranch(this,name);
+//                        this.setVisible(false);
+//                    }
+//                    else {
+//                        JOptionPane.showMessageDialog(null,"no such branch");
+//                    }
+//                }
             }
             else if(comboBox1.getSelectedItem().equals("add new branch"))
             {
