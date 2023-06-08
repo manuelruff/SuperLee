@@ -46,7 +46,13 @@ public class WorkOnABranch extends JFrame implements ActionListener {
         if(e.getActionCommand().equals("Start"))
         {
             if(comboBox1.getSelectedItem().equals("create weekly shift")) {
-
+                //check if there is not a weekly created already
+                if(managerController.HasWeekly(name)){
+                    JOptionPane.showMessageDialog(null, "you already have a weekly so you cant create one", "weekly", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    //todo create weekly shift
+                }
             }
             else if(comboBox1.getSelectedItem().equals("update day in weekly shift")) {
                 //check if this branch has weekly
@@ -59,7 +65,7 @@ public class WorkOnABranch extends JFrame implements ActionListener {
                 }
             }
             else if(comboBox1.getSelectedItem().equals("watch week from history")) {
-
+                //todo printing something
             }
             else if(comboBox1.getSelectedItem().equals("remove worker from this super")) {
                 JTextField textField = new JTextField();

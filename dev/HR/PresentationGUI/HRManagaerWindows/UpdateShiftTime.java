@@ -4,6 +4,10 @@ import HR.Bussiness.ManagerController;
 import HR.PresentationGUI.HRManager;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,17 +19,16 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
     private JTextField startMorningTextField, endMorningTextField, startEveningTextField, endEveningTextField;
     private JButton doButton, backButton;
     private JPanel UpdateTimeWin;
+    private ManagerController managerController;
     //save the window that opened us to show him after closing
     private WorkOnABranch save;
     //name of this branch we are working on
     private String name;
     // Constructor for the window
     public UpdateShiftTime(WorkOnABranch save,String name) {
-        this.save=save;
-        this.name=name;
         this.save = save;
         this.name = name;
-
+        this.managerController = ManagerController.getInstance();
 
         // Set the content pane background color to black
         getContentPane().setBackground(Color.BLACK);
@@ -50,6 +53,13 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
         endMorningTextField = new JTextField(10);
         startEveningTextField = new JTextField(10);
         endEveningTextField = new JTextField(10);
+
+
+// Set the document class for the text fields
+        startMorningTextField.setDocument(new DoubleDocument());
+        endMorningTextField.setDocument(new DoubleDocument());
+        startEveningTextField.setDocument(new DoubleDocument());
+        endEveningTextField.setDocument(new DoubleDocument());
 
         doButton = new JButton("Do");
         backButton = new JButton("Back");
@@ -118,7 +128,45 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getActionCommand().equals("Do"))
+        {
+            
+        }
+        else if(e.getActionCommand().equals("Back"))
+        {
+            //we show the main window
+            save.setVisible(true);
+            //close this window
+            this.dispose();
+        }
     }
 
+    // Create a custom document class that sets the double filter
+    class DoubleDocument extends PlainDocument {
+        public DoubleDocument() {
+            setDocumentFilter(new DoubleFilter());
+        }
+    }
+    // Create a document filter that only allows double values
+    class DoubleFilter extends DocumentFilter {
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            String newStr = fb.getDocument().getText(0, fb.getDocument().getLength()) + string;
+            try {
+                Double.parseDouble(newStr);
+                super.insertString(fb, offset, string, attr);
+            } catch (NumberFormatException e) {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            String newStr = fb.getDocument().getText(0, fb.getDocument().getLength()) + text;
+            try {
+                Double.parseDouble(newStr);
+                super.replace(fb, offset, length, text, attrs);
+            } catch (NumberFormatException e) {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+    }
 }
