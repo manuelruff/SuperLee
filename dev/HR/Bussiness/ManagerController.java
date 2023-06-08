@@ -539,5 +539,9 @@ public class ManagerController{
     }
 
     //stuff for the GUI
+    // add a job for a worker (role) by id by the name of the role - GUI
+    public void AddJobToWorker(String ID, String job_name) {
+        Workers.get(ID).AddJob(Jobs.valueOf(job_name));
+    }
 
 }

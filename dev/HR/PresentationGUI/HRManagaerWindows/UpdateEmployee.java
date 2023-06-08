@@ -51,7 +51,28 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
             }
             else if(comboBox1.getSelectedItem().equals("add job for worker"))
             {
-
+                JTextField textField = new JTextField();
+                int result = JOptionPane.showConfirmDialog(null, textField, "Enter worker id:", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    String ID = textField.getText();
+                    boolean check = managerController.isExistWorker(ID);
+                    //if the worker exists
+                    if(!check)
+                    {
+                        JOptionPane.showMessageDialog(null,"worker id not found");
+                    }
+                    else{
+                        String[] options = {"ShiftManager","Cashier","StoreKeeper","GeneralEmp","Guard","Cleaner","Usher"};
+                        JList<String> list = new JList<>(options);
+                        result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a job to add:", JOptionPane.OK_CANCEL_OPTION);
+                        if (result == JOptionPane.OK_OPTION) {
+                            // save the selected option
+                            String selectedOption = list.getSelectedValue();
+                            managerController.AddJobToWorker(ID,selectedOption);
+                            JOptionPane.showMessageDialog(null, "Role added successfully!", "Role", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                }
             }
             else if(comboBox1.getSelectedItem().equals("change worker wage"))
             {
@@ -81,17 +102,77 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
             }
             else if(comboBox1.getSelectedItem().equals("change worker contract"))
             {
-
+                JTextField field1 = new JTextField();
+                JTextField field2 = new JTextField();
+                JPanel panel = new JPanel(new GridLayout(2, 2));
+                panel.add(new JLabel("Enter Worker ID:"));
+                panel.add(field1);
+                panel.add(new JLabel("Enter New Contract:"));
+                panel.add(field2);
+                int result = JOptionPane.showConfirmDialog(null, panel, "Enter values", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    String ID = field1.getText();
+                    String value2 = field2.getText();
+                    if(!workerController.isExistWorker(ID)){
+                        JOptionPane.showMessageDialog(null, "This worker doesn't exist", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    managerController.ChangeContract(ID,value2);
+                    JOptionPane.showMessageDialog(null, "Contract changed successfully!", "Contract", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
             else if(comboBox1.getSelectedItem().equals("add bonus to worker"))
             {
-
+                JTextField field1 = new JTextField();
+                JTextField field2 = new JTextField();
+                JPanel panel = new JPanel(new GridLayout(2, 2));
+                panel.add(new JLabel("Enter Worker ID:"));
+                panel.add(field1);
+                panel.add(new JLabel("Enter Bonus:"));
+                panel.add(field2);
+                int result = JOptionPane.showConfirmDialog(null, panel, "Enter values", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    String ID = field1.getText();
+                    String value2 = field2.getText();
+                    int bonus = Integer.parseInt(value2);
+                    if(!workerController.isExistWorker(ID)){
+                        JOptionPane.showMessageDialog(null, "This worker doesn't exist", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if(bonus < 0){
+                        JOptionPane.showMessageDialog(null, "bonus can't be negative", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    String WorkerName = managerController.addBonusToWorker(ID,bonus);
+                    JOptionPane.showMessageDialog(null, "Bonus added successfully to: " + WorkerName, "Bonus", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
             else if(comboBox1.getSelectedItem().equals("remove bonus from worker"))
             {
-
+                JTextField field1 = new JTextField();
+                JTextField field2 = new JTextField();
+                JPanel panel = new JPanel(new GridLayout(2, 2));
+                panel.add(new JLabel("Enter Worker ID:"));
+                panel.add(field1);
+                panel.add(new JLabel("Enter Bonus:"));
+                panel.add(field2);
+                int result = JOptionPane.showConfirmDialog(null, panel, "Enter values", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    String ID = field1.getText();
+                    String value2 = field2.getText();
+                    int bonus = Integer.parseInt(value2);
+                    if(!workerController.isExistWorker(ID)){
+                        JOptionPane.showMessageDialog(null, "This worker doesn't exist", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if(bonus < 0){
+                        JOptionPane.showMessageDialog(null, "bonus can't be negative", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    String WorkerName = managerController.removeBonusToWorker(ID,bonus);
+                    JOptionPane.showMessageDialog(null, "Bonus removed successfully from: " + WorkerName, "Bonus", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
-
         }
         else if(e.getActionCommand().equals("Back"))
         {
