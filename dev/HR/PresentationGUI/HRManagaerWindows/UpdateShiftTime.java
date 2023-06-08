@@ -60,6 +60,8 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
         endMorningTextField.setDocument(new DoubleDocument());
         startEveningTextField.setDocument(new DoubleDocument());
         endEveningTextField.setDocument(new DoubleDocument());
+        // put initial values in the tsxt boxes
+
 
         doButton = new JButton("Do");
         backButton = new JButton("Back");
@@ -130,7 +132,7 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Do"))
         {
-            
+
         }
         else if(e.getActionCommand().equals("Back"))
         {
