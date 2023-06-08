@@ -129,6 +129,7 @@ public class ManagerController{
                 CanWorkList.remove(chosen);
             }
             //we finished adding all workers of a job type
+            indx_job++;
         }
         //we add the shift to the weekly
         curr.GetWeekShifts().AddShift(CurrShift);

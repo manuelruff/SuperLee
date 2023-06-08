@@ -370,23 +370,39 @@ public class CreateWeekly  extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == nextButton) {
-            //get all the info abount the numbers
-            int [] jobs=new int[6];
-            jobs[0]=Integer.parseInt(CashiersLabelField.getText());
-            jobs[1]=Integer.parseInt(StoreKeepersLabelField.getText());
-            jobs[2]=Integer.parseInt(GeneralEmployesLabelField.getText());
-            jobs[3]=Integer.parseInt(GuardsLabelField.getText());
-            jobs[4]=Integer.parseInt(CleanerLabelField.getText());
-            jobs[5]=Integer.parseInt(UsherLabelField.getText());
-            String error=managerController.AddShift(name,this.daynum,this.shiftnum,jobs);
-            //if we get error message we print it
-            if(!error.equals("success")){
-                errorLabel.setText(error);
+            boolean isCreated=false;
+            //we need to create an empty shift
+            if(empty.isSelected()) {
+                managerController.emptyShift(this.daynum,this.shiftnum,name);
+                isCreated=true;
+                //we want to unselect this
+                empty.setSelected(false);
             }
-            //if no error we can go on
             else {
+                //get all the info abount the numbers
+                int[] jobs = new int[6];
+                jobs[0] = Integer.parseInt(CashiersLabelField.getText());
+                jobs[1] = Integer.parseInt(StoreKeepersLabelField.getText());
+                jobs[2] = Integer.parseInt(GeneralEmployesLabelField.getText());
+                jobs[3] = Integer.parseInt(GuardsLabelField.getText());
+                jobs[4] = Integer.parseInt(CleanerLabelField.getText());
+                jobs[5] = Integer.parseInt(UsherLabelField.getText());
+                String error = managerController.AddShift(name, this.daynum, this.shiftnum, jobs);
+                //if we get error message we print it
+                if (!error.equals("success")) {
+                    isCreated=false;
+                    errorLabel.setText(error);
+                }
+                else{
+                    isCreated=true;
+                }
+            }
+            //if we created
+            if(isCreated) {
+                isCreated=false;
+                //if no error we can go on
                 //check if we are have finished
-                if (nextButton.getText().equals("Done")){
+                if (nextButton.getText().equals("Done")) {
                     JOptionPane.showMessageDialog(null, "weekly created successfully!", "weekly", JOptionPane.INFORMATION_MESSAGE);
                     this.save.setVisible(true);
                     this.dispose();
@@ -401,25 +417,24 @@ public class CreateWeekly  extends JFrame implements ActionListener {
                 UsherLabelField.setText("0");
 
                 //if we only need to change the shift time and not day thats it:
-                if(shiftnum==0){
+                if (shiftnum == 0) {
                     shiftnum++;
                     shiftLabel.setText("Evening");
                 }
                 //else we nned to change the day and shift
-                else{
-                    shiftnum=0;
+                else {
+                    shiftnum = 0;
                     shiftLabel.setText("Morning");
                     daynum++;
                     //next day
-                    day= Days.values()[daynum].toString();
+                    day = Days.values()[daynum].toString();
                     dayLabel.setText(day);
                 }
                 //if we are in the last day
-                if(this.day.equals("Saturday") && shiftnum==1){
+                if (this.day.equals("Saturday") && shiftnum == 1) {
                     nextButton.setText("Done");
                 }
             }
-
         }
         if (e.getSource() == cancelButton) {
             //delete what we have done and return to last window
