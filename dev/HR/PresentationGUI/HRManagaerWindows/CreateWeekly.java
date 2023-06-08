@@ -1,6 +1,7 @@
 package HR.PresentationGUI.HRManagaerWindows;
 
 import HR.Bussiness.ManagerController;
+import HR.Presentation.UIGeneralFnctions;
 import HR.PresentationGUI.HRManager;
 
 import javax.swing.*;
@@ -9,6 +10,8 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CreateWeekly  extends JFrame implements ActionListener {
     private JPanel CreateWeeklyWin;
@@ -18,12 +21,17 @@ public class CreateWeekly  extends JFrame implements ActionListener {
     private WorkOnABranch save;
     //name of this branch we are working on
     private String name;
-    private JLabel dayLabel, CashiersLabel, StoreKeepersLabel, GeneralEmployesLabel, GuardsLabel,  CleanerLabel, UsherLabel;
+    private JLabel dayLabel, CashiersLabel, StoreKeepersLabel, GeneralEmployesLabel, GuardsLabel,  CleanerLabel, UsherLabel , errorLabel;
     private JTextField CashiersLabelField, StoreKeepersLabelField, GeneralEmployesLabelField, GuardsLabelField, CleanerLabelField, UsherLabelField;
     private JButton nextButton, cancelButton;
     private JCheckBox empty;
 
+
+    //values saving for creating the shifts
     private String day="Sunday";
+    private int daynum=0;
+    private int shiftnum=0;
+
     public CreateWeekly(WorkOnABranch save,String name) {
         this.save=save;
         this.name=name;
@@ -43,6 +51,7 @@ public class CreateWeekly  extends JFrame implements ActionListener {
         GuardsLabel = new JLabel("Guards:");
         CleanerLabel = new JLabel("Cleaner:");
         UsherLabel = new JLabel("Usher:");
+        errorLabel= new JLabel("");
 
         // Set the foreground color of each label to white
         dayLabel.setForeground(Color.WHITE);
@@ -54,6 +63,7 @@ public class CreateWeekly  extends JFrame implements ActionListener {
         UsherLabel.setForeground(Color.WHITE);
         // Set the foreground color of each label to white
         dayLabel.setForeground(Color.WHITE);
+        errorLabel.setForeground(Color.WHITE);
 
 
         CashiersLabelField=new JTextField(10);
@@ -63,6 +73,171 @@ public class CreateWeekly  extends JFrame implements ActionListener {
         CleanerLabelField=new JTextField(10);
         UsherLabelField=new JTextField(10);
 
+        //make the button available only when all textboxes are full
+        CashiersLabelField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = CashiersLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = CashiersLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkAllTextBoxes();
+                // this method is not called for changes to the text content of the JTextField
+            }
+        });
+        StoreKeepersLabelField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = StoreKeepersLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = StoreKeepersLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkAllTextBoxes();
+                // this method is not called for changes to the text content of the JTextField
+            }
+        });
+        GeneralEmployesLabelField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = GeneralEmployesLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = GeneralEmployesLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkAllTextBoxes();
+                // this method is not called for changes to the text content of the JTextField
+            }
+        });
+        GuardsLabelField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = GuardsLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = GuardsLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkAllTextBoxes();
+                // this method is not called for changes to the text content of the JTextField
+            }
+        });
+        CleanerLabelField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = CleanerLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = CleanerLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkAllTextBoxes();
+                // this method is not called for changes to the text content of the JTextField
+            }
+        });
+        UsherLabelField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = UsherLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = UsherLabelField.getText();
+                checkAllTextBoxes();
+                // perform necessary actions based on the text retrieved from the text field
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkAllTextBoxes();
+                // this method is not called for changes to the text content of the JTextField
+            }
+        });
+
+        //make the text fields only get integers
+        CashiersLabelField.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (c < '0' || c > '9') {
+                    e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
+        StoreKeepersLabelField.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (c < '0' || c > '9') {
+                    e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
+        GeneralEmployesLabelField.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (c < '0' || c > '9') {
+                    e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
+        GuardsLabelField.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (c < '0' || c > '9') {
+                    e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
+        CleanerLabelField.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (c < '0' || c > '9') {
+                    e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
+        UsherLabelField.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (c < '0' || c > '9') {
+                    e.consume();  // if it's not a number, ignore the event
+                }
+            }
+        });
 
         nextButton = new JButton("Next");
         cancelButton = new JButton("Cancel");
@@ -133,6 +308,10 @@ public class CreateWeekly  extends JFrame implements ActionListener {
         buttonPanel.add(cancelButton);
         CreateWeeklyWin.add(buttonPanel);
 
+
+        //add the error lable
+        CreateWeeklyWin.add(errorLabel);
+
         // Set the maximum size of the buttons to fill the horizontal space
         Dimension maxButtonSize = new Dimension(Integer.MAX_VALUE, nextButton.getPreferredSize().height);
         nextButton.setMaximumSize(maxButtonSize);
@@ -152,13 +331,57 @@ public class CreateWeekly  extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+
+    private void checkAllTextBoxes() {
+        if (CashiersLabelField.getText().isEmpty() || StoreKeepersLabelField.getText().isEmpty() ||
+                GeneralEmployesLabelField.getText().isEmpty() || GuardsLabelField.getText().isEmpty() ||
+                CleanerLabelField.getText().isEmpty() || UsherLabelField.getText().isEmpty()) {
+            nextButton.setEnabled(false);
+        }
+        else {
+            nextButton.setEnabled(true);
+        }
+    }
+
+    //Sunday, Monday,Tuesday,Wednesday,Thursday,Friday,Saturday
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == nextButton) {
+            //get all the info abount the numbers
+            int [] jobs=new int[6];
+            jobs[0]=Integer.parseInt(CashiersLabelField.getText());
+            jobs[1]=Integer.parseInt(StoreKeepersLabelField.getText());
+            jobs[2]=Integer.parseInt(GeneralEmployesLabelField.getText());
+            jobs[3]=Integer.parseInt(GuardsLabelField.getText());
+            jobs[4]=Integer.parseInt(CleanerLabelField.getText());
+            jobs[5]=Integer.parseInt(UsherLabelField.getText());
+            String error=managerController.AddShift(name,this.daynum,this.shiftnum,jobs);
+            //if we get error message we print it
+            if(!error.equals("success")){
+                errorLabel.setText(error);
+            }
 
+            //now we need to change the values of day shift etc
+            if(this.day.equals("Thursday")){
+
+            }
+            //if we are in the last day
+            else if(this.day.equals("Friday")){
+                nextButton.setText("Done");
+            }
+            //we finished creating the weekly
+            else if (this.day.equals("Saturday")){
+
+                this.save.setVisible(true);
+                this.dispose();
+                //go back to prev window
+            }
         }
         if (e.getSource() == cancelButton) {
-            
+            //delete what we have done and return to last window
+            managerController.CancelWeekly(name);
+            this.save.setVisible(true);
+            this.dispose();
         }
         if (e.getSource() == empty) {
             if(empty.isSelected()) {
@@ -183,5 +406,6 @@ public class CreateWeekly  extends JFrame implements ActionListener {
             }
         }
     }
+
 }
 

@@ -73,14 +73,12 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
                 checkAllTextBoxes();
                 // perform necessary actions based on the text retrieved from the text field
             }
-
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String text = startMorningTextField.getText();
                 checkAllTextBoxes();
                 // perform necessary actions based on the text retrieved from the text field
             }
-
             @Override
             public void changedUpdate(DocumentEvent e) {
                 checkAllTextBoxes();

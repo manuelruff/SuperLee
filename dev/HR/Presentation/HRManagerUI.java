@@ -135,7 +135,7 @@ public class HRManagerUI {
                                             jobs[idx_job]=AskForIntNumber();
                                             String error=managerController.AddShift(Name,i,j,jobs);
                                             //if we get error message we print it
-                                            if(error!="success"){
+                                            if(!error.equals("success")){
                                                 System.out.println(error);
                                                 System.out.println("do you want to try this shift again or cancel the week and create later? \n" +
                                                         "1. try again \n" +
