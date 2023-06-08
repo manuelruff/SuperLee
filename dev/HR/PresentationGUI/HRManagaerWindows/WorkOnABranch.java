@@ -1,4 +1,5 @@
 package HR.PresentationGUI.HRManagaerWindows;
+import HR.Bussiness.Days;
 import HR.Bussiness.ManagerController;
 import HR.PresentationGUI.HRManager;
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class WorkOnABranch extends JFrame implements ActionListener {
     public WorkOnABranch(HRManager save,String name) {
         this.save=save;
         this.name=name;
+        this.managerController = ManagerController.getInstance();
         this.setContentPane(WorkOnABranchWin);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(300,200));
@@ -29,7 +31,6 @@ public class WorkOnABranch extends JFrame implements ActionListener {
         startButton.addActionListener(this);
         backButton.addActionListener(this);
         comboBox1.addActionListener(this);
-        this.managerController = ManagerController.getInstance();
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -51,7 +52,8 @@ public class WorkOnABranch extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "you already have a weekly so you cant create one", "weekly", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    //todo: create weekly shift
+                    new CreateWeekly(this,name);
+                    this.setVisible(false);
                 }
             }
             else if(comboBox1.getSelectedItem().equals("update day in weekly shift")) {
