@@ -45,10 +45,6 @@ public class HRManager extends JFrame implements ActionListener{
             if(comboBox1.getSelectedItem().equals("work on a branch (snif)"))
             {
                 String[] allBranches = managerController.getAllSuperNames();
-
-//                namesBox.setModel(new DefaultComboBoxModel<>(allBranches));
-//                HRManagerWin.add(namesBox);
-
                 JList<String> list = new JList<>(allBranches);
                 int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to add the employee:", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
