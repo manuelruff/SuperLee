@@ -54,14 +54,28 @@ public class WorkOnABranch extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "no weekly yet, go create one first", "weekly", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    //todo open update day bla bla
+                    new UpdateDayInWeekly(this,name);
+                    this.setVisible(false);
                 }
             }
             else if(comboBox1.getSelectedItem().equals("watch week from history")) {
 
             }
             else if(comboBox1.getSelectedItem().equals("remove worker from this super")) {
-
+                JTextField textField = new JTextField();
+                int result = JOptionPane.showConfirmDialog(null, textField, "Enter worker id:", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    String id = textField.getText();
+                    boolean check =managerController.IsWorksInSuper(id,name);
+                    //if the branch exists
+                    if(check)
+                    {
+                        managerController.RemoveWorker(id,name);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null,"worker id not found");
+                    }
+                }
             }
             else if(comboBox1.getSelectedItem().equals("update super shift times")) {
 
