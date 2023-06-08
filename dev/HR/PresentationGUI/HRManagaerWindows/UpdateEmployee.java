@@ -39,15 +39,28 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
         {
             if(comboBox1.getSelectedItem().equals("add new worker"))
             {
-
+                // todo: add a new window for adding new worker
             }
             else if(comboBox1.getSelectedItem().equals("add worker to branch"))
             {
-
+                //todo: first cuild the function for list of supers and then do this one
             }
             else if(comboBox1.getSelectedItem().equals("remove worker"))
             {
-
+                JTextField textField = new JTextField();
+                int result = JOptionPane.showConfirmDialog(null, textField, "Enter worker id:", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    String ID = textField.getText();
+                    boolean check = managerController.isExistWorker(ID);
+                    //if the worker exists
+                    if (!check) {
+                        JOptionPane.showMessageDialog(null, "worker id not found");
+                    }
+                    else{
+                        managerController.RemoveWorkerAllBranches(ID);
+                        JOptionPane.showMessageDialog(null, "The worker has been removed successfully!", "Fired!", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
             }
             else if(comboBox1.getSelectedItem().equals("add job for worker"))
             {

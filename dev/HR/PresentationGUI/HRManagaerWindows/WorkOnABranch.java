@@ -51,7 +51,7 @@ public class WorkOnABranch extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "you already have a weekly so you cant create one", "weekly", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    //todo create weekly shift
+                    //todo: create weekly shift
                 }
             }
             else if(comboBox1.getSelectedItem().equals("update day in weekly shift")) {
