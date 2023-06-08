@@ -45,7 +45,6 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        // TODO: place custom component creation code here
         DayComboBox = new JComboBox<String>();
         DayComboBox.addItem("Sunday");
         DayComboBox.addItem("Monday");

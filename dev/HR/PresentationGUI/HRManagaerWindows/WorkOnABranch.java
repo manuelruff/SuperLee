@@ -52,6 +52,8 @@ public class WorkOnABranch extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "you already have a weekly so you cant create one", "weekly", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
+                    //start creating a shift
+                    managerController.StartWeekly(name);
                     new CreateWeekly(this,name);
                     this.setVisible(false);
                 }
