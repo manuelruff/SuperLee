@@ -43,7 +43,7 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
             }
             else if(comboBox1.getSelectedItem().equals("add worker to branch"))
             {
-                //todo: first cuild the function for list of supers and then do this one
+                //todo: first build the function for list of supers and then do this one
             }
             else if(comboBox1.getSelectedItem().equals("remove worker"))
             {
