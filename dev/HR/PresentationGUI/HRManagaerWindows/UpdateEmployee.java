@@ -39,6 +39,8 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
             if(comboBox1.getSelectedItem().equals("add new worker"))
             {
                 // todo: add a new window for adding new worker
+                new AddNewWorker(this);
+                this.setVisible(false);
             }
             else if(comboBox1.getSelectedItem().equals("add worker to branch")) {
                 JTextField textField = new JTextField();
