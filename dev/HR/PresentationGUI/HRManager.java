@@ -1,5 +1,6 @@
 package HR.PresentationGUI;
 import HR.Bussiness.ManagerController;
+import HR.PresentationGUI.HRManagaerWindows.AddNewSuper;
 import HR.PresentationGUI.HRManagaerWindows.UpdateEmployee;
 import HR.PresentationGUI.HRManagaerWindows.WorkOnABranch;
 import javax.swing.*;
@@ -71,7 +72,8 @@ public class HRManager extends JFrame implements ActionListener{
             }
             else if(comboBox1.getSelectedItem().equals("add new branch"))
             {
-
+                new AddNewSuper(this);
+                this.setVisible(false);
             }
             else if(comboBox1.getSelectedItem().equals("send weekly shifts to history for all branches"))
             {
