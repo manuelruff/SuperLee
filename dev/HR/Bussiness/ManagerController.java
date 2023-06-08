@@ -544,4 +544,17 @@ public class ManagerController{
         Workers.get(ID).AddJob(Jobs.valueOf(job_name));
     }
 
+    // return all the super names - GUI
+    public String[] getAllSuperNames(){
+        // check if this one is ok - MANU!!
+        // read all the supers from the DB
+        dataController.getAllSupers();
+        List<List<String>> list=dataController.getSupers();
+        //todo: check if I add new super it updated in live and if it's ok
+        String [] allNames = new String[list.size()];
+        for(int i=0;i<list.size();i++){
+            allNames[i]=list.get(i).get(0);
+        }
+        return allNames;
+    }
 }
