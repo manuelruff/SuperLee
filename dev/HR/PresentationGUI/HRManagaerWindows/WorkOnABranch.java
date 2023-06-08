@@ -78,7 +78,8 @@ public class WorkOnABranch extends JFrame implements ActionListener {
                 }
             }
             else if(comboBox1.getSelectedItem().equals("update super shift times")) {
-
+                new UpdateShiftTime(this,name);
+                this.setVisible(false);
             }
             else if(comboBox1.getSelectedItem().equals("delete this branch")) {
                 int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this branch?", "Confirmation", JOptionPane.YES_NO_OPTION);
