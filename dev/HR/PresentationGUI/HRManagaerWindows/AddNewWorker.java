@@ -1,23 +1,20 @@
 package HR.PresentationGUI.HRManagaerWindows;
-
 import HR.Bussiness.ManagerController;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
+
 
 public class AddNewWorker extends JFrame implements ActionListener {
     private JPanel AddNewWorkerWin;
     private ManagerController managerController;
     //save the window that opened us to show him after closing
     private UpdateEmployee save;
-    private JLabel idLabel, fullNameLabel, bankNumLabel, contractLabel, wageLabel, roleLabel;
-    private JTextField idField, fullNameField, bankNumField, contractField, wageField, roleField;
+    private JLabel idLabel, fullNameLabel, bankNumLabel, contractLabel, wageLabel, roleLabel,branchLabel;
+    private JTextField idField, fullNameField, bankNumField, contractField, wageField, roleField,branchField;
+    private JOptionPane rolePane;
     private JButton addButton, cancelButton;
 
     public AddNewWorker(UpdateEmployee save) {
@@ -126,6 +123,23 @@ public class AddNewWorker extends JFrame implements ActionListener {
                 updateAddButtonEnabledState();
             }
         });
+
+        branchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateAddButtonEnabledState();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateAddButtonEnabledState();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateAddButtonEnabledState();
+            }
+        });
     }
 
     private void updateAddButtonEnabledState() {
@@ -135,6 +149,7 @@ public class AddNewWorker extends JFrame implements ActionListener {
                 !bankNumField.getText().isEmpty() &&
                 !contractField.getText().isEmpty() &&
                 !wageField.getText().isEmpty() &&
+                !branchField.getText().isEmpty()&&
                 !roleField.getText().isEmpty();
         addButton.setEnabled(allFieldsFilled);
     }
@@ -152,6 +167,7 @@ public class AddNewWorker extends JFrame implements ActionListener {
         contractLabel = new JLabel("Contract:");
         wageLabel = new JLabel("Wage:");
         roleLabel = new JLabel("Role:");
+        branchLabel = new JLabel("Branch:");
 
         // Set the foreground color of each label to white
         idLabel.setForeground(Color.WHITE);
@@ -160,6 +176,7 @@ public class AddNewWorker extends JFrame implements ActionListener {
         contractLabel.setForeground(Color.WHITE);
         wageLabel.setForeground(Color.WHITE);
         roleLabel.setForeground(Color.WHITE);
+        branchLabel.setForeground(Color.WHITE);
 
         idField = new JTextField(10);
         fullNameField = new JTextField(10);
@@ -167,6 +184,59 @@ public class AddNewWorker extends JFrame implements ActionListener {
         contractField = new JTextField(10);
         wageField = new JTextField(10);
         roleField = new JTextField(10);
+        branchField = new JTextField(10);
+
+        // choose the role from specific list of Roles
+        roleField.addFocusListener(new FocusAdapter() {
+            boolean optionPaneDisplayed = false;
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (!optionPaneDisplayed) {
+                    String[] options = {"ShiftManager","Cashier","StoreKeeper","GeneralEmp","Guard","Cleaner","Usher"};
+                    JList<String> list = new JList<>(options);
+                    int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a job:", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION) {
+                        // save the selected option
+                        String selectedOption = list.getSelectedValue();
+                        roleField.setText(selectedOption);
+                    }
+                    optionPaneDisplayed = true;
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                optionPaneDisplayed = false;
+            }
+        });
+
+        // choose the branch from specific list of Branches
+        branchField.addFocusListener(new FocusAdapter() {
+            boolean optionPaneDisplayed = false;
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (!optionPaneDisplayed) {
+                    String[] allBranches = managerController.getAllSuperNames();
+                    JList<String> list = new JList<>(allBranches);
+                    int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to add the employee:", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION) {
+                        // save the selected option
+                        String selectedOption = list.getSelectedValue();
+                        branchField.setText(selectedOption);
+                    }
+                    optionPaneDisplayed = true;
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                optionPaneDisplayed = false;
+            }
+        });
+
+        // check Id validate
+        // Set the input verifier for the ID field
+        idField.setInputVerifier(new IdVerifier());
 
         addButton = new JButton("Add");
         cancelButton = new JButton("Cancel");
@@ -218,6 +288,12 @@ public class AddNewWorker extends JFrame implements ActionListener {
         RolePanel.add(roleField);
         AddNewWorkerWin.add(RolePanel);
 
+        JPanel BranchPanel = new JPanel(new GridLayout(1, 2));
+        BranchPanel.setBackground(Color.BLACK); // Set the panel background color to black
+        BranchPanel.add(branchLabel);
+        BranchPanel.add(branchField);
+        AddNewWorkerWin.add(BranchPanel);
+
         JPanel buttonPanel = new JPanel(new GridLayout(2, 1)); // Set the grid layout to 2 rows and 1 column
         buttonPanel.setBackground(Color.BLACK); // Set the panel background color to black
         buttonPanel.add(addButton);
@@ -262,11 +338,15 @@ public class AddNewWorker extends JFrame implements ActionListener {
 
     }
 
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
+            String Id = idField.getText();
+            String fullName = fullNameField.getText();
+            int bankNum = Integer.parseInt(bankNumField.getText());
+            String contract = contractField.getText();
+            int wage = Integer.parseInt(wageField.getText());
+            String role = roleField.getText();
 
         }
         else if (e.getSource() == cancelButton) {
@@ -275,6 +355,21 @@ public class AddNewWorker extends JFrame implements ActionListener {
             //close this window
             this.dispose();
 
+        }
+    }
+    // check validate of the ID
+    class IdVerifier extends InputVerifier {
+        @Override
+        public boolean verify(JComponent input) {
+            // Get the ID field text
+            String ID = ((JTextField) input).getText();
+            // Check if the worker exists
+            boolean check = managerController.isExistWorker(ID);
+            if (check) {
+                JOptionPane.showMessageDialog(null, "Worker ID is already existed");
+                return false;
+            }
+            return true;
         }
     }
 }
