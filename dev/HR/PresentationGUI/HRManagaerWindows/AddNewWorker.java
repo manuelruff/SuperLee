@@ -2,6 +2,7 @@ package HR.PresentationGUI.HRManagaerWindows;
 import HR.Bussiness.Jobs;
 import HR.Bussiness.ManagerController;
 import HR.Bussiness.Training;
+import Shipment.Bussiness.Branch;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -17,12 +18,14 @@ public class AddNewWorker extends JFrame implements ActionListener {
     private UpdateEmployee save;
     private JLabel idLabel, fullNameLabel, bankNumLabel, contractLabel, wageLabel, roleLabel,branchLabel,licenceLabel,trainingLabel;
     private JTextField idField, fullNameField, bankNumField, contractField, wageField, roleField,branchField,licenceField,trainingField;
-    private JOptionPane rolePane;
+    private JComboBox<String> jobComboRole,branchCombo,licenceCombo,trainingCombo;
     private JButton addButton, cancelButton;
 
     public AddNewWorker(UpdateEmployee save) {
         this.save=save;
         this.managerController = ManagerController.getInstance();
+        // todo: check why it must be here and yet say I have problem
+        this.branchCombo = new JComboBox<>(managerController.getAllSuperNames());
         addButton.setEnabled(false);
         // Set the initial visibility of the fields
         trainingLabel.setVisible(false);
@@ -31,6 +34,10 @@ public class AddNewWorker extends JFrame implements ActionListener {
         licenceField.setVisible(false);
         branchLabel.setVisible(false);
         branchField.setVisible(false);
+        branchCombo.setVisible(false);
+        licenceCombo.setVisible(false);
+        trainingCombo.setVisible(false);
+
 
         // Add document listeners to each text field
         idField.getDocument().addDocumentListener(new DocumentListener() {
@@ -191,9 +198,9 @@ public class AddNewWorker extends JFrame implements ActionListener {
                 !fullNameField.getText().isEmpty() &&
                 !bankNumField.getText().isEmpty() &&
                 !contractField.getText().isEmpty() &&
+                !jobComboRole.getSelectedItem().equals("")&&
                 !wageField.getText().isEmpty() &&
-                !branchField.getText().isEmpty()&&
-                !roleField.getText().isEmpty();
+                ((!licenceCombo.getSelectedItem().equals("") && !trainingCombo.getSelectedItem().equals("") ||!branchCombo.getSelectedItem().equals("")));
         addButton.setEnabled(allFieldsFilled);
     }
 
@@ -235,60 +242,9 @@ public class AddNewWorker extends JFrame implements ActionListener {
         licenceField = new JTextField(10);
         trainingField = new JTextField(10);
 
-        // choose the role from specific list of Roles
-        roleField.addFocusListener(new FocusAdapter() {
-            boolean optionPaneDisplayed = false;
-
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (!optionPaneDisplayed) {
-                    String[] options = {"Driver","ShiftManager","Cashier","StoreKeeper","GeneralEmp","Guard","Cleaner","Usher"};
-                    JList<String> list = new JList<>(options);
-                    int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a job:", JOptionPane.OK_CANCEL_OPTION);
-                    if (result == JOptionPane.OK_OPTION) {
-                        // save the selected option
-                        String selectedOption = list.getSelectedValue();
-                        roleField.setText(selectedOption);
-                        toggleFieldsVisibility(selectedOption);
-                    }
-                    optionPaneDisplayed = true;
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                optionPaneDisplayed = false;
-            }
-        });
-
-
-
-        // choose the branch from specific list of Branches
-//        branchField.addFocusListener(new FocusAdapter() {
-//            boolean optionPaneDisplayed = false;
-//            @Override
-//            public void focusGained(FocusEvent e) {
-//                if (!optionPaneDisplayed) {
-//                    String[] allBranches = managerController.getAllSuperNames();
-//                    JList<String> list = new JList<>(allBranches);
-//                    int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to add the employee:", JOptionPane.OK_CANCEL_OPTION);
-//                    if (result == JOptionPane.OK_OPTION) {
-//                        // save the selected option
-//                        String selectedOption = list.getSelectedValue();
-//                        branchField.setText(selectedOption);
-//                    }
-//                    optionPaneDisplayed = true;
-//                }
-//            }
-//            @Override
-//            public void focusLost(FocusEvent e) {
-//                optionPaneDisplayed = false;
-//            }
-//        });
-
         // check Id validate
         // Set the input verifier for the ID field
-        idField.setInputVerifier(new IdVerifier());
+        idField.setInputVerifier(new IdVerifier(idLabel));
 
         addButton = new JButton("Add");
         cancelButton = new JButton("Cancel");
@@ -337,25 +293,40 @@ public class AddNewWorker extends JFrame implements ActionListener {
         JPanel RolePanel = new JPanel(new GridLayout(1, 2));
         RolePanel.setBackground(Color.BLACK); // Set the panel background color to black
         RolePanel.add(roleLabel);
-        RolePanel.add(roleField);
+        jobComboRole = new JComboBox<>(new String[] {"","Driver", "ShiftManager", "Cashier", "StoreKeeper", "GeneralEmp", "Guard", "Cleaner", "Usher"});
+        jobComboRole.setPreferredSize(roleField.getPreferredSize());
+        RolePanel.add(roleLabel);
+        RolePanel.add(jobComboRole);
         AddNewWorkerWin.add(RolePanel);
+
+        jobComboRole.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedOption = (String) jobComboRole.getSelectedItem();
+                toggleFieldsVisibility(selectedOption);
+            }
+        });
 
         JPanel BranchPanel = new JPanel(new GridLayout(1, 2));
         BranchPanel.setBackground(Color.BLACK); // Set the panel background color to black
         BranchPanel.add(branchLabel);
-        BranchPanel.add(branchField);
+        // todo: need to understand why the branches arent load
         AddNewWorkerWin.add(BranchPanel);
 
         JPanel LicencePanel = new JPanel(new GridLayout(1, 2));
         LicencePanel.setBackground(Color.BLACK); // Set the panel background color to black
         LicencePanel.add(licenceLabel);
-        LicencePanel.add(licenceField);
+        licenceCombo= new JComboBox<>(new String[] {"","C", "D"});
+        licenceCombo.setPreferredSize(licenceField.getPreferredSize());
+        LicencePanel.add(licenceCombo);
         AddNewWorkerWin.add(LicencePanel);
 
         JPanel TrainingPanel = new JPanel(new GridLayout(1, 2));
         TrainingPanel.setBackground(Color.BLACK); // Set the panel background color to black
         TrainingPanel.add(trainingLabel);
-        TrainingPanel.add(trainingField);
+        trainingCombo= new JComboBox<>(new String[] {"","Regular","Cooling","Freezer"});
+        trainingCombo.setPreferredSize(trainingField.getPreferredSize());
+        TrainingPanel.add(trainingCombo);
         AddNewWorkerWin.add(TrainingPanel);
 
         JPanel buttonPanel = new JPanel(new GridLayout(2, 1)); // Set the grid layout to 2 rows and 1 column
@@ -415,60 +386,6 @@ public class AddNewWorker extends JFrame implements ActionListener {
             String generic_Password = "123";
 
             if(role.equals("Driver")){
-//                JTextField field1 = new JTextField();
-//                JTextField field2 = new JTextField();
-//                JPanel panel = new JPanel(new GridLayout(2, 2));
-//                panel.add(new JLabel("licence type:"));
-//                panel.add(field1);
-//                panel.add(new JLabel("driver storage capabilities training:"));
-//                panel.add(field2);
-//                int result = JOptionPane.showConfirmDialog(null, panel, "Enter values", JOptionPane.OK_CANCEL_OPTION);
-//                field1.addFocusListener(new FocusAdapter() {
-//                    boolean optionPaneDisplayed = false;
-//
-//                    @Override
-//                    public void focusGained(FocusEvent e) {
-//                        if (!optionPaneDisplayed) {
-//                            String[] options = {"C","D"};
-//                            JList<String> list = new JList<>(options);
-//                            int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "licence type:", JOptionPane.OK_CANCEL_OPTION);
-//                            if (result == JOptionPane.OK_OPTION) {
-//                                // save the selected option
-//                                String selectedOption = list.getSelectedValue();
-//                                field1.setText(selectedOption);
-//                            }
-//                            optionPaneDisplayed = true;
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void focusLost(FocusEvent e) {
-//                        optionPaneDisplayed = false;
-//                    }
-//                });
-//                field2.addFocusListener(new FocusAdapter() {
-//                    boolean optionPaneDisplayed = false;
-//
-//                    @Override
-//                    public void focusGained(FocusEvent e) {
-//                        if (!optionPaneDisplayed) {
-//                            String[] options = {"Regular","Cooling","Freezer"};
-//                            JList<String> list = new JList<>(options);
-//                            int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a job:", JOptionPane.OK_CANCEL_OPTION);
-//                            if (result == JOptionPane.OK_OPTION) {
-//                                // save the selected option
-//                                String selectedOption = list.getSelectedValue();
-//                                field2.setText(selectedOption);
-//                            }
-//                            optionPaneDisplayed = true;
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void focusLost(FocusEvent e) {
-//                        optionPaneDisplayed = false;
-//                    }
-//                });
                 managerController.AddNewWorker(Id,fullName, bankNum,contract,wage,generic_Password,licenceField.getText().charAt(0), Training.valueOf(trainingField.getText()));
             }
             else{
@@ -484,8 +401,15 @@ public class AddNewWorker extends JFrame implements ActionListener {
 
         }
     }
-    // check validate of the ID
+
+
     class IdVerifier extends InputVerifier {
+        private JLabel idLabel;
+
+        public IdVerifier(JLabel idLabel) {
+            this.idLabel = idLabel;
+        }
+
         @Override
         public boolean verify(JComponent input) {
             // Get the ID field text
@@ -493,134 +417,48 @@ public class AddNewWorker extends JFrame implements ActionListener {
             // Check if the worker exists
             boolean check = managerController.isExistWorker(ID);
             if (check) {
-                JOptionPane.showMessageDialog(null, "Worker ID is already existed");
+                // Change the color of the IdLabel to red
+                idLabel.setForeground(Color.RED);
                 return false;
             }
+            // Change the color of the IdLabel to black
+            idLabel.setForeground(Color.WHITE);
             return true;
         }
     }
+
 
     private void toggleFieldsVisibility(String job) {
         if (job.equals("Driver")) {
             trainingLabel.setVisible(true);
             trainingField.setVisible(true);
+            trainingCombo.setVisible(true);
             licenceLabel.setVisible(true);
             licenceField.setVisible(true);
+            licenceCombo.setVisible(true);
             branchLabel.setVisible(false);
             branchField.setVisible(false);
-            // Remove the focus listener from the branchField
-            //branchField.removeFocusListener(branchField.getFocusListeners()[0]);
-            removeBranchFieldFocusListener();
-            branchField.setText("");
-            // Add the focus listener to the licenceField and trainingField
-            licenceField.addFocusListener(new FocusAdapter() {
-                boolean optionPaneDisplayed = false;
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                    if (!optionPaneDisplayed) {
-                        String[] options = {"C", "D"};
-                        JList<String> list = new JList<>(options);
-                        int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Licence type:", JOptionPane.OK_CANCEL_OPTION);
-                        if (result == JOptionPane.OK_OPTION) {
-                            // save the selected option
-                            String selectedOption = list.getSelectedValue();
-                            licenceField.setText(selectedOption);
-                        }
-                        optionPaneDisplayed = true;
-                    }
-                }
-
-                @Override
-                public void focusLost(FocusEvent e) {
-                    optionPaneDisplayed = false;
-                }
-            });
-            trainingField.addFocusListener(new FocusAdapter() {
-                boolean optionPaneDisplayed = false;
-
-                @Override
-                public void focusGained(FocusEvent e) {
-                    if (!optionPaneDisplayed) {
-                        String[] options = {"Regular","Cooling","Freezer"};
-                        JList<String> list = new JList<>(options);
-                        int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a job:", JOptionPane.OK_CANCEL_OPTION);
-                        if (result == JOptionPane.OK_OPTION) {
-                            // save the selected option
-                            String selectedOption = list.getSelectedValue();
-                            trainingField.setText(selectedOption);
-                        }
-                        optionPaneDisplayed = true;
-                    }
-                }
-
-                @Override
-                public void focusLost(FocusEvent e) {
-                    optionPaneDisplayed = false;
-                }
-            });
+            branchCombo.setVisible(false);
         } else {
             trainingLabel.setVisible(false);
             trainingField.setVisible(false);
+            trainingCombo.setVisible(false);
             licenceLabel.setVisible(false);
             licenceField.setVisible(false);
+            licenceCombo.setVisible(false);
             branchLabel.setVisible(true);
             branchField.setVisible(true);
-            // Remove the focus listener from the licenceField
-            // Remove the focus listener from the licenceField and trainingField
-            removeLicenceFieldFocusListener();
-            removeTrainingFieldFocusListener();
-            // Clear the text in the licenceField
-            licenceField.setText("");
-            trainingField.setText("");
-            // choose the branch from specific list of Branches
-            branchField.addFocusListener(new FocusAdapter() {
-                boolean optionPaneDisplayed = false;
-                @Override
-                public void focusGained(FocusEvent e) {
-                    if (!optionPaneDisplayed) {
-                        String[] allBranches = managerController.getAllSuperNames();
-                        JList<String> list = new JList<>(allBranches);
-                        int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to add the employee:", JOptionPane.OK_CANCEL_OPTION);
-                        if (result == JOptionPane.OK_OPTION) {
-                            // save the selected option
-                            String selectedOption = list.getSelectedValue();
-                            branchField.setText(selectedOption);
-                        }
-                        optionPaneDisplayed = true;
-                    }
-                }
-                @Override
-                public void focusLost(FocusEvent e) {
-                    optionPaneDisplayed = false;
-                }
-            });
+            branchCombo.setVisible(true);
+
+            JPanel BranchPanel = new JPanel(new GridLayout(1, 2));
+            BranchPanel.setBackground(Color.BLACK); // Set the panel background color to black
+            BranchPanel.add(branchLabel);
+            // todo: need to understand why the branches arent load
+            branchCombo.setPreferredSize(branchField.getPreferredSize());
+            BranchPanel.add(branchCombo);
+            AddNewWorkerWin.add(BranchPanel,6);
+
         }
     }
-
-    private void removeLicenceFieldFocusListener() {
-        for (FocusListener listener : licenceField.getFocusListeners()) {
-            if (listener instanceof FocusAdapter) {
-                licenceField.removeFocusListener(listener);
-            }
-        }
-    }
-
-    private void removeTrainingFieldFocusListener() {
-        for (FocusListener listener : trainingField.getFocusListeners()) {
-            if (listener instanceof FocusAdapter) {
-                trainingField.removeFocusListener(listener);
-            }
-        }
-    }
-
-    private void removeBranchFieldFocusListener() {
-        for (FocusListener listener : branchField.getFocusListeners()) {
-            if (listener instanceof FocusAdapter) {
-                branchField.removeFocusListener(listener);
-            }
-        }
-    }
-
 
 }
