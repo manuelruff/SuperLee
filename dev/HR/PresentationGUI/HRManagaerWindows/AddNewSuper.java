@@ -99,8 +99,7 @@ public class AddNewSuper extends JFrame implements ActionListener {
         boolean allFieldsFilled = !nameField.getText().isEmpty() &&
                 !addressField.getText().isEmpty() &&
                 !phoneField.getText().isEmpty() &&
-                !contactNameField.getText().isEmpty() &&
-                !zoneComboBox.getSelectedItem().equals("");
+                !contactNameField.getText().isEmpty();
         addButton.setEnabled(allFieldsFilled);
     }
 
@@ -173,7 +172,7 @@ public class AddNewSuper extends JFrame implements ActionListener {
         JPanel ZonePanel = new JPanel(new GridLayout(1, 2));
         ZonePanel.setBackground(Color.BLACK); // Set the panel background color to black
         ZonePanel.add(zoneFieldLabel);
-        zoneComboBox = new JComboBox<>(new String[] {"","North", "Center", "South"});
+        zoneComboBox = new JComboBox<>(new String[] {"North", "Center", "South"});
         zoneComboBox.setPreferredSize(zoneFieldLabel.getPreferredSize());
         ZonePanel.add(zoneFieldLabel);
         ZonePanel.add(zoneComboBox);
@@ -224,6 +223,10 @@ public class AddNewSuper extends JFrame implements ActionListener {
             String contactName = contactNameField.getText();
             String zone = zoneComboBox.getSelectedItem().toString();
             managerController.addSuper(siteName,siteAddress,sitePhoneNumber,contactName, Zone.valueOf(zone).ordinal());
+            // Display a success message and return to the previous window
+            JOptionPane.showMessageDialog(this, "Branch added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            save.setVisible(true); // show the main window
+            this.dispose(); // close the current window
 
         }
         else if (e.getSource() == cancelButton) {

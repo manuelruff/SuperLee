@@ -199,8 +199,7 @@ public class AddNewWorker extends JFrame implements ActionListener {
                 !bankNumField.getText().isEmpty() &&
                 !contractField.getText().isEmpty() &&
                 !jobComboRole.getSelectedItem().equals("")&&
-                !wageField.getText().isEmpty() &&
-                ((!licenceCombo.getSelectedItem().equals("") && !trainingCombo.getSelectedItem().equals("") ||!branchCombo.getSelectedItem().equals("")));
+                !wageField.getText().isEmpty();
         addButton.setEnabled(allFieldsFilled);
     }
 
@@ -316,7 +315,7 @@ public class AddNewWorker extends JFrame implements ActionListener {
         JPanel LicencePanel = new JPanel(new GridLayout(1, 2));
         LicencePanel.setBackground(Color.BLACK); // Set the panel background color to black
         LicencePanel.add(licenceLabel);
-        licenceCombo= new JComboBox<>(new String[] {"","C", "D"});
+        licenceCombo= new JComboBox<>(new String[] {"C", "D"});
         licenceCombo.setPreferredSize(licenceField.getPreferredSize());
         LicencePanel.add(licenceCombo);
         AddNewWorkerWin.add(LicencePanel);
@@ -324,7 +323,7 @@ public class AddNewWorker extends JFrame implements ActionListener {
         JPanel TrainingPanel = new JPanel(new GridLayout(1, 2));
         TrainingPanel.setBackground(Color.BLACK); // Set the panel background color to black
         TrainingPanel.add(trainingLabel);
-        trainingCombo= new JComboBox<>(new String[] {"","Regular","Cooling","Freezer"});
+        trainingCombo= new JComboBox<>(new String[] {"Regular","Cooling","Freezer"});
         trainingCombo.setPreferredSize(trainingField.getPreferredSize());
         TrainingPanel.add(trainingCombo);
         AddNewWorkerWin.add(TrainingPanel);
@@ -391,6 +390,10 @@ public class AddNewWorker extends JFrame implements ActionListener {
             else{
                 managerController.AddNewWorker(Id,fullName,bankNum,contract,wage, Jobs.valueOf(role),generic_Password,branch);
             }
+            // Display a success message and return to the previous window
+            JOptionPane.showMessageDialog(this, "Worker added successfully to branch " + branchField.getText() + "!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            save.setVisible(true); // show the main window
+            this.dispose(); // close the current window
 
         }
         else if (e.getSource() == cancelButton) {
