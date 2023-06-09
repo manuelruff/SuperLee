@@ -18,8 +18,8 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
     private JComboBox comboBox1;
     private JButton backButton;
     private JButton startButton;
-    //private JLabel IdLabel;
-    //private JTextField IdText;
+    private JLabel IdLabel;
+    private JTextField IdText;
     private ManagerController managerController;
     private HRManager save;
 
