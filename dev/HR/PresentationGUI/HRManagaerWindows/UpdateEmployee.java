@@ -18,8 +18,6 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
     private JComboBox comboBox1;
     private JButton backButton;
     private JButton startButton;
-    private JLabel IdLabel;
-    private JTextField IdText;
     private ManagerController managerController;
     private HRManager save;
 
@@ -62,25 +60,27 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
 
 
                 JTextField textField = new JTextField();
-                int result = JOptionPane.showConfirmDialog(null, textField, "Enter worker id:", JOptionPane.OK_CANCEL_OPTION);
+                JComboBox<String> branchComboBox = new JComboBox<>(managerController.getAllSuperNames());
+                JPanel panel = new JPanel(new GridLayout(0, 1));
+                panel.add(new JLabel("Enter worker ID:"));
+                panel.add(textField);
+                panel.add(new JLabel("Select a branch to add the employee:"));
+                panel.add(branchComboBox);
+
+                int result = JOptionPane.showConfirmDialog(null, panel, "Add Worker to Branch", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
                     String ID = textField.getText();
                     boolean check = managerController.isExistWorker(ID);
                     //if the worker exists
                     if (!check) {
-                        JOptionPane.showMessageDialog(null, "worker id not found");
+                        JOptionPane.showMessageDialog(null, "Worker ID not found", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        String[] allBranches = managerController.getAllSuperNames();
-                        JList<String> list = new JList<>(allBranches);
-                        result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to add the employee:", JOptionPane.OK_CANCEL_OPTION);
-                        if (result == JOptionPane.OK_OPTION) {
-                            // save the selected option
-                            String selectedOption = list.getSelectedValue();
-                            managerController.AddWorkerToBranch(ID, selectedOption);
-                            JOptionPane.showMessageDialog(null, "The worker added successfully!", "Role", JOptionPane.INFORMATION_MESSAGE);
-                        }
+                        String selectedBranch = (String) branchComboBox.getSelectedItem();
+                        managerController.AddWorkerToBranch(ID, selectedBranch);
+                        JOptionPane.showMessageDialog(null, "The worker added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
+
             }
             else if(comboBox1.getSelectedItem().equals("remove worker"))
             {
@@ -116,26 +116,67 @@ public class UpdateEmployee extends JFrame implements ActionListener  {
 //                    JOptionPane.showMessageDialog(null, "Role added successfully!", "Role", JOptionPane.INFORMATION_MESSAGE);
                 //}
                 //*** end of changes***
-                JTextField textField = new JTextField();
-                int result = JOptionPane.showConfirmDialog(null, textField, "Enter worker id:", JOptionPane.OK_CANCEL_OPTION);
+//                JTextField textField = new JTextField();
+//                int result = JOptionPane.showConfirmDialog(null, textField, "Enter worker id:", JOptionPane.OK_CANCEL_OPTION);
+//                if (result == JOptionPane.OK_OPTION) {
+//                    String ID = textField.getText();
+//                    boolean check = managerController.isExistWorker(ID);
+//                    //if the worker exists
+//                    if(!check)
+//                    {
+//                        JOptionPane.showMessageDialog(null,"worker id not found");
+//                    }
+//                    else{
+//                        String[] options = {"ShiftManager","Cashier","StoreKeeper","GeneralEmp","Guard","Cleaner","Usher"};
+//                        JList<String> list = new JList<>(options);
+//                        result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a job to add:", JOptionPane.OK_CANCEL_OPTION);
+//                        if (result == JOptionPane.OK_OPTION) {
+//                            // save the selected option
+//                            String selectedOption = list.getSelectedValue();
+//                            managerController.AddJobToWorker(ID,selectedOption);
+//                            JOptionPane.showMessageDialog(null, "Role added successfully!", "Role", JOptionPane.INFORMATION_MESSAGE);
+//                        }
+//                    }
+//                }
+
+
+
+
+
+                JComboBox<String> jobComboBox = new JComboBox<>();
+                jobComboBox.addItem("ShiftManager");
+                jobComboBox.addItem("Cashier");
+                jobComboBox.addItem("StoreKeeper");
+                jobComboBox.addItem("GeneralEmp");
+                jobComboBox.addItem("Guard");
+                jobComboBox.addItem("Cleaner");
+                jobComboBox.addItem("Usher");
+
+                // Create the text field for entering the worker ID
+                JTextField idTextField = new JTextField();
+
+                // Create the panel with the combo box and text field
+                JPanel panel = new JPanel(new GridLayout(0, 1));
+                panel.add(new JLabel("Select a job to add:"));
+                panel.add(jobComboBox);
+                panel.add(new JLabel("Enter worker ID:"));
+                panel.add(idTextField);
+
+                // Show the dialog box and get the result
+                int result = JOptionPane.showConfirmDialog(null, panel, "Add Job for Worker", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
-                    String ID = textField.getText();
-                    boolean check = managerController.isExistWorker(ID);
-                    //if the worker exists
-                    if(!check)
-                    {
-                        JOptionPane.showMessageDialog(null,"worker id not found");
-                    }
-                    else{
-                        String[] options = {"ShiftManager","Cashier","StoreKeeper","GeneralEmp","Guard","Cleaner","Usher"};
-                        JList<String> list = new JList<>(options);
-                        result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a job to add:", JOptionPane.OK_CANCEL_OPTION);
-                        if (result == JOptionPane.OK_OPTION) {
-                            // save the selected option
-                            String selectedOption = list.getSelectedValue();
-                            managerController.AddJobToWorker(ID,selectedOption);
-                            JOptionPane.showMessageDialog(null, "Role added successfully!", "Role", JOptionPane.INFORMATION_MESSAGE);
-                        }
+                    // Get the selected job and worker ID
+                    String selectedJob = (String) jobComboBox.getSelectedItem();
+                    String workerId = idTextField.getText();
+
+                    // Check if the worker exists
+                    boolean check = managerController.isExistWorker(workerId);
+                    if (!check) {
+                        JOptionPane.showMessageDialog(null, "Worker ID not found", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        // Add the job to the worker
+                        managerController.AddJobToWorker(workerId, selectedJob);
+                        JOptionPane.showMessageDialog(null, "Job added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             }

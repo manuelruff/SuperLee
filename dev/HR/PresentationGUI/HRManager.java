@@ -47,7 +47,7 @@ public class HRManager extends JFrame implements ActionListener{
             {
                 String[] allBranches = managerController.getAllSuperNames();
                 JList<String> list = new JList<>(allBranches);
-                int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to add the employee:", JOptionPane.OK_CANCEL_OPTION);
+                int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to work on:", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
                     // save the selected option
                     String name = list.getSelectedValue();
