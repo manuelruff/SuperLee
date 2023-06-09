@@ -548,14 +548,20 @@ public class ManagerController{
     // return all the super names - GUI
     public String[] getAllSuperNames(){
         // check if this one is ok - MANU!!
-        // read all the supers from the DB
-        dataController.getAllSupers();
-        List<List<String>> list=dataController.getSupers();
-        //todo: check if I add new super it updated in live and if it's ok
-        String [] allNames = new String[list.size()];
-        for(int i=0;i<list.size();i++){
-            allNames[i]=list.get(i).get(0);
+        if(this.Superim.isEmpty()){
+            // read all the supers from the DB
+            dataController.getAllSupers();
+            List<List<String>> list=dataController.getSupers();
+            //todo: check if I add new super it updated in live and if it's ok
+            String [] allNames = new String[list.size()];
+            for(int i=0;i<list.size();i++){
+                allNames[i]=list.get(i).get(0);
+            }
+            return allNames;
         }
-        return allNames;
-    }
+        else{
+            // if we while run and yet to write to DB and want to read the new brnahcs that addded
+            return this.Superim.keySet().toArray(new String[0]);
+            }
+        }
 }
