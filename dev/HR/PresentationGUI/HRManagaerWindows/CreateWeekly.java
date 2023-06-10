@@ -377,6 +377,14 @@ public class CreateWeekly  extends JFrame implements ActionListener {
                 isCreated=true;
                 //we want to unselect this
                 empty.setSelected(false);
+                //set all to available
+                CashiersLabelField.setEnabled(true);
+                StoreKeepersLabelField.setEnabled(true);
+                GeneralEmployesLabelField.setEnabled(true);
+                GuardsLabelField.setEnabled(true);
+                CleanerLabelField.setEnabled(true);
+                UsherLabelField.setEnabled(true);
+                nextButton.setEnabled(false);
             }
             else {
                 //get all the info abount the numbers
