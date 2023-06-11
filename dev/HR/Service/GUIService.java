@@ -2,6 +2,8 @@ package HR.Service;
 
 import HR.Bussiness.ServiceController;
 
+import java.util.List;
+
 //this will be singletone
 public class GUIService {
     private static GUIService instance;
@@ -16,6 +18,9 @@ public class GUIService {
         }
         return instance;
     }
-
+    public List<List<String>>getDriversSchedule(){
+        List<List<String>>driversSchedule = serviceController.getDriversSchedule();
+        return driversSchedule;
+    }
 
 }

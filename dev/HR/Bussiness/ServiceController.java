@@ -267,4 +267,24 @@ public class ServiceController {
         }
         return true;
     }
+
+
+    //stuff for gui service
+    public List<List<String>>getDriversSchedule(){
+        //load all the drivers from the db
+        dataController.loadAllWorkers();
+        List<List<String>>ret=new ArrayList<>();
+        for(Driver driver:Drivers.values()){
+            List<String>temp=new ArrayList<>();
+            temp.add(driver.getID());
+            temp.add(driver.getName());
+            List<Days> days=driver.getWeeklyWorkingDays();
+            for (int i=0; i < days.size(); i++){
+                temp.add((days.get(i).toString()));
+            }
+            ret.add(temp);
+        }
+        return ret;
+    }
+
 }

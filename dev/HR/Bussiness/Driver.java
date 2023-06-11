@@ -1,8 +1,7 @@
 package HR.Bussiness;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Driver extends AWorker{
     private char license;
@@ -90,7 +89,7 @@ public class Driver extends AWorker{
             System.out.println("ID: " + ID);
             int i;
             StringBuilder print = new StringBuilder();
-            for (i=0; i < WeeklyWorkingDays.size() - 1; i++){
+            for (i=0; i < WeeklyWorkingDays.size(); i++){
                 print.append(WeeklyWorkingDays.get(i).toString()).append(" , ");
             }
             print.append(WeeklyWorkingDays.get(i).toString());

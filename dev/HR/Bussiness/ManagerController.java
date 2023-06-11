@@ -391,6 +391,8 @@ public class ManagerController{
     }
     // prints all the drivers shifts
     public void PrintDriversSchedule() {
+        //load all the drivers from the db
+        dataController.loadAllWorkers();
         for(Driver driver: Drivers.values()){
             driver.PrintForShifts();
         }
