@@ -72,6 +72,7 @@ public class DataController {
 
     public void deleteShipment(String ID){shipmentMapper.deleteShipment(ID);}
 
+    public void deleteAvailable(String ID){getAvailableShipments().remove(ID);}
     public void deleteItemDoc(String shipmentID, String destination)
     {
         shipmentMapper.deleteItemDoc(shipmentID,destination);
