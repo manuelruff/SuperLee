@@ -26,6 +26,7 @@ public class Main {
                 new HRManager();
             }
             // else if
+            //shipment manager
             else{
                 JOptionPane.showMessageDialog(null,"Wrong role");
                 System.exit(0);
