@@ -30,7 +30,7 @@ public class SiteMenu extends JFrame implements ActionListener {
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        comboBox1 = new JComboBox<String>();
+        comboBox1 = new JComboBox<>();
         comboBox1.addItem("Add Vendor");
         comboBox1.addItem("Print All Sites (vendors and branches)");
         comboBox1.addItem("Update site info");
@@ -38,10 +38,17 @@ public class SiteMenu extends JFrame implements ActionListener {
     }
 
 
-   
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        if(e.getActionCommand().equals("Start"))
+        {
+            if(comboBox1.getSelectedItem().equals("Add Vendor"))
+            {
+                new AddVendor(this);
+                this.setVisible(false);
+            }
+        }
     }
 }

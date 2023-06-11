@@ -1,4 +1,42 @@
 package Shipment.PresentationGUI;
 
-public class DriverMenu {
+import Shipment.Bussiness.shipmentManagement;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class DriverMenu extends JFrame implements ActionListener {
+    private JButton backButton;
+    private JButton startButton;
+    private JComboBox<String> comboBox1;
+    private JPanel DriverMenu;
+    private shipmentManagement shipmentM;
+
+    public DriverMenu() {
+
+        this.setContentPane(DriverMenu);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setMinimumSize(new Dimension(300,200));
+        this.pack();
+        this.setVisible(true);
+        this.setTitle("Driver Menu");
+        startButton.addActionListener(this);
+        backButton.addActionListener(this);
+        comboBox1.addActionListener(this);
+        shipmentM = shipmentManagement.getInstance();
+    }
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        comboBox1 = new JComboBox<>();
+        comboBox1.addItem("Print All drivers");
+        comboBox1.addItem("Update driver licence");
+        comboBox1.addItem("Update driver training");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
