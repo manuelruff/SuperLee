@@ -59,7 +59,9 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
         ShiftComboBox = new JComboBox<String>();
         ShiftComboBox.addItem("Morning");
         ShiftComboBox.addItem("Evening");
-
+        doButton.setForeground(Color.black);
+        watchShiftButton.setForeground(Color.black);
+        backButton.setForeground(Color.black);
     }
 
     @Override
