@@ -270,6 +270,7 @@ public class ServiceController {
 
 
     //stuff for gui service
+    //function that return representation of all drivers and their scedual in string
     public List<List<String>>getDriversSchedule(){
         //load all the drivers from the db
         dataController.loadAllWorkers();
@@ -286,5 +287,54 @@ public class ServiceController {
         }
         return ret;
     }
+    //function that return representation 2 shifts in a day for a branch
+    public List<List<String>>getShift(String name,int day){
+        List<List<String>>ret=new ArrayList<>();
+        Shift shift1=dataController.getSuper(name).GetWeekShifts().GetShift(day*2);
+        Shift shift2=dataController.getSuper(name).GetWeekShifts().GetShift(day*2+1);
+        //ill put in one list the info of the mornning shift in the first place
+        List<String>sh1=new ArrayList<>();
+        sh1.add(shift1.getDate().toString());
+        sh1.add(shift1.getDate().getDayOfWeek().toString());
+        sh1.add(shift1.getShift_time().toString());
+        if(shift1.IsEmptyShift()){
+            sh1.add("Empty");
+        }
+        else{
+            sh1.add(Double.toString(shift1.getStart()));
+            sh1.add(Double.toString(shift1.getEnd()));
+            for (Jobs job : shift1.getWorkerList().keySet()) {
+                if(shift1.getWorkerList().get(job).size()!=0){
+                    sh1.add("As "+job+" the Workers are:");
+                    for (Worker worker: shift1.getWorkerList().get(job)){
+                        sh1.add("Name: "+worker.getName() + " with ID: "+worker.getID());
+                    }
+                }
+            }
+        }
 
+        //ill put in one list the info of the evening shift in the second place
+        List<String>sh2=new ArrayList<>();
+        sh2.add(shift2.getDate().toString());
+        sh2.add(shift2.getDate().getDayOfWeek().toString());
+        sh2.add(shift2.getShift_time().toString());
+        if(shift2.IsEmptyShift()){
+            sh2.add("Empty");
+        }
+        else{
+            sh2.add(Double.toString(shift2.getStart()));
+            sh2.add(Double.toString(shift2.getEnd()));
+            for (Jobs job : shift2.getWorkerList().keySet()) {
+                if(shift2.getWorkerList().get(job).size()!=0){
+                    sh2.add("As "+job+" the Workers are:");
+                    for (Worker worker: shift2.getWorkerList().get(job)){
+                        sh2.add("Name: "+worker.getName() + " with ID: "+worker.getID());
+                    }
+                }
+            }
+        }
+        ret.add(sh1);
+        ret.add(sh2);
+        return ret;
+    }
 }

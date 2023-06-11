@@ -19,8 +19,11 @@ public class GUIService {
         return instance;
     }
     public List<List<String>>getDriversSchedule(){
-        List<List<String>>driversSchedule = serviceController.getDriversSchedule();
-        return driversSchedule;
+        List<List<String>>ret = serviceController.getDriversSchedule();
+        return ret;
     }
-
+    public List<List<String>> getShift(String name,int day){
+        List<List<String>>ret = serviceController.getShift(name,day);
+        return ret;
+    }
 }
