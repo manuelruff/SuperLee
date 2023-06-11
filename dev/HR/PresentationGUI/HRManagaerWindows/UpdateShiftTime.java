@@ -221,14 +221,14 @@ public class UpdateShiftTime extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("Do"))
+        if(e.getSource() == doButton)
         {
-            managerController.UpdateSuperTimes(name, Days.valueOf(dayComboBox.getActionCommand().toString()),
+            managerController.UpdateSuperTimes(name, Days.valueOf(dayComboBox.getSelectedItem().toString()),
                     Double.parseDouble(startMorningTextField.getText()), Double.parseDouble(endMorningTextField.getText().toString()),
                     Double.parseDouble(startEveningTextField.getText()), Double.parseDouble(endEveningTextField.getText().toString()));
             backButton.doClick();
         }
-        else if(e.getActionCommand().equals("Back"))
+        else if(e.getSource() ==backButton )
         {
             //we show the main window
             save.setVisible(true);

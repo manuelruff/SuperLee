@@ -47,18 +47,23 @@ public class ShipManager extends JFrame implements ActionListener{
         if (e.getActionCommand().equals("Start")) {
             if (Objects.equals(comboBox1.getSelectedItem(), "Site Menu")){
                 new SiteMenu();
+                this.setVisible(false);
             }
             else if(Objects.equals(comboBox1.getSelectedItem(), "Truck Menu")){
                 new TruckMenu();
+                this.setVisible(false);
             }
             else if (Objects.equals(comboBox1.getSelectedItem(), "Drivers Menu")) {
                 new DriverMenu();
+                this.setVisible(false);
             }
             else if (Objects.equals(comboBox1.getSelectedItem(), "Order Menu")){
                 new OrderMenu();
+                this.setVisible(false);
             }
             else if (Objects.equals(comboBox1.getSelectedItem(), "Shipping Menu")){
                 new ShipmentMenu();
+                this.setVisible(false);
             }
             else if (Objects.equals(comboBox1.getSelectedItem(), "Print all shipped item docs")){
                 // TODO print all docs
