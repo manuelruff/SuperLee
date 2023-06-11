@@ -14,7 +14,6 @@ public class ServiceController {
     private Map<String, Worker> Workers;
     private Map<String, Driver> Drivers;
     private DataController dataController;
-
     private Set<String> changes;
 
     private ServiceController() {

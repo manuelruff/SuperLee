@@ -1,6 +1,7 @@
 package HR.PresentationGUI;
 import HR.Bussiness.ManagerController;
 import HR.PresentationGUI.HRManagaerWindows.AddNewSuper;
+import HR.PresentationGUI.HRManagaerWindows.DriversSchedule;
 import HR.PresentationGUI.HRManagaerWindows.UpdateEmployee;
 import HR.PresentationGUI.HRManagaerWindows.WorkOnABranch;
 import javax.swing.*;
@@ -103,6 +104,8 @@ public class HRManager extends JFrame implements ActionListener{
             else if(comboBox1.getSelectedItem().equals("Show Drivers Schedule"))
             {
                 //todo: add the drivers schedule print
+                new DriversSchedule(this);
+                this.setVisible(false);
             }
             else if(comboBox1.getSelectedItem().equals("Show all shipments"))
             {
