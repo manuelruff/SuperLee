@@ -23,8 +23,9 @@ public class Main {
         {
             // todo   calls the GUI object starting function
             if (role.equals("HRManager")){
-                HRManager a=new HRManager();
+                new HRManager();
             }
+            // else if
             else{
                 JOptionPane.showMessageDialog(null,"Wrong role");
                 System.exit(0);
