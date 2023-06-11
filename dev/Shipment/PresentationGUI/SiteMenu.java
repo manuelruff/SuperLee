@@ -12,7 +12,7 @@ public class SiteMenu extends JFrame implements ActionListener {
     private JPanel SiteMenu;
     private JButton exitButton;
     private JButton startButton;
-    private JComboBox comboBox1;
+    private JComboBox<String> comboBox1;
     private shipmentManagement shipmentM;
 
     public SiteMenu() throws HeadlessException {
@@ -26,7 +26,7 @@ public class SiteMenu extends JFrame implements ActionListener {
         startButton.addActionListener(this);
         exitButton.addActionListener(this);
         comboBox1.addActionListener(this);
-        this.shipmentM = shipmentManagement.getInstance();
+        shipmentM = shipmentManagement.getInstance();
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -38,9 +38,7 @@ public class SiteMenu extends JFrame implements ActionListener {
     }
 
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new SiteMenu());
-    }
+   
 
     @Override
     public void actionPerformed(ActionEvent e) {
