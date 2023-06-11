@@ -331,24 +331,27 @@ public class ManagerController{
 
     // checks if worker is a only storekeeper in a shift at branch today or if he is the shift manager
     public boolean IsOnlyStoreKeeperWithShipmentOrShiftManager(String branch,String ID, int day){
+        int shiftnum = day * 2;
+        // calculate the date of the shift
+        LocalDate send=Superim.get(branch).GetWeekShifts().GetShift(shiftnum).getDate();
+        // first check if there is a shipment in this date
+        if(!hrService.isThereAShipment(send,branch)){
+            return false;
+        }
+        // in case there is a shipment we check if the worker is a shift manager or the only storekeeper in a shift
         //we first need to load all the workers for this super from the db
         dataController.loadAllWorkersFromSuper(branch);
-        int shiftnum = day * 2;
         //if he works in this day - first if the worker is a storekeepr and there is shipment today and he is the only storekeeper
         Map<Jobs, List<Worker>> currWorkers1 = Superim.get(branch).GetWeekShifts().GetShift(shiftnum).getWorkerList();
         Map<Jobs, List<Worker>> currWorkers2 = Superim.get(branch).GetWeekShifts().GetShift(shiftnum+1).getWorkerList();
+        //check if the worker is the only storekeeper in a shift
         boolean storek1 = (currWorkers1.get(Jobs.StoreKeeper).contains(Workers.get(ID)) && currWorkers1.get(Jobs.StoreKeeper).size() == 1);
         boolean storek2 = (currWorkers2.get(Jobs.StoreKeeper).contains(Workers.get(ID)) && currWorkers2.get(Jobs.StoreKeeper).size() == 1);
+        // check if the worker is a shift manager
         boolean shiftm1 = currWorkers1.get(Jobs.ShiftManager).contains(Workers.get(ID));
         boolean shiftm2 = currWorkers2.get(Jobs.ShiftManager).contains(Workers.get(ID));
-        // first check if there is shipment today
-
-        LocalDate send=Superim.get(branch).GetWeekShifts().GetShift(shiftnum).getDate();
-        if(hrService.isThereAShipment(send,branch)){
-            // if there is check if the worker is a storekeeper and there is only one storekeeper in this shift
-            return storek1 || storek2 || shiftm1 || shiftm2;
-        }
-        return false;
+        //return true if the worker is a storekeeper or if there is only one storekeeper in this shift
+        return storek1 || storek2 || shiftm1 || shiftm2;
     }
     //checks if worker works in specific shift in a branch
     public boolean IsWorkAtDay(String branch, String ID, int day) {
