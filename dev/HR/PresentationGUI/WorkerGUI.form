@@ -72,7 +72,7 @@
           </grid>
         </constraints>
         <properties>
-          <foreground color="-1"/>
+          <foreground color="-16777216"/>
           <toolTipText value="ID"/>
         </properties>
       </component>
@@ -83,7 +83,7 @@
           </grid>
         </constraints>
         <properties>
-          <foreground color="-1"/>
+          <foreground color="-16777216"/>
           <toolTipText value="Password"/>
         </properties>
       </component>

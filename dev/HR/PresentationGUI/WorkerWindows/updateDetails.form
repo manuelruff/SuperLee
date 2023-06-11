@@ -35,7 +35,7 @@
           </grid>
         </constraints>
         <properties>
-          <foreground color="-1"/>
+          <foreground color="-16777216"/>
         </properties>
       </component>
       <component id="31002" class="javax.swing.JLabel">
@@ -54,10 +54,10 @@
           </grid>
         </constraints>
         <properties>
-          <foreground color="-1"/>
+          <foreground color="-16777216"/>
         </properties>
       </component>
-      <component id="9ba4b" class="javax.swing.JButton" binding="updateButton" custom-create="true" default-binding="true">
+      <component id="9ba4b" class="javax.swing.JButton" binding="updateButton" default-binding="true">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -82,7 +82,7 @@
           </grid>
         </constraints>
         <properties>
-          <foreground color="-1"/>
+          <foreground color="-16777216"/>
         </properties>
       </component>
     </children>
