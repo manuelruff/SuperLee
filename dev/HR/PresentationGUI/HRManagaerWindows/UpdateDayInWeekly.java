@@ -118,7 +118,6 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
         }
         if(e.getActionCommand().equals("Watch Shift"))
         {
-            //todo add the show print function
             //we will ask what day he wants to see
             Object[] options = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"};
             int selection = JOptionPane.showOptionDialog(null, "Choose a day", "Shifts", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);

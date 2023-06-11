@@ -290,6 +290,7 @@ public class ServiceController {
     //function that return representation 2 shifts in a day for a branch
     public List<List<String>>getShift(String name,int day){
         List<List<String>>ret=new ArrayList<>();
+        //get the two shifts we want
         Shift shift1=dataController.getSuper(name).GetWeekShifts().GetShift(day*2);
         Shift shift2=dataController.getSuper(name).GetWeekShifts().GetShift(day*2+1);
         //ill put in one list the info of the mornning shift in the first place
@@ -297,6 +298,7 @@ public class ServiceController {
         sh1.add(shift1.getDate().toString());
         sh1.add(shift1.getDate().getDayOfWeek().toString());
         sh1.add(shift1.getShift_time().toString());
+        //put all the values inside
         if(shift1.IsEmptyShift()){
             sh1.add("Empty");
         }
@@ -312,7 +314,7 @@ public class ServiceController {
                 }
             }
         }
-
+        //same for second shift
         //ill put in one list the info of the evening shift in the second place
         List<String>sh2=new ArrayList<>();
         sh2.add(shift2.getDate().toString());
