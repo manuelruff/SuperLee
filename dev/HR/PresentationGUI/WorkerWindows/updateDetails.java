@@ -60,6 +60,7 @@ public class updateDetails extends JFrame implements ActionListener {
             {
                 workerController.ChangeWorkerBank(this.Wid,Integer.parseInt(bank.getText()));
             }
+            //todo make sure that bank is only a number and that all is filled when he wants to press update
         }
         else if(e.getSource()==backButton)
         {
