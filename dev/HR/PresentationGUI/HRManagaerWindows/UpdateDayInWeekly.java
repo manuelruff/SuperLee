@@ -172,6 +172,10 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
         {
             //we show the main window
             save.setVisible(true);
+            if(this.prwin!=null) {
+                //close extra window
+                this.prwin.dispose();
+            }
             //close this window
             this.dispose();
         }

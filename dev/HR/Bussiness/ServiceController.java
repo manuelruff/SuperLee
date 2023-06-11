@@ -289,10 +289,79 @@ public class ServiceController {
     }
     //function that return representation 2 shifts in a day for a branch
     public List<List<String>>getShift(String name,int day){
+        return helpGetWeekly(dataController.getSuper(name).GetWeekShifts(),day);
+//        List<List<String>>ret=new ArrayList<>();
+//        //get the two shifts we want
+//        Shift shift1=dataController.getSuper(name).GetWeekShifts().GetShift(day*2);
+//        Shift shift2=dataController.getSuper(name).GetWeekShifts().GetShift(day*2+1);
+//        //ill put in one list the info of the mornning shift in the first place
+//        List<String>sh1=new ArrayList<>();
+//        sh1.add(shift1.getDate().toString());
+//        sh1.add(shift1.getDate().getDayOfWeek().toString());
+//        sh1.add(shift1.getShift_time().toString());
+//        //put all the values inside
+//        if(shift1.IsEmptyShift()){
+//            sh1.add("Empty");
+//        }
+//        else{
+//            sh1.add(Double.toString(shift1.getStart()));
+//            sh1.add(Double.toString(shift1.getEnd()));
+//            for (Jobs job : shift1.getWorkerList().keySet()) {
+//                if(shift1.getWorkerList().get(job).size()!=0){
+//                    sh1.add("As "+job+" the Workers are:");
+//                    for (Worker worker: shift1.getWorkerList().get(job)){
+//                        sh1.add("Name: "+worker.getName() + " with ID: "+worker.getID());
+//                    }
+//                }
+//            }
+//        }
+//        //same for second shift
+//        //ill put in one list the info of the evening shift in the second place
+//        List<String>sh2=new ArrayList<>();
+//        sh2.add(shift2.getDate().toString());
+//        sh2.add(shift2.getDate().getDayOfWeek().toString());
+//        sh2.add(shift2.getShift_time().toString());
+//        if(shift2.IsEmptyShift()){
+//            sh2.add("Empty");
+//        }
+//        else{
+//            sh2.add(Double.toString(shift2.getStart()));
+//            sh2.add(Double.toString(shift2.getEnd()));
+//            for (Jobs job : shift2.getWorkerList().keySet()) {
+//                if(shift2.getWorkerList().get(job).size()!=0){
+//                    sh2.add("As "+job+" the Workers are:");
+//                    for (Worker worker: shift2.getWorkerList().get(job)){
+//                        sh2.add("Name: "+worker.getName() + " with ID: "+worker.getID());
+//                    }
+//                }
+//            }
+//        }
+//        ret.add(sh1);
+//        ret.add(sh2);
+//        return ret;
+    }
+    //get info on shifts from weekly in history
+    public List<List<String>> getWeeklyFromHist(String name, int year, int month, int day, int dayInWeek) {
+        List<List<String>>ret=new ArrayList<>();
+        //take date from input
+        LocalDate date=LocalDate.of(year,month,day);
+        Weekly week=dataController.getWeekly(name,date.toString());
+        //if no weekly with this date we return null
+        if (week==null){
+            return null;
+        }
+        //if not null we return the day he wanted
+        else{
+            return helpGetWeekly(week,dayInWeek);
+        }
+    }
+
+
+    private List<List<String>> helpGetWeekly(Weekly week,int day){
         List<List<String>>ret=new ArrayList<>();
         //get the two shifts we want
-        Shift shift1=dataController.getSuper(name).GetWeekShifts().GetShift(day*2);
-        Shift shift2=dataController.getSuper(name).GetWeekShifts().GetShift(day*2+1);
+        Shift shift1=week.GetShift(day*2);
+        Shift shift2=week.GetShift(day*2+1);
         //ill put in one list the info of the mornning shift in the first place
         List<String>sh1=new ArrayList<>();
         sh1.add(shift1.getDate().toString());

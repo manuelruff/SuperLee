@@ -27,22 +27,11 @@ public class GUIService {
     }
     //get info on shifts from this weekly
     public List<List<String>> getShift(String name,int day){
-        List<List<String>>ret = serviceController.getShift(name,day);
-        return ret;
+        return serviceController.getShift(name,day);
     }
     //get info on shifts from weekly in history
-    public boolean getWeeklyFromHist(String Name, int year, int month, int day) {
-
-//        LocalDate date=LocalDate.of(year,month,day);
-//        Weekly week=dataController.getWeekly(Name,date.toString());
-//        if(week!=null){
-//            week.PrintMe();
-//            return true;
-//        }
-//        return false;
-        //Superim.get(Name).PrintWeekFromHistByDate(year, month, day);
-
-        return false;
+    public List<List<String>> getWeeklyFromHist(String name, int year, int month, int day, int dayInWeek) {
+        return serviceController.getWeeklyFromHist(name,year,month,day,dayInWeek);
     }
 
 }

@@ -1,5 +1,4 @@
 package HR.PresentationGUI.HRManagaerWindows;
-import HR.Bussiness.Days;
 import HR.Bussiness.ManagerController;
 import HR.PresentationGUI.HRManager;
 import javax.swing.*;
@@ -71,7 +70,6 @@ public class WorkOnABranch extends JFrame implements ActionListener {
             else if(comboBox1.getSelectedItem().equals("watch week from history")) {
                 new WeeklyFromHist(this,name);
                 this.setVisible(false);
-                //todo printing something
             }
             else if(comboBox1.getSelectedItem().equals("remove worker from this super")) {
                 JTextField textField = new JTextField();
