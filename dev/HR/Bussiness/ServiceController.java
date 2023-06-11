@@ -408,4 +408,15 @@ public class ServiceController {
         ret.add(sh2);
         return ret;
     }
+
+    //get info on worker for him to update
+    public List<String>getWorkerInfo(String id) {
+        List<String>ret=new ArrayList<>();
+        Worker w=dataController.getWorker(id);
+        ret.add(w.getID());
+        ret.add(w.getName());
+        ret.add(w.getPassword());
+        ret.add(String.valueOf(w.getBank()));
+        return ret;
+    }
 }
