@@ -2,12 +2,14 @@ package HR.PresentationGUI.HRManagaerWindows;
 import HR.Bussiness.Days;
 import HR.Bussiness.ManagerController;
 import HR.Bussiness.ShiftTime;
+import HR.Service.GUIService;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class UpdateDayInWeekly extends JFrame implements ActionListener {
 
@@ -19,6 +21,8 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
     private JButton backButton;
 //    private JButton watchShiftButton;
     private ManagerController managerController;
+    //take the instance of gui service so we get what we want
+    private GUIService guiService;
 
     //save the window that opened us to show him after closing
     private WorkOnABranch save;
@@ -42,7 +46,9 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
         ShiftComboBox.addActionListener(this);
         ActionComboBox.addActionListener(this);
         this.managerController = ManagerController.getInstance();
-        this.prwin=new PrintShift(name,0);
+        guiService=GUIService.getInstance();
+        List<List<String>> getShift = guiService.getShift(this.name,0);
+        this.prwin=new PrintShift(getShift);
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -133,31 +139,34 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
             //we will change the shift he sees when he change day
             if(DayComboBox.getSelectedItem().equals("Sunday")) {
                 prwin.dispose();
-                prwin=new PrintShift(name,0);
+                List<List<String>> getShift = guiService.getShift(this.name,0);
+                prwin=new PrintShift(getShift);
             } else if (DayComboBox.getSelectedItem().equals("Monday")) {
                 prwin.dispose();
-                prwin=new PrintShift(name,1);
+                List<List<String>> getShift = guiService.getShift(this.name,1);
+                prwin=new PrintShift(getShift);
             }
             else if(DayComboBox.getSelectedItem().equals("Tuesday")) {
                 prwin.dispose();
-                prwin=new PrintShift(name,2);
+                List<List<String>> getShift = guiService.getShift(this.name,2);
+                prwin=new PrintShift(getShift);
             }
             else if(DayComboBox.getSelectedItem().equals("Wednesday")) {
                 prwin.dispose();
-                prwin=new PrintShift(name,3);
-            }
+                List<List<String>> getShift = guiService.getShift(this.name,3);
+                prwin=new PrintShift(getShift);            }
             else if(DayComboBox.getSelectedItem().equals("Thursday")) {
                 prwin.dispose();
-                prwin=new PrintShift(name,4);
-            }
+                List<List<String>> getShift = guiService.getShift(this.name,4);
+                prwin=new PrintShift(getShift);            }
             else if(DayComboBox.getSelectedItem().equals("Friday")) {
                 prwin.dispose();
-                prwin=new PrintShift(name,5);
-            }
+                List<List<String>> getShift = guiService.getShift(this.name,5);
+                prwin=new PrintShift(getShift);            }
             else if(DayComboBox.getSelectedItem().equals("Saturday")) {
                 prwin.dispose();
-                prwin=new PrintShift(name,6);
-            }
+                List<List<String>> getShift = guiService.getShift(this.name,6);
+                prwin=new PrintShift(getShift);            }
         }
         else if(e.getSource()==backButton)
         {

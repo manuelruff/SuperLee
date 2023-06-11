@@ -12,14 +12,11 @@ import java.util.List;
 public class PrintShift  extends JFrame{
     private JPanel PrintShiftWin;
     //take the instance of gui service so we get what we want
-    private GUIService guiService;
-    private String name;
-    private int day;
-    public PrintShift(String name,int day) {
-        // After everything else
-        this.name=name;
-        this.day=day;
+    private List<List<String>> getShift;
 
+    public PrintShift(List<List<String>> getShift ) {
+        // After everything else
+        this.getShift=getShift;
         // create JScrollPane
         JScrollPane scrollPane = new JScrollPane(PrintShiftWin,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, // only vertical scrollbar as needed
@@ -33,13 +30,11 @@ public class PrintShift  extends JFrame{
         this.setTitle("Shifts");
     }
     private void createUIComponents() {
-        guiService=GUIService.getInstance();
         // Panel setup
         PrintShiftWin = new JPanel();
         PrintShiftWin.setLayout(new BoxLayout(PrintShiftWin, BoxLayout.Y_AXIS)); // Vertical layout
         PrintShiftWin.setBackground(Color.BLACK);  // set panel background to black
 
-        List<List<String>> getShift = guiService.getShift(this.name,this.day);
 
         for(List<String> shiftInfo : getShift) {
             if(!shiftInfo.isEmpty()){

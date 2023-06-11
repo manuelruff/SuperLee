@@ -69,7 +69,8 @@ public class WorkOnABranch extends JFrame implements ActionListener {
                 }
             }
             else if(comboBox1.getSelectedItem().equals("watch week from history")) {
-
+                new WeeklyFromHist(this,name);
+                this.setVisible(false);
                 //todo printing something
             }
             else if(comboBox1.getSelectedItem().equals("remove worker from this super")) {
