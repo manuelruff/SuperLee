@@ -14,7 +14,7 @@ public class PrintShift  extends JFrame{
     //take the instance of gui service so we get what we want
     private List<List<String>> getShift;
 
-    public PrintShift(List<List<String>> getShift ) {
+    public PrintShift(List<List<String>> getShift) {
         // After everything else
         this.getShift=getShift;
         // create JScrollPane
