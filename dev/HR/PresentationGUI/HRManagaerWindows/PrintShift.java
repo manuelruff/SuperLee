@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class PrintShift  extends JFrame implements ActionListener {
+public class PrintShift  extends JFrame{
     private JPanel PrintShiftWin;
     //take the instance of gui service so we get what we want
     private GUIService guiService;
@@ -19,11 +19,18 @@ public class PrintShift  extends JFrame implements ActionListener {
         // After everything else
         this.name=name;
         this.day=day;
-        this.setContentPane(PrintShiftWin);
+
+        // create JScrollPane
+        JScrollPane scrollPane = new JScrollPane(PrintShiftWin,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, // only vertical scrollbar as needed
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); // only horizontal scrollbar as needed
+
+        this.setContentPane(scrollPane);
         this.setMinimumSize(new Dimension(300,200));
+        this.setLocation(300, 0);
         this.pack();
         this.setVisible(true);
-        this.setTitle("Shift");
+        this.setTitle("Shifts");
     }
     private void createUIComponents() {
         guiService=GUIService.getInstance();
@@ -74,9 +81,4 @@ public class PrintShift  extends JFrame implements ActionListener {
         }
     }
 
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

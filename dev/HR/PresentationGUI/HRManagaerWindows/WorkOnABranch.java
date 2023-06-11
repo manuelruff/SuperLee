@@ -59,7 +59,6 @@ public class WorkOnABranch extends JFrame implements ActionListener {
                 }
             }
             else if(comboBox1.getSelectedItem().equals("update day in weekly shift")) {
-                //todo - let him watch the current shifts so he can change it
                 //check if this branch has weekly
                 if(!managerController.HasWeekly(name)){
                     JOptionPane.showMessageDialog(null, "no weekly yet, go create one first", "weekly", JOptionPane.INFORMATION_MESSAGE);

@@ -17,13 +17,16 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
     private JComboBox<String> ActionComboBox;
     private JButton doButton;
     private JButton backButton;
-    private JButton watchShiftButton;
+//    private JButton watchShiftButton;
     private ManagerController managerController;
 
     //save the window that opened us to show him after closing
     private WorkOnABranch save;
     //name of this branch we are working on
     private String name;
+    //shift info window
+    private PrintShift prwin;
+
     public UpdateDayInWeekly(WorkOnABranch save,String name) {
         this.save=save;
         this.name=name;
@@ -34,12 +37,12 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
         this.setVisible(true);
         this.setTitle("Update day in weekly");
         doButton.addActionListener(this);
-        watchShiftButton.addActionListener(this);
         backButton.addActionListener(this);
         DayComboBox.addActionListener(this);
         ShiftComboBox.addActionListener(this);
         ActionComboBox.addActionListener(this);
         this.managerController = ManagerController.getInstance();
+        this.prwin=new PrintShift(name,0);
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -58,10 +61,8 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
         ShiftComboBox.addItem("Morning");
         ShiftComboBox.addItem("Evening");
         doButton = new JButton("Do");
-        watchShiftButton = new JButton("Watch Shift");
         backButton = new JButton("Back");
         doButton.setForeground(Color.black);
-        watchShiftButton.setForeground(Color.black);
         backButton.setForeground(Color.black);
     }
 
@@ -116,14 +117,6 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
                 backButton.doClick();
             }
         }
-        if(e.getActionCommand().equals("Watch Shift"))
-        {
-            //we will ask what day he wants to see
-            Object[] options = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"};
-            int selection = JOptionPane.showOptionDialog(null, "Choose a day", "Shifts", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-            //we will open the window of the shifts for this day
-            new PrintShift(name,selection);
-        }
         else if(e.getSource()==ActionComboBox)
         {
             if(ActionComboBox.getSelectedItem().equals("Remove worker")) {
@@ -133,6 +126,37 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
             if(ActionComboBox.getSelectedItem().equals("Add worker")) {
                 //in this action he needs to choose a shift
                 ShiftComboBox.setVisible(true);
+            }
+        }
+        else if(e.getSource()==DayComboBox)
+        {
+            //we will change the shift he sees when he change day
+            if(DayComboBox.getSelectedItem().equals("Sunday")) {
+                prwin.dispose();
+                prwin=new PrintShift(name,0);
+            } else if (DayComboBox.getSelectedItem().equals("Monday")) {
+                prwin.dispose();
+                prwin=new PrintShift(name,1);
+            }
+            else if(DayComboBox.getSelectedItem().equals("Tuesday")) {
+                prwin.dispose();
+                prwin=new PrintShift(name,2);
+            }
+            else if(DayComboBox.getSelectedItem().equals("Wednesday")) {
+                prwin.dispose();
+                prwin=new PrintShift(name,3);
+            }
+            else if(DayComboBox.getSelectedItem().equals("Thursday")) {
+                prwin.dispose();
+                prwin=new PrintShift(name,4);
+            }
+            else if(DayComboBox.getSelectedItem().equals("Friday")) {
+                prwin.dispose();
+                prwin=new PrintShift(name,5);
+            }
+            else if(DayComboBox.getSelectedItem().equals("Saturday")) {
+                prwin.dispose();
+                prwin=new PrintShift(name,6);
             }
         }
         else if(e.getSource()==backButton)

@@ -492,7 +492,6 @@ public class HRManagerUI {
             }
         }
     }
-    //todo check of its working, change for all the ui to not know the enums so they send ints
     public static void CreateNewWorker(){
         boolean new_id_flag = false;
         String input_newID = "";
