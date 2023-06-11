@@ -411,6 +411,7 @@ public class CreateWeekly  extends JFrame implements ActionListener {
                 //if no error we can go on
                 //check if we are have finished
                 if (nextButton.getText().equals("Done")) {
+                    this.setVisible(false);
                     JOptionPane.showMessageDialog(null, "weekly created successfully!", "weekly", JOptionPane.INFORMATION_MESSAGE);
                     this.save.setVisible(true);
                     this.dispose();
