@@ -426,18 +426,24 @@ public class CreateWeekly  extends JFrame implements ActionListener {
                 UsherLabelField.setText("0");
 
                 //if we only need to change the shift time and not day thats it:
-                if (shiftnum == 0) {
+               if (shiftnum == 0) {
                     shiftnum++;
                     shiftLabel.setText("Evening");
                 }
-                //else we nned to change the day and shift
+                //else we need to change the day and shift
                 else {
                     shiftnum = 0;
                     shiftLabel.setText("Morning");
                     daynum++;
-                    //next day
-                    day = Days.values()[daynum].toString();
-                    dayLabel.setText(day);
+                    //next day - we dont need to do that when we are in the last day and it will throw exception
+                   try{
+                       day = Days.values()[daynum].toString();
+                       dayLabel.setText(day);
+                   }
+                   catch(Exception ex){
+
+                   }
+
                 }
                 //if we are in the last day
                 if (this.day.equals("Saturday") && shiftnum == 1) {

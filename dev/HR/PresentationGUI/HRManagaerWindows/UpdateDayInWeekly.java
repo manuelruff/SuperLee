@@ -59,6 +59,9 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
         ShiftComboBox = new JComboBox<String>();
         ShiftComboBox.addItem("Morning");
         ShiftComboBox.addItem("Evening");
+        doButton = new JButton("Do");
+        watchShiftButton = new JButton("Watch Shift");
+        backButton = new JButton("Back");
         doButton.setForeground(Color.black);
         watchShiftButton.setForeground(Color.black);
         backButton.setForeground(Color.black);
@@ -66,21 +69,21 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("Do"))
+        if(e.getSource()==doButton)
         {
             if(ActionComboBox.getSelectedItem().equals("Add worker")) {
                 //show a window to ask type of worker
                 Object[] options = {"ShiftManager", "Cashier", "GeneralEmp", "Guard", "Guard", "Cleaner","Usher"};
                 int selection = JOptionPane.showOptionDialog(null, "Choose a role", "Roles", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-                int shift_op =ShiftTime.valueOf(ShiftComboBox.getActionCommand().toString()).ordinal();
-                int day_choice = Days.valueOf(DayComboBox.getActionCommand().toString()).ordinal();
+                int shift_op =ShiftTime.valueOf(ShiftComboBox.getSelectedItem().toString()).ordinal();
+                int day_choice = Days.valueOf(DayComboBox.getSelectedItem().toString()).ordinal();
                 String workerID = managerController.AddToDay(name,shift_op,day_choice,selection);
                 JOptionPane.showMessageDialog(null, "Worker added: "+workerID, "added", JOptionPane.INFORMATION_MESSAGE);
                 //after i add it ill press back so he can go preform another action
                 backButton.doClick();
             }
             else if(ActionComboBox.getSelectedItem().equals("Remove worker")) {
-                int day_choice = Days.valueOf(DayComboBox.getActionCommand().toString()).ordinal();
+                int day_choice = Days.valueOf(DayComboBox.getSelectedItem().toString()).ordinal();
                 JTextField textField = new JTextField();
                 int result = JOptionPane.showConfirmDialog(null, textField, "Enter worker id:", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
@@ -119,7 +122,7 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
         {
             //todo add the show print function
         }
-        else if(e.getActionCommand().equals("ActionComboBox"))
+        else if(e.getSource()==ActionComboBox)
         {
             if(ActionComboBox.getSelectedItem().equals("Remove worker")) {
                 //in this action he is not choosing in
@@ -130,7 +133,7 @@ public class UpdateDayInWeekly extends JFrame implements ActionListener {
                 ShiftComboBox.setVisible(true);
             }
         }
-        else if(e.getActionCommand().equals("Back"))
+        else if(e.getSource()==backButton)
         {
             //we show the main window
             save.setVisible(true);
