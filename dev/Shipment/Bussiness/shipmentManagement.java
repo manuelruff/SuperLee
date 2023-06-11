@@ -713,6 +713,7 @@ public class shipmentManagement {
             order.addListOfItems(shipmentToDelete.getDocs().get(i).getItemList());
         }
         availableShipments.remove(shipmentToDelete);
+        dataController.deleteAvailable(shipmentToDelete.getID());
         shipments.remove(shipmentToDelete.getID());
         dataController.deleteShipment(shipmentToDelete.getID());
         shipmentService.askRemoveDayForDriver(shipmentToDelete.getDriver().getID(), shipmentToDelete.getDayOfTheWeek().ordinal());

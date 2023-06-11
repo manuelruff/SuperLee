@@ -1,4 +1,5 @@
 import HR.PresentationGUI.HRManager;
+import Shipment.PresentationGUI.ShipManager;
 
 import javax.swing.*;
 import javax.swing.JOptionPane;
@@ -25,7 +26,9 @@ public class Main {
             if (role.equals("HRManager")){
                 new HRManager();
             }
-            // else if
+            else if (role.equals("ShipManager")){
+                new ShipManager();
+            }
             //shipment manager
             else{
                 JOptionPane.showMessageDialog(null,"Wrong role");

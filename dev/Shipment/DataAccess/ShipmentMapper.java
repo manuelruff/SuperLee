@@ -278,6 +278,7 @@ public class ShipmentMapper {
     {
         for(Shipment shipment :shipmentsMap.values())
             writeShipment(shipment);
+        // todo check if shipment contains all
         for(Shipment shipment : availableShipmentsMap.values())
             writeShipment(shipment);
 
