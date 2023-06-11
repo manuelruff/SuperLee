@@ -1,6 +1,5 @@
 package Shipment.PresentationGUI;
 
-import Shipment.Bussiness.Order;
 import Shipment.Bussiness.shipmentManagement;
 import javax.swing.*;
 import java.awt.*;
