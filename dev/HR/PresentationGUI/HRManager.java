@@ -108,7 +108,7 @@ public class HRManager extends JFrame implements ActionListener{
             }
             else if(comboBox1.getSelectedItem().equals("Show all shipments"))
             {
-                //todo: add the shipments print
+                //todo: add the shipments print aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
             }
             else if(comboBox1.getSelectedItem().equals("pay salaries"))
             {

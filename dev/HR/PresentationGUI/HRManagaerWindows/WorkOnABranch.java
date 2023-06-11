@@ -32,7 +32,6 @@ public class WorkOnABranch extends JFrame implements ActionListener {
         comboBox1.addActionListener(this);
     }
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         comboBox1 = new JComboBox<String>();
         comboBox1.addItem("create weekly shift");
         comboBox1.addItem("update day in weekly shift");
