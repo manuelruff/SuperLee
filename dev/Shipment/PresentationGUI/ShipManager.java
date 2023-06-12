@@ -45,15 +45,15 @@ public class ShipManager extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Start")) {
             if (Objects.equals(comboBox1.getSelectedItem(), "Site Menu")){
-                new SiteMenu();
+                new SiteMenu(this);
                 this.setVisible(false);
             }
             else if(Objects.equals(comboBox1.getSelectedItem(), "Truck Menu")){
-                new TruckMenu();
+                new TruckMenu(this);
                 this.setVisible(false);
             }
             else if (Objects.equals(comboBox1.getSelectedItem(), "Drivers Menu")) {
-                new DriverMenu();
+                new DriverMenu(this);
                 this.setVisible(false);
             }
             else if (Objects.equals(comboBox1.getSelectedItem(), "Order Menu")){
@@ -61,7 +61,7 @@ public class ShipManager extends JFrame implements ActionListener{
                 this.setVisible(false);
             }
             else if (Objects.equals(comboBox1.getSelectedItem(), "Shipping Menu")){
-                new ShipmentMenu();
+                new ShippingMenu();
                 this.setVisible(false);
             }
             else if (Objects.equals(comboBox1.getSelectedItem(), "Print all shipped item docs")){
