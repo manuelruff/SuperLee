@@ -22,6 +22,7 @@ public class ShipmentMenu extends JFrame implements ActionListener {
         this.pack();
         this.setVisible(true);
         this.setTitle("Shipping Menu");
+        createUIComponents();
         comboBox1.addActionListener(this);
         exitButton.addActionListener(this);
         startButton.addActionListener(this);
@@ -32,7 +33,7 @@ public class ShipmentMenu extends JFrame implements ActionListener {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        comboBox1 = new JComboBox<>();
+        comboBox1 = new JComboBox<String>();
         comboBox1.addItem("Add Shipment");
         comboBox1.addItem("Delete Shipment");
         comboBox1.addItem("Print all Shipments");
@@ -61,13 +62,13 @@ public class ShipmentMenu extends JFrame implements ActionListener {
 
 
                 }
-                else if (Objects.equals(comboBox1.getSelectedItem(), "Print All shipment")) {
+                else if (Objects.equals(comboBox1.getSelectedItem(), "Print all Shipments")) {
 
                 }
-                else if (Objects.equals(comboBox1.getSelectedItem(), "Print all available shipments")) {
+                else if (Objects.equals(comboBox1.getSelectedItem(), "Print available Shipments")) {
 
                 }
-                else if (Objects.equals(comboBox1.getSelectedItem(), "execute nearest shipment")) {
+                else if (Objects.equals(comboBox1.getSelectedItem(), "Execute nearest Shipment")) {
 
                 }
 
