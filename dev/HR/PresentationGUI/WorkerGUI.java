@@ -53,10 +53,12 @@ public class WorkerGUI extends JFrame implements ActionListener {
             else {
                 //open the function he wants
                 if (comboBox1.getSelectedItem().equals("update personal details")) {
+                    this.setVisible(false);
                     List<String> worker=guiService.getWorkerInfo(ID.getText());
                     new updateDetails(this,worker);
                 } else {
-                    new editConstraints(this);
+                    this.setVisible(false);
+                    new editConstraints(this,ID.getText());
                 }
             }
         }

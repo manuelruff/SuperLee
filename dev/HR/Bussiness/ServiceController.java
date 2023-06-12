@@ -419,4 +419,20 @@ public class ServiceController {
         ret.add(String.valueOf(w.getBank()));
         return ret;
     }
+    //get info on worker cant work days
+
+    public List<String> getWorkerCantWorkDays(String id) {
+        List<String> ret = new ArrayList<>();
+        Worker w=dataController.getWorker(id);
+        Map<Days, List<CantWork>> info=w.getShiftsCantWork();
+        for (Days day:Days.values()) {
+            if (info.get(day) != null) {
+                ret.add(day.toString());
+                for (CantWork c : info.get(day)) {
+                    ret.add(c.toString());
+                }
+            }
+        }
+        return ret;
+    }
 }

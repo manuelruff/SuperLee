@@ -1,9 +1,5 @@
 package HR.Service;
-
 import HR.Bussiness.ServiceController;
-import HR.Bussiness.Weekly;
-
-import java.time.LocalDate;
 import java.util.List;
 
 //this will be singletone
@@ -37,5 +33,8 @@ public class GUIService {
     public List<String>getWorkerInfo(String id) {
         return serviceController.getWorkerInfo(id);
     }
-
+    //get info on worker cant work days
+    public List<String> getWorkerCantWorkDays(String id) {
+        return serviceController.getWorkerCantWorkDays(id);
+    }
 }
