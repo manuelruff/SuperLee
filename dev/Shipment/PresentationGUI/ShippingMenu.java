@@ -1,9 +1,12 @@
 package Shipment.PresentationGUI;
 
+import Shipment.Bussiness.shipmentManagement;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class ShippingMenu extends JFrame implements ActionListener {
     private JPanel panel;
@@ -11,18 +14,26 @@ public class ShippingMenu extends JFrame implements ActionListener {
     private JComboBox<String> comboBox;
     private JButton startButton;
     private JButton backButton;
+    private shipmentManagement sManagement;
+    private  ShipManager save;
 
-    public ShippingMenu(){
+    public ShippingMenu(ShipManager save) {
         createUIComponents();
-        display();
-
+        this.save = save;
+        setContentPane(panel);
+        pack();
+        setVisible(true);
+        sManagement = shipmentManagement.getInstance();
+        comboBox.addActionListener(this);
+        startButton.addActionListener(this);
+        backButton.addActionListener(this);
     }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
         this.setTitle("Shipping");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 200);
+        setPreferredSize(new Dimension(300, 200));
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -38,7 +49,7 @@ public class ShippingMenu extends JFrame implements ActionListener {
         panel.add(labelPanel);
 
         // Adding the combo box
-        String[] options = {"Option 1", "Option 2", "Option 3", "Option 4", "Option 5"};
+        String[] options = {"Add Shipment", "Delete Shipment", "Print All Shipments", "Print All Available Shipments", "Execute Nearest Shipment"};
         comboBox = new JComboBox<>(options);
         panel.add(comboBox);
 
@@ -60,17 +71,44 @@ public class ShippingMenu extends JFrame implements ActionListener {
 
 
     }
-    private void display() {
-        SwingUtilities.invokeLater(() -> {
-            setContentPane(panel);
-            pack();
-            setVisible(true);
-        });
-    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Start")) {
+            if (Objects.equals(comboBox.getSelectedItem(), "Add Shipment")) {
 
+            }
+            else if (Objects.equals(comboBox.getSelectedItem(), "Delete Shipment")) {
+                JTextField textField = new JTextField();
+                int result = JOptionPane.showConfirmDialog(null, textField, "Enter Shipment id:", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    String ID = textField.getText();
+                    boolean check = sManagement.checkShipmentID(ID);
+
+                    //if the Shipment exists
+                    if (!check) {
+                        JOptionPane.showMessageDialog(null, "Shipment id not found");
+                    } else {
+                        sManagement.deleteShipment(ID);
+                        JOptionPane.showMessageDialog(null, "The Shipment has been removed successfully!", "Remove", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+            else if (Objects.equals(comboBox.getSelectedItem(), "Print All Shipments")) {
+
+            }
+            else if (Objects.equals(comboBox.getSelectedItem(), "Print All Available Shipments")) {
+
+            }
+            else if (Objects.equals(comboBox.getSelectedItem(), "Execute Nearest Shipment")) {
+
+            }
+        }
+        else if (e.getActionCommand().equals("Back")){
+            this.dispose();
+            save.setVisible(true);
+        }
     }
 }
 
