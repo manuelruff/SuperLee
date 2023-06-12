@@ -1,7 +1,6 @@
 import HR.PresentationGUI.HRManager;
+import HR.PresentationGUI.WorkerGUI;
 import Shipment.PresentationGUI.ShipManager;
-
-import javax.swing.*;
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -28,6 +27,9 @@ public class Main {
             }
             else if (role.equals("ShipManager")){
                 new ShipManager();
+            }
+            else if (role.equals("Worker")){
+                new WorkerGUI();
             }
             //shipment manager
             else{

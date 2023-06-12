@@ -408,4 +408,30 @@ public class ServiceController {
         ret.add(sh2);
         return ret;
     }
+
+    //get info on worker for him to update
+    public List<String>getWorkerInfo(String id) {
+        List<String>ret=new ArrayList<>();
+        Worker w=dataController.getWorker(id);
+        ret.add(w.getID());
+        ret.add(w.getName());
+        ret.add(w.getPassword());
+        ret.add(String.valueOf(w.getBank()));
+        return ret;
+    }
+    //get info on worker cant work days
+    public List<String> getWorkerCantWorkDays(String id) {
+        List<String> ret = new ArrayList<>();
+        Worker w=dataController.getWorker(id);
+        Map<Days, List<CantWork>> info=w.getShiftsCantWork();
+        for (Days day:Days.values()) {
+            if (info.get(day) != null) {
+                ret.add(day.toString());
+                for (CantWork c : info.get(day)) {
+                    ret.add(c.toString());
+                }
+            }
+        }
+        return ret;
+    }
 }

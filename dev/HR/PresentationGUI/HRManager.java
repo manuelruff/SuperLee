@@ -14,6 +14,7 @@ public class HRManager extends JFrame implements ActionListener{
     private JComboBox<String> comboBox1;
     private JButton startButton;
     private JButton exitButton;
+    //take instance for manager controller
     private ManagerController managerController;
 
     public HRManager() {
@@ -29,7 +30,6 @@ public class HRManager extends JFrame implements ActionListener{
         this.managerController = ManagerController.getInstance();
     }
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         comboBox1 = new JComboBox<String>();
         comboBox1.addItem("work on a branch (snif)");
         comboBox1.addItem("add new branch");
@@ -42,7 +42,7 @@ public class HRManager extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("Start"))
+        if(e.getSource()==startButton)
         {
             if(comboBox1.getSelectedItem().equals("work on a branch (snif)"))
             {
@@ -126,7 +126,7 @@ public class HRManager extends JFrame implements ActionListener{
             }
 
         }
-        else if(e.getActionCommand().equals("Exit"))
+        else if(e.getSource()==exitButton)
         {
             System.exit(0);
         }
