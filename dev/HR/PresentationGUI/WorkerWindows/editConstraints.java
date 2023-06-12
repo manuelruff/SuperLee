@@ -23,6 +23,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
+
 public class editConstraints extends JFrame implements ActionListener {
     private JPanel editConstraintsWin;
     private JButton addButton;
@@ -50,6 +51,7 @@ public class editConstraints extends JFrame implements ActionListener {
         this.workerController = WorkerController.getInstance();
         createUIComponents();
     }
+
     private void createUIComponents() {
         editConstraintsWin = new JPanel();
         editConstraintsWin.setBackground(Color.BLACK);
@@ -88,19 +90,11 @@ public class editConstraints extends JFrame implements ActionListener {
         removeButton.addActionListener(this);
         backButton.addActionListener(this);
 
-        dataWin = new JPanel(new GridBagLayout());
+        dataWin = new JPanel();
         dataWin.setBackground(Color.BLACK);
+        dataWin.setLayout(new BoxLayout(dataWin, BoxLayout.Y_AXIS));
 
         loadData();
-
-        //add scrolbars to dataWin
-        JScrollPane scrollPane = new JScrollPane(dataWin);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5, 5, 5, 5);
 
         dayLabel = new JLabel("Day: ");
         dayLabel.setForeground(Color.WHITE);
@@ -114,86 +108,43 @@ public class editConstraints extends JFrame implements ActionListener {
         reasonLabel = new JLabel("Reason: ");
         reasonLabel.setForeground(Color.WHITE);
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        editConstraintsWin.add(dayLabel, gbc);
+        addComponent(dayLabel, 0, 0, 1, GridBagConstraints.HORIZONTAL, 0.0, 0.0, new Insets(5, 5, 5, 5));
+        addComponent(dayCB, 1, 0, 1, GridBagConstraints.HORIZONTAL, 1.0, 0.0, new Insets(5, 5, 5, 5));
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        editConstraintsWin.add(dayCB, gbc);
+        addComponent(fromLabel, 0, 1, 1, GridBagConstraints.HORIZONTAL, 0.0, 0.0, new Insets(5, 5, 5, 5));
+        addComponent(from, 1, 1, 1, GridBagConstraints.HORIZONTAL, 1.0, 0.0, new Insets(5, 5, 5, 5));
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.weightx = 0.0;
-        gbc.fill = GridBagConstraints.NONE;
-        editConstraintsWin.add(fromLabel, gbc);
+        addComponent(toLabel, 0, 2, 1, GridBagConstraints.HORIZONTAL, 0.0, 0.0, new Insets(5, 5, 5, 5));
+        addComponent(to, 1, 2, 1, GridBagConstraints.HORIZONTAL, 1.0, 0.0, new Insets(5, 5, 5, 5));
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        editConstraintsWin.add(from, gbc);
+        addComponent(reasonLabel, 0, 3, 1, GridBagConstraints.HORIZONTAL, 0.0, 0.0, new Insets(5, 5, 5, 5));
+        addComponent(reason, 1, 3, 1, GridBagConstraints.HORIZONTAL, 1.0, 0.0, new Insets(5, 5, 5, 5));
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.weightx = 0.0;
-        gbc.fill = GridBagConstraints.NONE;
-        editConstraintsWin.add(toLabel, gbc);
+        JScrollPane scrollPane = new JScrollPane(dataWin);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        addComponent(scrollPane, 0, 4, 2, GridBagConstraints.BOTH, 1.0, 1.0, new Insets(5, 5, 5, 5));
 
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        editConstraintsWin.add(to, gbc);
+        addComponent(addButton, 0, 5, 2, GridBagConstraints.HORIZONTAL, 1.0, 0.0, new Insets(5, 5, 5, 5));
+        addComponent(removeButton, 0, 6, 2, GridBagConstraints.HORIZONTAL, 1.0, 0.0, new Insets(5, 5, 5, 5));
+        addComponent(backButton, 0, 7, 2, GridBagConstraints.HORIZONTAL, 1.0, 0.0, new Insets(5, 5, 5, 5));
+    }
 
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.weightx = 0.0;
-        gbc.fill = GridBagConstraints.NONE;
-        editConstraintsWin.add(reasonLabel, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        editConstraintsWin.add(reason, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        editConstraintsWin.add(scrollPane, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.gridwidth = 2;
-        gbc.weighty = 0.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        editConstraintsWin.add(addButton, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.gridwidth = 2;
-        gbc.weighty = 0.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        editConstraintsWin.add(removeButton, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 7;
-        gbc.gridwidth = 2;
-        gbc.weighty = 0.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        editConstraintsWin.add(backButton, gbc);
+    private void addComponent(Component component, int gridx, int gridy, int gridwidth, int fill, double weightx,
+                              double weighty, Insets insets) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = gridx;
+        gbc.gridy = gridy;
+        gbc.gridwidth = gridwidth;
+        gbc.fill = fill;
+        gbc.weightx = weightx;
+        gbc.weighty = weighty;
+        gbc.insets = insets;
+        editConstraintsWin.add(component, gbc);
     }
 
     private void loadData() {
         dataWin.removeAll();
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5, 5, 5, 5);
 
         List<String> constraints = guiService.getWorkerCantWorkDays(id);
         String currentDay = "";
@@ -202,23 +153,15 @@ public class editConstraints extends JFrame implements ActionListener {
                 currentDay = constraint;
                 JLabel dayLabel = new JLabel("Day: " + currentDay);
                 dayLabel.setForeground(Color.WHITE);
-                gbc.gridx = 0;
-                gbc.gridy = GridBagConstraints.RELATIVE;
-                dataWin.add(dayLabel, gbc);
+                dataWin.add(dayLabel);
             } else {
                 JLabel constraintLabel = new JLabel(constraint);
                 constraintLabel.setForeground(Color.WHITE);
-                gbc.gridx = 0;
-                gbc.gridy = GridBagConstraints.RELATIVE;
-                dataWin.add(constraintLabel, gbc);
+                dataWin.add(constraintLabel);
             }
         }
 
-        gbc.weighty = 1.0;
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        dataWin.add(Box.createVerticalGlue(), gbc);
-
+        dataWin.add(Box.createVerticalGlue());
         dataWin.revalidate();
         dataWin.repaint();
     }
@@ -317,4 +260,3 @@ public class editConstraints extends JFrame implements ActionListener {
         }
     }
 }
-
