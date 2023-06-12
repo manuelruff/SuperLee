@@ -23,9 +23,16 @@ public class CantWork {
 
     public void printMe(){
         String print="start: "+start+ " end: "+end;
-        if(reason!=""){
+        if(!reason.equals("")){
             print+=" reason: "+reason;
         }
         System.out.println(print);
+    }
+    public String toString(){
+        String print="start: "+start+ " end: "+end;
+        if(!reason.equals("")){
+            print+=" reason: "+reason;
+        }
+        return print;
     }
 }

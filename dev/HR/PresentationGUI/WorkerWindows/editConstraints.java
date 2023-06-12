@@ -15,6 +15,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.text.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
+
 public class editConstraints extends JFrame implements ActionListener {
     private JPanel editConstraintsWin;
     private JButton addButton;
@@ -23,57 +31,47 @@ public class editConstraints extends JFrame implements ActionListener {
     private JComboBox<Days> dayCB;
     private JTextField from;
     private JTextField to;
-    private JPanel data;
+    private JPanel dataWin;
+    private JTextField reason;
 
-    //save the preview window to open in the end
+    private JLabel dayLabel;
+    private JLabel fromLabel;
+    private JLabel toLabel;
+    private JLabel reasonLabel;
+
     private WorkerGUI save;
-
-    // take instance for worker controller
     private WorkerController workerController;
-    //take the instance of gui service so we get what we want
     private GUIService guiService;
-    //save his id for extracting info and updating
     private String id;
-
-    //todo work with constraints reasons, i need to add that to this class
-
 
     public editConstraints(WorkerGUI save, String id) {
         this.save = save;
         this.id = id;
         this.workerController = WorkerController.getInstance();
+        createUIComponents();
     }
-
     private void createUIComponents() {
-        editConstraintsWin=new JPanel();
+        editConstraintsWin = new JPanel();
+        editConstraintsWin.setBackground(Color.BLACK);
+        editConstraintsWin.setLayout(new GridBagLayout());
+
         this.setContentPane(editConstraintsWin);
-        this.setMinimumSize(new Dimension(300, 300));
+        this.setMinimumSize(new Dimension(300, 500));
         this.pack();
         this.setVisible(true);
         this.setTitle("Constraints");
-        //get the instance when we update the panel
+
         guiService = GUIService.getInstance();
 
-        // TODO: place custom component creation code here
-        //combo box with days
         dayCB = new JComboBox<>(Days.values());
-        //load the data about the workers constraints
-        loadData();
-
-        // Add the data panel to a scroll pane
-        JScrollPane scrollPane = new JScrollPane(data);
-        scrollPane.setPreferredSize(new Dimension(300, 200));
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-        // Add the scroll pane to the content pane
-        editConstraintsWin.setLayout(new BorderLayout());
-        editConstraintsWin.add(scrollPane, BorderLayout.CENTER);
 
         from = new JTextField();
         from.setDocument(new DoubleDocument());
 
         to = new JTextField();
         to.setDocument(new DoubleDocument());
+
+        reason = new JTextField();
 
         DocumentListener docListener = createDocumentListener();
         from.getDocument().addDocumentListener(docListener);
@@ -83,56 +81,160 @@ public class editConstraints extends JFrame implements ActionListener {
         removeButton = new JButton("Remove Constraint");
         backButton = new JButton("Back");
 
-        // Initially disable buttons until text fields are filled
         addButton.setEnabled(false);
         removeButton.setEnabled(false);
 
-        //set listeneres for buttons
         addButton.addActionListener(this);
         removeButton.addActionListener(this);
         backButton.addActionListener(this);
-    }
-//load his constraints
-    private void loadData(){
-        data = new JPanel();
-        data.setLayout(new BoxLayout(data, BoxLayout.Y_AXIS));
-        List<String> constraints = guiService.getWorkerCantWorkDays(id);
-        String currentDay = "";  // Variable to keep track of the current day
 
+        dataWin = new JPanel(new GridBagLayout());
+        dataWin.setBackground(Color.BLACK);
+
+        loadData();
+
+        //add scrolbars to dataWin
+        JScrollPane scrollPane = new JScrollPane(dataWin);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        dayLabel = new JLabel("Day: ");
+        dayLabel.setForeground(Color.WHITE);
+
+        fromLabel = new JLabel("From: ");
+        fromLabel.setForeground(Color.WHITE);
+
+        toLabel = new JLabel("To: ");
+        toLabel.setForeground(Color.WHITE);
+
+        reasonLabel = new JLabel("Reason: ");
+        reasonLabel.setForeground(Color.WHITE);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        editConstraintsWin.add(dayLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        editConstraintsWin.add(dayCB, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0.0;
+        gbc.fill = GridBagConstraints.NONE;
+        editConstraintsWin.add(fromLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        editConstraintsWin.add(from, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 0.0;
+        gbc.fill = GridBagConstraints.NONE;
+        editConstraintsWin.add(toLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        editConstraintsWin.add(to, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.weightx = 0.0;
+        gbc.fill = GridBagConstraints.NONE;
+        editConstraintsWin.add(reasonLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        editConstraintsWin.add(reason, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        editConstraintsWin.add(scrollPane, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        gbc.weighty = 0.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        editConstraintsWin.add(addButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2;
+        gbc.weighty = 0.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        editConstraintsWin.add(removeButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        gbc.weighty = 0.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        editConstraintsWin.add(backButton, gbc);
+    }
+
+    private void loadData() {
+        dataWin.removeAll();
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        List<String> constraints = guiService.getWorkerCantWorkDays(id);
+        String currentDay = "";
         for (String constraint : constraints) {
             if (currentDay.isEmpty()) {
-                // A new day is encountered
                 currentDay = constraint;
                 JLabel dayLabel = new JLabel("Day: " + currentDay);
                 dayLabel.setForeground(Color.WHITE);
-                data.add(dayLabel);
+                gbc.gridx = 0;
+                gbc.gridy = GridBagConstraints.RELATIVE;
+                dataWin.add(dayLabel, gbc);
             } else {
-                // Constraints for the current day
                 JLabel constraintLabel = new JLabel(constraint);
                 constraintLabel.setForeground(Color.WHITE);
-                data.add(constraintLabel);
+                gbc.gridx = 0;
+                gbc.gridy = GridBagConstraints.RELATIVE;
+                dataWin.add(constraintLabel, gbc);
             }
         }
+
+        gbc.weighty = 1.0;
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        dataWin.add(Box.createVerticalGlue(), gbc);
+
+        dataWin.revalidate();
+        dataWin.repaint();
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        int selectedDay = dayCB.getSelectedIndex() + 1;
+        double fromTime = Double.parseDouble(from.getText());
+        double toTime = Double.parseDouble(to.getText());
         if (e.getSource() == addButton) {
-            // Handle add constraint action
-            Days selectedDay = (Days) dayCB.getSelectedItem();
-            String fromTime = from.getText();
-            String toTime = to.getText();
-
-            // TODO: Implement add constraint logic here
-            System.out.println("Adding constraint for " + selectedDay + " from " + fromTime + " to " + toTime);
-
+            workerController.AddConstraints(id, selectedDay, fromTime, toTime, reason.getText());
+            loadData();
         } else if (e.getSource() == removeButton) {
-            // Handle remove constraint action
-
-            // TODO: Implement remove constraint logic here
-            System.out.println("Removing constraint");
-
+            workerController.RemoveConstraints(id, selectedDay, fromTime, toTime);
+            loadData();
         } else if (e.getSource() == backButton) {
-            // Handle back button action
             this.dispose();
             save.setVisible(true);
         }
@@ -214,6 +316,5 @@ public class editConstraints extends JFrame implements ActionListener {
             setDocumentFilter(new HourFilter());
         }
     }
-
-
 }
+

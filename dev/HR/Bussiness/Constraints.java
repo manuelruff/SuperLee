@@ -26,11 +26,6 @@ public class Constraints {
         }
         // if not null we add a value to what we already have
         else{
-            for(CantWork cw : curr){
-                if(cw.getStart()<=s || cw.getEnd()>=e){
-                    return false;
-                }
-            }
             curr.add(new CantWork(s,e,r));
             return true;
         }

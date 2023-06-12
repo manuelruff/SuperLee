@@ -420,7 +420,6 @@ public class ServiceController {
         return ret;
     }
     //get info on worker cant work days
-
     public List<String> getWorkerCantWorkDays(String id) {
         List<String> ret = new ArrayList<>();
         Worker w=dataController.getWorker(id);
