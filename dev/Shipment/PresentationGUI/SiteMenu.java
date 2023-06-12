@@ -14,9 +14,10 @@ public class SiteMenu extends JFrame implements ActionListener {
     private JButton startButton;
     private JComboBox<String> comboBox1;
     private shipmentManagement shipmentM;
+    private ShipManager save;
 
-    public SiteMenu() throws HeadlessException {
-
+    public SiteMenu(ShipManager save)  {
+        this.save = save;
         this.setContentPane(SiteMenu);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(300,200));
@@ -49,6 +50,14 @@ public class SiteMenu extends JFrame implements ActionListener {
                 new AddVendor(this);
                 this.setVisible(false);
             }
+            else if (comboBox1.getSelectedItem().equals("Update site info")) {
+                new UpdateSite(this);
+                this.setVisible(false);
+            }
+        }
+        if(e.getSource()== exitButton)
+        {
+            this.save.setVisible(true);
         }
     }
 }

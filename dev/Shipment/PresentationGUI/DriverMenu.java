@@ -13,9 +13,10 @@ public class DriverMenu extends JFrame implements ActionListener {
     private JComboBox<String> comboBox1;
     private JPanel DriverMenu;
     private shipmentManagement shipmentM;
+    private ShipManager save;
 
-    public DriverMenu() {
-
+    public DriverMenu(ShipManager save) {
+        this.save = save;
         this.setContentPane(DriverMenu);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(300,200));
@@ -32,7 +33,7 @@ public class DriverMenu extends JFrame implements ActionListener {
         comboBox1 = new JComboBox<>();
         comboBox1.addItem("Print All drivers");
         comboBox1.addItem("Update driver licence");
-        comboBox1.addItem("Update driver training");
+        comboBox1.addItem("Contact phone number");
     }
 
     @Override

@@ -1,32 +1,32 @@
-    package Shipment.PresentationGUI;
+package Shipment.PresentationGUI;
+
+import javax.swing.*;
+import Shipment.Bussiness.shipmentManagement;
 
 
-    import Shipment.Bussiness.shipmentManagement;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-    import javax.swing.*;
-    import javax.swing.event.DocumentEvent;
-    import javax.swing.event.DocumentListener;
-    import java.awt.*;
-    import java.awt.event.ActionEvent;
-    import java.awt.event.ActionListener;
-    import java.awt.event.KeyAdapter;
-    import java.awt.event.KeyEvent;
-
-    public class AddVendor extends JFrame implements ActionListener {
-    private JPanel AddVendor ;
-    private SiteMenu save;
+public class AddTruck extends JFrame implements ActionListener{
+    private JPanel AddTruck;
+    private TruckMenu save;
     private shipmentManagement shipmentM;
-    private JTextField nameField,addressField,phoneField,contactNameField;
-    private JLabel nameLabel,addressLabel,phoneLabel,contactNameLabel;
+    private JTextField numberField, modelField, weightField, totalWeightField;
+    private JLabel numberLabel, modelLabel, weightLabel, totalWeightLabel;
     private JButton addButton, cancelButton;
 
-    public AddVendor(SiteMenu save)
+    public AddTruck(TruckMenu save)
     {
         createUIComponents();
         this.save = save;
         this.shipmentM = shipmentManagement.getInstance();
         addButton.setEnabled(false);
-        nameField.getDocument().addDocumentListener(new DocumentListener() {
+        numberField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 updateAddButtonEnabledState();
@@ -42,7 +42,7 @@
                 updateAddButtonEnabledState();
             }
         });
-        addressField.getDocument().addDocumentListener(new DocumentListener() {
+        modelField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 updateAddButtonEnabledState();
@@ -58,7 +58,7 @@
                 updateAddButtonEnabledState();
             }
         });
-        phoneField.getDocument().addDocumentListener(new DocumentListener() {
+        weightField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 updateAddButtonEnabledState();
@@ -74,7 +74,7 @@
                 updateAddButtonEnabledState();
             }
         });
-        contactNameField.getDocument().addDocumentListener(new DocumentListener() {
+        totalWeightField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 updateAddButtonEnabledState();
@@ -91,47 +91,46 @@
             }
         });
         this.setVisible(true);
-
-
     }
     private void updateAddButtonEnabledState() {
         // Enable the add button only if all text fields are non-empty
-        boolean allFieldsFilled = !nameField.getText().isEmpty() &&
-                !addressField.getText().isEmpty() &&
-                !phoneField.getText().isEmpty() &&
-                !contactNameField.getText().isEmpty();
+        boolean allFieldsFilled = !numberField.getText().isEmpty() &&
+                !modelField.getText().isEmpty() &&
+                !weightField.getText().isEmpty() &&
+                !totalWeightField.getText().isEmpty();
         addButton.setEnabled(allFieldsFilled);
     }
     private void createUIComponents() {
-        this.setTitle("Add New Vendor");
+        this.setTitle("Add New Truck");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Set the content pane background color to black
         getContentPane().setBackground(Color.BLACK);
 
         // Create the components
-        nameLabel = new JLabel("Name:");
-        addressLabel = new JLabel("Address:");
-        phoneLabel = new JLabel("Phone:");
-        contactNameLabel = new JLabel("Contact Name:");
+        numberLabel = new JLabel("Truck Number:");
+        modelLabel = new JLabel("Model:");
+        weightLabel = new JLabel("Truck Weight:");
+        totalWeightLabel = new JLabel("Truck total carry weight:");
 
         // Set the foreground color of each label to white
-        nameLabel.setForeground(Color.WHITE);
-        addressLabel.setForeground(Color.WHITE);
-        phoneLabel.setForeground(Color.WHITE);
-        contactNameLabel.setForeground(Color.WHITE);
+        numberLabel.setForeground(Color.WHITE);
+        modelLabel.setForeground(Color.WHITE);
+        weightLabel.setForeground(Color.WHITE);
+        totalWeightLabel.setForeground(Color.WHITE);
 
 
-        nameField = new JTextField(10);
-        addressField = new JTextField(10);
-        phoneField = new JTextField(10);
-        contactNameField = new JTextField(10);
+        numberField = new JTextField(10);
+        modelField = new JTextField(10);
+        weightField = new JTextField(10);
+        totalWeightField = new JTextField(10);
 
         // check name validate
         // Set the input verifier for the ID field
-        nameField.setInputVerifier(new AddVendor.NameVerifier(nameLabel));
+        numberField.setInputVerifier(new AddTruck.NumberVerifier(numberLabel));
 
         // check the phone number validate
-        phoneField.setInputVerifier(new AddVendor.PhoneNumberVerifier(phoneLabel));
+        weightField.setInputVerifier(new AddTruck.weightVerifier(weightLabel));
+        totalWeightField.setInputVerifier(new AddTruck.totalWeightVerifier(totalWeightLabel));
 
         addButton = new JButton("Add");
         cancelButton = new JButton("Cancel");
@@ -139,40 +138,41 @@
         cancelButton.setForeground(Color.BLACK);
 
         // Create a panel and set the layout
-        AddVendor = new JPanel();
-        AddVendor.setLayout(new BoxLayout(AddVendor, BoxLayout.Y_AXIS));
+        AddTruck = new JPanel();
+        AddTruck.setLayout(new BoxLayout(AddTruck, BoxLayout.Y_AXIS));
 
         // Add the components to the panel
         JPanel NamePAnel = new JPanel(new GridLayout(1, 2));
         NamePAnel.setBackground(Color.BLACK); // Set the panel background color to black
-        NamePAnel.add(nameLabel);
-        NamePAnel.add(nameField);
-        AddVendor.add(NamePAnel);
+        NamePAnel.add(numberLabel);
+        NamePAnel.add(numberField);
+        AddTruck.add(NamePAnel);
 
         JPanel AddressPAnel = new JPanel(new GridLayout(1, 2));
         AddressPAnel.setBackground(Color.BLACK); // Set the panel background color to black
-        AddressPAnel.add(addressLabel);
-        AddressPAnel.add(addressField);
-        AddVendor.add(AddressPAnel);
+        AddressPAnel.add(modelLabel);
+        AddressPAnel.add(modelField);
+        AddTruck.add(AddressPAnel);
 
         JPanel PhonePAnel = new JPanel(new GridLayout(1, 2));
         PhonePAnel.setBackground(Color.BLACK); // Set the panel background color to black
-        PhonePAnel.add(phoneLabel);
-        PhonePAnel.add(phoneField);
-        AddVendor.add(PhonePAnel);
+        PhonePAnel.add(weightLabel);
+        PhonePAnel.add(weightField);
+        AddTruck.add(PhonePAnel);
+
 
         JPanel ContactNamePAnel = new JPanel(new GridLayout(1, 2));
         ContactNamePAnel.setBackground(Color.BLACK); // Set the panel background color to black
-        ContactNamePAnel.add(contactNameLabel);
-        ContactNamePAnel.add(contactNameField);
-        AddVendor.add(ContactNamePAnel);
+        ContactNamePAnel.add(totalWeightLabel);
+        ContactNamePAnel.add(totalWeightField);
+        AddTruck.add(ContactNamePAnel);
 
 
         JPanel buttonPanel = new JPanel(new GridLayout(2, 1)); // Set the grid layout to 2 rows and 1 column
         buttonPanel.setBackground(Color.BLACK); // Set the panel background color to black
         buttonPanel.add(addButton);
         buttonPanel.add(cancelButton);
-        AddVendor.add(buttonPanel);
+        AddTruck.add(buttonPanel);
 
         // Set the maximum size of the buttons to fill the horizontal space
         Dimension maxButtonSize = new Dimension(Integer.MAX_VALUE, addButton.getPreferredSize().height);
@@ -184,7 +184,7 @@
         addButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
-        phoneField.addKeyListener(new KeyAdapter() {
+        weightField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
@@ -195,72 +195,95 @@
         });
 
         // Set the content pane and display the window
-        setContentPane(AddVendor);
+        setContentPane(AddTruck);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(300, 200));
         pack();
         setVisible(true);
-
-
     }
-    class NameVerifier extends InputVerifier {
-        private JLabel nameLabel;
+    class NumberVerifier extends InputVerifier {
+        private JLabel numberLabel;
 
-        public NameVerifier(JLabel nameLabel) {
-            this.nameLabel = nameLabel;
+        public NumberVerifier(JLabel nameLabel) {
+            this.numberLabel = nameLabel;
         }
 
         @Override
         public boolean verify(JComponent input) {
             // Get the ID field text
-            String name = ((JTextField) input).getText();
+            String number = ((JTextField) input).getText();
             // Check if the Vendor exists
-            boolean check = shipmentM.checkVendor(name);
+            boolean check = shipmentM.checkTruckNumber(number);
             if (check) {
                 // Change the color of the IdLabel to red
-                nameLabel.setForeground(Color.RED);
+                numberLabel.setForeground(Color.RED);
                 return false;
             }
             // Change the color of the IdLabel to white
-            nameLabel.setForeground(Color.WHITE);
+            numberLabel.setForeground(Color.WHITE);
             return true;
         }
     }
-        class PhoneNumberVerifier extends InputVerifier {
-            private JLabel phoneNumberLabel;
+    class weightVerifier extends InputVerifier {
+        private JLabel weight;
 
-            public PhoneNumberVerifier(JLabel phoneNumberLabel) {
-                this.phoneNumberLabel = phoneNumberLabel;
-            }
-
-            @Override
-            public boolean verify(JComponent input) {
-                String phoneNumber = ((JTextField) input).getText();
-
-                // Remove all non-digit characters from the phone number
-                String digitsOnly = phoneNumber.replaceAll("\\D", "");
-
-                if (digitsOnly.length() != 10) {
-                    // Change the color of the phoneNumberLabel to red
-                    phoneNumberLabel.setForeground(Color.RED);
-                    return false;
-                }
-
-                // Change the color of the phoneNumberLabel to white
-                phoneNumberLabel.setForeground(Color.WHITE);
-                return true;
-            }
+        public weightVerifier(JLabel phoneNumberLabel) {
+            this.weight = weightLabel;
         }
+
+        @Override
+        public boolean verify(JComponent input) {
+            String w = ((JTextField) input).getText();
+
+            // Remove all non-digit characters from the phone number
+            String digitsOnly = w.replaceAll("\\D", "");
+
+            if (Integer.parseInt(digitsOnly) < 0) {
+                // Change the color of the phoneNumberLabel to red
+                weight.setForeground(Color.RED);
+                return false;
+            }
+
+            // Change the color of the phoneNumberLabel to white
+            weight.setForeground(Color.WHITE);
+            return true;
+        }
+    }
+    class totalWeightVerifier extends InputVerifier {
+        private JLabel totalWeight;
+
+        public totalWeightVerifier(JLabel phoneNumberLabel) {
+            this.totalWeight = totalWeightLabel;
+        }
+
+        @Override
+        public boolean verify(JComponent input) {
+            String w = ((JTextField) input).getText();
+
+            // Remove all non-digit characters from the phone number
+            String digitsOnly = w.replaceAll("\\D", "");
+
+            if (Integer.parseInt(digitsOnly) < 0) {
+                // Change the color of the phoneNumberLabel to red
+                totalWeight.setForeground(Color.RED);
+                return false;
+            }
+
+            // Change the color of the phoneNumberLabel to white
+            totalWeight.setForeground(Color.WHITE);
+            return true;
+        }
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
-            String siteName = nameField.getText();
-            String siteAddress = addressField.getText();
-            String sitePhoneNumber = phoneField.getText();
-            String contactName = contactNameField.getText();
-            shipmentM.addVendor(siteName,siteAddress,sitePhoneNumber,contactName);
+            String number = numberField.getText();
+            String model = modelField.getText();
+            String weight = weightField.getText();
+            String totalWeight = totalWeightField.getText();
+            shipmentM.addTruck(number,Integer.parseInt(totalWeight),Integer.parseInt(weight),model,1);
             // Display a success message and return to the previous window
-            JOptionPane.showMessageDialog(this, "Vendor added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Truck added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             save.setVisible(true); // show the main window
             this.dispose(); // close the current window
 
