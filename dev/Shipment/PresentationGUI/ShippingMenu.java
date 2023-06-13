@@ -1,11 +1,14 @@
 package Shipment.PresentationGUI;
 
+import HR.Bussiness.Days;
 import Shipment.Bussiness.shipmentManagement;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class ShippingMenu extends JFrame implements ActionListener {
@@ -77,7 +80,26 @@ public class ShippingMenu extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Start")) {
             if (Objects.equals(comboBox.getSelectedItem(), "Add Shipment")) {
-
+                LocalDate currentDate = LocalDate.now();
+                if (currentDate.getDayOfWeek().equals(DayOfWeek.FRIDAY) || currentDate.getDayOfWeek().equals(DayOfWeek.SATURDAY)){
+                    new AddShipment(this, 1);
+                }
+                else{
+                    String[] options = {"This Week", "Next Week"};
+                    // dialog for this week or next week.
+                    int choice = JOptionPane.showOptionDialog(
+                            this,
+                            "Please choose the shipment schedule:",
+                            "Shipment Schedule",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            options,
+                            options[0]
+                    );
+                    new AddShipment(this, choice);
+                    setVisible(false);
+                }
             }
             else if (Objects.equals(comboBox.getSelectedItem(), "Delete Shipment")) {
                 JTextField textField = new JTextField();
