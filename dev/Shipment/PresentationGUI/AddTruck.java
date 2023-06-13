@@ -17,7 +17,8 @@ public class AddTruck extends JFrame implements ActionListener{
     private TruckMenu save;
     private shipmentManagement shipmentM;
     private JTextField numberField, modelField, weightField, totalWeightField;
-    private JLabel numberLabel, modelLabel, weightLabel, totalWeightLabel;
+    private JLabel numberLabel, modelLabel, weightLabel, totalWeightLabel,storageLabel;
+    private JComboBox<String> training;
     private JButton addButton, cancelButton;
 
     public AddTruck(TruckMenu save)
@@ -25,6 +26,7 @@ public class AddTruck extends JFrame implements ActionListener{
         createUIComponents();
         this.save = save;
         this.shipmentM = shipmentManagement.getInstance();
+        training.addActionListener(this);
         addButton.setEnabled(false);
         numberField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -111,18 +113,25 @@ public class AddTruck extends JFrame implements ActionListener{
         modelLabel = new JLabel("Model:");
         weightLabel = new JLabel("Truck Weight:");
         totalWeightLabel = new JLabel("Truck total carry weight:");
+        storageLabel = new JLabel("Choose storage capability's: ");
+
 
         // Set the foreground color of each label to white
         numberLabel.setForeground(Color.WHITE);
         modelLabel.setForeground(Color.WHITE);
         weightLabel.setForeground(Color.WHITE);
         totalWeightLabel.setForeground(Color.WHITE);
+        storageLabel.setForeground(Color.WHITE);
 
 
         numberField = new JTextField(10);
         modelField = new JTextField(10);
         weightField = new JTextField(10);
         totalWeightField = new JTextField(10);
+        training = new JComboBox<>();
+        training.addItem("Regular");
+        training.addItem("Cooling");
+        training.addItem("Freezer");
 
         // check name validate
         // Set the input verifier for the ID field

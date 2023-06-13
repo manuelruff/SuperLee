@@ -44,7 +44,7 @@ public class ShipManager extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Start")) {
-            /*if (Objects.equals(comboBox1.getSelectedItem(), "Site Menu")){
+            if (Objects.equals(comboBox1.getSelectedItem(), "Site Menu")){
                 new SiteMenu(this);
                 this.setVisible(false);
             }
@@ -55,7 +55,7 @@ public class ShipManager extends JFrame implements ActionListener{
             else if (Objects.equals(comboBox1.getSelectedItem(), "Drivers Menu")) {
                 new DriverMenu(this);
                 this.setVisible(false);
-            }*/
+            }
             if (Objects.equals(comboBox1.getSelectedItem(), "Order Menu")){
                 new OrderMenu();
                 this.setVisible(false);
