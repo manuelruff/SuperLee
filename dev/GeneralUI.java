@@ -36,7 +36,6 @@ public class GeneralUI {
                 System.exit(0);
             }
         }
-        System.out.println("have a good day");
         //do what we need in the database when closed
         sManagement.closeDB();
         managerController.closeDB();
