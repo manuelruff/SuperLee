@@ -1,8 +1,7 @@
 package Shipment.PresentationGUI;
 
-import HR.Bussiness.Days;
-import HR.Service.GUIService;
 import Shipment.Bussiness.shipmentManagement;
+import Shipment.Service.GUIService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +29,7 @@ public class ShippingMenu extends JFrame implements ActionListener {
         pack();
         setVisible(true);
         sManagement = shipmentManagement.getInstance();
+        guiService = GUIService.getInstance();
         comboBox.addActionListener(this);
         startButton.addActionListener(this);
         backButton.addActionListener(this);
@@ -163,20 +163,18 @@ public class ShippingMenu extends JFrame implements ActionListener {
 
                             if (result == JOptionPane.OK_OPTION) {
                                 if (Objects.equals(comboBoxWeight.getSelectedItem(), "Delete Items From Shipment")) {
-
-                                    JComboBox<String> comboBoxSites = new JComboBox<>(options);
+                                    JComboBox<String> comboBoxSites = new JComboBox<>(guiService.getSitesOfShipmentData());
                                     comboBoxSites.addActionListener(this);
-
                                     Object[] pop = {
                                             "Choose an option:",
                                             comboBoxSites
                                     };
 
                                     result = JOptionPane.showOptionDialog(null, pop, "Pop-up Window", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-
                                     if (result == JOptionPane.OK_OPTION) {
-
-                                        new ExecuteShipment(this);
+                                        String siteName = Objects.requireNonNull(comboBoxSites.getSelectedItem()).toString();
+                                        new ExecuteShipment(this, siteName);
+                                        this.setVisible(false);
                                     } else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Exchange Truck")) {
                                         if (sManagement.changeTruck()) {
                                             JOptionPane.showMessageDialog(this, "Truck Exchanged Successfully", "Success!", JOptionPane.INFORMATION_MESSAGE);

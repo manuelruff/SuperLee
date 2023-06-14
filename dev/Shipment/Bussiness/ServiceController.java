@@ -159,7 +159,6 @@ public class ServiceController {
 
 
 
-
     //prints all available shipments
     public void printAllShipments()
     {
@@ -203,5 +202,23 @@ public class ServiceController {
             if(Objects.equals(order.getDestination(), siteName))
                 iterator.remove();
         }
+    }
+
+    public String[] getSitesNames(){
+        Shipment shipment = shipments.get(0);
+        String[] ret = new String[shipment.getDestinations().size()];
+        for(int i=0; i < shipment.getDestinations().size(); i ++){
+            ret[i] = shipment.getDestinations().get(i).getName();
+        }
+        return ret;
+    }
+    public List<String> getItemsFromDoc(String siteName){
+        Shipment shipment = shipments.get(0);
+        List<String> ret = new ArrayList<>();
+        for(Item item : shipment.getItemDoc(siteName).getItemList()){
+            ret.add(item.getName());
+            ret.add(String.valueOf(item.getQuantity()));
+        }
+        return ret;
     }
 }
