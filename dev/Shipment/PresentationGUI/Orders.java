@@ -13,28 +13,26 @@ import java.awt.event.ActionListener;
 
 public class Orders extends JFrame implements ActionListener {
     private JPanel Orders;
-    private JTable table1;
 
     private shipmentManagement shipmentM;
-    private ShipManager save;
+    private OrderMenu save;
     private GUIService service;
 
-    public Orders(ShipManager save) {
+    private JFrame frame; // Declare frame as an instance variable
+
+    public Orders(OrderMenu save) {
         createUIComponents();
         this.save = save;
-        this.setContentPane(Orders);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(300,200));
-        this.pack();
-        this.setVisible(true);
-        this.setTitle("Driver Menu");
+
         shipmentM = shipmentManagement.getInstance();
         service = GUIService.getInstance();
+
+        frame.pack(); // Pack the frame
+        frame.setVisible(true); // Make the frame visible
     }
 
     private void createUIComponents() {
-        JFrame frame = new JFrame("JButton in JTable Example");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame = new JFrame("JButton in JTable Example"); // Use the instance variable frame
 
         // Create the table data
         Object[][] tableData = {
@@ -47,13 +45,13 @@ public class Orders extends JFrame implements ActionListener {
         // Create the table model
         DefaultTableModel model = new DefaultTableModel(tableData, columnNames);
 
-        // Create the custom renderer and editor for the button column
-        TableColumn buttonColumn = table1.getColumnModel().getColumn(1);
-        buttonColumn.setCellRenderer(new ButtonRenderer());
-        buttonColumn.setCellEditor(new ButtonEditor());
-
         // Create the JTable component
         JTable table = new JTable(model);
+
+        // Create the custom renderer and editor for the button column
+        TableColumn buttonColumn = table.getColumnModel().getColumn(1);
+        buttonColumn.setCellRenderer(new ButtonRenderer());
+        buttonColumn.setCellEditor(new ButtonEditor());
 
         // Set the preferred size of the table
         table.setPreferredScrollableViewportSize(new Dimension(400, 200));
@@ -63,22 +61,22 @@ public class Orders extends JFrame implements ActionListener {
 
         // Add the scroll pane to the frame
         frame.getContentPane().add(scrollPane);
-
-        frame.pack();
-        frame.setVisible(true);
     }
+
     // Helper method to create a JButton with the given text
-    private static JButton createButton(String text) {
+    private JButton createButton(String text) {
         JButton button = new JButton(text);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Perform button action here
-                System.out.println("Button clicked");
+                JOptionPane.showMessageDialog(null, "Button clicked");
             }
         });
         return button;
     }
+
+
     static class ButtonRenderer extends JButton implements TableCellRenderer {
         public ButtonRenderer() {
             setOpaque(true);
@@ -86,10 +84,12 @@ public class Orders extends JFrame implements ActionListener {
 
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                        boolean hasFocus, int row, int column) {
+
             if (isSelected) {
                 setForeground(table.getSelectionForeground());
                 setBackground(table.getSelectionBackground());
             } else {
+
                 setForeground(table.getForeground());
                 setBackground(UIManager.getColor("Button.background"));
             }
@@ -97,6 +97,7 @@ public class Orders extends JFrame implements ActionListener {
             return this;
         }
     }
+
     // Custom cell editor for the button column
     static class ButtonEditor extends DefaultCellEditor {
         protected JButton button;
@@ -130,8 +131,12 @@ public class Orders extends JFrame implements ActionListener {
             return button.getText();
         }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // Handle button click events here
     }
 }
+
+
+
