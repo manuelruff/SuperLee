@@ -75,4 +75,6 @@ public abstract class Truck {
     }
 
     public abstract void printTruck();
+    public abstract String getFormattedTruckDetails();
+
 }

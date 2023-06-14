@@ -438,6 +438,7 @@ public class ServiceController {
     }
     //get info of all drivers
     public List<List<String>>getDriversInfo(){
+        dataController.loadAllWorkers();
         List<List<String>>ret=new ArrayList<>();
         for (Driver d:Drivers.values()) {
             List<String>temp=new ArrayList<>();

@@ -5,6 +5,7 @@ import HR.Service.ShipmentService;
 import Shipment.DataAccess.DataController;
 import Shipment.DataAccess.ShipmentMapper;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -341,6 +342,9 @@ public class shipmentManagement {
         vendors.put(name, vendor);
     }
 
+    public Map<String, Vendor> getVendors() {
+        return vendors;
+    }
 
     public void addBranch(List<List<String>> siteDetails) {
         Branch branch;

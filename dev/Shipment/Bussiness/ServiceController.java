@@ -13,6 +13,8 @@ public class ServiceController {
     private List<Shipment> shipments;
     private Map<String,Order> orders;
     private Map<String,Truck> trucks;
+    private final Map<String, Vendor> vendors;
+    private ShipmentService shipmentService;
 
 
     public static ServiceController getInstance() {
@@ -26,6 +28,8 @@ public class ServiceController {
         shipments = shipmentM.getAvailableShipment();
         orders = dataController.getOrderMap();
         trucks = dataController.getTrucksMap();
+        vendors = shipmentM.getVendors();
+        shipmentService = ShipmentService.getInstance();
     }
 
     /**
@@ -106,6 +110,55 @@ public class ServiceController {
         }
         return false;
     }
+   public List<String[]> getSiteData()
+   {
+       List<String[]> SitesD = new ArrayList<>();
+       dataController.loadAllVendors();
+       for(Vendor vendor: vendors.values())
+       {
+           String[] data = new String[5];
+           data[0] = vendor.getName();
+           data[1] = vendor.getAddress();
+           data[2] = vendor.getPhoneNumber();
+           data[3] = vendor.getContactName();
+           SitesD.add(data);
+       }
+       for(List<String> site : shipmentService.getAllSites())
+       {
+           String[] data = new String[5];
+           data[0] = site.get(0);
+           data[1] = site.get(1);
+           data[2] = site.get(2);
+           data[3] = site.get(3);
+           data[4] = site.get(4);
+           SitesD.add(data);
+       }
+       return SitesD;
+   }
+   public List<List<String>> getDriversData()
+   {
+       return shipmentService.getDriversInfo();
+   }
+    public List<String[]> getTrucksData()
+    {
+        List<String[]> trucksD = new ArrayList<>();
+
+        dataController.loadAllTrucks();
+        for(Truck truck: trucks.values())
+        {
+            String[] data = new String[5];
+            data[0] = truck.getTruckNumber();
+            data[1] = truck.getModel();
+            data[2] = Integer.toString(truck.getTruckWeight());
+            data[3] = Integer.toString(truck.getTotalWeight());
+            data[4] = truck.getStorageType().toString();
+            trucksD.add(data);
+        }
+        return trucksD;
+    }
+
+
+
 
     //prints all available shipments
     public void printAllShipments()
@@ -117,6 +170,7 @@ public class ServiceController {
     //this function find drivers for all shipments without a driver if there is an available driver
     public void findDriversForShipment()
     {
+
         ShipmentService shipmentService = ShipmentService.getInstance();
         List<String> driverDetails;
         List<String> branchesNames = new ArrayList<>();
