@@ -259,7 +259,7 @@ public class shipmentManagement {
     /**
      * This function searching for a new truck for the shipment.
      */
-    public void changeTruck() {
+    public boolean changeTruck() {
         Shipment shipment = availableShipments.get(0);
         Truck currentTruck = getTruck(shipment.getTruckNumber());
         Driver currentDriver = shipment.getDriver();
@@ -285,14 +285,14 @@ public class shipmentManagement {
                             System.out.println("Truck Changed to: ");
                             truck.printTruck();
                             shipment.setShipmentStatus(Status.TruckExchange);
-                            return;
+                            return true;
                         }
                     }
                 }
 
             }
         }
-        System.out.println("couldn't switch truck for this shipment at this moment");
+        return false;
     }
 
 
@@ -832,8 +832,18 @@ public class shipmentManagement {
     }
 
     public boolean checkIfDriverExist() {
-        if (availableShipments.get(0).getDriver() == null)
-            return false;
+        Shipment shipment = availableShipments.get(0);
+        List<String> sitesNames = new ArrayList<>();
+        if (shipment.getDriver() == null) {
+            for (Site site : shipment.getDestinations())
+                sitesNames.add(site.getName());
+            Truck truck = getTruck(shipment.getTruckNumber());
+            Driver  driver = addDriver(shipmentService.askForDriver(truck.getLicenceType(),truck.getStorageType().ordinal(),shipment.getDayOfTheWeek().ordinal(),sitesNames));
+            if (driver == null)
+                return false;
+            shipment.setDriver(driver);
+            return true;
+        }
         return true;
     }
 }
