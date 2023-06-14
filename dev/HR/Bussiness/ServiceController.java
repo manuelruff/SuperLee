@@ -436,4 +436,17 @@ public class ServiceController {
         }
         return ret;
     }
+    //get info of all drivers
+    public List<List<String>>getDriversInfo(){
+        List<List<String>>ret=new ArrayList<>();
+        for (Driver d:Drivers.values()) {
+            List<String>temp=new ArrayList<>();
+            temp.add(d.getID());
+            temp.add(d.getName());
+            temp.add(Character.toString(d.getLicense()));
+            temp.add(d.getAbility().toString());
+            ret.add(temp);
+        }
+        return ret;
+    }
 }
