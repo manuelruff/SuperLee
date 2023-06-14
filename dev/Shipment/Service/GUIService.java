@@ -4,6 +4,7 @@ import Shipment.Bussiness.ServiceController;
 import Shipment.Bussiness.Shipment;
 import Shipment.Bussiness.shipmentManagement;
 
+import java.security.KeyPair;
 import java.util.List;
 
 public class GUIService {
@@ -32,5 +33,16 @@ public class GUIService {
     public List<List<String>> getDriversData()
     {
         return serviceController.getDriversData();
+    }
+
+    /**
+     * get the names of the sites of the executed shipment.
+     * @return List of string contains the names.
+     */
+    public String[] getSitesOfShipmentData(){
+        return serviceController.getSitesNames();
+    }
+    public List<String> getItemsFromDoc(String siteName){
+        return serviceController.getItemsFromDoc(siteName);
     }
 }
