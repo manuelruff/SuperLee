@@ -74,6 +74,11 @@ public class OrderMenu extends JFrame implements ActionListener {
                 else
                     textField1.setBackground(Color.RED);
             }
+            else if(comboBox.getSelectedItem().equals("Print all orders"))
+            {
+                new Orders(this);
+                this.setVisible(false);
+            }
 
         }
         if(e.getSource() == backButton)
