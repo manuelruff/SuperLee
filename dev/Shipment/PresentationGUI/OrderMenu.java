@@ -23,7 +23,7 @@ public class OrderMenu extends JFrame implements ActionListener {
         this.save = save;
         this.setContentPane(OrderMenu);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(300,200));
+        this.setMinimumSize(new Dimension(400,300));
         this.pack();
         this.setVisible(true);
         this.setTitle("Order Menu");
@@ -77,7 +77,6 @@ public class OrderMenu extends JFrame implements ActionListener {
             else if(comboBox.getSelectedItem().equals("Print all orders"))
             {
                 new Orders(this);
-                this.setVisible(false);
             }
 
         }
@@ -96,8 +95,9 @@ public class OrderMenu extends JFrame implements ActionListener {
         label2 = new JLabel();
         textField1 = new JTextField();
         textField2 = new JTextField();
+        comboBox.addItem("Print all orders(without items)");
+        comboBox.addItem("Print all items in orders");
         comboBox.addItem("Add Order");
-        comboBox.addItem("Print all orders");
         label1.setVisible(false);
         label2.setVisible(false);
         textField1.setVisible(false);
