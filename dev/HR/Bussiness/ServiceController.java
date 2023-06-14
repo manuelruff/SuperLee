@@ -255,7 +255,7 @@ public class ServiceController {
         for (String branch : branches) {
             dataController.getSuper(branch);
             for (Shift sh : Superim.get(branch).GetWeekShifts().getShiftList()) {
-                if (sh.getDate() == day) {
+                if (sh.getDate().isEqual(day)) {
                     if(sh.getWorkerList().get(Jobs.StoreKeeper)==null || sh.getWorkerList().get(Jobs.StoreKeeper).size()==0 ){
                         return false;
                     }
