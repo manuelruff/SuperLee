@@ -54,4 +54,10 @@ public class ShipmentService {
     public boolean checkStoreKeeperNow(List<String> branches,LocalDate day){
         return serviceController.checkStoreKeeperNow(branches,day);
     }
+
+    //function for shipment gui
+    public List<List<String>>getDriversInfo(){
+        List<List<String>>ret = serviceController.getDriversInfo();
+        return ret;
+    }
 }
