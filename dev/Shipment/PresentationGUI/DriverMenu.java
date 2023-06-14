@@ -32,12 +32,21 @@ public class DriverMenu extends JFrame implements ActionListener {
         // TODO: place custom component creation code here
         comboBox1 = new JComboBox<>();
         comboBox1.addItem("Print All drivers");
-        comboBox1.addItem("Update driver licence");
-        comboBox1.addItem("Contact phone number");
+        comboBox1.addItem("Update driver information");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == startButton) {
+            if(comboBox1.getSelectedItem().equals("Update driver information"))
+            {
+                new UpdateDriver(this);
+                this.setVisible(false);
+            }
+        }
+        if(e.getSource() == backButton)
+        {
 
+        }
     }
 }
