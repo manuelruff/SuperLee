@@ -175,11 +175,13 @@ public class ServiceController {
     public List<String>getDriver(String ID){
         Driver ret= dataController.getDriver(ID);
         //todo check if it works
-        List<String>driverInfo=new ArrayList<>();
-        driverInfo.add(ret.getID());
-        driverInfo.add(ret.getName());
-        driverInfo.add(String.valueOf(ret.getLicense()));
-        driverInfo.add(ret.getAbility().toString());
+        List<String> driverInfo = new ArrayList<>();
+        if(ret != null) {
+            driverInfo.add(ret.getID());
+            driverInfo.add(ret.getName());
+            driverInfo.add(String.valueOf(ret.getLicense()));
+            driverInfo.add(ret.getAbility().toString());
+        }
         return driverInfo;
     }
 

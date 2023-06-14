@@ -48,13 +48,11 @@ public class UpdateSite extends JFrame implements ActionListener {
             {
                 textField.setBackground(Color.white);
                 if (comboBox.getSelectedItem().equals("Site address")) {
-                    String newAddress = textField.getText();
                     shipmentM.updateSite(textField.getText(),textField1.getText(),1);
                     JOptionPane.showMessageDialog(this, "Vendor information changed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     save.setVisible(true); // show the main window
                     this.dispose(); // close the current window
                 } else if (comboBox.getSelectedItem().equals("Contact name")) {
-                    String newAddress = textField.getText();
                     shipmentM.updateSite(textField.getText(),textField1.getText(),2);
                     JOptionPane.showMessageDialog(this, "Vendor information changed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     save.setVisible(true); // show the main window

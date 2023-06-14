@@ -57,7 +57,7 @@ public class ShipManager extends JFrame implements ActionListener{
                 this.setVisible(false);
             }
             if (Objects.equals(comboBox1.getSelectedItem(), "Order Menu")){
-                new OrderMenu();
+                new OrderMenu(this);
                 this.setVisible(false);
             }
             else if (Objects.equals(comboBox1.getSelectedItem(), "Shipping Menu")){

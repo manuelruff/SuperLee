@@ -176,6 +176,11 @@ public class AddTruck extends JFrame implements ActionListener{
         ContactNamePAnel.add(totalWeightField);
         AddTruck.add(ContactNamePAnel);
 
+        JPanel storagePanel = new JPanel(new GridLayout(1,2));
+        storagePanel.setBackground(Color.BLACK);
+        storagePanel.add(storageLabel);
+        storagePanel.add(training);
+        AddTruck.add(storagePanel);
 
         JPanel buttonPanel = new JPanel(new GridLayout(2, 1)); // Set the grid layout to 2 rows and 1 column
         buttonPanel.setBackground(Color.BLACK); // Set the panel background color to black
@@ -226,6 +231,7 @@ public class AddTruck extends JFrame implements ActionListener{
             if (check) {
                 // Change the color of the IdLabel to red
                 numberLabel.setForeground(Color.RED);
+                addButton.setEnabled(false);
                 return false;
             }
             // Change the color of the IdLabel to white
@@ -244,10 +250,7 @@ public class AddTruck extends JFrame implements ActionListener{
         public boolean verify(JComponent input) {
             String w = ((JTextField) input).getText();
 
-            // Remove all non-digit characters from the phone number
-            String digitsOnly = w.replaceAll("\\D", "");
-
-            if (Integer.parseInt(digitsOnly) < 0) {
+            if (!w.matches("\\d+")) {
                 // Change the color of the phoneNumberLabel to red
                 weight.setForeground(Color.RED);
                 return false;
@@ -261,7 +264,7 @@ public class AddTruck extends JFrame implements ActionListener{
     class totalWeightVerifier extends InputVerifier {
         private JLabel totalWeight;
 
-        public totalWeightVerifier(JLabel phoneNumberLabel) {
+        public totalWeightVerifier(JLabel totalWeightLabel) {
             this.totalWeight = totalWeightLabel;
         }
 
@@ -269,11 +272,8 @@ public class AddTruck extends JFrame implements ActionListener{
         public boolean verify(JComponent input) {
             String w = ((JTextField) input).getText();
 
-            // Remove all non-digit characters from the phone number
-            String digitsOnly = w.replaceAll("\\D", "");
-
-            if (Integer.parseInt(digitsOnly) < 0) {
-                // Change the color of the phoneNumberLabel to red
+            if (!w.matches("\\d+")) {
+                // Change the color to red
                 totalWeight.setForeground(Color.RED);
                 return false;
             }
@@ -290,7 +290,14 @@ public class AddTruck extends JFrame implements ActionListener{
             String model = modelField.getText();
             String weight = weightField.getText();
             String totalWeight = totalWeightField.getText();
-            shipmentM.addTruck(number,Integer.parseInt(totalWeight),Integer.parseInt(weight),model,1);
+            String train = training.getSelectedItem().toString();
+            int num = 0;
+            switch (train) {
+                case "Freezer" -> num = 2;
+                case "Cooling" -> num = 1;
+                case "Regular" -> num = 0;
+            }
+            shipmentM.addTruck(number,Integer.parseInt(totalWeight),Integer.parseInt(weight),model,num);
             // Display a success message and return to the previous window
             JOptionPane.showMessageDialog(this, "Truck added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             save.setVisible(true); // show the main window
