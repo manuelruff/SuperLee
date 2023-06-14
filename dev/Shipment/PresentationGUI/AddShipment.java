@@ -1,5 +1,4 @@
 package Shipment.PresentationGUI;
-import Shipment.Bussiness.Vendor;
 import Shipment.Bussiness.shipmentManagement;
 
 import java.awt.event.ActionEvent;
