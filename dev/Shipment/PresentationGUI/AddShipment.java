@@ -141,6 +141,7 @@ public class AddShipment extends JFrame implements ActionListener {
             if (sManagement.createShipment(day,daysOfWeek.get(index),ID,vendor)){
                 JOptionPane.showMessageDialog(this, "Shipment added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
+                save.setVisible(true);
             }
             else {
                 JOptionPane.showMessageDialog(this, "Shipment Can't be created", "Failed", JOptionPane.INFORMATION_MESSAGE);
