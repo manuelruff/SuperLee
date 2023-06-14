@@ -1,6 +1,7 @@
 package Shipment.PresentationGUI;
 
 import HR.Bussiness.Days;
+import HR.Service.GUIService;
 import Shipment.Bussiness.shipmentManagement;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class ShippingMenu extends JFrame implements ActionListener {
@@ -18,7 +20,8 @@ public class ShippingMenu extends JFrame implements ActionListener {
     private JButton startButton;
     private JButton backButton;
     private shipmentManagement sManagement;
-    private  ShipManager save;
+    private ShipManager save;
+    private GUIService guiService;
 
     public ShippingMenu(ShipManager save) {
         createUIComponents();
@@ -81,10 +84,9 @@ public class ShippingMenu extends JFrame implements ActionListener {
         if (e.getActionCommand().equals("Start")) {
             if (Objects.equals(comboBox.getSelectedItem(), "Add Shipment")) {
                 LocalDate currentDate = LocalDate.now();
-                if (currentDate.getDayOfWeek().equals(DayOfWeek.FRIDAY) || currentDate.getDayOfWeek().equals(DayOfWeek.SATURDAY)){
+                if (currentDate.getDayOfWeek().equals(DayOfWeek.FRIDAY) || currentDate.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
                     new AddShipment(this, 1);
-                }
-                else{
+                } else {
                     String[] options = {"This Week", "Next Week"};
                     // dialog for this week or next week.
                     int choice = JOptionPane.showOptionDialog(
@@ -100,8 +102,7 @@ public class ShippingMenu extends JFrame implements ActionListener {
                     new AddShipment(this, choice);
                     setVisible(false);
                 }
-            }
-            else if (Objects.equals(comboBox.getSelectedItem(), "Delete Shipment")) {
+            } else if (Objects.equals(comboBox.getSelectedItem(), "Delete Shipment")) {
                 JTextField textField = new JTextField();
                 int result = JOptionPane.showConfirmDialog(null, textField, "Enter Shipment id:", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
@@ -116,20 +117,99 @@ public class ShippingMenu extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "The Shipment has been removed successfully!", "Remove", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
-            }
-            else if (Objects.equals(comboBox.getSelectedItem(), "Print All Shipments")) {
+            } else if (Objects.equals(comboBox.getSelectedItem(), "Print All Shipments")) {
 
-            }
-            else if (Objects.equals(comboBox.getSelectedItem(), "Print All Available Shipments")) {
+            } else if (Objects.equals(comboBox.getSelectedItem(), "Print All Available Shipments")) {
 
-            }
-            else if (Objects.equals(comboBox.getSelectedItem(), "Execute Nearest Shipment")) {
+            } else if (Objects.equals(comboBox.getSelectedItem(), "Execute Nearest Shipment")) {
+                if (!sManagement.checkAvailableShipment()) {
+                    JOptionPane.showMessageDialog(this, "There is No AvailableShipments at the moment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
+                } else if (!sManagement.checkIfDriverExist()) {
+                    JOptionPane.showMessageDialog(this, "Cant find a suitable driver", "Failure!", JOptionPane.INFORMATION_MESSAGE);
+                } else if (!sManagement.checkExecuteNow()) {
+                    JOptionPane.showMessageDialog(this, "In one of the branches there is not available storekeeper, so the shipment was canceled", "Failure!", JOptionPane.INFORMATION_MESSAGE);
+                    sManagement.deleteShipment(sManagement.getAvailableShipment().get(0).getID());
+                } else {
+                    String truckWeight;
+                    int weight = 0;
+                    int firstWeight = Integer.MAX_VALUE;
+                    boolean validInput = false;
+                    while (true) {
+                        while (!validInput) {
+                            truckWeight = JOptionPane.showInputDialog(this, "Please enter the weight of the truck:");
+                            if (truckWeight != null && truckWeight.matches("\\d+")) {
+                                weight = Integer.parseInt(truckWeight);
+                                if (weight >= firstWeight) {
+                                    JOptionPane.showMessageDialog(this, "The weight is higher then the last weight", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                                } else {
+                                    firstWeight = weight;
+                                    validInput = true;
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Invalid input! Please enter a numeric value.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        if (sManagement.checkTruckWeight(weight)) {
+                            String[] options = {"Exchange Truck", "Delete Items From Shipment", "Delete Last Site"};
+                            JComboBox<String> comboBoxWeight = new JComboBox<>(options);
+                            comboBoxWeight.addActionListener(this);
 
+                            Object[] message = {
+                                    "Choose an option:",
+                                    comboBoxWeight
+                            };
+
+                            int result = JOptionPane.showOptionDialog(null, message, "Pop-up Window", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+                            if (result == JOptionPane.OK_OPTION) {
+                                if (Objects.equals(comboBoxWeight.getSelectedItem(), "Delete Items From Shipment")) {
+
+                                    JComboBox<String> comboBoxSites = new JComboBox<>(options);
+                                    comboBoxSites.addActionListener(this);
+
+                                    Object[] pop = {
+                                            "Choose an option:",
+                                            comboBoxSites
+                                    };
+
+                                    result = JOptionPane.showOptionDialog(null, pop, "Pop-up Window", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+                                    if (result == JOptionPane.OK_OPTION) {
+
+                                        new ExecuteShipment(this);
+                                    } else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Exchange Truck")) {
+                                        if (sManagement.changeTruck()) {
+                                            JOptionPane.showMessageDialog(this, "Truck Exchanged Successfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                                        } else {
+                                            JOptionPane.showMessageDialog(this, "There is No Available truck at the moment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
+                                        }
+                                    } else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Delete Last Site")) {
+                                        if (sManagement.removeLastSiteFromShipment()) {
+                                            JOptionPane.showMessageDialog(this, "Site removed Successfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                                        } else {
+                                            JOptionPane.showMessageDialog(this, "There is only 1 site in the shipment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
+                                        }
+                                    }
+                                }
+                                // TODO maybe remove the cancel button
+                                else {
+                                    System.out.println("Dialog canceled.");
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(this, "The shipment has been executed successfully.", "finished", JOptionPane.ERROR_MESSAGE);
+                                //todo check this
+                                LocalTime time = LocalTime.now();
+                                sManagement.updateShipment(time);
+                                break;
+                            }
+                        }
+
+                    }
+                }
+            } else if (e.getActionCommand().equals("Back")) {
+                this.dispose();
+                save.setVisible(true);
             }
-        }
-        else if (e.getActionCommand().equals("Back")){
-            this.dispose();
-            save.setVisible(true);
         }
     }
 }

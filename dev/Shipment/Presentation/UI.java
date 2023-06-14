@@ -688,7 +688,12 @@ public class UI {
                         itemsToDelete();
                     }
                     case "2" -> {
-                        sManagement.changeTruck();
+                        if (!sManagement.changeTruck()){
+                            System.out.println("couldn't switch truck for this shipment at this moment");
+                        }
+                        else{
+
+                        }
                     }
                     case "3" -> {
                         if (sManagement.removeLastSiteFromShipment())
