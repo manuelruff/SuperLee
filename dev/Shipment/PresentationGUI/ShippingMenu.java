@@ -122,7 +122,7 @@ public class ShippingMenu extends JFrame implements ActionListener {
             } else if (Objects.equals(comboBox.getSelectedItem(), "Print All Available Shipments")) {
 
             } else if (Objects.equals(comboBox.getSelectedItem(), "Execute Nearest Shipment")) {
-                if (!sManagement.checkAvailableShipment()) {
+                if (sManagement.checkAvailableShipment()) {
                     JOptionPane.showMessageDialog(this, "There is No AvailableShipments at the moment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
                 } else if (!sManagement.checkIfDriverExist()) {
                     JOptionPane.showMessageDialog(this, "Cant find a suitable driver", "Failure!", JOptionPane.INFORMATION_MESSAGE);
@@ -204,10 +204,12 @@ public class ShippingMenu extends JFrame implements ActionListener {
 
                     }
                 }
-            } else if (e.getActionCommand().equals("Back")) {
-                this.dispose();
-                save.setVisible(true);
             }
+        }
+        else if (e.getActionCommand().equals("Back")) {
+            save.setVisible(true);
+            this.dispose();
+
         }
     }
 }
