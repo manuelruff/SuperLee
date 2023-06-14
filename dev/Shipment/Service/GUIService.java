@@ -45,4 +45,12 @@ public class GUIService {
     public List<String> getItemsFromDoc(String siteName){
         return serviceController.getItemsFromDoc(siteName);
     }
+    public List<String[]> getOrdersData()
+    {
+        return serviceController.getOrdersData();
+    }
+    public List<String[]> getOrdersItemsData()
+    {
+        return serviceController.getOrdersItemsData();
+    }
 }
