@@ -64,6 +64,8 @@ public class WorkerGUI extends JFrame implements ActionListener {
         }
         else if(e.getSource()==exitButton)
         {
+            //do what we need in the database when closed
+            workerController.closeDB();
             System.exit(0);
         }
     }
