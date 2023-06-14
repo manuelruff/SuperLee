@@ -139,6 +139,39 @@ public class ServiceController {
    {
        return shipmentService.getDriversInfo();
    }
+   public List<String[]> getOrdersData()
+   {
+       List<String[]> ordersD = new ArrayList<>();
+       dataController.loadAllOrders();
+       for(Order order: orders.values())
+       {
+           String[] data = new String[4];
+           data[0] = order.getID();
+           data[1] = order.getSource();
+           data[2] = order.getDestination();
+           data[3] = order.getZone().toString();
+           ordersD.add(data);
+       }
+       return ordersD;
+   }
+    public List<String[]> getOrdersItemsData()
+    {
+        List<String[]> ItemsD = new ArrayList<>();
+        dataController.loadAllOrders();
+        for(Order order: orders.values())
+        {
+            String[] data = new String[4];
+            data[0] = order.getID();
+            for(Item item: order.getItemList()) {
+                data[1] = item.getName();
+                data[2] = Integer.toString(item.getQuantity());
+                data[3] = item.getStorageCondition().toString();
+
+            }
+            ItemsD.add(data);
+        }
+        return ItemsD;
+    }
     public List<String[]> getTrucksData()
     {
         List<String[]> trucksD = new ArrayList<>();

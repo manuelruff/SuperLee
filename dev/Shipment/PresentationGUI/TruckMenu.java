@@ -80,9 +80,8 @@ public class TruckMenu  extends JFrame implements ActionListener {
         String[] columnNames = {"Truck Number", "Model", "Weight", "Total Weight", "Storage"};
 
         // Create the JTable component
-        JTable truckTable = new JTable(tableData, columnNames);
 
-        return truckTable;
+        return new JTable(tableData, columnNames);
     }
 
 
