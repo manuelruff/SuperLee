@@ -36,6 +36,15 @@ public class GeneralUI {
                 System.exit(0);
             }
         }
+        System.out.println("have a good day");
+        //do what we need in the database when closed
+        sManagement.closeDB();
+        managerController.closeDB();
+        //close the scanner
+        scanner.close();
+       //stops the program
+        System.exit(0);
+
 //        int choice=-1;
 //        while (choice!=5){
 //            System.out.println("please choose an option: ");
