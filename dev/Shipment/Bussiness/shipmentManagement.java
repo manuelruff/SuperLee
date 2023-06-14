@@ -820,7 +820,7 @@ public class shipmentManagement {
         for(Site site:availableShipments.get(0).getDestinations()){
             list.add(site.getName());
         }
-        return shipmentService.checkStoreKeeperNow(list,LocalDate.now());
+        return shipmentService.checkStoreKeeperNow(list,availableShipments.get(0).getDate());
     }
 
     public List<Shipment> getAvailableShipment() {

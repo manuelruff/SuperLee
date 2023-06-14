@@ -128,6 +128,8 @@ public class HRManager extends JFrame implements ActionListener{
         }
         else if(e.getSource()==exitButton)
         {
+            //do what we need in the database when closed
+            managerController.closeDB();
             System.exit(0);
         }
     }

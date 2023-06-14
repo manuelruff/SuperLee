@@ -102,7 +102,9 @@ public class WorkerController  {
         // checks if the worker works in the branch today in the correct job
         return ((curr1.get(Jobs.StoreKeeper).contains(Workers.get(ID)) || curr1.get(Jobs.ShiftManager).contains(Workers.get(ID))) && (curr2.get(Jobs.StoreKeeper).contains(Workers.get(ID)) || curr2.get(Jobs.ShiftManager).contains(Workers.get(ID))));
     }
-
+    public void closeDB(){
+        dataController.saveData();
+    }
     public void printShipments(LocalDate day , String branchName){
         hrService.askForShipments(day, branchName);
     }
