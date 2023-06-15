@@ -32,6 +32,7 @@ public class ExecuteShipment extends JFrame implements ActionListener {
         save = shippingMenu;
         createUIComponents();
 
+
         // finishing stuff
         comboBox.addActionListener(this);
         doButton.addActionListener(this);

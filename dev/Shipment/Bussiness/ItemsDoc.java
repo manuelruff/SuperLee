@@ -23,6 +23,18 @@ public class ItemsDoc {
         for(Item item : itemList)
             item.printItem();
     }
+    @Override
+    public String toString()
+    {
+        StringBuilder message = new StringBuilder();
+        message.append("Item Document details:\n");
+        message.append("Document ID: ").append(ID).append("\n");
+        message.append("Destination: ").append(siteName).append("\n");
+        for (Item item : itemList) {
+            message.append(item.toString()).append("\n");
+        }
+        return message.toString();
+    }
 
     public static void setCount(int num){count = num;}
     public void fixCounter(){count--;}

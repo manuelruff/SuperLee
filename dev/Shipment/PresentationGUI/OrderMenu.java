@@ -83,6 +83,11 @@ public class OrderMenu extends JFrame implements ActionListener {
                 JScrollPane scrollPane = new JScrollPane(createOrdersTable());
                 JOptionPane.showMessageDialog(null, scrollPane, "Order Details", JOptionPane.INFORMATION_MESSAGE);
             }
+            else if(comboBox.getSelectedItem().equals("Print all items in orders"))
+            {
+                new PrintItems(this);
+                this.setVisible(false);
+            }
 
         }
         if(e.getSource() == backButton)
