@@ -1,11 +1,13 @@
 package Shipment.PresentationGUI;
 
 import Shipment.Bussiness.shipmentManagement;
+import Shipment.Service.GUIService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class OrderMenu extends JFrame implements ActionListener {
     private JButton backButton;
@@ -18,6 +20,7 @@ public class OrderMenu extends JFrame implements ActionListener {
     private JLabel label1;
     private shipmentManagement shipmentM;
     private ShipManager save;
+    private GUIService service;
 
     public OrderMenu(ShipManager save) {
         this.save = save;
@@ -50,6 +53,7 @@ public class OrderMenu extends JFrame implements ActionListener {
             }
         });
         shipmentM = shipmentManagement.getInstance();
+        service = GUIService.getInstance();
     }
 
     @Override
@@ -74,9 +78,10 @@ public class OrderMenu extends JFrame implements ActionListener {
                 else
                     textField1.setBackground(Color.RED);
             }
-            else if(comboBox.getSelectedItem().equals("Print all orders"))
+            else if(comboBox.getSelectedItem().equals("Print all orders(without items)"))
             {
-                new Orders(this);
+                JScrollPane scrollPane = new JScrollPane(createOrdersTable());
+                JOptionPane.showMessageDialog(null, scrollPane, "Order Details", JOptionPane.INFORMATION_MESSAGE);
             }
 
         }
@@ -87,7 +92,25 @@ public class OrderMenu extends JFrame implements ActionListener {
         }
 
     }
+    public JTable createOrdersTable() {
+        // Create the table data
+        List<String[]> data = service.getOrdersData();
+        Object[][] tableData = new Object[data.size()][4];
+        int row = 0;
+        for (String[] order : data) {
+            tableData[row][0] = order[0];
+            tableData[row][1] = order[1];
+            tableData[row][2] = order[2];
+            tableData[row][3] = order[3];
+            row++;
+        }
+        // Create the table column names
+        String[] columnNames = {"Order ID", "Source", "Destination", "Storage"};
 
+        // Create the JTable component
+
+        return new JTable(tableData, columnNames);
+    }
     private void createUIComponents() {
         // TODO: place custom component creation code here
         comboBox = new JComboBox<>();

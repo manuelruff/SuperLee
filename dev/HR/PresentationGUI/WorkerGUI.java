@@ -17,7 +17,6 @@ public class WorkerGUI extends JFrame implements ActionListener {
     private JButton startButton;
     private JButton exitButton;
     private JTextField ID;
-    private JPasswordField Password;
     //take instance for worker controller
     private WorkerController workerController;
     //take the instance of gui service so we get what we want
@@ -46,20 +45,14 @@ public class WorkerGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==startButton){
-            //check that id and password exists
-            if(!workerController.isExistWorker(ID.getText()) || !workerController.IsTruePassword(ID.getText(),Password.getText())){
-                JOptionPane.showMessageDialog(null, "invalid input - try again!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            else {
-                //open the function he wants
-                if (comboBox1.getSelectedItem().equals("update personal details")) {
-                    this.setVisible(false);
-                    List<String> worker=guiService.getWorkerInfo(ID.getText());
-                    new updateDetails(this,worker);
-                } else {
-                    this.setVisible(false);
-                    new editConstraints(this,ID.getText());
-                }
+            //open the function he wants
+            if (comboBox1.getSelectedItem().equals("update personal details")) {
+                this.setVisible(false);
+                List<String> worker=guiService.getWorkerInfo(ID.getText());
+                new updateDetails(this,worker);
+            } else {
+                this.setVisible(false);
+                new editConstraints(this,ID.getText());
             }
         }
         else if(e.getSource()==exitButton)

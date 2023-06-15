@@ -24,18 +24,18 @@ public class WorkerUI {
             // got from the use the ID and the password
             System.out.println("ID: ");
             String ID = scanner.nextLine();  // Read user input
-            System.out.println("Password: ");
-            String passwordInput = scanner.nextLine();  // Read user input
-            // check if the worker enter valid inputs
-            if(!workerController.isExistWorker(ID) || !workerController.IsTruePassword(ID,passwordInput)){
-                System.out.println("invalid input - try again!");
-            }
-            // if the inputs were valid - call to WorkerOption menu
-            else {
+//            System.out.println("Password: ");
+//            String passwordInput = scanner.nextLine();  // Read user input
+//            // check if the worker enter valid inputs
+//            if(!workerController.isExistWorker(ID) || !workerController.IsTruePassword(ID,passwordInput)){
+//                System.out.println("invalid input - try again!");
+//            }
+//            // if the inputs were valid - call to WorkerOption menu
+//            else {
                 WorkerOption(ID);
                 flag = false;
                 break;
-            }
+//            }
         }
     }
 
