@@ -756,6 +756,7 @@ public class shipmentManagement {
     public boolean checkTruckWeight(int weight){
         if (staticsTruck == null)
             staticsTruck = getTruck(availableShipments.get(0).getTruckNumber());
+        staticsTruck.printTruck();
         return weight >= staticsTruck.getTotalWeight();
     }
 
@@ -813,6 +814,7 @@ public class shipmentManagement {
             shipment.setShipmentStatus(Status.NoChanges);
         shipment.setDepartureTime(time);
         shipmentService.askRemoveDayForDriver(shipment.getDriver().getID(), shipment.getDayOfTheWeek().ordinal());
+        shipment.printShipment();
     }
 
     public boolean checkExecuteNow(){

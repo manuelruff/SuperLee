@@ -170,38 +170,44 @@ public class ShippingMenu extends JFrame implements ActionListener {
                                             comboBoxSites
                                     };
 
-                                    result = JOptionPane.showOptionDialog(null, pop, "Pop-up Window", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                                    result = JOptionPane.showOptionDialog(null, pop, "Items to Delete", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                                     if (result == JOptionPane.OK_OPTION) {
                                         String siteName = Objects.requireNonNull(comboBoxSites.getSelectedItem()).toString();
                                         new ExecuteShipment(this, siteName);
                                         this.setVisible(false);
-                                    } else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Exchange Truck")) {
+                                    }
+                                }
+                                else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Exchange Truck")) {
                                         if (sManagement.changeTruck()) {
                                             JOptionPane.showMessageDialog(this, "Truck Exchanged Successfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
-                                        } else {
+                                            validInput = false;
+                                        }
+                                        else {
                                             JOptionPane.showMessageDialog(this, "There is No Available truck at the moment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
                                         }
-                                    } else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Delete Last Site")) {
+                                }
+                                else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Delete Last Site")) {
                                         if (sManagement.removeLastSiteFromShipment()) {
+                                            validInput = false;
                                             JOptionPane.showMessageDialog(this, "Site removed Successfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
-                                        } else {
+                                        }
+                                        else {
                                             JOptionPane.showMessageDialog(this, "There is only 1 site in the shipment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
                                         }
                                     }
-                                }
-                                // TODO maybe remove the cancel button
-                                else {
-                                    System.out.println("Dialog canceled.");
-                                }
-                            } else {
-                                JOptionPane.showMessageDialog(this, "The shipment has been executed successfully.", "finished", JOptionPane.ERROR_MESSAGE);
-                                //todo check this
-                                LocalTime time = LocalTime.now();
-                                sManagement.updateShipment(time);
-                                break;
-                            }
-                        }
 
+                            }
+
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(this, "The shipment has been executed successfully.", "finished", JOptionPane.INFORMATION_MESSAGE);
+                            //todo check this
+                            LocalTime time = LocalTime.now();
+                            sManagement.updateShipment(time);
+                            save.setVisible(true);
+                            this.dispose();
+                            break;
+                        }
                     }
                 }
             }
