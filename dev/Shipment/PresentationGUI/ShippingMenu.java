@@ -131,7 +131,7 @@ public class ShippingMenu extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "In one of the branches there is not available storekeeper, so the shipment was canceled", "Failure!", JOptionPane.INFORMATION_MESSAGE);
                     sManagement.deleteShipment(sManagement.getAvailableShipment().get(0).getID());
                 } else {
-                    new ExecuteShipment(this);
+                    //new ExecuteShipment(save);
                     String truckWeight;
                     int weight = 0;
                     int firstWeight = Integer.MAX_VALUE;
