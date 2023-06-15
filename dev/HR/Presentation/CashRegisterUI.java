@@ -66,9 +66,12 @@ public class CashRegisterUI {
                     while(!isShiftManager){
                         if(!cashRegisterController.CheckWorkerCanCancel(ID)){
                             System.out.println("access denied - this action is for Domain.Shift Manager only!");
-                            continue;
+                            break;
                         }
                         isShiftManager = true;
+                    }
+                    if(!isShiftManager){
+                        break;
                     }
 //                    System.out.println("please enter your password: ");
 //                    String password = scanner.nextLine();  // Read user input

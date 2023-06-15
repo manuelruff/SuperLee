@@ -2,6 +2,8 @@ package Shipment.Service;
 
 import Shipment.Bussiness.Days;
 import Shipment.Bussiness.ServiceController;
+import Shipment.PresentationGUI.ShipManager;
+import Shipment.PresentationGUI.ShippingMenu;
 
 import java.time.LocalDate;
 
@@ -49,5 +51,10 @@ public class HRService {
     // this function will go over the available shipments and find drivers.
     public void weeklyCreated(){
         serviceController.findDriversForShipment();
+    }
+
+    //functions for the gui of hr module
+    public void openMainShipManagerWin(){
+        new ShipManager();
     }
 }

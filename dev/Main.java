@@ -1,4 +1,5 @@
 import HR.PresentationGUI.HRManager;
+import HR.PresentationGUI.StoreManager;
 import HR.PresentationGUI.WorkerGUI;
 import Shipment.PresentationGUI.ShipManager;
 import javax.swing.JOptionPane;
@@ -21,7 +22,6 @@ public class Main {
         }
         else if(mode.equals("GUI"))
         {
-            // todo   calls the GUI object starting function
             if (role.equals("HRManager")){
                 new HRManager();
             }
@@ -31,7 +31,9 @@ public class Main {
             else if (role.equals("Worker")){
                 new WorkerGUI();
             }
-            //shipment manager
+            else if(role.equals("StoreManager")){
+                new StoreManager();
+            }
             else{
                 JOptionPane.showMessageDialog(null,"Wrong role");
                 System.exit(0);

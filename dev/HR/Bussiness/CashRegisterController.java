@@ -38,7 +38,12 @@ public class CashRegisterController  {
      * @param ID - the Id of the worker
      * @return true/false
      */
-    public boolean CheckWorkerCanCancel(String ID){return Workers.get(ID).CanDoJob(Jobs.ShiftManager);}
+    public boolean CheckWorkerCanCancel(String ID){
+        if(Workers.get(ID)!=null){
+        return Workers.get(ID).CanDoJob(Jobs.ShiftManager);
+        }
+        return false;
+    }
     public boolean CheckWorkerPassword(String ID, String password){
         return Workers.get(ID).CheckPassword(password);
     }

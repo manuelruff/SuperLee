@@ -15,7 +15,6 @@ public class HRManagerUI {
         scanner=sc;
         UIGeneralFnctions.setScanner(sc);
         int choice=-1;
-        System.out.println("please log in: ");
         while (choice!=3){
 //            System.out.println("Password: ");
 //            String input = scanner.nextLine();  // Read user input

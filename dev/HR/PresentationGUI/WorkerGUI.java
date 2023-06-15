@@ -6,6 +6,7 @@ import HR.PresentationGUI.WorkerWindows.updateDetails;
 import HR.Service.GUIService;
 
 import javax.swing.*;
+import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,14 +46,19 @@ public class WorkerGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==startButton){
-            //open the function he wants
-            if (comboBox1.getSelectedItem().equals("update personal details")) {
-                this.setVisible(false);
-                List<String> worker=guiService.getWorkerInfo(ID.getText());
-                new updateDetails(this,worker);
-            } else {
-                this.setVisible(false);
-                new editConstraints(this,ID.getText());
+            if(!workerController.isExistWorker(ID.getText())){
+                JOptionPane.showMessageDialog(null,"invalid ID - try again!");
+            }
+            else {
+                //open the function he wants
+                if (comboBox1.getSelectedItem().equals("update personal details")) {
+                    this.setVisible(false);
+                    List<String> worker = guiService.getWorkerInfo(ID.getText());
+                    new updateDetails(this, worker);
+                } else {
+                    this.setVisible(false);
+                    new editConstraints(this, ID.getText());
+                }
             }
         }
         else if(e.getSource()==exitButton)

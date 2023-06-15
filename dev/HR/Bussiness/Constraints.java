@@ -16,6 +16,9 @@ public class Constraints {
     }
 
     public boolean AddCantWork(Days day,double s,double e,String r ){
+        if(s>e){
+            return false;
+        }
         List<CantWork> curr=cantWork.get(day);
         //if its null we need to add a new one
         if (curr==null){
@@ -57,6 +60,10 @@ public class Constraints {
             //we remove the one we found
             if (check) {
                 curr.remove(i);
+                //if its empty now we won show this
+                if(curr.size()==0){
+                    cantWork.remove(day);
+                }
                 return true;
             }
         }
