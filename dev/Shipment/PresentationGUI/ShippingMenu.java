@@ -21,7 +21,6 @@ public class ShippingMenu extends JFrame implements ActionListener {
     private shipmentManagement sManagement;
     private ShipManager save;
     private GUIService guiService;
-    private volatile boolean wait = true;
 
     public ShippingMenu(ShipManager save) {
         createUIComponents();
@@ -118,112 +117,36 @@ public class ShippingMenu extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "The Shipment has been removed successfully!", "Remove", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
-            } else if (Objects.equals(comboBox.getSelectedItem(), "Print All Shipments")) {
-
-            } else if (Objects.equals(comboBox.getSelectedItem(), "Print All Available Shipments")) {
-
-            } else if (Objects.equals(comboBox.getSelectedItem(), "Execute Nearest Shipment")) {
+            }
+            else if (Objects.equals(comboBox.getSelectedItem(), "Print All Shipments")) {
+                new PrintShipment(this, 1);
+                setVisible(false);
+            }
+            else if (Objects.equals(comboBox.getSelectedItem(), "Print All Available Shipments")) {
+                new PrintShipment(this, 2);
+                setVisible(false);
+            }
+            else if (Objects.equals(comboBox.getSelectedItem(), "Execute Nearest Shipment")) {
                 if (sManagement.checkAvailableShipment()) {
                     JOptionPane.showMessageDialog(this, "There is No AvailableShipments at the moment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
-                } else if (!sManagement.checkIfDriverExist()) {
+                }
+                else if (!sManagement.checkIfDriverExist()) {
                     JOptionPane.showMessageDialog(this, "Cant find a suitable driver", "Failure!", JOptionPane.INFORMATION_MESSAGE);
-                } else if (!sManagement.checkExecuteNow()) {
+                }
+                else if (!sManagement.checkExecuteNow()) {
                     JOptionPane.showMessageDialog(this, "In one of the branches there is not available storekeeper, so the shipment was canceled", "Failure!", JOptionPane.INFORMATION_MESSAGE);
                     sManagement.deleteShipment(sManagement.getAvailableShipment().get(0).getID());
-                } else {
-                    //new ExecuteShipment(save);
-                    String truckWeight;
-                    int weight = 0;
-                    int firstWeight = Integer.MAX_VALUE;
-                    boolean validInput = false;
-                    while (true) {
-                        while (!validInput) {
-                            truckWeight = JOptionPane.showInputDialog(this, "Please enter the weight of the truck:");
-                            if (truckWeight != null && truckWeight.matches("\\d+")) {
-                                weight = Integer.parseInt(truckWeight);
-                                if (weight >= firstWeight) {
-                                    JOptionPane.showMessageDialog(this, "The weight is higher then the last weight", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-                                } else {
-                                    firstWeight = weight;
-                                    validInput = true;
-                                }
-                            } else {
-                                JOptionPane.showMessageDialog(this, "Invalid input! Please enter a numeric value.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
-                        if (sManagement.checkTruckWeight(weight)) {
-                            String[] options = {"Exchange Truck", "Delete Items From Shipment", "Delete Last Site"};
-                            JComboBox<String> comboBoxWeight = new JComboBox<>(options);
-                            comboBoxWeight.addActionListener(this);
-
-                            Object[] message = {
-                                    "Choose an option:",
-                                    comboBoxWeight
-                            };
-
-                            int result = JOptionPane.showOptionDialog(null, message, "Pop-up Window", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-
-                            if (result == JOptionPane.OK_OPTION) {
-                                if (Objects.equals(comboBoxWeight.getSelectedItem(), "Delete Items From Shipment")) {
-                                    JComboBox<String> comboBoxSites = new JComboBox<>(guiService.getSitesOfShipmentData());
-                                    comboBoxSites.addActionListener(this);
-                                    Object[] pop = {
-                                            "Choose an option:",
-                                            comboBoxSites
-                                    };
-
-                                    result = JOptionPane.showOptionDialog(null, pop, "Items to Delete", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-                                    if (result == JOptionPane.OK_OPTION) {
-                                        String siteName = Objects.requireNonNull(comboBoxSites.getSelectedItem()).toString();
-                                        wait = false;
-                                        new ItemsToDelete(this, siteName);
-                                        this.setVisible(false);
-                                    }
-                                }
-                                else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Exchange Truck")) {
-                                        if (sManagement.changeTruck()) {
-                                            JOptionPane.showMessageDialog(this, "Truck Exchanged Successfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
-                                            validInput = false;
-                                        }
-                                        else {
-                                            JOptionPane.showMessageDialog(this, "There is No Available truck at the moment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
-                                        }
-                                }
-                                else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Delete Last Site")) {
-                                        if (sManagement.removeLastSiteFromShipment()) {
-                                            validInput = false;
-                                            JOptionPane.showMessageDialog(this, "Site removed Successfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
-                                        }
-                                        else {
-                                            JOptionPane.showMessageDialog(this, "There is only 1 site in the shipment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
-                                        }
-                                    }
-
-                            }
-
-                        }
-                        else {
-                            JOptionPane.showMessageDialog(this, "The shipment has been executed successfully.", "finished", JOptionPane.INFORMATION_MESSAGE);
-                            //todo check this
-                            LocalTime time = LocalTime.now();
-                            sManagement.updateShipment(time);
-                            save.setVisible(true);
-                            this.dispose();
-                            break;
-                        }
+                }
+                else {
+                    new ExecuteShipment(this);
+                    setVisible(false);
                     }
                 }
             }
-        }
         else if (e.getActionCommand().equals("Back")) {
             save.setVisible(true);
             this.dispose();
-
         }
-    }
-
-    public void setWait(boolean wait) {
-        this.wait = wait;
     }
 }
 

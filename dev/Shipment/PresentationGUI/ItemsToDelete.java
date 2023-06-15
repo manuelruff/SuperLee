@@ -14,28 +14,38 @@ import Shipment.Service.GUIService;
 
 public class ItemsToDelete extends JFrame implements ActionListener {
     private JPanel panel;
-    private JLabel fieldLabel;
+    private JComboBox<String> comboBox;
+    private JLabel label, fieldLabel;
     private JTextField field;
     private JButton doButton;
     private shipmentManagement sManagement;
-    private ShippingMenu save;
+    private ExecuteShipment save;
     private GUIService guiService;
+    private String siteName;
+    private List<String> itemNames;
+    private List<Integer> itemQuantities;
 
 
-    public ItemsToDelete(ShippingMenu shippingMenu, String siteName){
-        save = shippingMenu;
+    public ItemsToDelete(ExecuteShipment executeShipment, String siteName){
+        this.siteName = siteName;
+        save = executeShipment;
         createUIComponents();
         setContentPane(panel);
         pack();
         setVisible(true);
 
         // finishing stuff
+        comboBox.addActionListener(this);
         doButton.addActionListener(this);
-        field.addActionListener(new ActionListener() {
+        field.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void insertUpdate(DocumentEvent e) {checkBox();}
 
-            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {checkBox();}
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {checkBox();}
         });
     }
     private void checkBox(){
@@ -44,15 +54,19 @@ public class ItemsToDelete extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == doButton) {
-
+        if(e.getSource() == doButton){
+            int index = comboBox.getSelectedIndex();
+            if (sManagement.deleteItemFromShipment(itemNames.get(index),Integer.parseInt(field.getText()),siteName)){
+                JOptionPane.showMessageDialog(null, "The item was deleted", "Remove", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+                save.setVisible(true);
+            };
         }
-
     }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        this.setTitle("Execute Shipment");
+        this.setTitle("ItemsToDelete");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(300, 200));
 
@@ -63,13 +77,49 @@ public class ItemsToDelete extends JFrame implements ActionListener {
 
         sManagement = shipmentManagement.getInstance();
         guiService = GUIService.getInstance();
+        itemNames = new ArrayList<>();
+        itemQuantities = new ArrayList<>();
+
+
+        // setting the combo box
+        JPanel comboPanel = new JPanel();
+        comboPanel.setLayout(new GridLayout(1,1));
+        comboPanel.setBackground(Color.BLACK);
+        comboPanel.setPreferredSize(new Dimension(10,10));
+        splittingList();
+        String[] options = itemNames.toArray(new String[itemNames.size()]);
+        comboBox = new JComboBox<>(options);
+        comboPanel.add(comboBox);
+        panel.add(comboPanel);
+        comboBox.setPreferredSize(new Dimension(10, 10)); // Set a narrower width for the combo box
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                label.setText("this item quantity is " + itemQuantities.get(comboBox.getSelectedIndex()));
+                label.setVisible(true);
+                fieldLabel.setVisible(true);
+                field.setVisible(true);
+            }
+        });
+
+
+
+        JPanel labelPanel = new JPanel();
+        labelPanel.setLayout(new GridLayout(1,1));
+        labelPanel.setBackground(Color.BLACK);
+        label = new JLabel();
+        label.setForeground(Color.white);
+        label.setVisible(false);
+        labelPanel.add(label);
+        panel.add(labelPanel);
 
         JPanel fieldPanel = new JPanel();
         fieldPanel.setLayout(new GridLayout(1,2));
         fieldPanel.setBackground(Color.BLACK);
         fieldLabel = new JLabel("Quantity:");
-        field = new JTextField(10);
+        field = new JTextField();
         fieldLabel.setVisible(false);
+        fieldLabel.setForeground(Color.white);
         fieldLabel.setInputVerifier(new digitVerifier(fieldLabel));
         field.setVisible(false);
         fieldPanel.add(fieldLabel);
@@ -81,9 +131,21 @@ public class ItemsToDelete extends JFrame implements ActionListener {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1,1));
         buttonPanel.setBackground(Color.BLACK);
-        doButton = new JButton("Enter");
+        doButton = new JButton("Delete");
         buttonPanel.add(doButton);
         panel.add(buttonPanel);
+    }
+
+    private void splittingList(){
+        List<String> temp = guiService.getItemsFromDoc(siteName);
+        for(int i=0; i< temp.size(); i++){
+            if (i % 2 == 0){
+                itemNames.add(temp.get(i));
+            }
+            else{
+                itemQuantities.add(Integer.parseInt(temp.get(i)));
+            }
+        }
     }
 
     class digitVerifier extends InputVerifier {
