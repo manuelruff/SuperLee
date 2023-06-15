@@ -16,7 +16,14 @@ public class Item {
         System.out.println("\tQuantity: "+ quantity);
         System.out.println("\tStorage Condition: " + storageCondition.name() + "\n");
     }
-
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Item name: ").append(name).append("\n");
+        sb.append("Quantity: ").append(quantity).append("\n");
+        sb.append("Storage Condition: ").append(storageCondition.name()).append("\n");
+        return sb.toString();
+    }
     public String getName() {
         return name;
     }

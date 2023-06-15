@@ -467,6 +467,67 @@ public class shipmentManagement {
         vendorMap.get(source).get(vendorMap.get(source).size() - 1).printOrder();
     }
 
+    public String[] getOrdersIDs()
+    {
+        dataController.loadAllOrders();
+        String[] ids = new String[orderMap.size()];
+        int i=0;
+        for(Order order: orderMap.values())
+        {
+            ids[i] = order.getID();
+            i++;
+        }
+        return ids;
+    }
+    public String[] getItemDocsIDs()
+    {
+        dataController.loadAllShipments();
+        String[] ids = new String[getItemDocsSize()];
+        int i=0;
+        for(Shipment shipment: shipments.values())
+        {
+            for(ItemsDoc itemsDoc: shipment.getDocs())
+            {
+                ids[i] = itemsDoc.getID();
+            }
+        }
+        return ids;
+    }
+    public int getItemDocsSize()
+    {
+        int num=0;
+        for(Shipment shipment: shipments.values())
+        {
+            for(ItemsDoc itemsDoc: shipment.getDocs())
+            {
+                num++;
+            }
+        }
+        return num;
+    }
+    public StringBuilder getItems(String id)
+    {
+        Order order = orderMap.get(id);
+        StringBuilder message = new StringBuilder();
+        for (Item item : order.getItemList()) {
+            message.append(item.toString()).append("\n");
+        }
+        return message;
+    }
+    public StringBuilder getItemDocString(String id)
+    {
+        StringBuilder message = new StringBuilder();
+        for(Shipment shipment: shipments.values())
+        {
+            for(ItemsDoc itemsDoc: shipment.getDocs())
+            {
+                if(Objects.equals(id, itemsDoc.getID()))
+                    message.append(itemsDoc.toString()).append("\n");
+            }
+        }
+        return message;
+    }
+
     public void printOrders() {
         dataController.loadAllVendors();
         dataController.loadAllOrders();

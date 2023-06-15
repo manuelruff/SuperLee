@@ -6,6 +6,9 @@ import java.awt.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Objects;
 
 public class ShipManager extends JFrame implements ActionListener{
@@ -28,7 +31,14 @@ public class ShipManager extends JFrame implements ActionListener{
         exitButton.addActionListener(this);
         startButton.addActionListener(this);
         sManagement = shipmentManagement.getInstance();
-
+        sManagement.checkVendor("Osem");
+        sManagement.createOrder("Osem","branch1");
+        sManagement.addItemToOrder("Osem", "k", 10, 0);
+        sManagement.createOrder("Osem","branch2");
+        sManagement.addItemToOrder("Osem", "s", 10, 0);
+        LocalDate today = LocalDate.now();
+        LocalDate closestSunday = today.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+        sManagement.createShipment(0,closestSunday,"123","Osem");
 
     }
     private void createUIComponents() {
@@ -66,6 +76,8 @@ public class ShipManager extends JFrame implements ActionListener{
             }
             else if (Objects.equals(comboBox1.getSelectedItem(), "Print all shipped item docs")){
                 // TODO print all docs
+                new PrintItemDocs(this);
+                this.setVisible(false);
             }
         }
         else if(e.getActionCommand().equals("Exit"))

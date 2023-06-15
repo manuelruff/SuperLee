@@ -21,6 +21,7 @@ public class ShippingMenu extends JFrame implements ActionListener {
     private shipmentManagement sManagement;
     private ShipManager save;
     private GUIService guiService;
+    private volatile boolean wait = true;
 
     public ShippingMenu(ShipManager save) {
         createUIComponents();
@@ -130,6 +131,7 @@ public class ShippingMenu extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "In one of the branches there is not available storekeeper, so the shipment was canceled", "Failure!", JOptionPane.INFORMATION_MESSAGE);
                     sManagement.deleteShipment(sManagement.getAvailableShipment().get(0).getID());
                 } else {
+                    //new ExecuteShipment(save);
                     String truckWeight;
                     int weight = 0;
                     int firstWeight = Integer.MAX_VALUE;
@@ -173,7 +175,8 @@ public class ShippingMenu extends JFrame implements ActionListener {
                                     result = JOptionPane.showOptionDialog(null, pop, "Items to Delete", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                                     if (result == JOptionPane.OK_OPTION) {
                                         String siteName = Objects.requireNonNull(comboBoxSites.getSelectedItem()).toString();
-                                        new ExecuteShipment(this, siteName);
+                                        wait = false;
+                                        new ItemsToDelete(this, siteName);
                                         this.setVisible(false);
                                     }
                                 }
@@ -217,6 +220,10 @@ public class ShippingMenu extends JFrame implements ActionListener {
             this.dispose();
 
         }
+    }
+
+    public void setWait(boolean wait) {
+        this.wait = wait;
     }
 }
 
