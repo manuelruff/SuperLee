@@ -8,17 +8,17 @@ import javax.swing.JOptionPane;
 public class Main {
     public static void main(String[] args) {
 
-        if( args.length!=2){
+        if( args.length!=2 && args.length!=1){
             System.out.println("Wrong parameters");
         }
         //its just the main one so we will open the store manager option
         if(args.length==1){
             //we get the args that we want to start by:
             String mode = args[0];
-            if(mode.equals("SuperLiMainGUI ")){
+            if(mode.equals("SuperLiMainGUI")){
                 new StoreManager();
             }
-            else if(mode.equals("SuperLiMainCLI ")){
+            else if(mode.equals("SuperLiMainCLI")){
                 GeneralUI.StartMe("StoreManager");
             }
             else{
