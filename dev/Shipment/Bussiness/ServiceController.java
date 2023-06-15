@@ -11,6 +11,7 @@ public class ServiceController {
     private DataController dataController;
     private shipmentManagement shipmentM;
     private List<Shipment> shipments;
+    private Map<String,Shipment> shipmentsEX;
     private Map<String,Order> orders;
     private Map<String,Truck> trucks;
     private final Map<String, Vendor> vendors;
@@ -29,6 +30,7 @@ public class ServiceController {
         orders = dataController.getOrderMap();
         trucks = dataController.getTrucksMap();
         vendors = shipmentM.getVendors();
+        shipmentsEX = shipmentM.getShipments();
         shipmentService = ShipmentService.getInstance();
     }
 
@@ -190,7 +192,50 @@ public class ServiceController {
         return trucksD;
     }
 
-
+    public String[] getShipmentsIDs()
+    {
+        String[] ids = new String[shipmentsEX.size()];
+        int i=0;
+        for(Shipment shipment : shipmentsEX.values())
+        {
+            ids[i] = shipment.getID();
+        }
+        return ids;
+    }
+    public String[] getAShipmentsIDs()
+    {
+        String[] ids = new String[shipments.size()];
+        int i=0;
+        for(Shipment shipment : shipments)
+        {
+            ids[i] = shipment.getID();
+        }
+        return ids;
+    }
+    public StringBuilder getShipmentString(String id)
+    {
+        StringBuilder message = new StringBuilder();
+        for(Shipment shipment: shipmentsEX.values())
+        {
+            if(shipment.getID().equals(id))
+            {
+                message.append(shipment.toString()).append("\n");
+            }
+        }
+        return message;
+    }
+    public StringBuilder getAShipmentString(String id)
+    {
+        StringBuilder message = new StringBuilder();
+        for(Shipment shipment: shipments)
+        {
+            if(shipment.getID().equals(id))
+            {
+                message.append(shipment.toString()).append("\n");
+            }
+        }
+        return message;
+    }
 
     //prints all available shipments
     public void printAllShipments()

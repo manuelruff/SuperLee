@@ -172,8 +172,12 @@ public class editConstraints extends JFrame implements ActionListener {
         double fromTime = Double.parseDouble(from.getText());
         double toTime = Double.parseDouble(to.getText());
         if (e.getSource() == addButton) {
-            workerController.AddConstraints(id, selectedDay, fromTime, toTime, reason.getText());
-            loadData();
+            if(!workerController.AddConstraints(id, selectedDay, fromTime, toTime, reason.getText())){
+                JOptionPane.showMessageDialog(null,"from needs to be bigger then to");
+            }
+            else {
+                loadData();
+            }
         } else if (e.getSource() == removeButton) {
             workerController.RemoveConstraints(id, selectedDay, fromTime, toTime);
             loadData();

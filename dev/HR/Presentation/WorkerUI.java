@@ -30,12 +30,15 @@ public class WorkerUI {
 //            if(!workerController.isExistWorker(ID) || !workerController.IsTruePassword(ID,passwordInput)){
 //                System.out.println("invalid input - try again!");
 //            }
+            if(!workerController.isExistWorker(ID)){
+                System.out.println("invalid input - try again!");
+            }
 //            // if the inputs were valid - call to WorkerOption menu
-//            else {
+            else {
                 WorkerOption(ID);
                 flag = false;
                 break;
-//            }
+            }
         }
     }
 
@@ -128,7 +131,7 @@ public class WorkerUI {
                                     System.out.println("your constraint added");
                                 }
                                 else{
-                                    System.out.println("you already have constraint in identical time");
+                                    System.out.println("from needs to be bigger then to");
                                 }
                                 //stop the loop
                                 day_choice =8;

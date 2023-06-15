@@ -1,6 +1,8 @@
 import HR.PresentationGUI.HRManager;
+import HR.PresentationGUI.StoreManager;
 import HR.PresentationGUI.WorkerGUI;
 import Shipment.PresentationGUI.ShipManager;
+
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -8,6 +10,21 @@ public class Main {
 
         if( args.length!=2){
             System.out.println("Wrong parameters");
+        }
+        //its just the main one so we will open the store manager option
+        if(args.length==1){
+            //we get the args that we want to start by:
+            String mode = args[0];
+            if(mode.equals("SuperLiMainGUI ")){
+                new StoreManager();
+            }
+            else if(mode.equals("SuperLiMainCLI ")){
+                GeneralUI.StartMe("StoreManager");
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Wrong parameters");
+                System.exit(0);
+            }
         }
         //we get the args that we want to start by:
         String mode = args[0];
@@ -21,7 +38,6 @@ public class Main {
         }
         else if(mode.equals("GUI"))
         {
-            // todo   calls the GUI object starting function
             if (role.equals("HRManager")){
                 new HRManager();
             }
@@ -31,7 +47,9 @@ public class Main {
             else if (role.equals("Worker")){
                 new WorkerGUI();
             }
-            //shipment manager
+            else if(role.equals("StoreManager")){
+                new StoreManager();
+            }
             else{
                 JOptionPane.showMessageDialog(null,"Wrong role");
                 System.exit(0);

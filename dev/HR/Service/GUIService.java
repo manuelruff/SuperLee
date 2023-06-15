@@ -37,4 +37,5 @@ public class GUIService {
     public List<String> getWorkerCantWorkDays(String id) {
         return serviceController.getWorkerCantWorkDays(id);
     }
+
 }

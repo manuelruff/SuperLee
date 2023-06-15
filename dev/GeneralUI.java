@@ -26,7 +26,7 @@ public class GeneralUI {
         //start the ui here
         //we activate the role that we want to use
         switch (role) {
-            case "worker" -> WorkerUI.WorkerLogIN(scanner);
+            case "Worker" -> WorkerUI.WorkerLogIN(scanner);
             case "HRManager" -> HRManagerUI.ManagerLogIN(scanner);
             case "ShipManager" -> UI.SManagerLogIN(scanner);
             case "CashRegister" -> CashRegisterUI.CashWork(scanner);
