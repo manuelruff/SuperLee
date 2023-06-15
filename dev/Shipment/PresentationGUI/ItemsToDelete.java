@@ -14,20 +14,15 @@ import Shipment.Service.GUIService;
 
 public class ItemsToDelete extends JFrame implements ActionListener {
     private JPanel panel;
-    private JComboBox<String> comboBox;
-    private JLabel label, fieldLabel;
+    private JLabel fieldLabel;
     private JTextField field;
     private JButton doButton;
     private shipmentManagement sManagement;
     private ShippingMenu save;
     private GUIService guiService;
-    private String siteName;
-    private List<String> itemNames;
-    private List<Integer> itemQuantities;
 
 
     public ItemsToDelete(ShippingMenu shippingMenu, String siteName){
-        this.siteName = siteName;
         save = shippingMenu;
         createUIComponents();
         setContentPane(panel);
@@ -35,17 +30,12 @@ public class ItemsToDelete extends JFrame implements ActionListener {
         setVisible(true);
 
         // finishing stuff
-        comboBox.addActionListener(this);
         doButton.addActionListener(this);
-        field.getDocument().addDocumentListener(new DocumentListener() {
+        field.addActionListener(new ActionListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) {checkBox();}
+            public void actionPerformed(ActionEvent e) {
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {checkBox();}
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {checkBox();}
+            }
         });
     }
     private void checkBox(){
@@ -54,15 +44,10 @@ public class ItemsToDelete extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("delete")){
-            int index = comboBox.getSelectedIndex();
-            if (sManagement.deleteItemFromShipment(itemNames.get(index),itemQuantities.get(index),siteName)){
-                JOptionPane.showMessageDialog(null, "The item was deleted", "Remove", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
-                save.setWait(true);
-                save.setVisible(true);
-            };
+        if(e.getSource() == doButton) {
+
         }
+
     }
 
     private void createUIComponents() {
@@ -78,37 +63,6 @@ public class ItemsToDelete extends JFrame implements ActionListener {
 
         sManagement = shipmentManagement.getInstance();
         guiService = GUIService.getInstance();
-        itemNames = new ArrayList<>();
-        itemQuantities = new ArrayList<>();
-
-
-        // setting the combo box
-        JPanel comboPanel = new JPanel();
-        comboPanel.setLayout(new GridLayout(1,1));
-        comboPanel.setBackground(Color.BLACK);
-        splittingList();
-        String[] options = itemNames.toArray(new String[itemNames.size()]);
-        comboBox = new JComboBox<>(options);
-        comboPanel.add(comboBox);
-        panel.add(comboPanel);
-        comboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                label.setText("this item quantity is " + itemQuantities.get(comboBox.getSelectedIndex()));
-                label.setVisible(true);
-            }
-        });
-
-
-
-        JPanel labelPanel = new JPanel();
-        labelPanel.setLayout(new GridLayout(1,1));
-        labelPanel.setBackground(Color.BLACK);
-        label = new JLabel();
-        label.setForeground(Color.white);
-        label.setVisible(false);
-        labelPanel.add(label);
-        panel.add(labelPanel);
 
         JPanel fieldPanel = new JPanel();
         fieldPanel.setLayout(new GridLayout(1,2));
@@ -127,21 +81,9 @@ public class ItemsToDelete extends JFrame implements ActionListener {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1,1));
         buttonPanel.setBackground(Color.BLACK);
-        doButton = new JButton("Delete");
+        doButton = new JButton("Enter");
         buttonPanel.add(doButton);
         panel.add(buttonPanel);
-    }
-
-    private void splittingList(){
-        List<String> temp = guiService.getItemsFromDoc(siteName);
-        for(int i=0; i< temp.size(); i++){
-            if (i % 2 == 0){
-                itemNames.add(temp.get(i));
-            }
-            else{
-                itemQuantities.add(Integer.parseInt(temp.get(i)));
-            }
-        }
     }
 
     class digitVerifier extends InputVerifier {
