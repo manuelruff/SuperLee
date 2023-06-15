@@ -17,12 +17,12 @@ public class HRManagerUI {
         int choice=-1;
         System.out.println("please log in: ");
         while (choice!=3){
-            System.out.println("Password: ");
-            String input = scanner.nextLine();  // Read user input
-            if(!managerController.checkPassword(input)){
-                System.out.println("Wrong password please try again");
-            }
-            else{
+//            System.out.println("Password: ");
+//            String input = scanner.nextLine();  // Read user input
+//            if(!managerController.checkPassword(input)){
+//                System.out.println("Wrong password please try again");
+//            }
+//            else{
                 System.out.println("welcome MS BIG BOSS, what would you like to do today?");
                 //first read all the messages from the sihpment service
                 if(!managerController.ReadAllMessagesFromService().isEmpty()){
@@ -43,7 +43,7 @@ public class HRManagerUI {
                 //so we leave the while loop
                 choice=3;
             }
-        }
+//        }
     }
 
     /**

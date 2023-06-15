@@ -28,13 +28,13 @@ public class ExecuteShipment extends JFrame implements ActionListener {
 
 
     public ExecuteShipment(ShippingMenu shippingMenu, String siteName){
-        sManagement = shipmentManagement.getInstance();
-        guiService = GUIService.getInstance();
-        itemNames = new ArrayList<>();
-        itemQuantities = new ArrayList<>();
         this.siteName = siteName;
-        createUIComponents();
         save = shippingMenu;
+        createUIComponents();
+
+        // finishing stuff
+        comboBox.addActionListener(this);
+        doButton.addActionListener(this);
         field.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {checkBox();}
@@ -73,12 +73,18 @@ public class ExecuteShipment extends JFrame implements ActionListener {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.BLACK);
 
+        sManagement = shipmentManagement.getInstance();
+        guiService = GUIService.getInstance();
+        itemNames = new ArrayList<>();
+        itemQuantities = new ArrayList<>();
+
+
         // setting the combo box
         JPanel comboPanel = new JPanel();
         comboPanel.setLayout(new GridLayout(1,1));
         comboPanel.setBackground(Color.BLACK);
         splittingList();
-        String[] options = (String[]) itemNames.toArray();
+        String[] options = itemNames.toArray(new String[itemNames.size()]);
         comboBox = new JComboBox<>(options);
         comboPanel.add(comboBox);
         panel.add(comboPanel);
@@ -87,7 +93,6 @@ public class ExecuteShipment extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 label.setText("this item quantity is " + itemQuantities.get(comboBox.getSelectedIndex()));
                 label.setVisible(true);
-
             }
         });
 
@@ -99,7 +104,7 @@ public class ExecuteShipment extends JFrame implements ActionListener {
         label = new JLabel();
         label.setForeground(Color.white);
         label.setVisible(false);
-        labelPanel.add(labelPanel);
+        labelPanel.add(label);
         panel.add(labelPanel);
 
         JPanel fieldPanel = new JPanel();
@@ -122,13 +127,6 @@ public class ExecuteShipment extends JFrame implements ActionListener {
         doButton = new JButton("Delete");
         buttonPanel.add(doButton);
         panel.add(buttonPanel);
-
-        // finishing stuff
-        setContentPane(panel);
-        pack();
-        setVisible(true);
-        comboBox.addActionListener(this);
-        doButton.addActionListener(this);
     }
 
     private void splittingList(){
