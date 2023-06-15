@@ -1,151 +1,167 @@
 package Shipment.PresentationGUI;
 
-import Shipment.Bussiness.shipmentManagement;
-import Shipment.Service.GUIService;
-
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import Shipment.Bussiness.shipmentManagement;
+import Shipment.Service.GUIService;
 
 public class ExecuteShipment extends JFrame implements ActionListener {
     private JPanel panel;
-    private JLabel label;
-    private JTextField weightField;
+    private JComboBox<String> comboBox;
+    private JLabel label, fieldLabel;
+    private JTextField field;
     private JButton doButton;
-    private int firstWeight;
-
     private shipmentManagement sManagement;
-    private ShippingMenu shippingMenu;
-
+    private ShippingMenu save;
     private GUIService guiService;
-    ExecuteShipment(ShippingMenu save){
+    private String siteName;
+    private List<String> itemNames;
+    private List<Integer> itemQuantities;
+
+
+    public ExecuteShipment(ShippingMenu shippingMenu, String siteName){
+        this.siteName = siteName;
+        save = shippingMenu;
         createUIComponents();
-        this.shippingMenu = save;
-        setContentPane(panel);
-        pack();
-        setVisible(true);
-        sManagement = shipmentManagement.getInstance();
-        guiService = GUIService.getInstance();
+
+
+        // finishing stuff
+        comboBox.addActionListener(this);
         doButton.addActionListener(this);
-        doButton.setEnabled(false);
-        weightField.addActionListener(new ActionListener() {
+        field.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                String input = weightField.getText();
-                weightField.setBackground(Color.WHITE);
-                int weight;
-                try{
-                    weight = Integer.parseInt(input);
-                }
-                catch (NumberFormatException ignored){
-                    weightField.setBackground(Color.RED);
-                    return;
-                }
-                if(weight > firstWeight){
+            public void insertUpdate(DocumentEvent e) {checkBox();}
 
-                }
-            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {checkBox();}
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {checkBox();}
         });
-
     }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-        panel = new JPanel();
-        this.setTitle("Execute Shipment");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(300, 200));
-
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(Color.BLACK);
-
-        // initialize the enters field
-        JPanel fieldPanel = new JPanel();
-        fieldPanel.setLayout(new GridLayout(2, 1));
-        fieldPanel.setBackground(Color.BLACK);
-        label = new JLabel("Truck Weight:");
-        weightField = new JTextField(10);
-        label.setForeground(Color.white);
-        fieldPanel.add(label);
-        fieldPanel.add(weightField);
-        panel.add(fieldPanel);
-
-        JPanel emptyPanel = new JPanel();
-        emptyPanel.setLayout(new GridLayout(1,1));
-        emptyPanel.setBackground(Color.BLACK);
-        panel.add(emptyPanel);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 1));
-        doButton = new JButton("Enter");
-        buttonPanel.add(doButton);
-
-
+    private void checkBox(){
+        setEnabled(!field.getText().isEmpty());
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == doButton){
-            int weight = Integer.parseInt(weightField.getText());
-            if (sManagement.checkTruckWeight(weight)) {
-                String[] options = {"Exchange Truck", "Delete Items From Shipment", "Delete Last Site"};
-                JComboBox<String> comboBoxWeight = new JComboBox<>(options);
-                comboBoxWeight.addActionListener(this);
+        if(e.getActionCommand().equals("delete")){
+            int index = comboBox.getSelectedIndex();
+            if (sManagement.deleteItemFromShipment(itemNames.get(index),itemQuantities.get(index),siteName)){
+                JOptionPane.showMessageDialog(null, "The item was deleted", "Remove", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+                save.setVisible(true);
+            };
+        }
+    }
 
-                Object[] message = {
-                        "Choose an option:",
-                        comboBoxWeight
-                };
-                int result = JOptionPane.showOptionDialog(null, message, "Options to Follow", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        this.setTitle("Execute Shipment");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(300, 200));
 
-                if (result == JOptionPane.OK_OPTION) {
-                    if (Objects.equals(comboBoxWeight.getSelectedItem(), "Delete Items From Shipment")) {
-                        JComboBox<String> comboBoxSites = new JComboBox<>(guiService.getSitesOfShipmentData());
-                        comboBoxSites.addActionListener(this);
-                        Object[] pop = {
-                                "Choose an option:",
-                                comboBoxSites
-                        };
+        // setting the main panel.
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(Color.BLACK);
 
-                        result = JOptionPane.showOptionDialog(null, pop, "Items to Delete", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-                        if (result == JOptionPane.OK_OPTION) {
-                            String siteName = Objects.requireNonNull(comboBoxSites.getSelectedItem()).toString();
-                            new ItemsToDelete(shippingMenu, siteName);
-                            this.setVisible(false);
-                        }
-                    }
-                    else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Exchange Truck")) {
-                        if (sManagement.changeTruck()) {
-                            JOptionPane.showMessageDialog(this, "Truck Exchanged Successfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                        else {
-                            JOptionPane.showMessageDialog(this, "There is No Available truck at the moment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                    }
-                    else if (Objects.equals(comboBoxWeight.getSelectedItem(), "Delete Last Site")) {
-                        if (sManagement.removeLastSiteFromShipment()) {
-                            JOptionPane.showMessageDialog(this, "Site removed Successfully", "Success!", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                        else {
-                            JOptionPane.showMessageDialog(this, "There is only 1 site in the shipment", "Failure!", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                    }
+        sManagement = shipmentManagement.getInstance();
+        guiService = GUIService.getInstance();
+        itemNames = new ArrayList<>();
+        itemQuantities = new ArrayList<>();
 
-                }
 
+        // setting the combo box
+        JPanel comboPanel = new JPanel();
+        comboPanel.setLayout(new GridLayout(1,1));
+        comboPanel.setBackground(Color.BLACK);
+        splittingList();
+        String[] options = itemNames.toArray(new String[itemNames.size()]);
+        comboBox = new JComboBox<>(options);
+        comboPanel.add(comboBox);
+        panel.add(comboPanel);
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                label.setText("this item quantity is " + itemQuantities.get(comboBox.getSelectedIndex()));
+                label.setVisible(true);
             }
-            else {
-                JOptionPane.showMessageDialog(this, "The shipment has been executed successfully.", "finished", JOptionPane.INFORMATION_MESSAGE);
-                //todo check this
-                LocalTime time = LocalTime.now();
-                sManagement.updateShipment(time);
-                shippingMenu.setVisible(true);
-                this.dispose();
+        });
+
+
+
+        JPanel labelPanel = new JPanel();
+        labelPanel.setLayout(new GridLayout(1,1));
+        labelPanel.setBackground(Color.BLACK);
+        label = new JLabel();
+        label.setForeground(Color.white);
+        label.setVisible(false);
+        labelPanel.add(label);
+        panel.add(labelPanel);
+
+        JPanel fieldPanel = new JPanel();
+        fieldPanel.setLayout(new GridLayout(1,2));
+        fieldPanel.setBackground(Color.BLACK);
+        fieldLabel = new JLabel("Quantity:");
+        field = new JTextField();
+        fieldLabel.setVisible(false);
+        fieldLabel.setInputVerifier(new digitVerifier(fieldLabel));
+        field.setVisible(false);
+        fieldPanel.add(fieldLabel);
+        fieldPanel.add(field);
+        panel.add(fieldPanel);
+
+
+        // setting the button
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1,1));
+        buttonPanel.setBackground(Color.BLACK);
+        doButton = new JButton("Delete");
+        buttonPanel.add(doButton);
+        panel.add(buttonPanel);
+    }
+
+    private void splittingList(){
+        List<String> temp = guiService.getItemsFromDoc(siteName);
+        for(int i=0; i< temp.size(); i++){
+            if (i % 2 == 0){
+                itemNames.add(temp.get(i));
             }
+            else{
+                itemQuantities.add(Integer.parseInt(temp.get(i)));
+            }
+        }
+    }
+
+    class digitVerifier extends InputVerifier {
+        private JLabel fieldLabel;
+
+        public digitVerifier(JLabel fieldLabel) {
+            this.fieldLabel = fieldLabel;
+        }
+
+        @Override
+        public boolean verify(JComponent input) {
+            String w = ((JTextField) input).getText();
+
+            if (!w.matches("\\d+")) {
+                // Change the color to red
+                fieldLabel.setForeground(Color.RED);
+                return false;
+            }
+
+            // Change the color to white
+            fieldLabel.setForeground(Color.WHITE);
+            return true;
         }
     }
 }
