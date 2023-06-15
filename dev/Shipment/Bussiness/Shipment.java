@@ -76,6 +76,42 @@ public class Shipment {
             itemsDoc.printItemsDoc();
 
     }
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("****** Shipment details ******\n");
+        sb.append("Shipment ID: ").append(ID).append("\n");
+        sb.append("Date: ").append(date).append("\n");
+        if (departureTime != null) {
+            sb.append("Shipment occurred on ").append(dayOfTheWeek.toString()).append(" at ").append(departureTime).append("\n");
+        } else {
+            sb.append("Shipment scheduled for this ").append(dayOfTheWeek.toString()).append("\n");
+        }
+        sb.append("Truck number: ").append(truckNumber).append("\n");
+        if (driver != null) {
+            sb.append("Driver Name: ").append(driver.getName()).append("\n");
+        } else {
+            sb.append("No driver at the moment").append("\n");
+        }
+        sb.append("Vendor: ").append(source.getName()).append("\n");
+        sb.append("Status: ");
+        if (shipmentStatus == Status.Available) {
+            sb.append("The shipment is ready to be executed").append("\n");
+        } else if (shipmentStatus == Status.NoChanges) {
+            sb.append("There isn't any changes in this shipment as of this moment").append("\n");
+        } else {
+            sb.append("This shipment has undergone some changes: ").append(shipmentStatus.toString()).append("\n");
+        }
+        sb.append("Destinations:\n");
+        for (Site site : destinations) {
+            sb.append(site.toString()).append("\n");
+        }
+        sb.append("Item doc:\n");
+        for (ItemsDoc itemsDoc : docs) {
+            sb.append(itemsDoc.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+
 
     public LocalTime getDepartureTime() {
         return departureTime;

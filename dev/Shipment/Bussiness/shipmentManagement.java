@@ -889,6 +889,10 @@ public class shipmentManagement {
     public List<Shipment> getAvailableShipment() {
         return availableShipments;
     }
+    public Map<String,Shipment> getShipments()
+    {
+        return shipments;
+    }
 
     public void closeDB() {
         dataController.closeShipmentsDB();

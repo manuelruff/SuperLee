@@ -23,4 +23,16 @@ public class Branch extends Site{
         System.out.println("Phone Number: " + getPhoneNumber());
         System.out.println("Zone: " + zone + "\n");
     }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Site Type: Branch\n");
+        sb.append("Name: ").append(getName()).append("\n");
+        sb.append("Address: ").append(getAddress()).append("\n");
+        sb.append("Contact Name: ").append(getContactName()).append("\n");
+        sb.append("Phone Number: ").append(getPhoneNumber()).append("\n");
+        sb.append("Zone: ").append(zone).append("\n");
+        return sb.toString();
+    }
+
 }
