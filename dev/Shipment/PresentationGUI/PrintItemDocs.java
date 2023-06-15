@@ -13,10 +13,10 @@ public class PrintItemDocs extends JFrame implements ActionListener {
     private JButton backButton;
     private JButton printButton;
     private JComboBox<String> comboBox;
-    private ShippingMenu save;
+    private ShipManager save;
     private shipmentManagement shipmentM;
 
-    public PrintItemDocs(ShippingMenu save) {
+    public PrintItemDocs(ShipManager save) {
         shipmentM = shipmentManagement.getInstance();
         this.save = save;
         this.setContentPane(PrintItemDocs);
