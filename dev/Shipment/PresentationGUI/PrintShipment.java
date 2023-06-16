@@ -20,9 +20,10 @@ public class PrintShipment extends JFrame implements ActionListener {
     private int ch;
 
 
-    public PrintShipment(ShippingMenu save,int ch) {
+    public PrintShipment(ShippingMenu save,int ch1) {
         shipmentM = shipmentManagement.getInstance();
-        this.ch=ch;
+        this.ch=ch1;
+        createUIComponents();
         this.save = save;
         this.setContentPane(PrintShipment);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,39 +38,60 @@ public class PrintShipment extends JFrame implements ActionListener {
 
     }
 
-    private void createUIComponents() {
-        shipmentM = shipmentManagement.getInstance();
-        service = GUIService.getInstance();
-        if(ch==1)
-        {
-            String[] d = service.getShipmentsIDs();
-            comboBox = new JComboBox<>(d);
-        }
-        else {
-            String[] d = service.getAShipmentsIDs();
-            comboBox = new JComboBox<>(d);
-        }
-
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==printButton)
-        {
-            if(ch ==1) {
-                StringBuilder message = service.getShipmentString(Objects.requireNonNull(comboBox.getSelectedItem()).toString());
-                JOptionPane.showMessageDialog(null, message.toString(), "Shipment", JOptionPane.INFORMATION_MESSAGE);
+        if (e.getSource() == printButton) {
+            String selectedItem = Objects.requireNonNull(comboBox.getSelectedItem()).toString();
+            StringBuilder message;
+            if (ch == 1 ) {
+                String[] d = service.getShipmentsIDs();
+                comboBox.removeAllItems();
+                for (String s : d) {
+                    comboBox.addItem(s);
+                }
+                message = service.getShipmentString(selectedItem);
+            } else {
+                String[] d = service.getAShipmentsIDs();
+                comboBox.removeAllItems();
+                for (String s : d) {
+                    comboBox.addItem(s);
+                }
+                message = service.getAShipmentString(selectedItem);
             }
-            else {
-                StringBuilder message = service.getAShipmentString(Objects.requireNonNull(comboBox.getSelectedItem()).toString());
-                JOptionPane.showMessageDialog(null, message.toString(), "Shipment", JOptionPane.INFORMATION_MESSAGE);
-            }
-
+            JOptionPane.showMessageDialog(null, message.toString(), "Shipment", JOptionPane.INFORMATION_MESSAGE);
         }
-        if(e.getSource() == backButton)
-        {
+        if (e.getSource() == backButton) {
             save.setVisible(true);
             this.dispose();
         }
+    }
+
+    private void createUIComponents() {
+        shipmentM = shipmentManagement.getInstance();
+        comboBox = new JComboBox<>();
+        service = GUIService.getInstance();
+        if (ch == 1 ) {
+            String[] d = service.getShipmentsIDs();
+
+            for (String s : d) {
+                comboBox.addItem(s);
+            }
+        } else {
+            String[] d = service.getAShipmentsIDs();
+            for (String s : d) {
+                comboBox.addItem(s);
+            }
+        }
+        comboBox.setForeground(Color.BLACK);
+//        if(ch==1)
+//        {
+//            String[] d = service.getShipmentsIDs();
+//            comboBox = new JComboBox<>(d);
+//        }
+//        else {
+//            String[] d = service.getAShipmentsIDs();
+//            comboBox = new JComboBox<>(d);
+//        }
     }
 }

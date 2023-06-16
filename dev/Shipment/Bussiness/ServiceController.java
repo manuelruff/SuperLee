@@ -194,11 +194,13 @@ public class ServiceController {
 
     public String[] getShipmentsIDs()
     {
+        shipmentsEX = shipmentM.getShipments();
         String[] ids = new String[shipmentsEX.size()];
         int i=0;
         for(Shipment shipment : shipmentsEX.values())
         {
             ids[i] = shipment.getID();
+            i++;
         }
         return ids;
     }
@@ -209,6 +211,7 @@ public class ServiceController {
         for(Shipment shipment : shipments)
         {
             ids[i] = shipment.getID();
+            i++;
         }
         return ids;
     }
