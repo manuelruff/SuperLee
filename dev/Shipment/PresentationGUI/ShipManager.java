@@ -31,6 +31,7 @@ public class ShipManager extends JFrame implements ActionListener{
         exitButton.addActionListener(this);
         startButton.addActionListener(this);
         sManagement = shipmentManagement.getInstance();
+        //TEST
         /*sManagement.checkVendor("Osem");
         sManagement.createOrder("Osem","branch1");
         sManagement.addItemToOrder("Osem", "k", 10, 0);
@@ -42,8 +43,8 @@ public class ShipManager extends JFrame implements ActionListener{
         LocalDate today = LocalDate.now();
         LocalDate closestSunday = today.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
         sManagement.createShipment(0,closestSunday,"123","Osem");
-        sManagement.printAvailableShipments();
-         */
+        sManagement.printAvailableShipments();*/
+
 
     }
     private void createUIComponents() {
@@ -87,6 +88,8 @@ public class ShipManager extends JFrame implements ActionListener{
         }
         else if(e.getActionCommand().equals("Exit"))
         {
+            //todo connect to DB
+            //sManagement.closeDB();
             System.exit(0);
         }
     }

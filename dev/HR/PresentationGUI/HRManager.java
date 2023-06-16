@@ -48,6 +48,11 @@ public class HRManager extends JFrame implements ActionListener{
             {
                 String[] allBranches = managerController.getAllSuperNames();
                 JList<String> list = new JList<>(allBranches);
+                UIManager UI = new UIManager();
+                UI.put("OptionPane.background", Color.BLACK);
+                UI.put("Panel.background", Color.BLACK);
+                UI.put("OptionPane.messageForeground", Color.WHITE);
+                UI.put("Button.foreground", Color.BLACK);
                 int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to work on:", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
                     // save the selected option

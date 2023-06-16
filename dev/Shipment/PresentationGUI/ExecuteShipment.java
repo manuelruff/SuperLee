@@ -124,7 +124,7 @@ public class ExecuteShipment extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "The shipment has been executed successfully.", "finished", JOptionPane.INFORMATION_MESSAGE);
                     //todo check this
                     LocalTime time = LocalTime.now();
-                    sManagement.updateShipment(time);
+                    sManagement.updateShipment();
                     save.setVisible(true);
                     this.dispose();
                 }
@@ -150,7 +150,6 @@ public class ExecuteShipment extends JFrame implements ActionListener {
         JPanel fieldPanel = new JPanel();
         fieldPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         fieldPanel.setBackground(Color.BLACK);
-        fieldPanel.setPreferredSize(dimension);
         fieldLabel = new JLabel("Truck Weight:");
         fieldLabel.setForeground(Color.white);
         field = new JTextField();

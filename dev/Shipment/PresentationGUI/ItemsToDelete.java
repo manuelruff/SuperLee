@@ -56,8 +56,19 @@ public class ItemsToDelete extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == doButton){
             int index = comboBox.getSelectedIndex();
+            if (field.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "the Quantity field is empty", "Invalid input", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (sManagement.deleteItemFromShipment(itemNames.get(index),Integer.parseInt(field.getText()),siteName)){
-                JOptionPane.showMessageDialog(null, "The item was deleted", "Remove", JOptionPane.INFORMATION_MESSAGE);
+                if (itemQuantities.get(index) > Integer.parseInt(field.getText())){
+                    String temp = String.valueOf(itemQuantities.get(index) - Integer.parseInt(field.getText()));
+                    String msg = "The item Quantity was reduced to " + temp ;
+                    JOptionPane.showMessageDialog(null, msg, "Remove", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "The item was deleted", "Remove", JOptionPane.INFORMATION_MESSAGE);
+                }
                 dispose();
                 save.setVisible(true);
             };
@@ -68,7 +79,7 @@ public class ItemsToDelete extends JFrame implements ActionListener {
         // TODO: place custom component creation code here
         this.setTitle("ItemsToDelete");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(300, 200));
+        setPreferredSize(new Dimension(300, 250));
 
         // setting the main panel.
         panel = new JPanel();
@@ -83,15 +94,15 @@ public class ItemsToDelete extends JFrame implements ActionListener {
 
         // setting the combo box
         JPanel comboPanel = new JPanel();
-        comboPanel.setLayout(new GridLayout(1,1));
+        comboPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         comboPanel.setBackground(Color.BLACK);
-        comboPanel.setPreferredSize(new Dimension(10,10));
+        comboPanel.setPreferredSize(new Dimension(270,25));
         splittingList();
         String[] options = itemNames.toArray(new String[itemNames.size()]);
         comboBox = new JComboBox<>(options);
         comboPanel.add(comboBox);
         panel.add(comboPanel);
-        comboBox.setPreferredSize(new Dimension(10, 10)); // Set a narrower width for the combo box
+        comboBox.setPreferredSize(new Dimension(270, 25)); // Set a narrower width for the combo box
         comboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,16 +116,18 @@ public class ItemsToDelete extends JFrame implements ActionListener {
 
 
         JPanel labelPanel = new JPanel();
-        labelPanel.setLayout(new GridLayout(1,1));
+        labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         labelPanel.setBackground(Color.BLACK);
+        labelPanel.setPreferredSize(new Dimension(300, 20));
         label = new JLabel();
         label.setForeground(Color.white);
+        label.setPreferredSize(new Dimension(300, 20));
         label.setVisible(false);
         labelPanel.add(label);
         panel.add(labelPanel);
 
         JPanel fieldPanel = new JPanel();
-        fieldPanel.setLayout(new GridLayout(1,2));
+        fieldPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         fieldPanel.setBackground(Color.BLACK);
         fieldLabel = new JLabel("Quantity:");
         field = new JTextField();
@@ -122,6 +135,7 @@ public class ItemsToDelete extends JFrame implements ActionListener {
         fieldLabel.setForeground(Color.white);
         fieldLabel.setInputVerifier(new digitVerifier(fieldLabel));
         field.setVisible(false);
+        field.setPreferredSize(new Dimension(280, field.getPreferredSize().height));
         fieldPanel.add(fieldLabel);
         fieldPanel.add(field);
         panel.add(fieldPanel);
