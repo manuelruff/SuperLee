@@ -647,19 +647,7 @@ public class UI {
             System.out.println("There is no driver assigned to this shipment please update the weekly shift");
             return;
         }
-        //time formatter
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime time = null;
-        while (time == null) {
-            System.out.println("Enter the time (in HH:MM format): ");
-            String timeStr = scanner.nextLine();
 
-            try {
-                time = LocalTime.parse(timeStr, formatter);
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid time format. Please enter time in HH:MM format.");
-            }
-        }
         //reading the truck weight from the user and checking if it is valid
         int currWeight;
         System.out.println("you have arrived at your destination: ");
@@ -721,7 +709,7 @@ public class UI {
             }
         }
         System.out.println("The Items Were delivered to their destinations");
-        sManagement.updateShipment(time);
+        sManagement.updateShipment();
     }
     private static void itemsToDelete(){
         int amount;

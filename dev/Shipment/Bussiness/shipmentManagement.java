@@ -8,6 +8,7 @@ import Shipment.DataAccess.ShipmentMapper;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -817,7 +818,6 @@ public class shipmentManagement {
     public boolean checkTruckWeight(int weight){
         if (staticsTruck == null)
             staticsTruck = getTruck(availableShipments.get(0).getTruckNumber());
-        staticsTruck.printTruck();
         return weight >= staticsTruck.getTotalWeight();
     }
 
@@ -867,13 +867,17 @@ public class shipmentManagement {
         return false;
     }
 
-    public void updateShipment(LocalTime time) {
+    public void updateShipment() {
         Shipment shipment = availableShipments.get(0);
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedTime = currentTime.format(formatter);
+        LocalTime formattedLocalTime = LocalTime.parse(formattedTime, formatter);
         availableShipments.remove(shipment);
         shipments.put(shipment.getID(), shipment);
         if (shipment.getShipmentStatus() == Status.Available)
             shipment.setShipmentStatus(Status.NoChanges);
-        shipment.setDepartureTime(time);
+        shipment.setDepartureTime(formattedLocalTime);
         shipmentService.askRemoveDayForDriver(shipment.getDriver().getID(), shipment.getDayOfTheWeek().ordinal());
         shipment.printShipment();
     }
