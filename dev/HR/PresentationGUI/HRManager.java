@@ -28,6 +28,16 @@ public class HRManager extends JFrame implements ActionListener{
         exitButton.addActionListener(this);
         comboBox1.addActionListener(this);
         this.managerController = ManagerController.getInstance();
+
+        //set default color of messabe boxes
+        UIManager UI = new UIManager();
+        UI.put("OptionPane.background", Color.BLACK);
+        UI.put("Panel.background", Color.BLACK);
+        UI.put("OptionPane.messageForeground", Color.WHITE);
+        UI.put("Button.foreground", Color.BLACK);
+        UI.put("Label.foreground", Color.WHITE);
+        UI.put("Label.foreground", Color.WHITE);
+
     }
     private void createUIComponents() {
         comboBox1 = new JComboBox<String>();
@@ -48,11 +58,8 @@ public class HRManager extends JFrame implements ActionListener{
             {
                 String[] allBranches = managerController.getAllSuperNames();
                 JList<String> list = new JList<>(allBranches);
-                UIManager UI = new UIManager();
-                UI.put("OptionPane.background", Color.BLACK);
-                UI.put("Panel.background", Color.BLACK);
-                UI.put("OptionPane.messageForeground", Color.WHITE);
-                UI.put("Button.foreground", Color.BLACK);
+
+
                 int result = JOptionPane.showConfirmDialog(null, new JScrollPane(list), "Select a branch to work on:", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
                     // save the selected option
