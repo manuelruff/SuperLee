@@ -31,7 +31,14 @@ public class ShipManager extends JFrame implements ActionListener{
         exitButton.addActionListener(this);
         startButton.addActionListener(this);
         sManagement = shipmentManagement.getInstance();
-
+        //set default color of messabe boxes
+        UIManager UI = new UIManager();
+        UI.put("OptionPane.background", Color.BLACK);
+        UI.put("Panel.background", Color.BLACK);
+        UI.put("OptionPane.messageForeground", Color.WHITE);
+        UI.put("Button.foreground", Color.BLACK);
+        UI.put("Label.foreground", Color.WHITE);
+        UI.put("Label.foreground", Color.WHITE);
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -75,7 +82,7 @@ public class ShipManager extends JFrame implements ActionListener{
         else if(e.getActionCommand().equals("Exit"))
         {
             //todo connect to DB
-            //sManagement.closeDB();
+            sManagement.closeDB();
             System.exit(0);
         }
     }
