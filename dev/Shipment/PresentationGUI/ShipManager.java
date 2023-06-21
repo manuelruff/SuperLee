@@ -31,20 +31,6 @@ public class ShipManager extends JFrame implements ActionListener{
         exitButton.addActionListener(this);
         startButton.addActionListener(this);
         sManagement = shipmentManagement.getInstance();
-        //TEST
-        /*sManagement.checkVendor("Osem");
-        sManagement.createOrder("Osem","branch1");
-        sManagement.addItemToOrder("Osem", "k", 10, 0);
-        sManagement.addItemToOrder("Osem", "v", 10, 0);
-        sManagement.addItemToOrder("Osem", "g", 10, 0);
-        sManagement.addItemToOrder("Osem", "t", 20, 0);
-        sManagement.createOrder("Osem","branch2");
-        sManagement.addItemToOrder("Osem", "s", 10, 0);
-        LocalDate today = LocalDate.now();
-        LocalDate closestSunday = today.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
-        sManagement.createShipment(0,closestSunday,"123","Osem");
-        sManagement.printAvailableShipments();*/
-
 
     }
     private void createUIComponents() {
