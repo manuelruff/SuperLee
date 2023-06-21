@@ -2,6 +2,7 @@ package Shipment.Service;
 
 import Shipment.Bussiness.Days;
 import Shipment.Bussiness.ServiceController;
+import Shipment.PresentationGUI.PrintAShipments;
 import Shipment.PresentationGUI.ShipManager;
 import Shipment.PresentationGUI.ShippingMenu;
 
@@ -56,5 +57,9 @@ public class HRService {
     //functions for the gui of hr module
     public void openMainShipManagerWin(){
         new ShipManager();
+    }
+
+    public void openMainShipmentInfo(){
+        new PrintAShipments(null);
     }
 }

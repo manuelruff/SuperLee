@@ -52,7 +52,9 @@ public class PrintAShipments extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(null, message.toString(), "Shipment", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getSource() == backButton) {
-            save.setVisible(true);
+            if(save!=null){
+                save.setVisible(true);
+            }
             this.dispose();
         }
     }
