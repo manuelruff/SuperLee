@@ -119,11 +119,11 @@ public class ShippingMenu extends JFrame implements ActionListener {
                 }
             }
             else if (Objects.equals(comboBox.getSelectedItem(), "Print All Shipments")) {
-                new PrintShipment(this, 1);
+                new PrintShipment(this);
                 setVisible(false);
             }
             else if (Objects.equals(comboBox.getSelectedItem(), "Print All Available Shipments")) {
-                new PrintShipment(this, 2);
+                new PrintAShipments(this);
                 setVisible(false);
             }
             else if (Objects.equals(comboBox.getSelectedItem(), "Execute Nearest Shipment")) {

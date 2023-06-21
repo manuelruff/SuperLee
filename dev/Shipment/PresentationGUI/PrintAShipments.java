@@ -1,6 +1,5 @@
 package Shipment.PresentationGUI;
 
-import Shipment.Bussiness.shipmentManagement;
 import Shipment.Service.GUIService;
 
 import javax.swing.*;
@@ -9,21 +8,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
-public class PrintShipment extends JFrame implements ActionListener {
+public class PrintAShipments extends JFrame implements ActionListener {
+    private JPanel PrintAShipments;
     private JButton backButton;
-    private JPanel PrintShipment;
     private JButton printButton;
     private JComboBox<String> comboBox;
-    private shipmentManagement shipmentM;
     private GUIService service;
     private ShippingMenu save;
-    private int ch;
 
 
-    public PrintShipment(ShippingMenu save) {
+
+    public PrintAShipments(ShippingMenu save) {
         createUIComponents();
         this.save = save;
-        this.setContentPane(PrintShipment);
+        this.setContentPane(PrintAShipments);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(400,300));
         this.pack();
@@ -36,28 +34,26 @@ public class PrintShipment extends JFrame implements ActionListener {
 
     }
 
+    private void createUIComponents() {
+        comboBox = new JComboBox<>();
+        service = GUIService.getInstance();
+        String[] d = service.getAShipmentsIDs();
+        for (String s : d) {
+            comboBox.addItem(s);
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == printButton) {
             String selectedItem = Objects.requireNonNull(comboBox.getSelectedItem()).toString();
             StringBuilder message;
-            message = service.getShipmentString(selectedItem);
+            message = service.getAShipmentString(selectedItem);
             JOptionPane.showMessageDialog(null, message.toString(), "Shipment", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getSource() == backButton) {
             save.setVisible(true);
             this.dispose();
-        }
-    }
-
-    private void createUIComponents() {
-        shipmentM = shipmentManagement.getInstance();
-        comboBox = new JComboBox<>();
-        service = GUIService.getInstance();
-        String[] d = service.getShipmentsIDs();
-        for (String s : d) {
-            comboBox.addItem(s);
         }
     }
 }
