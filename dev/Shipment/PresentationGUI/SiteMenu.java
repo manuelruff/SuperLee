@@ -102,6 +102,7 @@ public class SiteMenu extends JFrame implements ActionListener {
         if(e.getSource()== exitButton)
         {
             this.save.setVisible(true);
+            this.dispose();
         }
     }
 }
