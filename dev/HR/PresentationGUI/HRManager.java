@@ -4,6 +4,8 @@ import HR.PresentationGUI.HRManagaerWindows.AddNewSuper;
 import HR.PresentationGUI.HRManagaerWindows.DriversSchedule;
 import HR.PresentationGUI.HRManagaerWindows.UpdateEmployee;
 import HR.PresentationGUI.HRManagaerWindows.WorkOnABranch;
+import Shipment.Service.HRService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +18,7 @@ public class HRManager extends JFrame implements ActionListener{
     private JButton exitButton;
     //take instance for manager controller
     private ManagerController managerController;
+    private HRService hrService;
 
     public HRManager() {
         this.setContentPane(HRManagerWin);
@@ -28,7 +31,7 @@ public class HRManager extends JFrame implements ActionListener{
         exitButton.addActionListener(this);
         comboBox1.addActionListener(this);
         this.managerController = ManagerController.getInstance();
-
+        this.hrService = HRService.getInstance();
         //set default color of messabe boxes
         UIManager UI = new UIManager();
         UI.put("OptionPane.background", Color.BLACK);
@@ -121,6 +124,8 @@ public class HRManager extends JFrame implements ActionListener{
             else if(comboBox1.getSelectedItem().equals("Show all shipments"))
             {
                 //todo: add the shipments print aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                this.hrService.openMainShipmentInfo();
+                
             }
             else if(comboBox1.getSelectedItem().equals("pay salaries"))
             {
