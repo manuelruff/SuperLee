@@ -42,7 +42,7 @@ public class PrintShipment extends JFrame implements ActionListener {
         if (e.getSource() == printButton) {
             String selectedItem = Objects.requireNonNull(comboBox.getSelectedItem()).toString();
             StringBuilder message;
-            message = service.getAShipmentString(selectedItem);
+            message = service.getShipmentString(selectedItem);
 
             JTextArea textArea = new JTextArea(message.toString());
             textArea.setEditable(false);
