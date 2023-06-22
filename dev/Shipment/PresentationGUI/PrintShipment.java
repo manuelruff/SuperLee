@@ -42,8 +42,15 @@ public class PrintShipment extends JFrame implements ActionListener {
         if (e.getSource() == printButton) {
             String selectedItem = Objects.requireNonNull(comboBox.getSelectedItem()).toString();
             StringBuilder message;
-            message = service.getShipmentString(selectedItem);
-            JOptionPane.showMessageDialog(null, message.toString(), "Shipment", JOptionPane.INFORMATION_MESSAGE);
+            message = service.getAShipmentString(selectedItem);
+
+            JTextArea textArea = new JTextArea(message.toString());
+            textArea.setEditable(false);
+
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(500, 500));
+
+            JOptionPane.showMessageDialog(null, scrollPane, "Shipment", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getSource() == backButton) {
             save.setVisible(true);

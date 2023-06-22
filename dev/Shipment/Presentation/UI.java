@@ -19,20 +19,7 @@ public class UI {
     private static Scanner scanner;
     public static void SManagerLogIN(Scanner sc) {
         scanner = sc;
-        int choice = -1;
-        System.out.println("please log in: ");
-        while (choice != 4) {
-            System.out.println("Password: ");
-            String input = scanner.nextLine();  // Read user input
-            if (!sManagement.checkPassword(input)) {
-                System.out.println("Wrong password please try again");
-                continue;
-            } else {
-                System.out.println("welcome Shipment Manager!");
-            }
-            shippingMenu(sc);
-            choice = 4;
-        }
+        shippingMenu(sc);
     }
 
     public static void shippingMenu(Scanner sc)
